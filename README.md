@@ -1,6 +1,8 @@
 xcnew
 =====
 
+[![Build Status](https://travis-ci.org/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.org/manicmaniac/xcnew)
+
 A command line interface to make a project for iOS Single View App.
 
 Install
