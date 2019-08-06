@@ -15,7 +15,7 @@ int main(int argc, char *const argv[]) {
     @autoreleasepool {
         NSError *error = nil;
         XCNOptionSet optionSet = {0};
-        if ([[XCNOptionParser sharedOptionParser] parseArguments:argv count:argc optionSet:&optionSet error:&error]) {
+        if ([XCNOptionParser.sharedOptionParser parseArguments:argv count:argc optionSet:&optionSet error:&error]) {
             XCNProject *project = [[XCNProject alloc] initWithProductName:optionSet.productName];
             project.organizationName = optionSet.organizationName;
             project.organizationIdentifier = optionSet.organizationIdentifier;
