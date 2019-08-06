@@ -17,25 +17,29 @@
    @private
     NSFileManager *_fileManager;
     NSString *_temporaryDirectory;
+    NSString *_previousDirectory;
     NSString *_executablePath;
 }
 
 // MARK: Public
 
 - (void)setUp {
-    _fileManager = [NSFileManager defaultManager];
+    _fileManager = NSFileManager.defaultManager;
     int pid = [NSProcessInfo processInfo].processIdentifier;
     _temporaryDirectory = [NSString stringWithFormat:@"%@%@-%d", NSTemporaryDirectory(), NSStringFromClass([self class]), pid];
     NSError *error = nil;
     if (![_fileManager createDirectoryAtPath:_temporaryDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
         NSLog(@"%@", error);
     }
+    _previousDirectory = _fileManager.currentDirectoryPath;
+    [_fileManager changeCurrentDirectoryPath:_temporaryDirectory];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    _executablePath = [[bundle.executablePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"xcnew"];
+    _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
 }
 
 - (void)tearDown {
     NSError *error = nil;
+    [_fileManager changeCurrentDirectoryPath:_previousDirectory];
     if (![_fileManager removeItemAtPath:_temporaryDirectory error:&error]) {
         NSLog(@"%@", error);
     }
@@ -104,7 +108,7 @@
 
 - (void)testExecuteWithAllValidArguments {
     NSString *stdoutString = nil, *stderrString = nil;
-    NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Example"];
+    NSString *path = @"Example";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
                             @"--has-unit-tests",
