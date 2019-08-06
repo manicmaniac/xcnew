@@ -30,7 +30,7 @@
     return instance;
 }
 
-- (BOOL)parseArguments:(char *const _Nullable *)argv count:(int)argc optionSet:(inout XCNOptionSet *)optionSet error:(NSError *_Nullable __autoreleasing *)error {
+- (BOOL)parseArguments:(char *const _Nullable *)argv count:(int)argc optionSet:(out XCNOptionSet *)optionSet error:(NSError *_Nullable __autoreleasing *)error {
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
     [self configureDefaultOptionSet:optionSet];
@@ -87,7 +87,7 @@
 
 // MARK: Private
 
-- (void)configureDefaultOptionSet:(inout XCNOptionSet *)optionSet {
+- (void)configureDefaultOptionSet:(out XCNOptionSet *)optionSet {
     optionSet->language = XCNLanguageSwift;
 }
 

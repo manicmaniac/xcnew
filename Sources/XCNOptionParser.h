@@ -31,7 +31,7 @@ XCN_FINAL_CLASS
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
-- (BOOL)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc optionSet:(inout XCNOptionSet *)optionSet error:(NSError *__autoreleasing _Nullable *)error;
+- (BOOL)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc optionSet:(out XCNOptionSet *)optionSet error:(NSError *__autoreleasing _Nullable *)error;
 
 @end
 
