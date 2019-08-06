@@ -27,7 +27,8 @@ typedef struct {
 XCN_FINAL_CLASS
 @interface XCNOptionParser : NSObject
 
-+ (XCNOptionParser *)sharedOptionParser;
+@property (class, readonly) XCNOptionParser *sharedOptionParser;
+
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 - (BOOL)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc optionSet:(inout XCNOptionSet *)optionSet error:(NSError *__autoreleasing _Nullable *)error;
