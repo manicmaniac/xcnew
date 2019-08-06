@@ -88,10 +88,10 @@
 }
 
 - (void)testExecuteWithMinimalValidArguments {
-    NSString *stdoutString = nil, *stderrString = nil;
-    NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Example"];
+    NSString *stdoutString = nil;
+    NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"Example", path ];
-    XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString]);
+    XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
     XCTAssertEqualObjects(@"", stdoutString);
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
@@ -107,8 +107,8 @@
 }
 
 - (void)testExecuteWithAllValidArguments {
-    NSString *stdoutString = nil, *stderrString = nil;
-    NSString *path = @"Example";
+    NSString *stdoutString = nil;
+    NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Example"];
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
                             @"--has-unit-tests",
@@ -117,7 +117,7 @@
                             @"--", // GNU style option scanning terminator
                             @"Example",
                             path ];
-    XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString]);
+    XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
     XCTAssertEqualObjects(@"", stdoutString);
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
@@ -135,24 +135,29 @@
 // MARK: Private
 
 - (int)runWithArguments:(NSArray<NSString *> *)arguments standardOutput:(NSString **)stdoutString standardError:(NSString **)stderrString {
+    NSFileHandle *stdoutFileHandle, *stderrFileHandle;
     NSTask *task = [NSTask new];
     task.launchPath = _executablePath;
     task.arguments = arguments;
-    NSPipe *stdoutPipe = [NSPipe pipe];
-    NSPipe *stderrPipe = [NSPipe pipe];
-    NSFileHandle *stdoutFileHandle = stdoutPipe.fileHandleForReading;
-    NSFileHandle *stderrFileHandle = stderrPipe.fileHandleForReading;
-    task.standardOutput = stdoutPipe;
-    task.standardError = stderrPipe;
-    [task launch];
-    NSData *stdoutData = [stdoutFileHandle readDataToEndOfFile];
-    [stdoutFileHandle closeFile];
-    NSData *stderrData = [stderrFileHandle readDataToEndOfFile];
-    [stderrFileHandle closeFile];
     if (stdoutString) {
+        NSPipe *stdoutPipe = [NSPipe pipe];
+        stdoutFileHandle = stdoutPipe.fileHandleForReading;
+        task.standardOutput = stdoutPipe;
+    }
+    if (stderrString) {
+        NSPipe *stderrPipe = [NSPipe pipe];
+        stderrFileHandle = stderrPipe.fileHandleForReading;
+        task.standardError = stderrPipe;
+    }
+    [task launch];
+    if (stdoutString) {
+        NSData *stdoutData = [stdoutFileHandle readDataToEndOfFile];
+        [stdoutFileHandle closeFile];
         *stdoutString = [[NSString alloc] initWithData:stdoutData encoding:NSUTF8StringEncoding];
     }
     if (stderrString) {
+        NSData *stderrData = [stderrFileHandle readDataToEndOfFile];
+        [stderrFileHandle closeFile];
         *stderrString = [[NSString alloc] initWithData:stderrData encoding:NSUTF8StringEncoding];
     }
     [task waitUntilExit];

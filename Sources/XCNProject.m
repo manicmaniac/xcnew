@@ -35,8 +35,9 @@
 
 - (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error {
     if (!path.isAbsolutePath) {
-        path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path];
+        path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
     }
+    path = path.stringByStandardizingPath;
     IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
