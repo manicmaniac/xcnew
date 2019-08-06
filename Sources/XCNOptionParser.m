@@ -94,7 +94,7 @@
 - (void)showHelp {
     puts("xcnew - A command line tool to create Xcode project.\n"
          "\n"
-         "Usage: xcnew [-h] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> <OUTPUT_DIR>\n"
+         "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> <OUTPUT_DIR>\n"
          "\n"
          "Options:\n"
          "    -h, --help                     Show this help and exit\n"
