@@ -25,23 +25,23 @@
 
 - (void)setUp {
     _fileManager = NSFileManager.defaultManager;
+    _previousDirectory = _fileManager.currentDirectoryPath;
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
     int pid = [NSProcessInfo processInfo].processIdentifier;
     _temporaryDirectory = [NSString stringWithFormat:@"%@%@-%d", NSTemporaryDirectory(), NSStringFromClass([self class]), pid];
     NSError *error = nil;
     if (![_fileManager createDirectoryAtPath:_temporaryDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-        NSLog(@"%@", error);
+        XCTFail(@"%@", error);
     }
-    _previousDirectory = _fileManager.currentDirectoryPath;
     [_fileManager changeCurrentDirectoryPath:_temporaryDirectory];
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
 }
 
 - (void)tearDown {
     NSError *error = nil;
     [_fileManager changeCurrentDirectoryPath:_previousDirectory];
     if (![_fileManager removeItemAtPath:_temporaryDirectory error:&error]) {
-        NSLog(@"%@", error);
+        XCTFail(@"%@", error);
     }
 }
 
