@@ -55,11 +55,18 @@
     XCTAssertEqualObjects(@"xcnew: Wrong number of arguments (1 for 2).\n", stderrString);
 }
 
-- (void)testRunWithInvalidOptionArguments {
+- (void)testRunWithInvalidShortOptionArguments {
+    NSString *stdoutString = nil, *stderrString = nil;
+    XCTAssertEqual(110, [self runWithArguments:@[ @"-X" ] standardOutput:&stdoutString standardError:&stderrString]);
+    XCTAssertEqualObjects(@"", stdoutString);
+    XCTAssertEqualObjects(@"xcnew: Unrecognized option '-X'.\n", stderrString);
+}
+
+- (void)testRunWithInvalidLongOptionArguments {
     NSString *stdoutString = nil, *stderrString = nil;
     XCTAssertEqual(110, [self runWithArguments:@[ @"--invalid" ] standardOutput:&stdoutString standardError:&stderrString]);
     XCTAssertEqualObjects(@"", stdoutString);
-    XCTAssertEqualObjects(@"xcnew: unrecognized option `--invalid'\n", stderrString);
+    XCTAssertEqualObjects(@"xcnew: Unrecognized option '--invalid'.\n", stderrString);
 }
 
 - (void)testRunWithHelp {

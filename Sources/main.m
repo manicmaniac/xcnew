@@ -26,14 +26,11 @@ int main(int argc, char *const argv[]) {
             [project writeToFile:optionSet.outputPath error:&error];
         }
         if (error) {
-            // When `XCNInvalidArgumentError` occurs, `getopt_long(3)` automatically displays the error message.
-            if (![error.domain isEqualToString:XCNErrorDomain] || error.code != XCNInvalidArgumentError) {
-                NSMutableString *message = [NSMutableString stringWithFormat:@"xcnew: %@", error.localizedDescription];
-                if (error.localizedFailureReason) {
-                    [message appendFormat:@" %@", error.localizedFailureReason];
-                }
-                fprintf(stderr, "%s\n", message.UTF8String);
+            NSMutableString *message = [NSMutableString stringWithFormat:@"xcnew: %@", error.localizedDescription];
+            if (error.localizedFailureReason) {
+                [message appendFormat:@" %@", error.localizedFailureReason];
             }
+            fprintf(stderr, "%s\n", message.UTF8String);
             return (int)error.code;
         }
     }

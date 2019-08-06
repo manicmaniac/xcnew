@@ -16,6 +16,11 @@
 
 // MARK: Public
 
++ (void)initialize {
+    [super initialize];
+    opterr = 0;
+}
+
 + (XCNOptionParser *)sharedOptionParser {
     static XCNOptionParser *instance;
     static dispatch_once_t onceToken;
@@ -56,9 +61,14 @@
             case 'o':
                 optionSet->language = XCNLanguageObjectiveC;
                 break;
+            case '?':
+                if (error) {
+                    *error = XCNInvalidArgumentErrorCreateWithLongOption(argv[optind - 1]);
+                }
+                return NO;
             default:
                 if (error) {
-                    *error = XCNInvalidArgumentErrorMake(shortOption);
+                    *error = XCNInvalidArgumentErrorCreateWithShortOption(optopt);
                 }
                 return NO;
         }
@@ -66,7 +76,7 @@
     int numberOfRestArguments = argc - optind;
     if (numberOfRestArguments != 2) {
         if (error) {
-            *error = XCNWrongNumberOfArgumentsErrorMake(2, numberOfRestArguments);
+            *error = XCNWrongNumberOfArgumentsErrorCreateWithExpectation(2, numberOfRestArguments);
         }
         return NO;
     }

@@ -37,14 +37,14 @@
     IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
-            *error = XCNIDEFoundationInconsistencyErrorMake(@"A template kind with identifier '%@' not found.", kXcode3ProjectTemplateKindIdentifier);
+            *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"A template kind with identifier '%@' not found.", kXcode3ProjectTemplateKindIdentifier);
         }
         return NO;
     }
     IDETemplate *template = [self singleViewAppProjectTemplateForKind:kind];
     if (!template) {
         if (error) {
-            *error = XCNIDEFoundationInconsistencyErrorMake(@"A template for kind '%@' not found.", kind);
+            *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"A template for kind '%@' not found.", kind);
         }
         return NO;
     }

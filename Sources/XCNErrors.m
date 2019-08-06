@@ -14,7 +14,7 @@ NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 
 // MARK: Internal
 
-NSError *XCNIDEFoundationInconsistencyErrorMake(NSString *format, ...) {
+inline NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) {
     va_list args;
     va_start(args, format);
     NSString *localizedDescription = [[NSString alloc] initWithFormat:format arguments:args];
@@ -25,13 +25,19 @@ NSError *XCNIDEFoundationInconsistencyErrorMake(NSString *format, ...) {
     return [NSError errorWithDomain:XCNErrorDomain code:XCNIDEFoundationInconsistencyError userInfo:userInfo];
 }
 
-NSError *XCNInvalidArgumentErrorMake(char shortOption) {
-    NSString *localizedDescription = [NSString stringWithFormat:@"Invalid argument '%c'", shortOption];
+inline NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption) {
+    NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '-%c'.", shortOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];
 }
 
-NSError *XCNWrongNumberOfArgumentsErrorMake(int expected, int actual) {
+inline NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption) {
+    NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '%s'.", longOption];
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];
+}
+
+inline NSError *XCNWrongNumberOfArgumentsErrorCreateWithExpectation(int expected, int actual) {
     NSString *localizedDescription = [NSString stringWithFormat:@"Wrong number of arguments (%d for %d).", actual, expected];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNWrongNumberOfArgumentError userInfo:userInfo];

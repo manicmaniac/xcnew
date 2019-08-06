@@ -15,24 +15,32 @@
 
 @implementation XCNErrorsTests
 
-- (void)testXCNIDEFoundationInconsistencyErrorMake {
-    NSError *error = XCNIDEFoundationInconsistencyErrorMake(@"%@ %@ %@", @"foo", @"bar", @"baz");
+- (void)testXCNIDEFoundationInconsistencyErrorCreateWithFormat {
+    NSError *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"%@ %@ %@", @"foo", @"bar", @"baz");
     XCTAssertEqualObjects(XCNErrorDomain, error.domain);
     XCTAssertEqual(100, error.code);
     XCTAssertEqualObjects(@"foo bar baz", error.localizedDescription);
     XCTAssertEqualObjects(@"This error means Xcode changes interface to manipulate project files.", error.localizedFailureReason);
 }
 
-- (void)testXCNInvalidArgumentErrorMake {
-    NSError *error = XCNInvalidArgumentErrorMake('h');
+- (void)testXCNInvalidArgumentErrorCreateWithShortOption {
+    NSError *error = XCNInvalidArgumentErrorCreateWithShortOption('X');
     XCTAssertEqualObjects(XCNErrorDomain, error.domain);
     XCTAssertEqual(110, error.code);
-    XCTAssertEqualObjects(@"Invalid argument 'h'", error.localizedDescription);
+    XCTAssertEqualObjects(@"Unrecognized option '-X'.", error.localizedDescription);
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNWrongNumberOfArgumentsErrorMake {
-    NSError *error = XCNWrongNumberOfArgumentsErrorMake(2, 4);
+- (void)testXCNInvalidArgumentErrorCreateWithLongOption {
+    NSError *error = XCNInvalidArgumentErrorCreateWithLongOption("--invalid");
+    XCTAssertEqualObjects(XCNErrorDomain, error.domain);
+    XCTAssertEqual(110, error.code);
+    XCTAssertEqualObjects(@"Unrecognized option '--invalid'.", error.localizedDescription);
+    XCTAssertNil(error.localizedFailureReason);
+}
+
+- (void)testXCNWrongNumberOfArgumentsErrorCreateWithExpectation {
+    NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithExpectation(2, 4);
     XCTAssertEqualObjects(XCNErrorDomain, error.domain);
     XCTAssertEqual(111, error.code);
     XCTAssertEqualObjects(@"Wrong number of arguments (4 for 2).", error.localizedDescription);
