@@ -31,6 +31,7 @@ int main(int argc, char *const argv[]) {
                 [message appendFormat:@" %@", error.localizedFailureReason];
             }
             fprintf(stderr, "%s\n", message.UTF8String);
+            fflush(stderr);
             return (int)error.code;
         }
     }
