@@ -6,8 +6,6 @@
 //  Copyright © 2019 Ryosuke Ito. All rights reserved.
 //
 
-@import XCTest;
-
 #define XCNAssertFileExistsAtPath(path, ...) \
     do { \
         BOOL xcn_isDirectory = NO; \
