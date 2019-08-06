@@ -20,6 +20,7 @@ distclean:
 	$(RM) -R build
 
 $(PREFIX)/bin/xcnew: build/Release/xcnew
+	mkdir -p $(PREFIX)/bin
 	install $< $@
 
 build/Release/xcnew:
