@@ -99,6 +99,7 @@
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
     NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
     XCNAssertFileExistsAtPath(appDelegatePath);
+    XCNAssertFileContainsString(appDelegatePath, @"Example");
 }
 
 - (void)testExecuteWithAllValidArguments {
@@ -124,10 +125,7 @@
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
     NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
     XCNAssertFileExistsAtPath(appDelegatePath);
-    NSError *error = nil;
-    NSString *appDelegateSource = [NSString stringWithContentsOfFile:appDelegatePath encoding:NSUTF8StringEncoding error:&error];
-    XCTAssertNil(error);
-    XCTAssert([appDelegateSource containsString:@"Organization"]);
+    XCNAssertFileContainsString(appDelegatePath, @"Organization");
 }
 
 // MARK: Private
