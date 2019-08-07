@@ -5,7 +5,8 @@ BUILD_DIR ?= build
 
 all: build/Release/xcnew
 
-install: $(PREFIX)/bin/xcnew
+install:
+	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release install BUILD_DIR=$(BUILD_DIR) DSTROOT=$(PREFIX)
 
 uninstall:
 	$(RM) $(PREFIX)/bin/xcnew
@@ -18,10 +19,6 @@ clean:
 
 distclean:
 	$(RM) -R build
-
-$(PREFIX)/bin/xcnew: build/Release/xcnew
-	mkdir -p $(PREFIX)/bin
-	install $< $@
 
 build/Release/xcnew:
 	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release build BUILD_DIR=$(BUILD_DIR)

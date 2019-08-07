@@ -422,6 +422,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/PrivateHeaders",
 				);
+				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
@@ -444,6 +445,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/PrivateHeaders",
 				);
+				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
