@@ -4,10 +4,9 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-@import Foundation.NSObject;
+#import <Foundation/Foundation.h>
 
-@interface IDETemplateFactory : NSObject
-{
+@interface IDETemplateFactory : NSObject {
 }
 
 - (id)mainFileNameForContext:(id)arg1;
@@ -18,4 +17,3 @@
 - (BOOL)canInstantiateTemplateForContext:(id)arg1;
 
 @end
-

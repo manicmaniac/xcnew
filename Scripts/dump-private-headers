@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
+
+class-dump -H \
+           -C '^DVTFile(Path|SystemRepresentationProviding)$' \
+           -o 'PrivateHeaders/DVTFoundation' \
+           "$contents_dir/SharedFrameworks/DVTFoundation.framework"
+rm -f 'PrivateHeaders/DVTFoundation/NSString-DVTFileSystemRepresentationProviding.h'
+
+class-dump -H \
+           -C '^IDETemplate(|Factory|InstantiationContext|Kind|Option|OptionParent)$' \
+           -o 'PrivateHeaders/IDEFoundation' \
+           "$contents_dir/Frameworks/IDEFoundation.framework"
+rm -f 'PrivateHeaders/IDEFoundation/CDStructures.h'
+
+for filename in PrivateHeaders/*/*.h
+do
+    sed -i '' \
+         -e 's/^- (void)\.cxx_destruct;$//;
+             s/^#import <objc\/NSObject\.h>$/#import <Foundation\/Foundation.h>/;
+             s/unsigned long long hash;$/NSUInteger hash;/;
+             s/id \*_field2;$/__unsafe_unretained id *_field2;/;
+             s/^#import "NS.*$//;' \
+         "$filename"
+done
+
+sed -i '' -e '7i\
+#import <os/lock.h>' PrivateHeaders/DVTFoundation/DVTFilePath.h
+
+sed -i '' -e '7i\
+#import "CDStructures.h"' PrivateHeaders/DVTFoundation/DVTFilePath.h \
+                          PrivateHeaders/IDEFoundation/IDETemplate.h \
+                          PrivateHeaders/IDEFoundation/IDETemplateFactory.h
+
+find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} \;

@@ -4,13 +4,12 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-@import Foundation.NSObject;
+
 
 @class IDETemplateOption, IDEWorkspace, NSString;
 
-@protocol IDETemplateOptionParent <NSObject>
-@property(retain, nonatomic) IDEWorkspace *workspace;
-@property(readonly, copy) NSString *identifier;
+@protocol IDETemplateOptionParent<NSObject>
+@property (retain, nonatomic) IDEWorkspace *workspace;
+@property (readonly, copy) NSString *identifier;
 - (void)valueDidChangeForOption:(IDETemplateOption *)arg1;
 @end
-

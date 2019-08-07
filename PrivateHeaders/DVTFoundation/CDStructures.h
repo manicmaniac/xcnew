@@ -44,7 +44,7 @@ typedef struct {
 
 typedef struct {
     struct _NSRange range;
-    unsigned long long hash;
+    NSUInteger hash;
     unsigned long long type;
 } CDStruct_3dd9eb72;
 
@@ -58,4 +58,3 @@ typedef union {
     } independent;
     unsigned long long combined;
 } CDUnion_7de6e739;
-
