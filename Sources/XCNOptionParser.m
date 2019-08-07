@@ -112,7 +112,11 @@
          "    -t, --has-unit-tests           Enable unit tests\n"
          "    -u, --has-ui-tests             Enable UI tests\n"
          "    -c, --use-core-data            Enable Core Data template\n"
-         "    -o, --objc                     Use Objective-C (default: Swift)");
+         "    -o, --objc                     Use Objective-C (default: Swift)\n"
+         "\n"
+         "Arguments:\n"
+         "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
+         "    [OUTPUT_DIR]                   Optional directory name of the project");
 }
 
 - (void)showVersion {
