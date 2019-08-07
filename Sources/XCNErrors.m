@@ -37,8 +37,14 @@ inline NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOpti
     return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];
 }
 
-inline NSError *XCNWrongNumberOfArgumentsErrorCreateWithExpectation(int expected, int actual) {
-    NSString *localizedDescription = [NSString stringWithFormat:@"Wrong number of arguments (%d for %d).", actual, expected];
+inline NSError *XCNWrongNumberOfArgumentsErrorCreateWithRange(NSRange acceptableRange, int actual) {
+    NSString *expected;
+    if (acceptableRange.length == 0) {
+        expected = [NSString stringWithFormat:@"%lu", acceptableRange.location];
+    } else {
+        expected = [NSString stringWithFormat:@"%lu..%lu", acceptableRange.location, NSMaxRange(acceptableRange)];
+    }
+    NSString *localizedDescription = [NSString stringWithFormat:@"Wrong number of arguments (%d for %@).", actual, expected];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNWrongNumberOfArgumentError userInfo:userInfo];
 }

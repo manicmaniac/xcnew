@@ -49,14 +49,7 @@
     NSString *stdoutString = nil, *stderrString = nil;
     XCTAssertEqual(111, [self runWithArguments:@[] standardOutput:&stdoutString standardError:&stderrString]);
     XCTAssertEqualObjects(@"", stdoutString);
-    XCTAssertEqualObjects(@"xcnew: Wrong number of arguments (0 for 2).\n", stderrString);
-}
-
-- (void)testRunWithShortNumberOfArguments {
-    NSString *stdoutString = nil, *stderrString = nil;
-    XCTAssertEqual(111, [self runWithArguments:@[ @"Example" ] standardOutput:&stdoutString standardError:&stderrString]);
-    XCTAssertEqualObjects(@"", stdoutString);
-    XCTAssertEqualObjects(@"xcnew: Wrong number of arguments (1 for 2).\n", stderrString);
+    XCTAssertEqualObjects(@"xcnew: Wrong number of arguments (0 for 1..2).\n", stderrString);
 }
 
 - (void)testRunWithInvalidShortOptionArguments {
@@ -89,8 +82,8 @@
 
 - (void)testExecuteWithMinimalValidArguments {
     NSString *stdoutString = nil;
-    NSString *path = @"./Example/../Example/";
-    NSArray *arguments = @[ @"Example", path ];
+    NSString *path = @"Example";
+    NSArray *arguments = @[ @"Example" ];
     XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
     XCTAssertEqualObjects(@"", stdoutString);
     XCNAssertDirectoryExistsAtPath(path);
@@ -108,15 +101,16 @@
 
 - (void)testExecuteWithAllValidArguments {
     NSString *stdoutString = nil;
-    NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Example"];
+    NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
                             @"--has-unit-tests",
                             @"--has-ui-tests",
                             @"--use-core-data",
                             @"--", // GNU style option scanning terminator
-                            @"Example",
+                            @"ProductName",
                             path ];
+    path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
     XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
     XCTAssertEqualObjects(@"", stdoutString);
     XCNAssertDirectoryExistsAtPath(path);

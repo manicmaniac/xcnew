@@ -74,14 +74,22 @@
         }
     }
     int numberOfRestArguments = argc - optind;
-    if (numberOfRestArguments != 2) {
-        if (error) {
-            *error = XCNWrongNumberOfArgumentsErrorCreateWithExpectation(2, numberOfRestArguments);
-        }
-        return NO;
+    switch (numberOfRestArguments) {
+        case 2:
+            optionSet->productName = @(argv[optind]);
+            optionSet->outputPath = @(argv[optind + 1]);
+            break;
+        case 1:
+            optionSet->productName = @(argv[optind]);
+            optionSet->outputPath = optionSet->productName;
+            break;
+        default:
+            if (error) {
+                NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
+                *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
+            }
+            return NO;
     }
-    optionSet->productName = @(argv[optind]);
-    optionSet->outputPath = @(argv[optind + 1]);
     return YES;
 }
 
@@ -94,7 +102,7 @@
 - (void)showHelp {
     puts("xcnew - A command line tool to create Xcode project.\n"
          "\n"
-         "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> <OUTPUT_DIR>\n"
+         "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> [OUTPUT_DIR]\n"
          "\n"
          "Options:\n"
          "    -h, --help                     Show this help and exit\n"

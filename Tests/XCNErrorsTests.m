@@ -39,11 +39,12 @@
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNWrongNumberOfArgumentsErrorCreateWithExpectation {
-    NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithExpectation(2, 4);
+- (void)testXCNWrongNumberOfArgumentsErrorCreateWithRange {
+    NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
+    NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, 4);
     XCTAssertEqualObjects(XCNErrorDomain, error.domain);
     XCTAssertEqual(111, error.code);
-    XCTAssertEqualObjects(@"Wrong number of arguments (4 for 2).", error.localizedDescription);
+    XCTAssertEqualObjects(@"Wrong number of arguments (4 for 1..2).", error.localizedDescription);
     XCTAssertNil(error.localizedFailureReason);
 }
 
