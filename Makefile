@@ -17,7 +17,7 @@ check:
 clean:
 	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release clean BUILD_DIR=$(BUILD_DIR)
 
-distclean:
+distclean: clean
 	$(RM) -R build
 
 build/Release/xcnew:
