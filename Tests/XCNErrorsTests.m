@@ -6,7 +6,7 @@
 //  Copyright © 2019 Ryosuke Ito. All rights reserved.
 //
 
-@import XCTest;
+#import <XCTest/XCTest.h>
 
 #import "XCNErrorsInternal.h"
 

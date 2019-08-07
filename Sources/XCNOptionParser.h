@@ -6,7 +6,7 @@
 //  Copyright © 2019 Ryosuke Ito. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 #import "XCNLanguage.h"
 #import "XCNMacroDefinitions.h"
