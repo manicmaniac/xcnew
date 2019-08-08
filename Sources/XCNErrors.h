@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 XCN_EXTERN NSErrorDomain const XCNErrorDomain;
 
-typedef NS_ENUM(NSUInteger, XCNErrorCode) {
+typedef NS_ERROR_ENUM(XCNErrorDomain, XCNError) {
     XCNIDEFoundationInconsistencyError = 100,
     XCNInvalidArgumentError = 110,
     XCNWrongNumberOfArgumentError = 111,
