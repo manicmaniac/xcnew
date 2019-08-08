@@ -12,6 +12,13 @@
 
 #import <getopt.h>
 
+static void XCNOptionSetInitialize(XCNOptionSet *optionSet) {
+    memset((void *)optionSet, 0, sizeof(*optionSet));
+    optionSet->language = XCNLanguageSwift;
+}
+
+// MARK: -
+
 @implementation XCNOptionParser
 
 // MARK: Public
@@ -33,7 +40,7 @@
 - (BOOL)parseArguments:(char *const _Nullable *)argv count:(int)argc optionSet:(out XCNOptionSet *)optionSet error:(NSError *_Nullable __autoreleasing *)error {
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
-    [self configureDefaultOptionSet:optionSet];
+    XCNOptionSetInitialize(optionSet);
     int shortOption;
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
         switch (shortOption) {
@@ -94,10 +101,6 @@
 }
 
 // MARK: Private
-
-- (void)configureDefaultOptionSet:(out XCNOptionSet *)optionSet {
-    optionSet->language = XCNLanguageSwift;
-}
 
 - (void)showHelp {
     puts("xcnew - A command line tool to create Xcode project.\n"
