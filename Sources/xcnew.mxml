@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<manpage>
+  <docdate>August 10, 2019</docdate>
+  <doctitle>XCNEW</doctitle>
+  <os>Darwin</os>
+  <section>1</section>
+  <names>
+    <name>xcnew<desc>A command line interface to make a project for iOS Single View App.</desc></name>
+  </names>
+  <usage>
+    <flag optional="1">h|--help<desc>Show help and exit</desc></flag>
+    <flag optional="1">v|--version<desc>Show version and exit</desc></flag>
+    <flag optional="1">n|--organization-name<arg>ORG_NAME</arg><desc>Specify organization's name</desc></flag>
+    <flag optional="1">i|--organization-identifier<arg>ORG_ID</arg><desc>Specify organization's identifier</desc></flag>
+    <flag optional="1">t|--has-unit-tests<desc>Enable unit tests</desc></flag>
+    <flag optional="1">u|--has-ui-tests<desc>Enable UI tests</desc></flag>
+    <arg>PRODUCT_NAME<desc>Required TARGET_NAME of project.pbxproj</desc></arg>
+    <arg optional="1">OUTPUT_DIR<desc>Optional directory name of the project</desc></arg>
+  </usage>
+  <diagnostics>
+    <p>The <command>xcnew</command> command returns 0 on success, others on failure.</p>
+  </diagnostics>
+  <environment>
+    <dl>
+      <dt>DEVELOPER_DIR</dt>
+      <dd>Overrides the active developer directory. See documentation for <b>xcode-select(1)</b>.</dd>
+    </dl>
+  </environment>
+  <seealso>
+    <manpage>xcode-select<section>1</section>, </manpage>
+    <manpage>xcodebuild<section>1</section></manpage>
+  </seealso>
+  <bugs>
+    <p>Since <command>xcnew</command> is depends on Xcode private frameworks, it cannot work as expected when the path of Xcode has been changed since it was built.</p>
+  </bugs>
+</manpage>
