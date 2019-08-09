@@ -9,10 +9,10 @@ install:
 	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release install BUILD_DIR=$(BUILD_DIR) DSTROOT=$(PREFIX)
 
 uninstall:
-	$(RM) $(PREFIX)/bin/xcnew
+	$(RM) $(PREFIX)/bin/xcnew $(PREFIX)/share/man/man1/xcnew.1
 
 check:
-	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Debug test BUILD_DIR=$(BUILD_DIR)
+	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release test BUILD_DIR=$(BUILD_DIR)
 
 clean:
 	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release clean BUILD_DIR=$(BUILD_DIR)
