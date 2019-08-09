@@ -25,6 +25,7 @@ static void XCNOptionSetInitialize(XCNOptionSet *optionSet) {
 
 + (void)initialize {
     [super initialize];
+    NSAssert(self == [XCNOptionParser class], @"XCNOptionParser mustn't be inherited.");
     opterr = 0;
 }
 

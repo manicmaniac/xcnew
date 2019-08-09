@@ -22,7 +22,9 @@
 
 + (void)initialize {
     [super initialize];
-    IDEInitialize(1, NULL);
+    if (self == [XCNProject self]) {
+        IDEInitialize(1, NULL);
+    }
 }
 
 - (instancetype)initWithProductName:(NSString *)productName {
