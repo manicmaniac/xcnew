@@ -28,6 +28,7 @@
 }
 
 - (instancetype)initWithProductName:(NSString *)productName {
+    NSParameterAssert(productName != nil);
     self = [super init];
     if (self) {
         _productName = [productName copy];
@@ -36,6 +37,7 @@
 }
 
 - (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error {
+    NSParameterAssert(path != nil);
     if (!path.isAbsolutePath) {
         path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
     }
@@ -86,6 +88,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 }
 
 - (void)configureTemplateOptions:(NSArray<IDETemplateOption *> *)options {
+    NSParameterAssert(options != nil);
     for (IDETemplateOption *option in options) {
         NSString *identifier = option.identifier;
         if ([identifier isEqualToString:@"languageChoice"]) {

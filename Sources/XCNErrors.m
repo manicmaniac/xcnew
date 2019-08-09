@@ -15,6 +15,7 @@ NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 // MARK: Internal
 
 inline NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) {
+    NSCParameterAssert(format != nil);
     va_list args;
     va_start(args, format);
     NSString *localizedDescription = [[NSString alloc] initWithFormat:format arguments:args];
@@ -32,6 +33,7 @@ inline NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption) {
 }
 
 inline NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption) {
+    NSCParameterAssert(longOption != nil);
     NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '%s'.", longOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];

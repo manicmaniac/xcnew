@@ -13,6 +13,7 @@
 #import <getopt.h>
 
 static void XCNOptionSetInitialize(XCNOptionSet *optionSet) {
+    NSCParameterAssert(optionSet != nil);
     memset((void *)optionSet, 0, sizeof(*optionSet));
     optionSet->language = XCNLanguageSwift;
 }
@@ -39,6 +40,9 @@ static void XCNOptionSetInitialize(XCNOptionSet *optionSet) {
 }
 
 - (BOOL)parseArguments:(char *const _Nullable *)argv count:(int)argc optionSet:(out XCNOptionSet *)optionSet error:(NSError *_Nullable __autoreleasing *)error {
+    NSParameterAssert(argv != nil);
+    NSParameterAssert(argc > 0);
+    NSParameterAssert(optionSet != nil);
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
     XCNOptionSetInitialize(optionSet);
