@@ -8,7 +8,12 @@ A command line interface to make a project for iOS Single View App.
 Install
 -------
 
-Good old `make install` creates `/usr/local/bin/xcnew` command.
+You can install `xcnew` via [Homebrew](https://brew.sh).
+
+    brew tap manicmaniac/tap
+    brew install
+
+Otherwise good old `make install` creates `/usr/local/bin/xcnew` command.
 You may need to use `sudo` to run `make install`.
 
     make install
