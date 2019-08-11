@@ -13,16 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef struct {
-    NSString *productName;
-    NSString *_Nullable organizationName;
-    NSString *_Nullable organizationIdentifier;
-    BOOL hasUnitTests;
-    BOOL hasUITests;
-    BOOL useCoreData;
-    XCNLanguage language;
-    NSString *outputPath;
-} XCNOptionSet;
+@class XCNOptionSet;
 
 XCN_FINAL_CLASS
 @interface XCNOptionParser : NSObject
@@ -31,7 +22,7 @@ XCN_FINAL_CLASS
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
-- (BOOL)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc optionSet:(out XCNOptionSet *)optionSet error:(NSError *__autoreleasing _Nullable *)error;
+- (nullable XCNOptionSet *)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc error:(NSError *__autoreleasing _Nullable *)error;
 
 @end
 

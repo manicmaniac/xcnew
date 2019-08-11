@@ -9,14 +9,10 @@
 #import "XCNOptionParser.h"
 #import "XCNErrorsInternal.h"
 #import "XCNMacroDefinitions.h"
+#import "XCNOptionSet.h"
 
 #import <getopt.h>
 
-static void XCNOptionSetInitialize(XCNOptionSet *optionSet) {
-    NSCParameterAssert(optionSet != nil);
-    memset((void *)optionSet, 0, sizeof(*optionSet));
-    optionSet->language = XCNLanguageSwift;
-}
 
 // MARK: -
 
@@ -39,70 +35,69 @@ static void XCNOptionSetInitialize(XCNOptionSet *optionSet) {
     return instance;
 }
 
-- (BOOL)parseArguments:(char *const _Nullable *)argv count:(int)argc optionSet:(out XCNOptionSet *)optionSet error:(NSError *_Nullable __autoreleasing *)error {
+- (nullable XCNOptionSet *)parseArguments:(char *const _Nullable *)argv count:(int)argc error:(NSError *_Nullable __autoreleasing *)error {
     NSParameterAssert(argv != nil);
     NSParameterAssert(argc > 0);
-    NSParameterAssert(optionSet != nil);
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
-    XCNOptionSetInitialize(optionSet);
+    XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
     int shortOption;
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
         switch (shortOption) {
             case 'h':
                 [self showHelp];
-                return NO;
+                return nil;
             case 'v':
                 [self showVersion];
-                return NO;
+                return nil;
             case 'n':
-                optionSet->organizationName = @(optarg);
+                optionSet.organizationName = @(optarg);
                 break;
             case 'i':
-                optionSet->organizationIdentifier = @(optarg);
+                optionSet.organizationIdentifier = @(optarg);
                 break;
             case 't':
-                optionSet->hasUnitTests = YES;
+                optionSet.hasUnitTests = YES;
                 break;
             case 'u':
-                optionSet->hasUITests = YES;
+                optionSet.hasUITests = YES;
                 break;
             case 'c':
-                optionSet->useCoreData = YES;
+                optionSet.useCoreData = YES;
                 break;
             case 'o':
-                optionSet->language = XCNLanguageObjectiveC;
+                optionSet.language = XCNLanguageObjectiveC;
                 break;
             case '?':
                 if (error) {
                     *error = XCNInvalidArgumentErrorCreateWithLongOption(argv[optind - 1]);
                 }
-                return NO;
+                return nil;
             default:
                 if (error) {
                     *error = XCNInvalidArgumentErrorCreateWithShortOption(optopt);
                 }
-                return NO;
+                return nil;
         }
     }
     int numberOfRestArguments = argc - optind;
     switch (numberOfRestArguments) {
         case 2:
-            optionSet->productName = @(argv[optind]);
-            optionSet->outputPath = @(argv[optind + 1]);
+            optionSet.productName = @(argv[optind]);
+            optionSet.outputPath = @(argv[optind + 1]);
             break;
         case 1:
-            optionSet->productName = @(argv[optind]);
-            optionSet->outputPath = optionSet->productName;
+            optionSet.productName = @(argv[optind]);
+            optionSet.outputPath = optionSet.productName;
             break;
         default:
             if (error) {
                 NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
                 *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
             }
-            return NO;
+            return nil;
     }
-    return YES;
+    return optionSet;
 }
 
 // MARK: Private
