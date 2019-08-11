@@ -10,7 +10,4 @@ matrix:
   - osx_image: xcode10.2
   - osx_image: xcode10.1
 
-script:
-  - make check
-  - make install
-  - make uninstall
+after_script: make install
