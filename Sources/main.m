@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "XCNErrors.h"
 #import "XCNOptionParser.h"
+#import "XCNOptionSet.h"
 #import "XCNProject.h"
 
 int main(int argc, char *const argv[]) {
     @autoreleasepool {
-        XCNOptionSet optionSet;
         NSError *error = nil;
-        if ([XCNOptionParser.sharedOptionParser parseArguments:argv count:argc optionSet:&optionSet error:&error]) {
+        XCNOptionSet *optionSet = [XCNOptionParser.sharedOptionParser parseArguments:argv count:argc error:&error];
+        if (optionSet) {
             XCNProject *project = [[XCNProject alloc] initWithProductName:optionSet.productName];
             project.organizationName = optionSet.organizationName;
             project.organizationIdentifier = optionSet.organizationIdentifier;
