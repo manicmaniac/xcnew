@@ -11,7 +11,6 @@ matrix:
   - osx_image: xcode10.1
 
 script:
-  - |
-    make check
-    make install
-    make uninstall
+  - make check
+  - make install
+  - make uninstall
