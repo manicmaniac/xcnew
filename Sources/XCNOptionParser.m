@@ -13,9 +13,6 @@
 
 #import <getopt.h>
 
-
-// MARK: -
-
 @implementation XCNOptionParser
 
 // MARK: Public
