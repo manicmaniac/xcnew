@@ -14,6 +14,13 @@ NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 
 // MARK: Internal
 
+inline NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path) {
+    NSCParameterAssert(path != nil);
+    NSString *localizedDescription = [NSString stringWithFormat:@"Cannot write at path '%@'.", path];
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNFileWriteUnknownError userInfo:userInfo];
+}
+
 inline NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) {
     NSCParameterAssert(format != nil);
     va_list args;

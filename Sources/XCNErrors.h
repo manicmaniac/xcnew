@@ -16,10 +16,11 @@ XCN_EXTERN NSErrorDomain const XCNErrorDomain;
 
 // clang-format off
 typedef NS_ERROR_ENUM(XCNErrorDomain, XCNError) {
+    XCNFileWriteUnknownError = 1,
     XCNIDEFoundationInconsistencyError = 100,
     XCNInvalidArgumentError = 110,
     XCNWrongNumberOfArgumentError = 111,
-    XCNUnknownError = 128
+    XCNUnknownError = 125
 };
 // clang-format on
 

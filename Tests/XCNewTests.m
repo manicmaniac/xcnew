@@ -126,6 +126,28 @@
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
 }
 
+- (void)testExecuteWithInaccessiblePath {
+    NSString *stdoutString = nil;
+    NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Inaccessible"];
+    NSError *error = nil;
+    if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error]) {
+        return XCTFail(@"%@", error);
+    }
+    if (![_fileManager setAttributes:@{NSFileImmutable : @YES} ofItemAtPath:path error:&error]) {
+        return XCTFail(@"%@", error);
+    }
+    NSArray *arguments = @[ @"ProductName", path ];
+    XCTAssertEqual(1, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
+    XCTAssertEqualObjects(@"", stdoutString);
+    XCNAssertDirectoryExistsAtPath(path);
+    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Inaccessible.xcodeproj/project.pbxproj"]);
+    if (![_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:path error:&error]) {
+        XCTFail(@"%@", error);
+    }
+}
+
 // MARK: Private
 
 - (int)runWithArguments:(NSArray<NSString *> *)arguments standardOutput:(NSString **)stdoutString standardError:(NSString **)stderrString {

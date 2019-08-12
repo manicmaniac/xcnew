@@ -38,10 +38,16 @@
 
 - (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error {
     NSParameterAssert(path != nil);
-    if (!path.isAbsolutePath) {
-        path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
+    path = [self absolutePathForPath:path];
+    if (![NSFileManager.defaultManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error]) {
+        return NO;
     }
-    path = path.stringByStandardizingPath;
+    if (![NSFileManager.defaultManager isWritableFileAtPath:path]) {
+        if (error) {
+            *error = XCNFileWriteUnknownErrorCreateWithPath(path);
+        }
+        return NO;
+    }
     IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
@@ -85,6 +91,13 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
         }
     }
     return nil;
+}
+
+- (NSString *)absolutePathForPath:(NSString *)path {
+    if (!path.isAbsolutePath) {
+        path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path];
+    }
+    return path.stringByStandardizingPath;
 }
 
 - (void)configureTemplateOptions:(NSArray<IDETemplateOption *> *)options {
