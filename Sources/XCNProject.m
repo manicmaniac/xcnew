@@ -7,7 +7,6 @@
 //
 
 #import "XCNProject.h"
-#import "XCNErrorsInternal.h"
 
 #import <DVTFoundation/DVTFilePath.h>
 #import <IDEFoundation/IDETemplate.h>
@@ -15,6 +14,7 @@
 #import <IDEFoundation/IDETemplateInstantiationContext.h>
 #import <IDEFoundation/IDETemplateKind.h>
 #import <IDEFoundation/IDETemplateOption.h>
+#import "XCNErrorsInternal.h"
 
 @implementation XCNProject
 

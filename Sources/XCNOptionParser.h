@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "XCNLanguage.h"
 #import "XCNMacroDefinitions.h"
 

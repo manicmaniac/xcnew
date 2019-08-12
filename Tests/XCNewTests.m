@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-
 #import "XCNTestAssertions.h"
 
 @interface XCNewTests : XCTestCase

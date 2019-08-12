@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-
 #import "XCNErrorsInternal.h"
 
 @interface XCNErrorsTests : XCTestCase

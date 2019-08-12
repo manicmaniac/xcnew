@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "XCNMacroDefinitions.h"
 
 NS_ASSUME_NONNULL_BEGIN

@@ -7,11 +7,11 @@
 //
 
 #import "XCNOptionParser.h"
+
+#import <getopt.h>
 #import "XCNErrorsInternal.h"
 #import "XCNMacroDefinitions.h"
 #import "XCNOptionSet.h"
-
-#import <getopt.h>
 
 @implementation XCNOptionParser
 
