@@ -24,6 +24,8 @@
     <dl>
       <dt>DEVELOPER_DIR</dt>
       <dd>Overrides the active developer directory. See documentation for <b>xcode-select(1)</b>.</dd>
+      <dt>DVTSDKLogLevel</dt>
+      <dd>Set log level for Xcode private frameworks (default 1).</dd>
     </dl>
   </environment>
   <seealso>
