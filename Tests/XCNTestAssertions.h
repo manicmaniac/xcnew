@@ -6,6 +6,9 @@
 //  Copyright © 2019 Ryosuke Ito. All rights reserved.
 //
 
+#ifndef XCNTestAssertions_h
+#define XCNTestAssertions_h
+
 #define XCNAssertFileExistsAtPath(path, ...) \
     do { \
         BOOL xcn_isDirectory = NO; \
@@ -28,3 +31,5 @@
         XCTAssertNil(xcn_error); \
         XCTAssert([xcn_contents containsString:string], __VA_ARGS__); \
     } while (0)
+
+#endif /* XCNTestAssertions_h */
