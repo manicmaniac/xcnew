@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *productName;
 @property (nonatomic, copy, nullable) NSString *organizationName;
 @property (nonatomic, copy, nullable) NSString *organizationIdentifier;
-@property (nonatomic, assign) BOOL hasUnitTests;
-@property (nonatomic, assign) BOOL hasUITests;
-@property (nonatomic, assign) BOOL useCoreData;
-@property (nonatomic, assign) XCNLanguage language;
+@property (nonatomic) BOOL hasUnitTests;
+@property (nonatomic) BOOL hasUITests;
+@property (nonatomic) BOOL useCoreData;
+@property (nonatomic) XCNLanguage language;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
