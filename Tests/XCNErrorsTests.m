@@ -14,6 +14,14 @@
 
 @implementation XCNErrorsTests
 
+- (void)testXCNFileWriteUnknownErrorCreateWithPath {
+    NSError *error = XCNFileWriteUnknownErrorCreateWithPath(@"/path/to/file");
+    XCTAssertEqualObjects(XCNErrorDomain, error.domain);
+    XCTAssertEqual(1, error.code);
+    XCTAssertEqualObjects(@"Cannot write at path '/path/to/file'.", error.localizedDescription);
+    XCTAssertNil(error.localizedFailureReason);
+}
+
 - (void)testXCNIDEFoundationInconsistencyErrorCreateWithFormat {
     NSError *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"%@ %@ %@", @"foo", @"bar", @"baz");
     XCTAssertEqualObjects(XCNErrorDomain, error.domain);

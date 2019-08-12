@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+XCN_EXTERN NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path);
 XCN_EXTERN NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) NS_FORMAT_FUNCTION(1, 2);
 XCN_EXTERN NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption);
 XCN_EXTERN NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption);
