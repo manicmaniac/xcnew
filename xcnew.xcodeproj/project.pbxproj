@@ -114,11 +114,7 @@
 		5B1F0F3A22F7A2BA00A7AFFA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
-				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
-				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
-				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
-				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
+				5BB4F7112301B93F000BBD00 /* xcnew-tests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -127,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				5B20A2F022F0BB0300EA7295 /* Sources */,
-				5B20A2FA22F0BC1900EA7295 /* PrivateHeaders */,
 				5B1F0F3A22F7A2BA00A7AFFA /* Tests */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
 				5B20ADE022F0BDBA00EA7295 /* Frameworks */,
@@ -147,30 +142,9 @@
 		5B20A2F022F0BB0300EA7295 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5B20AFC422F74B7300EA7295 /* XCNErrors.h */,
-				5B20AFC722F74CCB00EA7295 /* XCNErrorsInternal.h */,
-				5B20AFC522F74B7300EA7295 /* XCNErrors.m */,
-				5B20AFD522F7599700EA7295 /* XCNLanguage.h */,
-				5B1F0F5722F88EE700A7AFFA /* XCNMacroDefinitions.h */,
-				5B20AFCC22F7567C00EA7295 /* XCNOptionParser.h */,
-				5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */,
-				5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */,
-				5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */,
-				5B20AFBE22F7437700EA7295 /* XCNProject.h */,
-				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
-				5B20A2F822F0BB8500EA7295 /* main.m */,
-				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
+				5BB4F70F2301B917000BBD00 /* xcnew */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		5B20A2FA22F0BC1900EA7295 /* PrivateHeaders */ = {
-			isa = PBXGroup;
-			children = (
-				5B20AFB922F73E2000EA7295 /* DVTFoundation */,
-				5B20AFAC22F73DDB00EA7295 /* IDEFoundation */,
-			);
-			path = PrivateHeaders;
 			sourceTree = "<group>";
 		};
 		5B20ADE022F0BDBA00EA7295 /* Frameworks */ = {
@@ -203,6 +177,48 @@
 				5B20AFBB22F73E5E00EA7295 /* DVTFileSystemRepresentationProviding-Protocol.h */,
 			);
 			path = DVTFoundation;
+			sourceTree = "<group>";
+		};
+		5BB4F70F2301B917000BBD00 /* xcnew */ = {
+			isa = PBXGroup;
+			children = (
+				5BB4F7102301B92A000BBD00 /* include */,
+				5B20AFC422F74B7300EA7295 /* XCNErrors.h */,
+				5B20AFC722F74CCB00EA7295 /* XCNErrorsInternal.h */,
+				5B20AFC522F74B7300EA7295 /* XCNErrors.m */,
+				5B20AFD522F7599700EA7295 /* XCNLanguage.h */,
+				5B1F0F5722F88EE700A7AFFA /* XCNMacroDefinitions.h */,
+				5B20AFCC22F7567C00EA7295 /* XCNOptionParser.h */,
+				5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */,
+				5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */,
+				5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */,
+				5B20AFBE22F7437700EA7295 /* XCNProject.h */,
+				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
+				5B20A2F822F0BB8500EA7295 /* main.m */,
+				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
+			);
+			path = xcnew;
+			sourceTree = "<group>";
+		};
+		5BB4F7102301B92A000BBD00 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				5B20AFB922F73E2000EA7295 /* DVTFoundation */,
+				5B20AFAC22F73DDB00EA7295 /* IDEFoundation */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		5BB4F7112301B93F000BBD00 /* xcnew-tests */ = {
+			isa = PBXGroup;
+			children = (
+				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
+				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
+				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
+				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
+				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
+			);
+			path = "xcnew-tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,7 +329,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -329,7 +345,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -467,7 +483,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
+					"$(SRCROOT)/Sources/xcnew/include",
 				);
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -490,7 +506,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
+					"$(SRCROOT)/Sources/xcnew/include",
 				);
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
