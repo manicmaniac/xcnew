@@ -10,8 +10,7 @@ Install
 
 You can install `xcnew` via [Homebrew](https://brew.sh).
 
-    brew tap manicmaniac/tap
-    brew install
+    brew install manicmaniac/tap/xcnew
 
 Otherwise good old `make install` creates `/usr/local/bin/xcnew` command.
 You may need to use `sudo` to run `make install`.
