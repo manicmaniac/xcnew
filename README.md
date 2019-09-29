@@ -42,10 +42,15 @@ Usage
         <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj
         [OUTPUT_DIR]                   Optional directory name of the project
 
-How it works
-------------
+How it works?
+-------------
 
-Just by using Xcode private frameworks, `IDEFoundation` and `Xcode3Core`.
+Just by reverse engineering and utilizing Xcode private frameworks, `IDEFoundation` and `Xcode3Core`.
+
+Why not Swift but Objective-C?
+------------------------------
+
+Simply too difficult to implement this kind of magic in Swift.
 
 License
 -------
