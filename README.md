@@ -1,6 +1,8 @@
 xcnew
 =====
 
+[![Actions Status](https://github.com/manicmaniac/xcnew/workflows/CI/badge.svg)](https://github.com/manicmaniac/xcnew/actions)
+
 A command line interface to make a project for iOS Single View App.
 
 Install
