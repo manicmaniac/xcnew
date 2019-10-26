@@ -33,7 +33,7 @@
 }
 
 - (nullable XCNOptionSet *)parseArguments:(char *const _Nullable *)argv count:(int)argc error:(NSError *_Nullable __autoreleasing *)error {
-    NSParameterAssert(argv != nil);
+    NSParameterAssert(argv != NULL);
     NSParameterAssert(argc > 0);
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
