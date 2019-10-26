@@ -40,7 +40,7 @@ inline NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption) {
 }
 
 inline NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption) {
-    NSCParameterAssert(longOption != nil);
+    NSCParameterAssert(longOption != NULL);
     NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '%s'.", longOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];
