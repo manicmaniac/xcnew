@@ -46,45 +46,45 @@
 
 - (void)testRunWithNoArguments {
     NSString *stdoutString = nil, *stderrString = nil;
-    XCTAssertEqual(111, [self runWithArguments:@[] standardOutput:&stdoutString standardError:&stderrString]);
-    XCTAssertEqualObjects(@"", stdoutString);
-    XCTAssertEqualObjects(@"xcnew: Wrong number of arguments (0 for 1..2).\n", stderrString);
+    XCTAssertEqual([self runWithArguments:@[] standardOutput:&stdoutString standardError:&stderrString], 111);
+    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqualObjects(stderrString, @"xcnew: Wrong number of arguments (0 for 1..2).\n");
 }
 
 - (void)testRunWithInvalidShortOptionArguments {
     NSString *stdoutString = nil, *stderrString = nil;
-    XCTAssertEqual(110, [self runWithArguments:@[ @"-X" ] standardOutput:&stdoutString standardError:&stderrString]);
-    XCTAssertEqualObjects(@"", stdoutString);
-    XCTAssertEqualObjects(@"xcnew: Unrecognized option '-X'.\n", stderrString);
+    XCTAssertEqual([self runWithArguments:@[ @"-X" ] standardOutput:&stdoutString standardError:&stderrString], 110);
+    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqualObjects(stderrString, @"xcnew: Unrecognized option '-X'.\n");
 }
 
 - (void)testRunWithInvalidLongOptionArguments {
     NSString *stdoutString = nil, *stderrString = nil;
-    XCTAssertEqual(110, [self runWithArguments:@[ @"--invalid" ] standardOutput:&stdoutString standardError:&stderrString]);
-    XCTAssertEqualObjects(@"", stdoutString);
-    XCTAssertEqualObjects(@"xcnew: Unrecognized option '--invalid'.\n", stderrString);
+    XCTAssertEqual([self runWithArguments:@[ @"--invalid" ] standardOutput:&stdoutString standardError:&stderrString], 110);
+    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqualObjects(stderrString, @"xcnew: Unrecognized option '--invalid'.\n");
 }
 
 - (void)testRunWithHelp {
     NSString *stdoutString = nil, *stderrString = nil;
-    XCTAssertEqual(0, [self runWithArguments:@[ @"-h" ] standardOutput:&stdoutString standardError:&stderrString]);
+    XCTAssertEqual([self runWithArguments:@[ @"-h" ] standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertTrue([stdoutString containsString:@"Usage"]);
-    XCTAssertEqualObjects(@"", stderrString);
+    XCTAssertEqualObjects(stderrString, @"");
 }
 
 - (void)testRunWithVersion {
     NSString *stdoutString = nil, *stderrString = nil;
-    XCTAssertEqual(0, [self runWithArguments:@[ @"-v" ] standardOutput:&stdoutString standardError:&stderrString]);
+    XCTAssertEqual([self runWithArguments:@[ @"-v" ] standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertTrue([stdoutString containsString:@"."]);
-    XCTAssertEqualObjects(@"", stderrString);
+    XCTAssertEqualObjects(stderrString, @"");
 }
 
 - (void)testExecuteWithMinimalValidArguments {
     NSString *stdoutString = nil;
     NSString *path = @"Example";
     NSArray *arguments = @[ @"Example" ];
-    XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
-    XCTAssertEqualObjects(@"", stdoutString);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
@@ -110,8 +110,8 @@
                             @"ProductName",
                             path ];
     path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
-    XCTAssertEqual(0, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
-    XCTAssertEqualObjects(@"", stdoutString);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
@@ -136,8 +136,8 @@
         return XCTFail(@"%@", error);
     }
     NSArray *arguments = @[ @"ProductName", path ];
-    XCTAssertEqual(1, [self runWithArguments:arguments standardOutput:&stdoutString standardError:nil]);
-    XCTAssertEqualObjects(@"", stdoutString);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 1);
+    XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);

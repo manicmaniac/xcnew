@@ -33,8 +33,8 @@
     optionSet.language = language;
     optionSet.outputPath = outputPath;
     XCNOptionSet *copied = [optionSet copy];
-    XCTAssertNotEqual(copied, optionSet);
-    XCTAssertEqualObjects(copied, optionSet);
+    XCTAssertNotEqual(optionSet, copied);
+    XCTAssertEqualObjects(optionSet, copied);
 }
 
 @end
