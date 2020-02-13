@@ -17,6 +17,12 @@
 		5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFBF22F7437700EA7295 /* XCNProject.m */; };
 		5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
 		5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
+		5B35519423F5D75B000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
+		5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */; };
+		5B35519823F5D87C000E5EA1 /* XCNUserInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */; };
+		5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */; };
+		5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
+		5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */; };
 		5BC9EE2222FDF75800D67BD1 /* xcnew.mxml in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
 		5BC9EE2522FDF81E00D67BD1 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
@@ -93,6 +99,10 @@
 		5B20AFCC22F7567C00EA7295 /* XCNOptionParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionParser.h; sourceTree = "<group>"; };
 		5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParser.m; sourceTree = "<group>"; };
 		5B20AFD522F7599700EA7295 /* XCNLanguage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNLanguage.h; sourceTree = "<group>"; };
+		5B35519323F5D75B000E5EA1 /* XCNLanguage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNLanguage.m; sourceTree = "<group>"; };
+		5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNUserInterface.m; sourceTree = "<group>"; };
+		5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNUserInterfaceTests.m; sourceTree = "<group>"; };
+		5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNLanguageTests.m; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,8 +129,10 @@
 			children = (
 				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
+				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
 				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
+				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
 			);
 			path = Tests;
@@ -154,6 +166,7 @@
 				5B20AFC722F74CCB00EA7295 /* XCNErrorsInternal.h */,
 				5B20AFC522F74B7300EA7295 /* XCNErrors.m */,
 				5B20AFD522F7599700EA7295 /* XCNLanguage.h */,
+				5B35519323F5D75B000E5EA1 /* XCNLanguage.m */,
 				5B1F0F5722F88EE700A7AFFA /* XCNMacroDefinitions.h */,
 				5B20AFCC22F7567C00EA7295 /* XCNOptionParser.h */,
 				5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */,
@@ -162,6 +175,7 @@
 				5B20AFBE22F7437700EA7295 /* XCNProject.h */,
 				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
 				5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */,
+				5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
 				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
 			);
@@ -288,10 +302,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B35519823F5D87C000E5EA1 /* XCNUserInterfaceTests.m in Sources */,
 				5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */,
 				5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */,
 				5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */,
+				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
+				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B1F0F3C22F7A2BA00A7AFFA /* XCNewTests.m in Sources */,
+				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,11 +318,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B35519423F5D75B000E5EA1 /* XCNLanguage.m in Sources */,
 				5B20A2F922F0BB8500EA7295 /* main.m in Sources */,
 				5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */,
 				5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */,
 				5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */,
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
+				5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */,
 				5BC9EE2222FDF75800D67BD1 /* xcnew.mxml in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

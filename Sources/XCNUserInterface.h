@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, XCNUserInterface) {
     XCNUserInterfaceSwiftUI,
     XCNUserInterfaceStoryboard,
 };
+
+extern NSString *NSStringFromXCNUserInterface(XCNUserInterface userInterface);
+
+NS_ASSUME_NONNULL_END

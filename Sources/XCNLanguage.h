@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, XCNLanguage) {
     XCNLanguageSwift,
     XCNLanguageObjectiveC,
 };
+
+extern NSString *NSStringFromXCNLanguage(XCNLanguage language);
+
+NS_ASSUME_NONNULL_END
