@@ -118,6 +118,8 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = [self stringFromBOOL:_hasUITests];
         } else if ([identifier isEqualToString:@"coreData"]) {
             option.value = [self stringFromBOOL:_useCoreData];
+        } else if ([identifier isEqualToString:@"userInterface"]) {
+            option.value = [self stringFromUserInterface:_userInterface];
         }
     }
 }
@@ -128,6 +130,15 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             return @"Objective-C";
         case XCNLanguageSwift:
             return @"Swift";
+    }
+}
+
+- (NSString *)stringFromUserInterface:(XCNUserInterface)userInterface {
+    switch (userInterface) {
+        case XCNUserInterfaceSwiftUI:
+            return @"SwiftUI";
+        case XCNUserInterfaceStoryboard:
+            return @"Storyboard";
     }
 }
 
