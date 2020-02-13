@@ -24,6 +24,7 @@ int main(int argc, char *const argv[]) {
             project.hasUITests = optionSet.hasUITests;
             project.useCoreData = optionSet.useCoreData;
             project.language = optionSet.language;
+            project.userInterface = optionSet.userInterface;
             [project writeToFile:optionSet.outputPath error:&error];
         }
         if (error) {

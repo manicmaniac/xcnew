@@ -12,6 +12,15 @@
 
 // MARK: Public
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _language = XCNLanguageSwift;
+        _userInterface = XCNUserInterfaceStoryboard;
+    }
+    return self;
+}
+
 - (BOOL)isEqualToOptionSet:(XCNOptionSet *)optionSet {
     return ([_productName isEqualToString:optionSet.productName] &&
             [_organizationName isEqualToString:optionSet.organizationName] &&
