@@ -30,6 +30,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.mxml";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "MPGL Translator";
 			outputFiles = (
@@ -91,6 +93,7 @@
 		5B20AFCC22F7567C00EA7295 /* XCNOptionParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionParser.h; sourceTree = "<group>"; };
 		5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParser.m; sourceTree = "<group>"; };
 		5B20AFD522F7599700EA7295 /* XCNLanguage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNLanguage.h; sourceTree = "<group>"; };
+		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
@@ -158,6 +161,7 @@
 				5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */,
 				5B20AFBE22F7437700EA7295 /* XCNProject.h */,
 				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
+				5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
 				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
 			);
