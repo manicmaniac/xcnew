@@ -96,6 +96,7 @@
     NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Example");
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
 }
 
 - (void)testExecuteWithAllValidArguments {
@@ -106,6 +107,7 @@
                             @"--has-unit-tests",
                             @"--has-ui-tests",
                             @"--use-core-data",
+                            @"--swift-ui",
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
@@ -123,6 +125,7 @@
     NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
 }
 
 - (void)testExecuteWithInaccessiblePath {
