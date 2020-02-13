@@ -7,6 +7,7 @@
 //
 
 #import "XCNLanguage.h"
+#import "XCNUserInterface.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL hasUITests;
 @property (nonatomic) BOOL useCoreData;
 @property (nonatomic) XCNLanguage language;
+@property (nonatomic) XCNUserInterface userInterface;
 @property (nonatomic, copy) NSString *outputPath;
 
 - (BOOL)isEqualToOptionSet:(XCNOptionSet *)optionSet;

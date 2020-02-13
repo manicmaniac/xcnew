@@ -65,6 +65,9 @@
             case 'o':
                 optionSet.language = XCNLanguageObjectiveC;
                 break;
+            case 's':
+                optionSet.userInterface = XCNUserInterfaceSwiftUI;
+                break;
             case '?':
                 if (error) {
                     *error = XCNInvalidArgumentErrorCreateWithLongOption(argv[optind - 1]);
@@ -113,6 +116,7 @@
          "    -u, --has-ui-tests             Enable UI tests\n"
          "    -c, --use-core-data            Enable Core Data template\n"
          "    -o, --objc                     Use Objective-C (default: Swift)\n"
+         "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
          "\n"
          "Arguments:\n"
          "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
@@ -123,7 +127,7 @@
     puts(XCN_PROGRAM_VERSION);
 }
 
-static const char shortOptions[] = "hvn:i:tuco";
+static const char shortOptions[] = "hvn:i:tucos";
 
 static const struct option longOptions[] = {
     {"help", no_argument, NULL, 'h'},
@@ -134,6 +138,7 @@ static const struct option longOptions[] = {
     {"has-ui-tests", no_argument, NULL, 'u'},
     {"use-core-data", no_argument, NULL, 'c'},
     {"objc", no_argument, NULL, 'o'},
+    {"swift-ui", no_argument, NULL, 's'},
     {NULL, 0, NULL, 0},
 };
 
