@@ -9,8 +9,6 @@
 #ifndef XCNMacroDefinitions_h
 #define XCNMacroDefinitions_h
 
-#import <Foundation/Foundation.h>
-
 #define XCN_PROGRAM_VERSION "0.3.2"
 
 #ifdef __cplusplus
