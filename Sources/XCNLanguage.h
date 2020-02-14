@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XCNMacroDefinitions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,6 @@ typedef NS_ENUM(NSUInteger, XCNLanguage) {
     XCNLanguageObjectiveC,
 };
 
-extern NSString *NSStringFromXCNLanguage(XCNLanguage language);
+XCN_EXTERN NSString *NSStringFromXCNLanguage(XCNLanguage language);
 
 NS_ASSUME_NONNULL_END
