@@ -22,6 +22,7 @@
     BOOL hasUITests = YES;
     BOOL useCoreData = YES;
     XCNLanguage language = XCNLanguageObjectiveC;
+    XCNUserInterface userInterface = XCNUserInterfaceSwiftUI;
     NSString *outputPath = @"/test";
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
     optionSet.productName = productName;
@@ -31,6 +32,7 @@
     optionSet.hasUITests = hasUITests;
     optionSet.useCoreData = useCoreData;
     optionSet.language = language;
+    optionSet.userInterface = userInterface;
     optionSet.outputPath = outputPath;
     XCNOptionSet *copied = [optionSet copy];
     XCTAssertNotEqual(optionSet, copied);
