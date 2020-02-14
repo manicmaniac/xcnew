@@ -23,6 +23,9 @@
 #define XCN_FINAL_CLASS
 #endif
 
-#define XCN_SWIFT_UI_IS_AVAILABLE (XCODE_VERSION_MAJOR >= 1100)
+// Since some versions of Xcode has an invalid octal version number like 0900 and it causes a compilation error,
+// I added prefix `0x` to the actual XCODE_VERSION_MAJOR build variable.
+// See also `Preprocessor Macros` section in the project's build settings.
+#define XCN_SWIFT_UI_IS_AVAILABLE (XCODE_VERSION_MAJOR >= 0x1100)
 
 #endif /* XCNMacroDefinions_h */
