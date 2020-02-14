@@ -25,6 +25,6 @@
 #define XCN_FINAL_CLASS
 #endif
 
-#define XCNSwiftUIIsAvailable [NSClassFromString(@"IDELocalizationHandler") instancesRespondToSelector:(SEL)"localizedStringSwiftUISupportByBluePrint"]
+#define XCN_SWIFT_UI_IS_AVAILABLE (XCODE_VERSION_ACTUAL >= 1100)
 
 #endif /* XCNMacroDefinions_h */

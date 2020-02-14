@@ -68,7 +68,7 @@
                 optionSet.language = XCNLanguageObjectiveC;
                 break;
             case 's':
-                NSAssert(XCNSwiftUIIsAvailable, @"option `s` should be allowed only when Swift UI is available.");
+                NSAssert(XCN_SWIFT_UI_IS_AVAILABLE, @"option `s` should be allowed only when Swift UI is available.");
                 optionSet.userInterface = XCNUserInterfaceSwiftUI;
                 break;
             case '?':
@@ -107,7 +107,7 @@
 
 - (void)showHelp {
     puts("xcnew - A command line tool to create Xcode project.\n");
-    if (XCNSwiftUIIsAvailable) {
+    if (XCN_SWIFT_UI_IS_AVAILABLE) {
         puts("Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tucos] <PRODUCT_NAME> [OUTPUT_DIR]\n");
     } else {
         puts("Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> [OUTPUT_DIR]\n");
@@ -121,7 +121,7 @@
          "    -u, --has-ui-tests             Enable UI tests\n"
          "    -c, --use-core-data            Enable Core Data template\n"
          "    -o, --objc                     Use Objective-C (default: Swift)");
-    if (XCNSwiftUIIsAvailable) {
+    if (XCN_SWIFT_UI_IS_AVAILABLE) {
         puts("    -s, --swift-ui                 Use Swift UI (default: Storyboard)");
     }
     puts("\n"
@@ -135,28 +135,13 @@
 }
 
 + (char *)shortOptions {
-    if (XCNSwiftUIIsAvailable) {
+    if (XCN_SWIFT_UI_IS_AVAILABLE) {
         return "hvn:i:tucos";
     }
     return "hvn:i:tuco";
 }
 
 + (struct option *)longOptions {
-    if (XCNSwiftUIIsAvailable) {
-        static struct option longOptions[] = {
-            {"help", no_argument, NULL, 'h'},
-            {"version", no_argument, NULL, 'v'},
-            {"organization-name", required_argument, NULL, 'n'},
-            {"organization-identifier", required_argument, NULL, 'i'},
-            {"has-unit-tests", no_argument, NULL, 't'},
-            {"has-ui-tests", no_argument, NULL, 'u'},
-            {"use-core-data", no_argument, NULL, 'c'},
-            {"objc", no_argument, NULL, 'o'},
-            {"swift-ui", no_argument, NULL, 's'},
-            {NULL, 0, NULL, 0},
-        };
-        return longOptions;
-    }
     static struct option longOptions[] = {
         {"help", no_argument, NULL, 'h'},
         {"version", no_argument, NULL, 'v'},
@@ -166,8 +151,12 @@
         {"has-ui-tests", no_argument, NULL, 'u'},
         {"use-core-data", no_argument, NULL, 'c'},
         {"objc", no_argument, NULL, 'o'},
+        {"swift-ui", no_argument, NULL, 's'},
         {NULL, 0, NULL, 0},
     };
+    if (!XCN_SWIFT_UI_IS_AVAILABLE) {
+        memset(&(longOptions[8]), 0, sizeof(struct option));
+    }
     return longOptions;
 }
 

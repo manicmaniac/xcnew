@@ -101,7 +101,7 @@
 }
 
 - (void)testExecuteWithAllValidArgumentsWhenSwiftUIIsAvailable {
-    if (!XCNSwiftUIIsAvailable) {
+    if (!XCN_SWIFT_UI_IS_AVAILABLE) {
         NSLog(@"Skipped %@ because Swift UI is not available.", self.name);
         return;
     }
@@ -135,7 +135,7 @@
 }
 
 - (void)testExecuteWithAllValidArgumentWhenSwiftUIIsNotAvailable {
-    if (XCNSwiftUIIsAvailable) {
+    if (XCN_SWIFT_UI_IS_AVAILABLE) {
         NSLog(@"Skipped %@ because Swift UI is available.", self.name);
         return;
     }
