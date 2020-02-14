@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "XCNMacroDefinitions.h"
+#import "XCNSecureTemporaryDirectory.h"
 #import "XCNTestAssertions.h"
 
 @interface XCNewTests : XCTestCase
@@ -28,10 +29,9 @@
     _previousDirectory = _fileManager.currentDirectoryPath;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
-    int pid = [NSProcessInfo processInfo].processIdentifier;
-    _temporaryDirectory = [NSString stringWithFormat:@"%@%@-%d", NSTemporaryDirectory(), NSStringFromClass([self class]), pid];
     NSError *error = nil;
-    if (![_fileManager createDirectoryAtPath:_temporaryDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
+    _temporaryDirectory = XCNCreateSecureTemporaryDirectoryWithBasename(@"XCNewTests-XXXXXX", &error);
+    if (!_temporaryDirectory) {
         XCTFail(@"%@", error);
     }
     [_fileManager changeCurrentDirectoryPath:_temporaryDirectory];
