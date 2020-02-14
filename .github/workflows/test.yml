@@ -1,0 +1,17 @@
+name: Test
+on: [push]
+jobs:
+  unit-test:
+    runs-on: macOS-10.15
+    strategy:
+      fail-fast: false
+      matrix:
+        xcode: ["11.3", "11.2.1", "11.1"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      - name: Run unit tests
+        run: set -o pipefail && make check | xcpretty
+      - name: Install
+        run: set -o pipefail && make install | xcpretty
