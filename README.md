@@ -26,7 +26,7 @@ Usage
 
     xcnew - A command line tool to create Xcode project.
     
-    Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> [OUTPUT_DIR]
+    Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tucos] <PRODUCT_NAME> [OUTPUT_DIR]
     
     Options:
         -h, --help                     Show this help and exit
@@ -37,10 +37,13 @@ Usage
         -u, --has-ui-tests             Enable UI tests
         -c, --use-core-data            Enable Core Data template
         -o, --objc                     Use Objective-C (default: Swift)
+        -s, --swift-ui                 Use Swift UI (default: Storyboard)
     
     Arguments:
         <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj
         [OUTPUT_DIR]                   Optional directory name of the project
+
+Note: `-s, --swift-ui` option appears only if you build `xcnew` with Xcode `>= 11.0`.
 
 How it works?
 -------------
