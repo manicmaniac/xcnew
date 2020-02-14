@@ -38,6 +38,8 @@
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
+    const char *shortOptions = [XCNOptionParser shortOptions];
+    const struct option *longOptions = [XCNOptionParser longOptions];
     int shortOption;
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
         switch (shortOption) {
@@ -66,6 +68,7 @@
                 optionSet.language = XCNLanguageObjectiveC;
                 break;
             case 's':
+                NSAssert(XCNSwiftUIIsAvailable, @"option `s` should be allowed only when Swift UI is available.");
                 optionSet.userInterface = XCNUserInterfaceSwiftUI;
                 break;
             case '?':
@@ -103,11 +106,13 @@
 // MARK: Private
 
 - (void)showHelp {
-    puts("xcnew - A command line tool to create Xcode project.\n"
-         "\n"
-         "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> [OUTPUT_DIR]\n"
-         "\n"
-         "Options:\n"
+    puts("xcnew - A command line tool to create Xcode project.\n");
+    if (XCNSwiftUIIsAvailable) {
+        puts("Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tucos] <PRODUCT_NAME> [OUTPUT_DIR]\n");
+    } else {
+        puts("Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco] <PRODUCT_NAME> [OUTPUT_DIR]\n");
+    }
+    puts("Options:\n"
          "    -h, --help                     Show this help and exit\n"
          "    -v, --version                  Show version and exit\n"
          "    -n, --organization-name        Specify organization's name\n"
@@ -115,9 +120,11 @@
          "    -t, --has-unit-tests           Enable unit tests\n"
          "    -u, --has-ui-tests             Enable UI tests\n"
          "    -c, --use-core-data            Enable Core Data template\n"
-         "    -o, --objc                     Use Objective-C (default: Swift)\n"
-         "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
-         "\n"
+         "    -o, --objc                     Use Objective-C (default: Swift)");
+    if (XCNSwiftUIIsAvailable) {
+        puts("    -s, --swift-ui                 Use Swift UI (default: Storyboard)");
+    }
+    puts("\n"
          "Arguments:\n"
          "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
          "    [OUTPUT_DIR]                   Optional directory name of the project");
@@ -127,19 +134,41 @@
     puts(XCN_PROGRAM_VERSION);
 }
 
-static const char shortOptions[] = "hvn:i:tucos";
++ (char *)shortOptions {
+    if (XCNSwiftUIIsAvailable) {
+        return "hvn:i:tucos";
+    }
+    return "hvn:i:tuco";
+}
 
-static const struct option longOptions[] = {
-    {"help", no_argument, NULL, 'h'},
-    {"version", no_argument, NULL, 'v'},
-    {"organization-name", required_argument, NULL, 'n'},
-    {"organization-identifier", required_argument, NULL, 'i'},
-    {"has-unit-tests", no_argument, NULL, 't'},
-    {"has-ui-tests", no_argument, NULL, 'u'},
-    {"use-core-data", no_argument, NULL, 'c'},
-    {"objc", no_argument, NULL, 'o'},
-    {"swift-ui", no_argument, NULL, 's'},
-    {NULL, 0, NULL, 0},
-};
++ (struct option *)longOptions {
+    if (XCNSwiftUIIsAvailable) {
+        static struct option longOptions[] = {
+            {"help", no_argument, NULL, 'h'},
+            {"version", no_argument, NULL, 'v'},
+            {"organization-name", required_argument, NULL, 'n'},
+            {"organization-identifier", required_argument, NULL, 'i'},
+            {"has-unit-tests", no_argument, NULL, 't'},
+            {"has-ui-tests", no_argument, NULL, 'u'},
+            {"use-core-data", no_argument, NULL, 'c'},
+            {"objc", no_argument, NULL, 'o'},
+            {"swift-ui", no_argument, NULL, 's'},
+            {NULL, 0, NULL, 0},
+        };
+        return longOptions;
+    }
+    static struct option longOptions[] = {
+        {"help", no_argument, NULL, 'h'},
+        {"version", no_argument, NULL, 'v'},
+        {"organization-name", required_argument, NULL, 'n'},
+        {"organization-identifier", required_argument, NULL, 'i'},
+        {"has-unit-tests", no_argument, NULL, 't'},
+        {"has-ui-tests", no_argument, NULL, 'u'},
+        {"use-core-data", no_argument, NULL, 'c'},
+        {"objc", no_argument, NULL, 'o'},
+        {NULL, 0, NULL, 0},
+    };
+    return longOptions;
+}
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "XCNMacroDefinitions.h"
 #import "XCNTestAssertions.h"
 
 @interface XCNewTests : XCTestCase
@@ -99,7 +100,12 @@
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
 }
 
-- (void)testExecuteWithAllValidArguments {
+- (void)testExecuteWithAllValidArgumentsWhenSwiftUIIsAvailable {
+    if (!XCNSwiftUIIsAvailable) {
+        NSLog(@"Skipped %@ because Swift UI is not available.", self.name);
+        return;
+    }
+    NSLog(@"%f", NSFoundationVersionNumber);
     NSString *stdoutString = nil;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
@@ -126,6 +132,37 @@
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+}
+
+- (void)testExecuteWithAllValidArgumentWhenSwiftUIIsNotAvailable {
+    if (XCNSwiftUIIsAvailable) {
+        NSLog(@"Skipped %@ because Swift UI is available.", self.name);
+        return;
+    }
+    NSString *stdoutString = nil;
+    NSString *path = @"./Example/../Example/";
+    NSArray *arguments = @[ @"--organization-name=Organization",
+                            @"--organization-identifier=com.example",
+                            @"--has-unit-tests",
+                            @"--has-ui-tests",
+                            @"--use-core-data",
+                            @"--", // GNU style option scanning terminator
+                            @"ProductName",
+                            path ];
+    path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    XCNAssertDirectoryExistsAtPath(path);
+    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Example.xcdatamodeld/Example.xcdatamodel/contents"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleTests/Info.plist"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
+    NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
+    XCNAssertFileExistsAtPath(appDelegatePath);
+    XCNAssertFileContainsString(appDelegatePath, @"Organization");
 }
 
 - (void)testExecuteWithInaccessiblePath {
