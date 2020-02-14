@@ -100,12 +100,8 @@
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
 }
 
-- (void)testExecuteWithAllValidArgumentsWhenSwiftUIIsAvailable {
-    if (!XCN_SWIFT_UI_IS_AVAILABLE) {
-        NSLog(@"Skipped %@ because Swift UI is not available.", self.name);
-        return;
-    }
-    NSLog(@"%f", NSFoundationVersionNumber);
+#if XCN_SWIFT_UI_IS_AVAILABLE
+- (void)testExecuteWithAllValidArgumentsEnablingSwiftUI {
     NSString *stdoutString = nil;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
@@ -133,12 +129,9 @@
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
 }
+#endif
 
-- (void)testExecuteWithAllValidArgumentWhenSwiftUIIsNotAvailable {
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        NSLog(@"Skipped %@ because Swift UI is available.", self.name);
-        return;
-    }
+- (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
     NSString *stdoutString = nil;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
@@ -163,6 +156,7 @@
     NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
 }
 
 - (void)testExecuteWithInaccessiblePath {
