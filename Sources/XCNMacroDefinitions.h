@@ -9,6 +9,8 @@
 #ifndef XCNMacroDefinitions_h
 #define XCNMacroDefinitions_h
 
+#import <Foundation/Foundation.h>
+
 #define XCN_PROGRAM_VERSION "0.3.2"
 
 #ifdef __cplusplus
@@ -22,5 +24,7 @@
 #else
 #define XCN_FINAL_CLASS
 #endif
+
+#define XCNSwiftUIIsAvailable [NSClassFromString(@"IDELocalizationHandler") instancesRespondToSelector:(SEL)"localizedStringSwiftUISupportByBluePrint"]
 
 #endif /* XCNMacroDefinions_h */

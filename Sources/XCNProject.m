@@ -105,7 +105,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
     for (IDETemplateOption *option in options) {
         NSString *identifier = option.identifier;
         if ([identifier isEqualToString:@"languageChoice"]) {
-            option.value = [self stringFromLanguage:_language];
+            option.value = NSStringFromXCNLanguage(_language);
         } else if ([identifier isEqualToString:@"productName"]) {
             option.value = _productName;
         } else if ([identifier isEqualToString:@"organizationName"]) {
@@ -113,26 +113,15 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
         } else if ([identifier isEqualToString:@"bundleIdentifierPrefix"]) {
             option.value = _organizationIdentifier;
         } else if ([identifier isEqualToString:@"hasUnitTests"]) {
-            option.value = [self stringFromBOOL:_hasUnitTests];
+            option.booleanValue = _hasUnitTests;
         } else if ([identifier isEqualToString:@"hasUITests"]) {
-            option.value = [self stringFromBOOL:_hasUITests];
+            option.booleanValue = _hasUITests;
         } else if ([identifier isEqualToString:@"coreData"]) {
-            option.value = [self stringFromBOOL:_useCoreData];
+            option.booleanValue = _useCoreData;
+        } else if ([identifier isEqualToString:@"userInterface"]) {
+            option.value = NSStringFromXCNUserInterface(_userInterface);
         }
     }
-}
-
-- (NSString *)stringFromLanguage:(XCNLanguage)language {
-    switch (language) {
-        case XCNLanguageObjectiveC:
-            return @"Objective-C";
-        case XCNLanguageSwift:
-            return @"Swift";
-    }
-}
-
-- (NSString *)stringFromBOOL:(BOOL)value {
-    return value ? @"true" : @"false";
 }
 
 @end

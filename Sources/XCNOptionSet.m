@@ -12,6 +12,15 @@
 
 // MARK: Public
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _language = XCNLanguageSwift;
+        _userInterface = XCNUserInterfaceStoryboard;
+    }
+    return self;
+}
+
 - (BOOL)isEqualToOptionSet:(XCNOptionSet *)optionSet {
     return ([_productName isEqualToString:optionSet.productName] &&
             [_organizationName isEqualToString:optionSet.organizationName] &&
@@ -20,6 +29,7 @@
             (_hasUITests == optionSet.hasUITests) &&
             (_useCoreData == optionSet.useCoreData) &&
             (_language == optionSet.language) &&
+            (_userInterface == optionSet.userInterface) &&
             [_outputPath isEqualToString:optionSet.outputPath]);
 }
 
@@ -41,6 +51,7 @@
             (_hasUnitTests ? 0x2f : 0x20) ^
             (_useCoreData ? 0x3f : 0x30) ^
             _language ^
+            _userInterface ^
             _outputPath.hash);
 }
 
@@ -55,6 +66,7 @@
     copied.hasUITests = _hasUITests;
     copied.useCoreData = _useCoreData;
     copied.language = _language;
+    copied.userInterface = _userInterface;
     copied.outputPath = _outputPath;
     return copied;
 }

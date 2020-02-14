@@ -14,6 +14,7 @@
     <flag optional="1">i|--organization-identifier<arg>ORG_ID</arg><desc>Specify organization's identifier</desc></flag>
     <flag optional="1">t|--has-unit-tests<desc>Enable unit tests</desc></flag>
     <flag optional="1">u|--has-ui-tests<desc>Enable UI tests</desc></flag>
+    <flag optional="1">s|--swift-ui<desc>Enable Swift UI (available only when Swift UI is supported)</desc></flag>
     <arg>PRODUCT_NAME<desc>Required TARGET_NAME of project.pbxproj</desc></arg>
     <arg optional="1">OUTPUT_DIR<desc>Optional directory name of the project</desc></arg>
   </usage>
