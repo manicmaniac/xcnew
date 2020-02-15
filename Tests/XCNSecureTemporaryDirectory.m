@@ -34,6 +34,7 @@ NSString *_Nullable XCNCreateSecureTemporaryDirectoryWithBasename(NSString *base
                 }];
             }
         }
+        return nil;
     }
     return [NSString stringWithUTF8String:templatePath];
 }
