@@ -47,9 +47,9 @@
     return (_productName.hash ^
             _organizationName.hash ^
             _organizationIdentifier.hash ^
-            (_hasUITests ? 0x1f : 0x10) ^
-            (_hasUnitTests ? 0x2f : 0x20) ^
-            (_useCoreData ? 0x3f : 0x30) ^
+            _hasUnitTests ^
+            _hasUITests ^
+            _useCoreData ^
             _language ^
             _userInterface ^
             _outputPath.hash);
