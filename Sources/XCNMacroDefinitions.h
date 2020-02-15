@@ -9,8 +9,6 @@
 #ifndef XCNMacroDefinitions_h
 #define XCNMacroDefinitions_h
 
-#define XCN_PROGRAM_VERSION "0.4.0"
-
 #ifdef __cplusplus
 #define XCN_EXTERN extern "C"
 #else
