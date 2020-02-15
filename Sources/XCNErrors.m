@@ -14,14 +14,14 @@ NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 
 // MARK: Internal
 
-inline NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path) {
+NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path) {
     NSCParameterAssert(path != nil);
     NSString *localizedDescription = [NSString stringWithFormat:@"Cannot write at path '%@'.", path];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNFileWriteUnknownError userInfo:userInfo];
 }
 
-inline NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) {
+NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) {
     NSCParameterAssert(format != nil);
     va_list args;
     va_start(args, format);
@@ -33,20 +33,20 @@ inline NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *for
     return [NSError errorWithDomain:XCNErrorDomain code:XCNIDEFoundationInconsistencyError userInfo:userInfo];
 }
 
-inline NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption) {
+NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption) {
     NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '-%c'.", shortOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];
 }
 
-inline NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption) {
+NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption) {
     NSCParameterAssert(longOption != NULL);
     NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '%s'.", longOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:userInfo];
 }
 
-inline NSError *XCNWrongNumberOfArgumentsErrorCreateWithRange(NSRange acceptableRange, int actual) {
+NSError *XCNWrongNumberOfArgumentsErrorCreateWithRange(NSRange acceptableRange, int actual) {
     NSString *expected;
     if (acceptableRange.length == 0) {
         expected = [NSString stringWithFormat:@"%lu", acceptableRange.location];
