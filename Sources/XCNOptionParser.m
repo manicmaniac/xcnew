@@ -20,7 +20,6 @@
 + (void)initialize {
     [super initialize];
     NSAssert(self == [XCNOptionParser class], @"XCNOptionParser mustn't be inherited.");
-    opterr = 0;
 }
 
 + (XCNOptionParser *)sharedOptionParser {
@@ -37,6 +36,7 @@
     NSParameterAssert(argc > 0);
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
+    opterr = 0;
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
     int shortOption;
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
