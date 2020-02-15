@@ -58,7 +58,7 @@
 // MARK: NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-    XCNOptionSet *copied = [[XCNOptionSet alloc] init];
+    XCNOptionSet *copied = [[XCNOptionSet allocWithZone:zone] init];
     copied.productName = _productName;
     copied.organizationName = _organizationName;
     copied.organizationIdentifier = _organizationIdentifier;
