@@ -45,7 +45,7 @@
                 puts(help);
                 return nil;
             case 'v':
-                puts(XCN_PROGRAM_VERSION);
+                puts([[NSBundle.mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
                 return nil;
             case 'n':
                 optionSet.organizationName = @(optarg);

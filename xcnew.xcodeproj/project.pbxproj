@@ -106,6 +106,7 @@
 		5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNLanguageTests.m; sourceTree = "<group>"; };
 		5B37112423F73094004CD497 /* XCNSecureTemporaryDirectory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNSecureTemporaryDirectory.h; sourceTree = "<group>"; };
 		5B37112523F73094004CD497 /* XCNSecureTemporaryDirectory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNSecureTemporaryDirectory.m; sourceTree = "<group>"; };
+		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,7 +131,6 @@
 		5B1F0F3A22F7A2BA00A7AFFA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
@@ -139,6 +139,7 @@
 				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
+				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -183,6 +184,7 @@
 				5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
 				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
+				5B37114B23F81570004CD497 /* Info.plist */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -488,6 +490,7 @@
 		5B20A2F622F0BB0300EA7295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
@@ -497,12 +500,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/PrivateHeaders",
 				);
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -510,6 +515,7 @@
 		5B20A2F722F0BB0300EA7295 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
@@ -519,12 +525,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/PrivateHeaders",
 				);
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
