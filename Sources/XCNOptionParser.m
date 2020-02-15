@@ -42,10 +42,10 @@
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
         switch (shortOption) {
             case 'h':
-                [self showHelp];
+                puts(help);
                 return nil;
             case 'v':
-                [self showVersion];
+                puts(XCN_PROGRAM_VERSION);
                 return nil;
             case 'n':
                 optionSet.organizationName = @(optarg);
@@ -110,32 +110,26 @@
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING ""
 #endif
 
-- (void)showHelp {
-    puts("xcnew - A command line tool to create Xcode project.\n"
-         "\n"
-         "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
-         "\n"
-         "Options:\n"
-         "    -h, --help                     Show this help and exit\n"
-         "    -v, --version                  Show version and exit\n"
-         "    -n, --organization-name        Specify organization's name\n"
-         "    -i, --organization-identifier  Specify organization's identifier\n"
-         "    -t, --has-unit-tests           Enable unit tests\n"
-         "    -u, --has-ui-tests             Enable UI tests\n"
-         "    -c, --use-core-data            Enable Core Data template\n"
-         "    -o, --objc                     Use Objective-C (default: Swift)\n"
+static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
+                           "\n"
+                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
+                           "\n"
+                           "Options:\n"
+                           "    -h, --help                     Show this help and exit\n"
+                           "    -v, --version                  Show version and exit\n"
+                           "    -n, --organization-name        Specify organization's name\n"
+                           "    -i, --organization-identifier  Specify organization's identifier\n"
+                           "    -t, --has-unit-tests           Enable unit tests\n"
+                           "    -u, --has-ui-tests             Enable UI tests\n"
+                           "    -c, --use-core-data            Enable Core Data template\n"
+                           "    -o, --objc                     Use Objective-C (default: Swift)\n"
 #if XCN_SWIFT_UI_IS_AVAILABLE
-         "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
+                           "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
 #endif
-         "\n"
-         "Arguments:\n"
-         "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
-         "    [OUTPUT_DIR]                   Optional directory name of the project");
-}
-
-- (void)showVersion {
-    puts(XCN_PROGRAM_VERSION);
-}
+                           "\n"
+                           "Arguments:\n"
+                           "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
+                           "    [OUTPUT_DIR]                   Optional directory name of the project";
 
 static const char shortOptions[] = "hvn:i:tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING;
 
