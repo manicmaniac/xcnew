@@ -1,37 +1,58 @@
 #!/bin/bash
 
+# A utility script to dump Xcode private headers that are used in `xcnew`.
+#
+# This tool needs the following commands to be installed:
+# See `PrivateHeaders/versions.txt` to know which version of the tools are needed.
+#
+# - [Xcode](https://developer.apple.com/download/more/)
+# - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
+# - [class-dump](http://stevenygard.com/projects/class-dump/)
+
 set -e
 
 contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
 
+# Dump necessary headers in DVTFoundation.framework.
 class-dump -H \
            -C '^DVTFile(Path|SystemRepresentationProviding)$' \
            -o 'PrivateHeaders/DVTFoundation' \
            "$contents_dir/SharedFrameworks/DVTFoundation.framework"
 rm -f 'PrivateHeaders/DVTFoundation/NSString-DVTFileSystemRepresentationProviding.h'
 
+# Dump necessary headers in IDEFoundation.framework.
 class-dump -H \
            -C '^IDETemplate(|Factory|InstantiationContext|Kind|Option|OptionParent)$' \
            -o 'PrivateHeaders/IDEFoundation' \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 rm -f 'PrivateHeaders/IDEFoundation/CDStructures.h'
 
-find PrivateHeaders -type f -name '*.h' -exec sed -i '' \
-    -e 's/^- (void)\.cxx_destruct;$//' \
-    -e 's/^#import <objc\/NSObject\.h>$/#import <Foundation\/Foundation.h>/' \
-    -e 's/unsigned long long hash;$/NSUInteger hash;/' \
-    -e 's/id \*_field2;$/__unsafe_unretained id *_field2;/' \
-    -e 's/^#import "NS.*$//;' \
-    {} \;
+find PrivateHeaders -type f -name '*.h' -exec sed -i '' -e '
+    # Remove C++ destructor declaration, which is not permitted in Objective-C class.
+    s/^- (void)\.cxx_destruct;$//
 
+    # Import Foundation.framework instead of importing individual headers.
+    s/^#import <objc\/NSObject\.h>$/#import <Foundation\/Foundation.h>/
+    s/^#import "NS.*$//
+
+    # Use `NSUInteger` instead of an architecture-dependent type `unsigned long long`.
+    s/unsigned long long hash;$/NSUInteger hash;/
+
+    # Add an explicit ownership to avoid warnings.
+    s/id \*_field2;$/__unsafe_unretained id *_field2;/
+' {} \;
+
+# Add missing header `<os/lock.h>`
 sed -i '' -e '7i\
 #import <os/lock.h>' PrivateHeaders/DVTFoundation/DVTFilePath.h
 
+# Add missing import for `CDStructures.h`
 sed -i '' -e '7i\
 #import "CDStructures.h"' PrivateHeaders/DVTFoundation/DVTFilePath.h \
                           PrivateHeaders/IDEFoundation/IDETemplate.h \
                           PrivateHeaders/IDEFoundation/IDETemplateFactory.h
 
+# Re-format all files.
 find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} \;
 
 # To reproduce the result, tool versions are recorded.
