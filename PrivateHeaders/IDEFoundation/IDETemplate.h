@@ -14,6 +14,7 @@
     BOOL _chooserOnly;
     BOOL _hiddenFromLibrary;
     BOOL _hiddenFromChooser;
+    BOOL __isDebug;
     NSString *_defaultCompletionName;
     NSString *_mainTemplateFile;
     NSArray *_allowedTypes;
@@ -28,20 +29,28 @@
     NSArray *_templateOptions;
     NSString *_buildableType;
     long long _sortOrder;
+    NSString *_nameOfInitialFileForEditor;
     IDEWorkspace *_workspace;
     IDETemplateOption *_optionWithMainTemplateFiles;
     IDETemplateOption *_optionWithAllowedTypes;
 }
 
++ (void)_injectHotSwapedTemplatesOfTemplateKind:(id)arg1 availableTemplates:(id)arg2;
++ (id)_allTemplateBearingDirectoriesToHotSwap;
++ (id)_findAllTemplateBearingDirectoriesToHotSwap;
++ (id)_availableTemplatesOfTemplateKind:(id)arg1 templateSearchFilePaths:(id)arg2;
 + (id)availableTemplatesOfTemplateKind:(id)arg1;
-+ (id)_extraTemplateFolderPaths;
++ (id)_templateSearchFilePaths;
++ (id)_templateFolderPathsInDefault:(id)arg1;
 + (id)additionalAvailableTemplatesOfTemplateKind:(id)arg1;
 + (void)_processChildrenOfFilePath:(id)arg1 enumerator:(CDUnknownBlockType)arg2;
 + (void)initialize;
 + (id)_templateInfoForTemplateAtURL:(id)arg1 error:(id *)arg2;
+@property BOOL _isDebug;                                           // @synthesize _isDebug=__isDebug;
 @property (retain) IDETemplateOption *optionWithAllowedTypes;      // @synthesize optionWithAllowedTypes=_optionWithAllowedTypes;
 @property (retain) IDETemplateOption *optionWithMainTemplateFiles; // @synthesize optionWithMainTemplateFiles=_optionWithMainTemplateFiles;
 @property (retain, nonatomic) IDEWorkspace *workspace;             // @synthesize workspace=_workspace;
+@property (readonly, copy) NSString *nameOfInitialFileForEditor;   // @synthesize nameOfInitialFileForEditor=_nameOfInitialFileForEditor;
 @property long long sortOrder;                                     // @synthesize sortOrder=_sortOrder;
 @property (readonly, copy) NSString *buildableType;                // @synthesize buildableType=_buildableType;
 @property (readonly) BOOL hiddenFromChooser;                       // @synthesize hiddenFromChooser=_hiddenFromChooser;

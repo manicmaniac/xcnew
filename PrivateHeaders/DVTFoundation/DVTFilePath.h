@@ -105,10 +105,11 @@
 - (id)relativePathStringFromFilePath:(id)arg1;
 - (id)relativePathStringFromAncestorFilePath:(id)arg1;
 - (void)invokeWithAccessToFileSystemRepresentation:(CDUnknownBlockType)arg1;
+- (void)invokeWithAccessToFileSystemRepresentationAndLength:(CDUnknownBlockType)arg1;
+- (void)invokeWithAccessToHeapAllocatedFileSystemRepresentationAndLength:(CDUnknownBlockType)arg1;
 - (const char *)fileNameFSRepReturningLength:(long long *)arg1;
 - (BOOL)_fileNameHasSuffix:(const char *)arg1 suffixLength:(long long)arg2;
 - (BOOL)getFullFileSystemRepresentationIntoBuffer:(char **)arg1 ofLength:(unsigned long long)arg2 allowAllocation:(BOOL)arg3;
-- (BOOL)_getFSRepIntoBuffer:(char **)arg1 ofLength:(unsigned long long)arg2 requiredLength:(unsigned long long)arg3 endPtr:(char **)arg4 allowAllocation:(BOOL)arg5;
 @property (readonly) NSString *pathExtension;
 @property (readonly) NSString *fileName;
 @property (readonly) NSURL *fileURL;
