@@ -16,7 +16,10 @@
 #import <IDEFoundation/IDETemplateOption.h>
 #import "XCNErrorsInternal.h"
 
-@implementation XCNProject
+@implementation XCNProject {
+@private
+    NSFileManager *_fileManager;
+}
 
 // MARK: Public
 
@@ -32,6 +35,7 @@
     self = [super init];
     if (self) {
         _productName = [productName copy];
+        _fileManager = NSFileManager.defaultManager;
     }
     return self;
 }
@@ -39,10 +43,10 @@
 - (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error {
     NSParameterAssert(path != nil);
     path = [self absolutePathForPath:path];
-    if (![NSFileManager.defaultManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error]) {
+    if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error]) {
         return NO;
     }
-    if (![NSFileManager.defaultManager isWritableFileAtPath:path]) {
+    if (![_fileManager isWritableFileAtPath:path]) {
         if (error) {
             *error = XCNFileWriteUnknownErrorCreateWithPath(path);
         }
@@ -93,7 +97,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 
 - (NSString *)absolutePathForPath:(NSString *)path {
     if (!path.isAbsolutePath) {
-        path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path];
+        path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path];
     }
     return path.stringByStandardizingPath;
 }
