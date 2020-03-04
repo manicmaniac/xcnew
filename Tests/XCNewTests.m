@@ -29,7 +29,7 @@
     _previousDirectory = _fileManager.currentDirectoryPath;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
-    NSError *error = nil;
+    NSError *error;
     _temporaryDirectory = XCNCreateSecureTemporaryDirectoryWithBasename(@"XCNewTests-XXXXXX", &error);
     if (!_temporaryDirectory) {
         XCTFail(@"%@", error);
@@ -38,7 +38,7 @@
 }
 
 - (void)tearDown {
-    NSError *error = nil;
+    NSError *error;
     [_fileManager changeCurrentDirectoryPath:_previousDirectory];
     if (![_fileManager removeItemAtPath:_temporaryDirectory error:&error]) {
         XCTFail(@"%@", error);
@@ -46,42 +46,42 @@
 }
 
 - (void)testRunWithNoArguments {
-    NSString *stdoutString = nil, *stderrString = nil;
+    NSString *stdoutString, *stderrString;
     XCTAssertEqual([self runWithArguments:@[] standardOutput:&stdoutString standardError:&stderrString], 111);
     XCTAssertEqualObjects(stdoutString, @"");
     XCTAssertEqualObjects(stderrString, @"xcnew: Wrong number of arguments (0 for 1..2).\n");
 }
 
 - (void)testRunWithInvalidShortOptionArguments {
-    NSString *stdoutString = nil, *stderrString = nil;
+    NSString *stdoutString, *stderrString;
     XCTAssertEqual([self runWithArguments:@[ @"-X" ] standardOutput:&stdoutString standardError:&stderrString], 110);
     XCTAssertEqualObjects(stdoutString, @"");
     XCTAssertEqualObjects(stderrString, @"xcnew: Unrecognized option '-X'.\n");
 }
 
 - (void)testRunWithInvalidLongOptionArguments {
-    NSString *stdoutString = nil, *stderrString = nil;
+    NSString *stdoutString, *stderrString;
     XCTAssertEqual([self runWithArguments:@[ @"--invalid" ] standardOutput:&stdoutString standardError:&stderrString], 110);
     XCTAssertEqualObjects(stdoutString, @"");
     XCTAssertEqualObjects(stderrString, @"xcnew: Unrecognized option '--invalid'.\n");
 }
 
 - (void)testRunWithHelp {
-    NSString *stdoutString = nil, *stderrString = nil;
+    NSString *stdoutString, *stderrString;
     XCTAssertEqual([self runWithArguments:@[ @"-h" ] standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertTrue([stdoutString containsString:@"Usage"]);
     XCTAssertEqualObjects(stderrString, @"");
 }
 
 - (void)testRunWithVersion {
-    NSString *stdoutString = nil, *stderrString = nil;
+    NSString *stdoutString, *stderrString;
     XCTAssertEqual([self runWithArguments:@[ @"-v" ] standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertTrue([stdoutString containsString:@"."]);
     XCTAssertEqualObjects(stderrString, @"");
 }
 
 - (void)testExecuteWithMinimalValidArguments {
-    NSString *stdoutString = nil;
+    NSString *stdoutString;
     NSString *path = @"Example";
     NSArray *arguments = @[ @"Example" ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
@@ -102,7 +102,7 @@
 
 #if XCN_SWIFT_UI_IS_AVAILABLE
 - (void)testExecuteWithAllValidArgumentsEnablingSwiftUI {
-    NSString *stdoutString = nil;
+    NSString *stdoutString;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
@@ -132,7 +132,7 @@
 #endif
 
 - (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
-    NSString *stdoutString = nil;
+    NSString *stdoutString;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
@@ -160,9 +160,9 @@
 }
 
 - (void)testExecuteWithInaccessiblePath {
-    NSString *stdoutString = nil;
+    NSString *stdoutString;
     NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Inaccessible"];
-    NSError *error = nil;
+    NSError *error;
     if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error]) {
         return XCTFail(@"%@", error);
     }

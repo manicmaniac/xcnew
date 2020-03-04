@@ -26,7 +26,7 @@
 
 #define XCNAssertFileContainsString(path, string, ...) \
     do { \
-        NSError *xcn_error = nil; \
+        NSError *xcn_error; \
         NSString *xcn_contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&xcn_error]; \
         XCTAssertNil(xcn_error); \
         XCTAssert([xcn_contents containsString:string], __VA_ARGS__); \
