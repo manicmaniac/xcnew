@@ -15,7 +15,6 @@
 @end
 
 @implementation XCNewTests {
-   @private
     NSFileManager *_fileManager;
     NSString *_temporaryDirectory;
     NSString *_previousDirectory;

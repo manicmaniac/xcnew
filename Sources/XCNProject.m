@@ -17,7 +17,6 @@
 #import "XCNErrorsInternal.h"
 
 @implementation XCNProject {
-@private
     NSFileManager *_fileManager;
 }
 
