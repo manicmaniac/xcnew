@@ -70,11 +70,13 @@
     context.documentTemplate = template;
     context.documentFilePath = [DVTFilePath filePathForPathString:path];
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
-    [kind.factory instantiateTemplateForContext:context options:nil whenDone:^{
-        // As far as I know, this block is always called from the main thread but it's not guaranteed.
-        // Anyway `CFRunLoop` is a thread-safe object so it doesn't matter even if a subthread calls this block.
-        CFRunLoopStop(runLoop);
-    }];
+    [kind.factory instantiateTemplateForContext:context
+                                        options:nil
+                                       whenDone:^{
+                                           // As far as I know, this block is always called from the main thread but it's not guaranteed.
+                                           // Anyway `CFRunLoop` is a thread-safe object so it doesn't matter even if a subthread calls this block.
+                                           CFRunLoopStop(runLoop);
+                                       }];
     CFRunLoopRun();
     return YES;
 }
