@@ -16,7 +16,9 @@
 #import <IDEFoundation/IDETemplateOption.h>
 #import "XCNErrorsInternal.h"
 
-@implementation XCNProject
+@implementation XCNProject {
+    NSFileManager *_fileManager;
+}
 
 // MARK: Public
 
@@ -32,6 +34,7 @@
     self = [super init];
     if (self) {
         _productName = [productName copy];
+        _fileManager = NSFileManager.defaultManager;
     }
     return self;
 }
@@ -39,10 +42,10 @@
 - (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error {
     NSParameterAssert(path != nil);
     path = [self absolutePathForPath:path];
-    if (![NSFileManager.defaultManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error]) {
+    if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error]) {
         return NO;
     }
-    if (![NSFileManager.defaultManager isWritableFileAtPath:path]) {
+    if (![_fileManager isWritableFileAtPath:path]) {
         if (error) {
             *error = XCNFileWriteUnknownErrorCreateWithPath(path);
         }
@@ -67,11 +70,13 @@
     context.documentTemplate = template;
     context.documentFilePath = [DVTFilePath filePathForPathString:path];
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
-    [kind.factory instantiateTemplateForContext:context options:nil whenDone:^{
-        // As far as I know, this block is always called from the main thread but it's not guaranteed.
-        // Anyway `CFRunLoop` is a thread-safe object so it doesn't matter even if a subthread calls this block.
-        CFRunLoopStop(runLoop);
-    }];
+    [kind.factory instantiateTemplateForContext:context
+                                        options:nil
+                                       whenDone:^{
+                                           // As far as I know, this block is always called from the main thread but it's not guaranteed.
+                                           // Anyway `CFRunLoop` is a thread-safe object so it doesn't matter even if a subthread calls this block.
+                                           CFRunLoopStop(runLoop);
+                                       }];
     CFRunLoopRun();
     return YES;
 }
@@ -93,7 +98,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 
 - (NSString *)absolutePathForPath:(NSString *)path {
     if (!path.isAbsolutePath) {
-        path = [NSFileManager.defaultManager.currentDirectoryPath stringByAppendingPathComponent:path];
+        path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path];
     }
     return path.stringByStandardizingPath;
 }

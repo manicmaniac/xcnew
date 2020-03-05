@@ -14,10 +14,12 @@ NSString *_Nullable XCNCreateSecureTemporaryDirectoryWithBasename(NSString *base
     char templatePath[PATH_MAX] = {0};
     if (![templatePathString getCString:templatePath maxLength:sizeof(templatePath) encoding:NSUTF8StringEncoding]) {
         if (error) {
-            *error = [NSError errorWithDomain:XCNErrorDomain code:XCNInvalidArgumentError userInfo:@{
-                NSLocalizedDescriptionKey: @"Failed to generate a temporary directory name.",
-                NSLocalizedFailureReasonErrorKey: @"The given basename is too long."
-            }];
+            *error = [NSError errorWithDomain:XCNErrorDomain
+                                         code:XCNInvalidArgumentError
+                                     userInfo:@{
+                                         NSLocalizedDescriptionKey : @"Failed to generate a temporary directory name.",
+                                         NSLocalizedFailureReasonErrorKey : @"The given basename is too long."
+                                     }];
         }
         return nil;
     }
@@ -25,13 +27,17 @@ NSString *_Nullable XCNCreateSecureTemporaryDirectoryWithBasename(NSString *base
         if (error) {
             errno_t currentErrno = errno;
             if (currentErrno) {
-                *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:(NSInteger)currentErrno userInfo:@{
-                    NSLocalizedDescriptionKey: [NSString stringWithUTF8String:strerror(currentErrno)]
-                }];
+                *error = [NSError errorWithDomain:NSPOSIXErrorDomain
+                                             code:(NSInteger)currentErrno
+                                         userInfo:@{
+                                             NSLocalizedDescriptionKey : [NSString stringWithUTF8String:strerror(currentErrno)]
+                                         }];
             } else {
-                *error = [NSError errorWithDomain:XCNErrorDomain code:XCNUnknownError userInfo:@{
-                    NSLocalizedDescriptionKey: @"`mkdtemp` unexpectedly failed without reporting error."
-                }];
+                *error = [NSError errorWithDomain:XCNErrorDomain
+                                             code:XCNUnknownError
+                                         userInfo:@{
+                                             NSLocalizedDescriptionKey : @"`mkdtemp` unexpectedly failed without reporting error."
+                                         }];
             }
         }
         return nil;

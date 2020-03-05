@@ -11,8 +11,8 @@
 
 #define XCNAssertFileExistsAtPath(path, ...) \
     do { \
-        BOOL xcn_isDirectory = NO; \
-        XCTAssert([NSFileManager.defaultManager fileExistsAtPath:path isDirectory:&xcn_isDirectory] && !xcn_isDirectory, __VA_ARGS__); \
+        BOOL isDirectory = NO; \
+        XCTAssert([NSFileManager.defaultManager fileExistsAtPath:path isDirectory:&isDirectory] && !isDirectory, __VA_ARGS__); \
     } while (0)
 
 #define XCNAssertFileOrDirectoryDoesNotExistAtPath(path, ...) \
@@ -20,16 +20,16 @@
 
 #define XCNAssertDirectoryExistsAtPath(path, ...) \
     do { \
-        BOOL xcn_isDirectory = NO; \
-        XCTAssert([NSFileManager.defaultManager fileExistsAtPath:path isDirectory:&xcn_isDirectory] && xcn_isDirectory, __VA_ARGS__); \
+        BOOL isDirectory = NO; \
+        XCTAssert([NSFileManager.defaultManager fileExistsAtPath:path isDirectory:&isDirectory] && isDirectory, __VA_ARGS__); \
     } while (0)
 
 #define XCNAssertFileContainsString(path, string, ...) \
     do { \
-        NSError *xcn_error = nil; \
-        NSString *xcn_contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&xcn_error]; \
-        XCTAssertNil(xcn_error); \
-        XCTAssert([xcn_contents containsString:string], __VA_ARGS__); \
+        NSError *error; \
+        NSString *contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error]; \
+        XCTAssertNil(error); \
+        XCTAssert([contents containsString:string], __VA_ARGS__); \
     } while (0)
 
 #endif /* XCNTestAssertions_h */
