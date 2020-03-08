@@ -24,29 +24,11 @@
 		5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
 		5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */; };
 		5B37112623F73094004CD497 /* XCNSecureTemporaryDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37112523F73094004CD497 /* XCNSecureTemporaryDirectory.m */; };
-		5BC9EE2222FDF75800D67BD1 /* xcnew.mxml in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
-		5BC9EE2522FDF81E00D67BD1 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */; };
+		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
 		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXBuildRule section */
-		5BC9EE2722FDF88100D67BD1 /* PBXBuildRule */ = {
-			isa = PBXBuildRule;
-			compilerSpec = com.apple.compilers.proxy.script;
-			filePatterns = "*.mxml";
-			fileType = pattern.proxy;
-			inputFiles = (
-			);
-			isEditable = 1;
-			name = "MPGL Translator";
-			outputFiles = (
-				"$(BUILT_PRODUCTS_DIR)/$(INPUT_FILE_BASE).1",
-			);
-			script = "xml2man -f \"$INPUT_FILE_PATH\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
-		};
-/* End PBXBuildRule section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5B1F0F4122F7A2FA00A7AFFA /* CopyFiles */ = {
@@ -65,7 +47,7 @@
 			dstPath = /share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
-				5BC9EE2522FDF81E00D67BD1 /* xcnew.1 in Copy Files */,
+				5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
@@ -108,8 +90,8 @@
 		5B37112523F73094004CD497 /* XCNSecureTemporaryDirectory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNSecureTemporaryDirectory.m; sourceTree = "<group>"; };
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
+		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
-		5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
 		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
 		5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSetTests.m; sourceTree = "<group>"; };
@@ -159,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				5B20A2EE22F0BB0300EA7295 /* xcnew */,
-				5BC9EE2422FDF79F00D67BD1 /* xcnew.1 */,
 				5B1F0F3922F7A2BA00A7AFFA /* xcnew-tests.xctest */,
 			);
 			name = Products;
@@ -184,6 +165,7 @@
 				5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
 				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
+				5B63AE032414C9CB00730367 /* xcnew.1 */,
 				5B37114B23F81570004CD497 /* Info.plist */,
 			);
 			path = Sources;
@@ -258,7 +240,6 @@
 				5BC9EE2322FDF76100D67BD1 /* Copy Files */,
 			);
 			buildRules = (
-				5BC9EE2722FDF88100D67BD1 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -333,7 +314,6 @@
 				5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */,
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
 				5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */,
-				5BC9EE2222FDF75800D67BD1 /* xcnew.mxml in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
