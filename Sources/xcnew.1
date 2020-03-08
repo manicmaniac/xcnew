@@ -1,0 +1,62 @@
+.\" Automatically generated from mdocxml
+.Dd February 14, 2020
+.Dt "XCNEW" 1
+.Os "Darwin" ""
+.Sh NAME
+.Nm xcnew
+.Nd \&A command line interface \&to make \&a project for iOS Single View App.
+.Sh SYNOPSIS
+.Nm
+.Op Fl h|--help
+.Op Fl v|--version
+.Op Fl n|--organization-name Ar ORG_NAME
+.Op Fl i|--organization-identifier Ar ORG_ID
+.Op Fl t|--has-unit-tests
+.Op Fl u|--has-ui-tests
+.Op Fl s|--swift-ui
+.Ar PRODUCT_NAME
+.Op Ar OUTPUT_DIR
+.Sh OPTIONS
+The available options are as follows:
+.Bl -tag -width XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+.It Fl h|--help
+Show help and exit
+.It Fl v|--version
+Show version and exit
+.It Fl n|--organization-name
+Specify organization's name
+.It Fl i|--organization-identifier
+Specify organization's identifier
+.It Fl t|--has-unit-tests
+Enable unit tests
+.It Fl u|--has-ui-tests
+Enable \&UI tests
+.It Fl s|--swift-ui
+Enable Swift \&UI (available only when Swift \&UI \&is supported)
+.It Ar "PRODUCT_NAME"
+Required TARGET_NAME \&of project.pbxproj
+.It Ar "OUTPUT_DIR"
+Optional directory name \&of the project
+.El
+.Sh ENVIRONMENT
+.Bl -tag -width XXXXX
+.It DEVELOPER_DIR
+Overrides the active developer directory. See documentation for
+.Sy xcode-select(1).
+.It DVTSDKLogLevel
+Set log level for Xcode private frameworks (default 1).
+.El
+.Pp
+.Sh DIAGNOSTICS
+The
+.Nm xcnew
+command returns 0 \&on success, others \&on failure.
+.Pp
+.Sh SEE ALSO
+.Xr xcode-select 1 ,
+.Xr xcodebuild 1
+.Sh BUGS
+Since
+.Nm xcnew
+\&is depends \&on Xcode private frameworks, \&it cannot work \&as expected when the path \&of Xcode has been changed since \&it was built.
+.Pp
