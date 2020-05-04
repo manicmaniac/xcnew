@@ -23,7 +23,6 @@
 		5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */; };
 		5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
 		5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */; };
-		5B37112623F73094004CD497 /* XCNSecureTemporaryDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B37112523F73094004CD497 /* XCNSecureTemporaryDirectory.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
@@ -86,8 +85,6 @@
 		5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNUserInterface.m; sourceTree = "<group>"; };
 		5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNUserInterfaceTests.m; sourceTree = "<group>"; };
 		5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNLanguageTests.m; sourceTree = "<group>"; };
-		5B37112423F73094004CD497 /* XCNSecureTemporaryDirectory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNSecureTemporaryDirectory.h; sourceTree = "<group>"; };
-		5B37112523F73094004CD497 /* XCNSecureTemporaryDirectory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNSecureTemporaryDirectory.m; sourceTree = "<group>"; };
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
@@ -116,8 +113,6 @@
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
-				5B37112423F73094004CD497 /* XCNSecureTemporaryDirectory.h */,
-				5B37112523F73094004CD497 /* XCNSecureTemporaryDirectory.m */,
 				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
@@ -294,7 +289,6 @@
 				5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */,
 				5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */,
 				5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */,
-				5B37112623F73094004CD497 /* XCNSecureTemporaryDirectory.m in Sources */,
 				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B1F0F3C22F7A2BA00A7AFFA /* XCNewTests.m in Sources */,
