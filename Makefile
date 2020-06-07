@@ -2,23 +2,25 @@
 
 PREFIX ?= /usr/local
 BUILD_DIR ?= build
+XCODEBUILD = xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release BUILD_DIR=$(BUILD_DIR)
+EXECUTABLE = $(BUILD_DIR)/Release/xcnew
 
-all: build/Release/xcnew
+all: $(EXECUTABLE)
 
 install:
-	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release install BUILD_DIR=$(BUILD_DIR) DSTROOT=$(PREFIX)
+	$(XCODEBUILD) install DSTROOT=$(PREFIX)
 
 uninstall:
 	$(RM) $(PREFIX)/bin/xcnew $(PREFIX)/share/man/man1/xcnew.1
 
 check:
-	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release test BUILD_DIR=$(BUILD_DIR)
+	$(XCODEBUILD) test
 
 clean:
-	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release clean BUILD_DIR=$(BUILD_DIR)
+	$(XCODEBUILD) clean
 
 distclean: clean
-	$(RM) -R build
+	$(RM) -R $(BUILD_DIR)
 
-build/Release/xcnew:
-	xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release build BUILD_DIR=$(BUILD_DIR)
+$(EXECUTABLE):
+	$(XCODEBUILD) build
