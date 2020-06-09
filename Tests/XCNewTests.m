@@ -84,10 +84,10 @@
 }
 
 - (void)testExecuteWithMinimalValidArguments {
-    NSString *stdoutString;
+    NSString *stdoutString, *stderrString;
     NSString *path = @"Example";
     NSArray *arguments = @[ @"Example" ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
@@ -101,11 +101,14 @@
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Example");
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
+    }
 }
 
 #if XCN_SWIFT_UI_IS_AVAILABLE
 - (void)testExecuteWithAllValidArgumentsEnablingSwiftUI {
-    NSString *stdoutString;
+    NSString *stdoutString, *stderrString;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
@@ -117,7 +120,7 @@
                             @"ProductName",
                             path ];
     path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
@@ -131,11 +134,14 @@
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
+    }
 }
 #endif
 
 - (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
-    NSString *stdoutString;
+    NSString *stdoutString, *stderrString;
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
@@ -146,7 +152,7 @@
                             @"ProductName",
                             path ];
     path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 0);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
@@ -160,10 +166,13 @@
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
+    }
 }
 
 - (void)testExecuteWithInaccessiblePath {
-    NSString *stdoutString;
+    NSString *stdoutString, *stderrString;
     NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Inaccessible"];
     NSError *error;
     if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error]) {
@@ -173,7 +182,7 @@
         return XCTFail(@"%@", error);
     }
     NSArray *arguments = @[ @"ProductName", path ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:nil], 1);
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 1);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
@@ -181,6 +190,9 @@
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Inaccessible.xcodeproj/project.pbxproj"]);
     if (![_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:path error:&error]) {
         XCTFail(@"%@", error);
+    }
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
     }
 }
 
