@@ -200,7 +200,7 @@
 
 - (int)runWithArguments:(NSArray<NSString *> *)arguments standardOutput:(NSString **)stdoutString standardError:(NSString **)stderrString {
     NSFileHandle *stdoutFileHandle, *stderrFileHandle;
-    NSTask *task = [NSTask new];
+    NSTask *task = [[NSTask alloc] init];
     task.launchPath = _executablePath;
     task.arguments = arguments;
     if (stdoutString) {
