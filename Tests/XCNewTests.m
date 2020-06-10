@@ -212,12 +212,10 @@
     [task launch];
     if (stdoutString) {
         NSData *stdoutData = [stdoutFileHandle readDataToEndOfFile];
-        [stdoutFileHandle closeFile];
         *stdoutString = [[NSString alloc] initWithData:stdoutData encoding:NSUTF8StringEncoding];
     }
     if (stderrString) {
         NSData *stderrData = [stderrFileHandle readDataToEndOfFile];
-        [stderrFileHandle closeFile];
         *stderrString = [[NSString alloc] initWithData:stderrData encoding:NSUTF8StringEncoding];
     }
     [task waitUntilExit];
