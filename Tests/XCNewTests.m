@@ -224,8 +224,7 @@
 
 - (NSURL *)sandboxProfileURL {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *url = [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
-    return url;
+    return [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
 }
 
 @end
