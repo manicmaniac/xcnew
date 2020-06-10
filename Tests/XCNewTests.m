@@ -198,7 +198,7 @@
     NSFileHandle *stdoutFileHandle, *stderrFileHandle;
     NSTask *task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/sandbox-exec";
-    task.arguments = [@[ @"-p", [self sandboxProfile], _executablePath ] arrayByAddingObjectsFromArray:arguments];
+    task.arguments = [@[ @"-f", [self sandboxProfileURL].path, _executablePath ] arrayByAddingObjectsFromArray:arguments];
     if (stdoutString) {
         NSPipe *stdoutPipe = [NSPipe pipe];
         stdoutFileHandle = stdoutPipe.fileHandleForReading;
@@ -224,15 +224,10 @@
     return task.terminationStatus;
 }
 
-- (NSString *)sandboxProfile {
+- (NSURL *)sandboxProfileURL {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSURL *url = [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
-    NSError *error;
-    NSString *profile = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-    if (!profile) {
-        XCTFail(@"%@", error);
-    }
-    return profile;
+    return url;
 }
 
 @end
