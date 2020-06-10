@@ -197,8 +197,8 @@
 - (int)runWithArguments:(NSArray<NSString *> *)arguments standardOutput:(NSString **)stdoutString standardError:(NSString **)stderrString {
     NSFileHandle *stdoutFileHandle, *stderrFileHandle;
     NSTask *task = [[NSTask alloc] init];
-    task.launchPath = _executablePath;
-    task.arguments = arguments;
+    task.launchPath = @"/usr/bin/sandbox-exec";
+    task.arguments = [@[ @"-p", [self sandboxProfile], _executablePath ] arrayByAddingObjectsFromArray:arguments];
     if (stdoutString) {
         NSPipe *stdoutPipe = [NSPipe pipe];
         stdoutFileHandle = stdoutPipe.fileHandleForReading;
@@ -222,6 +222,17 @@
     }
     [task waitUntilExit];
     return task.terminationStatus;
+}
+
+- (NSString *)sandboxProfile {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *url = [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
+    NSError *error;
+    NSString *profile = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+    if (!profile) {
+        XCTFail(@"%@", error);
+    }
+    return profile;
 }
 
 @end
