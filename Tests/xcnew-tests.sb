@@ -6,5 +6,4 @@
 (allow mach-lookup)
 (allow file-read*)
 (allow file-write*
-    (subpath "/private/var/folders")
-)
+    (subpath "/private/var/folders"))
