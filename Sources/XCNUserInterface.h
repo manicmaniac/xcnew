@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XCNMacroDefinitions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +15,6 @@ typedef NS_ENUM(NSUInteger, XCNUserInterface) {
     XCNUserInterfaceStoryboard,
 };
 
-XCN_EXTERN NSString *NSStringFromXCNUserInterface(XCNUserInterface userInterface);
+OBJC_EXPORT NSString *NSStringFromXCNUserInterface(XCNUserInterface userInterface);
 
 NS_ASSUME_NONNULL_END

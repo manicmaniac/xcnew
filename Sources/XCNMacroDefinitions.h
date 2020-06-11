@@ -9,12 +9,6 @@
 #ifndef XCNMacroDefinitions_h
 #define XCNMacroDefinitions_h
 
-#ifdef __cplusplus
-#define XCN_EXTERN extern "C"
-#else
-#define XCN_EXTERN extern
-#endif
-
 #if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
 #define XCN_FINAL_CLASS __attribute__((objc_subclassing_restricted))
 #else

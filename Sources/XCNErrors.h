@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XCNMacroDefinitions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-XCN_EXTERN NSErrorDomain const XCNErrorDomain;
+OBJC_EXPORT NSErrorDomain const XCNErrorDomain;
 
 // clang-format off
 typedef NS_ERROR_ENUM(XCNErrorDomain, XCNError) {

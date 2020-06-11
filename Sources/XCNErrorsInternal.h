@@ -10,10 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-XCN_EXTERN NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path);
-XCN_EXTERN NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) NS_FORMAT_FUNCTION(1, 2);
-XCN_EXTERN NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption);
-XCN_EXTERN NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption);
-XCN_EXTERN NSError *XCNWrongNumberOfArgumentsErrorCreateWithRange(NSRange acceptableRange, int actual);
+OBJC_EXPORT NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path);
+OBJC_EXPORT NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) NS_FORMAT_FUNCTION(1, 2);
+OBJC_EXPORT NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption);
+OBJC_EXPORT NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption);
+OBJC_EXPORT NSError *XCNWrongNumberOfArgumentsErrorCreateWithRange(NSRange acceptableRange, int actual);
 
 NS_ASSUME_NONNULL_END
