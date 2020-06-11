@@ -107,7 +107,7 @@
 #if XCN_SWIFT_UI_IS_AVAILABLE
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING "s"
 #else
-#define XCN_SWIFT_UI_SHORT_OPTION_STRING ""
+#define XCN_SWIFT_UI_SHORT_OPTION_STRING
 #endif
 
 static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
