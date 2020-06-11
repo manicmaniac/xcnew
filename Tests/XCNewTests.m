@@ -18,6 +18,7 @@
     NSString *_temporaryDirectory;
     NSString *_previousDirectory;
     NSString *_executablePath;
+    NSURL *_sandboxProfileURL;
 }
 
 // MARK: Public
@@ -27,6 +28,7 @@
     _previousDirectory = _fileManager.currentDirectoryPath;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
+    _sandboxProfileURL = [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
     NSError *error;
     NSURL *temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                         inDomain:NSUserDomainMask
@@ -202,7 +204,7 @@
     NSFileHandle *stdoutFileHandle, *stderrFileHandle;
     NSTask *task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/sandbox-exec";
-    task.arguments = [@[ @"-f", [self sandboxProfileURL].path, _executablePath ] arrayByAddingObjectsFromArray:arguments];
+    task.arguments = [@[ @"-f", _sandboxProfileURL.path, _executablePath ] arrayByAddingObjectsFromArray:arguments];
     if (stdoutString) {
         NSPipe *stdoutPipe = [NSPipe pipe];
         stdoutFileHandle = stdoutPipe.fileHandleForReading;
@@ -224,11 +226,6 @@
     }
     [task waitUntilExit];
     return task.terminationStatus;
-}
-
-- (NSURL *)sandboxProfileURL {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    return [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
 }
 
 @end
