@@ -36,5 +36,5 @@ int main(int argc, char *const argv[]) {
             return (int)error.code;
         }
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
