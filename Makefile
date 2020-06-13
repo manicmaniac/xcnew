@@ -1,7 +1,7 @@
 .PHONY: all install uninstall check clean distclean
 
-PREFIX ?= /usr/local
-BUILD_DIR ?= build
+PREFIX = /usr/local
+BUILD_DIR = build
 XCODEBUILD = xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release BUILD_DIR=$(BUILD_DIR)
 EXECUTABLE = $(BUILD_DIR)/Release/xcnew
 
