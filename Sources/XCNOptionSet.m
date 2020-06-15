@@ -30,7 +30,7 @@
             (_useCoreData == optionSet.useCoreData) &&
             (_language == optionSet.language) &&
             (_userInterface == optionSet.userInterface) &&
-            [_outputPath isEqualToString:optionSet.outputPath]);
+            [_outputURL isEqual:optionSet.outputURL]);
 }
 
 - (BOOL)isEqual:(id)object {
@@ -52,7 +52,7 @@
             _useCoreData ^
             _language ^
             _userInterface ^
-            _outputPath.hash);
+            _outputURL.hash);
 }
 
 // MARK: NSCopying
@@ -67,7 +67,7 @@
     copied.useCoreData = _useCoreData;
     copied.language = _language;
     copied.userInterface = _userInterface;
-    copied.outputPath = _outputPath;
+    copied.outputURL = _outputURL;
     return copied;
 }
 

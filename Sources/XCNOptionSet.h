@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL useCoreData;
 @property (nonatomic) XCNLanguage language;
 @property (nonatomic) XCNUserInterface userInterface;
-@property (nonatomic, copy) NSString *outputPath;
+@property (nonatomic, copy) NSURL *outputURL;
 
 - (BOOL)isEqualToOptionSet:(XCNOptionSet *)optionSet;
 

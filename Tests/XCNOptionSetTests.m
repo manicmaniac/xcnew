@@ -23,7 +23,7 @@
     BOOL useCoreData = YES;
     XCNLanguage language = XCNLanguageObjectiveC;
     XCNUserInterface userInterface = XCNUserInterfaceSwiftUI;
-    NSString *outputPath = @"/test";
+    NSURL *outputURL = [NSURL fileURLWithPath:@"/test"];
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
     optionSet.productName = productName;
     optionSet.organizationName = organizationName;
@@ -33,7 +33,7 @@
     optionSet.useCoreData = useCoreData;
     optionSet.language = language;
     optionSet.userInterface = userInterface;
-    optionSet.outputPath = outputPath;
+    optionSet.outputURL = outputURL;
     XCNOptionSet *copied = [optionSet copy];
     XCTAssertNotEqual(optionSet, copied);
     XCTAssertEqualObjects(optionSet, copied);

@@ -39,15 +39,14 @@
     return self;
 }
 
-- (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error {
-    NSParameterAssert(path != nil);
-    path = [self absolutePathForPath:path];
-    if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error]) {
+- (BOOL)writeToURL:(NSURL *)url error:(NSError *__autoreleasing  _Nullable *)error {
+    NSParameterAssert(url != nil);
+    if (![_fileManager createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:error]) {
         return NO;
     }
-    if (![_fileManager isWritableFileAtPath:path]) {
+    if (![_fileManager isWritableFileAtPath:url.path]) {
         if (error) {
-            *error = XCNFileWriteUnknownErrorCreateWithPath(path);
+            *error = XCNFileWriteUnknownErrorCreateWithPath(url.path);
         }
         return NO;
     }
@@ -68,7 +67,7 @@
     [self configureTemplateOptions:template.templateOptions];
     IDETemplateInstantiationContext *context = [kind newTemplateInstantiationContext];
     context.documentTemplate = template;
-    context.documentFilePath = [DVTFilePath filePathForPathString:path];
+    context.documentFilePath = [DVTFilePath filePathForFileURL:url];
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
     [kind.factory instantiateTemplateForContext:context
                                         options:nil
@@ -94,13 +93,6 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
         }
     }
     return nil;
-}
-
-- (NSString *)absolutePathForPath:(NSString *)path {
-    if (!path.isAbsolutePath) {
-        path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path];
-    }
-    return path.stringByStandardizingPath;
 }
 
 - (void)configureTemplateOptions:(NSArray<IDETemplateOption *> *)options {

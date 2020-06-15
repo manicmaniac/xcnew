@@ -15,9 +15,9 @@
 
 @implementation XCNewTests {
     NSFileManager *_fileManager;
-    NSString *_temporaryDirectory;
-    NSString *_previousDirectory;
-    NSString *_executablePath;
+    NSURL *_temporaryDirectoryURL;
+    NSURL *_previousDirectoryURL;
+    NSURL *_executableURL;
     NSURL *_sandboxProfileURL;
 }
 
@@ -25,27 +25,26 @@
 
 - (void)setUp {
     _fileManager = NSFileManager.defaultManager;
-    _previousDirectory = _fileManager.currentDirectoryPath;
+    _previousDirectoryURL = [NSURL fileURLWithPath:_fileManager.currentDirectoryPath];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    _executablePath = [bundle.executablePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@"xcnew"];
+    _executableURL = [NSURL fileURLWithPath:@"xcnew" relativeToURL:bundle.executableURL];
     _sandboxProfileURL = [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
     NSError *error;
-    NSURL *temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
-                                                        inDomain:NSUserDomainMask
-                                               appropriateForURL:_fileManager.temporaryDirectory
-                                                          create:YES
-                                                           error:&error];
-    if (!temporaryDirectoryURL) {
+    _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
+                                                  inDomain:NSUserDomainMask
+                                         appropriateForURL:_fileManager.temporaryDirectory
+                                                    create:YES
+                                                     error:&error];
+    if (!_temporaryDirectoryURL) {
         return XCTFail(@"%@", error);
     }
-    _temporaryDirectory = [temporaryDirectoryURL path];
-    [_fileManager changeCurrentDirectoryPath:_temporaryDirectory];
+    [_fileManager changeCurrentDirectoryPath:_temporaryDirectoryURL.path];
 }
 
 - (void)tearDown {
     NSError *error;
-    [_fileManager changeCurrentDirectoryPath:_previousDirectory];
-    if (![_fileManager removeItemAtPath:_temporaryDirectory error:&error]) {
+    [_fileManager changeCurrentDirectoryPath:_previousDirectoryURL.path];
+    if (![_fileManager removeItemAtPath:_temporaryDirectoryURL.path error:&error]) {
         XCTFail(@"%@", error);
     }
 }
@@ -175,7 +174,7 @@
 
 - (void)testExecuteWithInaccessiblePath {
     NSString *stdoutString, *stderrString;
-    NSString *path = [_temporaryDirectory stringByAppendingPathComponent:@"Inaccessible"];
+    NSString *path = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"].path;
     NSError *error;
     if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error]) {
         return XCTFail(@"%@", error);
@@ -204,7 +203,7 @@
     NSFileHandle *stdoutFileHandle, *stderrFileHandle;
     NSTask *task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/sandbox-exec";
-    task.arguments = [@[ @"-f", _sandboxProfileURL.path, _executablePath ] arrayByAddingObjectsFromArray:arguments];
+    task.arguments = [@[ @"-f", _sandboxProfileURL.path, _executableURL.path ] arrayByAddingObjectsFromArray:arguments];
     if (stdoutString) {
         NSPipe *stdoutPipe = [NSPipe pipe];
         stdoutFileHandle = stdoutPipe.fileHandleForReading;

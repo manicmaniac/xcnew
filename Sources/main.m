@@ -25,7 +25,7 @@ int main(int argc, char *const argv[]) {
             project.useCoreData = optionSet.useCoreData;
             project.language = optionSet.language;
             project.userInterface = optionSet.userInterface;
-            [project writeToFile:optionSet.outputPath error:&error];
+            [project writeToURL:optionSet.outputURL error:&error];
         }
         if (error) {
             NSMutableString *message = [NSMutableString stringWithFormat:@"xcnew: %@", error.localizedDescription];
