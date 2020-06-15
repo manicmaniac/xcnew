@@ -14,7 +14,7 @@
     BOOL _chooserOnly;
     BOOL _hiddenFromLibrary;
     BOOL _hiddenFromChooser;
-    BOOL __isDebug;
+    BOOL _isDebug;
     NSString *_defaultCompletionName;
     NSString *_mainTemplateFile;
     NSArray *_allowedTypes;
@@ -46,9 +46,10 @@
 + (void)_processChildrenOfFilePath:(id)arg1 enumerator:(CDUnknownBlockType)arg2;
 + (void)initialize;
 + (id)_templateInfoForTemplateAtURL:(id)arg1 error:(id *)arg2;
-@property BOOL _isDebug;                                           // @synthesize _isDebug=__isDebug;
+
 @property (retain) IDETemplateOption *optionWithAllowedTypes;      // @synthesize optionWithAllowedTypes=_optionWithAllowedTypes;
 @property (retain) IDETemplateOption *optionWithMainTemplateFiles; // @synthesize optionWithMainTemplateFiles=_optionWithMainTemplateFiles;
+@property BOOL isDebug;                                            // @synthesize isDebug=_isDebug;
 @property (retain, nonatomic) IDEWorkspace *workspace;             // @synthesize workspace=_workspace;
 @property (readonly, copy) NSString *nameOfInitialFileForEditor;   // @synthesize nameOfInitialFileForEditor=_nameOfInitialFileForEditor;
 @property long long sortOrder;                                     // @synthesize sortOrder=_sortOrder;
@@ -65,9 +66,8 @@
 @property (retain) IDETemplateKind *templateKind;                  // @synthesize templateKind=_templateKind;
 @property (readonly) DVTFilePath *filePath;                        // @synthesize filePath=_filePath;
 @property (readonly, copy) NSDictionary *templateInfo;             // @synthesize templateInfo=_templateInfo;
-
-@property (readonly, copy) NSArray *allowedTypes;      // @synthesize allowedTypes=_allowedTypes;
-@property (readonly, copy) NSString *mainTemplateFile; // @synthesize mainTemplateFile=_mainTemplateFile;
+@property (readonly, copy) NSArray *allowedTypes;                  // @synthesize allowedTypes=_allowedTypes;
+@property (readonly, copy) NSString *mainTemplateFile;             // @synthesize mainTemplateFile=_mainTemplateFile;
 - (void)valueDidChangeForOption:(id)arg1;
 @property (readonly) NSString *currentOptionsIdentifierValue;
 @property (readonly) IDETemplateOption *productNameOption;
