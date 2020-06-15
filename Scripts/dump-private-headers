@@ -52,6 +52,13 @@ sed -i '' -e '7i\
                           PrivateHeaders/IDEFoundation/IDETemplate.h \
                           PrivateHeaders/IDEFoundation/IDETemplateFactory.h
 
+# Manually add C function which cannot be extracted with `class-dump`
+cat <<-EOF >PrivateHeaders/IDEFoundation/IDEInitialization.h
+@class NSError;
+
+extern void IDEInitialize(int, NSError *__autoreleasing _Nullable *_Nullable);
+EOF
+
 # Re-format all files.
 find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} \;
 

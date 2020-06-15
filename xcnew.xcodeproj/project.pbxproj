@@ -89,6 +89,7 @@
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
+		5B9B42CB24982AE700119B10 /* IDEInitialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEInitialization.h; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
 		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
@@ -190,6 +191,7 @@
 		5B20AFAC22F73DDB00EA7295 /* IDEFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				5B9B42CB24982AE700119B10 /* IDEInitialization.h */,
 				5B20AFAE22F73DDB00EA7295 /* IDETemplate.h */,
 				5B20AFAD22F73DDB00EA7295 /* IDETemplateFactory.h */,
 				5B20AFAF22F73DDB00EA7295 /* IDETemplateInstantiationContext.h */,

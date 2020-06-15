@@ -35,6 +35,7 @@
 
 + (void)_registerStandardCachedFileInfoDerivationFunctionsIfNeeded;
 + (CDUnknownFunctionPointerType)_cachedInfoDerivationFunctionForKey:(id)arg1 derivationLock:(id *)arg2;
++ (void)_registerCachedInfoDerivationFunction:(CDUnknownFunctionPointerType)arg1 forKey:(id)arg2 shouldUsePerVnodeLock:(BOOL)arg3;
 + (void)registerCachedInfoDerivationFunction:(CDUnknownFunctionPointerType)arg1 forKey:(id)arg2;
 + (id)filePathForFileURL:(id)arg1;
 + (id)filePathForPathString:(id)arg1;

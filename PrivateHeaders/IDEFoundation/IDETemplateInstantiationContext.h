@@ -27,6 +27,7 @@
     id<IDEProvisioningBasicTeam> _team;
 }
 
+
 @property (retain) id<IDEProvisioningBasicTeam> team;         // @synthesize team=_team;
 @property BOOL reuseFileReferences;                           // @synthesize reuseFileReferences=_reuseFileReferences;
 @property BOOL alwaysReplaceFiles;                            // @synthesize alwaysReplaceFiles=_alwaysReplaceFiles;
@@ -40,7 +41,6 @@
 @property (retain) DVTFilePath *documentFilePath;             // @synthesize documentFilePath=_documentFilePath;
 @property (retain, nonatomic) IDETemplate *documentTemplate;  // @synthesize documentTemplate=_documentTemplate;
 @property (retain, nonatomic) IDEWorkspace *workspace;        // @synthesize workspace=_workspace;
-
 @property (readonly) NSDictionary *additionalMacroExpansions;
 @property (readonly) NSArray *customDataStoresForTemplateMacros;
 - (id)destinationBlueprintProvider;
