@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithProductName:(NSString *)productName NS_DESIGNATED_INITIALIZER;
-- (BOOL)writeToFile:(NSString *)path error:(NSError *__autoreleasing _Nullable *)error;
+- (BOOL)writeToURL:(NSURL *)url error:(NSError *__autoreleasing _Nullable *)error;
 
 @end
 

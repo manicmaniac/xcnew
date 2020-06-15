@@ -86,11 +86,11 @@
     switch (numberOfRestArguments) {
         case 2:
             optionSet.productName = @(argv[optind]);
-            optionSet.outputPath = @(argv[optind + 1]);
+            optionSet.outputURL = [NSURL fileURLWithPath:@(argv[optind + 1])];
             break;
         case 1:
             optionSet.productName = @(argv[optind]);
-            optionSet.outputPath = optionSet.productName;
+            optionSet.outputURL = [NSURL fileURLWithPath:optionSet.productName];
             break;
         default:
             if (error) {
