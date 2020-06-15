@@ -9,6 +9,7 @@
 #import "XCNProject.h"
 
 #import <DVTFoundation/DVTFilePath.h>
+#import <IDEFoundation/IDEInitialization.h>
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateFactory.h>
 #import <IDEFoundation/IDETemplateInstantiationContext.h>
@@ -81,8 +82,6 @@
 }
 
 // MARK: Private
-
-extern void IDEInitialize(int, NSError **);
 
 static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
 
