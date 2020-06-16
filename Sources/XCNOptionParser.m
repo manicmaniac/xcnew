@@ -42,10 +42,10 @@
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
         switch (shortOption) {
             case 'h':
-                puts(help);
+                [self printHelpWithPath:argv[0]];
                 return nil;
             case 'v':
-                puts([[NSBundle.mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
+                [self printVersion];
                 return nil;
             case 'n':
                 optionSet.organizationName = @(optarg);
@@ -104,15 +104,31 @@
 
 // MARK: Private
 
+- (void)printHelpWithPath:(const char *)path {
+    const char *programName = strrchr(path, '/');
+    if (programName) {
+        programName++;
+    } else {
+        programName = path;
+    }
+    printf(help, programName, programName);
+}
+
+- (void)printVersion {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    const char *version = [[bundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String];
+    puts(version);
+}
+
 #if XCN_SWIFT_UI_IS_AVAILABLE
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING "s"
 #else
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING
 #endif
 
-static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
+static const char help[] = "%s - A command line tool to create Xcode project.\n"
                            "\n"
-                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
+                           "Usage: %s [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
                            "    -h, --help                     Show this help and exit\n"

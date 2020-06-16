@@ -77,6 +77,19 @@
     XCTAssertEqualObjects(stderrString, @"");
 }
 
+- (void)testRunWithHelpWithCustomProgramName {
+    NSURL *previousExecutableURL = _executableURL;
+    _executableURL = [_temporaryDirectoryURL URLByAppendingPathComponent:@"foo"];
+    NSError *error;
+    if (![_fileManager copyItemAtURL:previousExecutableURL toURL:_executableURL error:&error]) {
+        XCTFail(@"%@", error);
+    }
+    NSString *stdoutString, *stderrString;
+    XCTAssertEqual([self runWithArguments:@[ @"-h" ] standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertTrue([stdoutString containsString:@"foo"]);
+    XCTAssertEqualObjects(stderrString, @"");
+}
+
 - (void)testRunWithVersion {
     NSString *stdoutString, *stderrString;
     XCTAssertEqual([self runWithArguments:@[ @"-v" ] standardOutput:&stdoutString standardError:&stderrString], 0);
