@@ -46,7 +46,6 @@
 + (void)_processChildrenOfFilePath:(id)arg1 enumerator:(CDUnknownBlockType)arg2;
 + (void)initialize;
 + (id)_templateInfoForTemplateAtURL:(id)arg1 error:(id *)arg2;
-
 @property (retain) IDETemplateOption *optionWithAllowedTypes;      // @synthesize optionWithAllowedTypes=_optionWithAllowedTypes;
 @property (retain) IDETemplateOption *optionWithMainTemplateFiles; // @synthesize optionWithMainTemplateFiles=_optionWithMainTemplateFiles;
 @property BOOL isDebug;                                            // @synthesize isDebug=_isDebug;
