@@ -27,7 +27,7 @@ class-dump -H \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 rm -f 'PrivateHeaders/IDEFoundation/CDStructures.h'
 
-find PrivateHeaders -type f -name '*.h' -exec sed -i '' -e '
+xargs -0 -J% find PrivateHeaders -type f -name '*.h' -exec sed -i '' -e '%' {} + <<-'EOF'
     # Remove C++ destructor declaration, which is not permitted in Objective-C class.
     s/^- (void)\.cxx_destruct;$//
 
@@ -40,7 +40,7 @@ find PrivateHeaders -type f -name '*.h' -exec sed -i '' -e '
 
     # Add an explicit ownership to avoid warnings.
     s/id \*_field2;$/__unsafe_unretained id *_field2;/
-' {} \;
+EOF
 
 # Add missing header `<os/lock.h>`
 sed -i '' -e '7i\
