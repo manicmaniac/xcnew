@@ -10,8 +10,6 @@
 
 #import <DVTFoundation/DVTFileSystemRepresentationProviding-Protocol.h>
 
-
-
 @class DVTFileDataType, DVTFileSystemVNode, NSArray, NSDate, NSDictionary, NSNumber, NSString, NSURL;
 
 @interface DVTFilePath : NSObject<NSCopying, DVTFileSystemRepresentationProviding, NSSecureCoding> {
@@ -47,7 +45,6 @@
 + (id)_lookupOrCreateFilePathWithParentPath:(id)arg1 fileSystemRepresentation:(const char *)arg2 length:(unsigned long long)arg3 allowCreation:(BOOL)arg4;
 + (id)rootFilePath;
 + (void)initialize;
-
 - (id)_descriptionOfAssociates;
 - (id)description;
 - (void)dvt_provideFileSystemRepresentationToBlock:(CDUnknownBlockType)arg1;

@@ -5,7 +5,6 @@
 //
 
 
-
 @class IDETemplateOption, IDEWorkspace, NSString;
 
 @protocol IDETemplateOptionParent<NSObject>

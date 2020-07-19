@@ -7,7 +7,6 @@
 #import <Foundation/Foundation.h>
 
 
-
 @class DVTFilePath, IDEContainerItem, IDEGroup, IDETemplate, IDEWorkspace, NSArray, NSDictionary;
 @protocol IDEProvisioningBasicTeam;
 
@@ -26,7 +25,6 @@
     IDEWorkspace *_createdWorkspace;
     id<IDEProvisioningBasicTeam> _team;
 }
-
 
 @property (retain) id<IDEProvisioningBasicTeam> team;         // @synthesize team=_team;
 @property BOOL reuseFileReferences;                           // @synthesize reuseFileReferences=_reuseFileReferences;
