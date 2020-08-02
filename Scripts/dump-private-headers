@@ -69,4 +69,4 @@ find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} +
     xcodebuild -version
     class-dump --version
     clang-format --version
-) > PrivateHeaders/versions.txt
+) >PrivateHeaders/versions.txt
