@@ -27,7 +27,7 @@ class-dump -H \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 rm -f 'PrivateHeaders/IDEFoundation/CDStructures.h'
 
-xargs -0 -J% find PrivateHeaders -type f -name '*.h' -exec sed -i '' -e '%' {} + <<-'EOF'
+find PrivateHeaders -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
     # Remove C++ destructor declaration, which is not permitted in Objective-C class.
     /^- (void)\.cxx_destruct;$/d
 
@@ -60,7 +60,7 @@ extern void IDEInitialize(int, NSError *__autoreleasing _Nullable *_Nullable);
 EOF
 
 # Re-format all files.
-find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} \;
+find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} +
 
 # To reproduce the result, tool versions are recorded.
 (
@@ -69,4 +69,4 @@ find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} \;
     xcodebuild -version
     class-dump --version
     clang-format --version
-) > PrivateHeaders/versions.txt
+) >PrivateHeaders/versions.txt
