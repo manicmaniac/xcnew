@@ -60,7 +60,7 @@ extern void IDEInitialize(int, NSError *__autoreleasing _Nullable *_Nullable);
 EOF
 
 # Re-format all files.
-find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} \;
+find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} +
 
 # To reproduce the result, tool versions are recorded.
 (
