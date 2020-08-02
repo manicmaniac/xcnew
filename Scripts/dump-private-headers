@@ -27,7 +27,7 @@ class-dump -H \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 rm -f 'PrivateHeaders/IDEFoundation/CDStructures.h'
 
-xargs -0 -J% find PrivateHeaders -type f -name '*.h' -exec sed -i '' -e '%' {} + <<-'EOF'
+find PrivateHeaders -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
     # Remove C++ destructor declaration, which is not permitted in Objective-C class.
     /^- (void)\.cxx_destruct;$/d
 
