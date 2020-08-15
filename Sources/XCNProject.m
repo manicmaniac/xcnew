@@ -112,6 +112,8 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.booleanValue = (_feature & XCNProjectFeatureUITests);
         } else if ([identifier isEqualToString:@"coreData"]) {
             option.booleanValue = (_feature & XCNProjectFeatureCoreData);
+        } else if ([identifier isEqualToString:@"coreDataCloudKit"]) {
+            option.booleanValue = (_feature & XCNProjectFeatureCloudKit);
         } else if ([identifier isEqualToString:@"userInterface"]) {
             option.value = NSStringFromXCNUserInterface(_userInterface);
         }

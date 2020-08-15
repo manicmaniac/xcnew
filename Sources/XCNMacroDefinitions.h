@@ -19,5 +19,6 @@
 // I added prefix `0x` to the actual XCODE_VERSION_MAJOR build variable.
 // See also `Preprocessor Macros` section in the project's build settings.
 #define XCN_SWIFT_UI_IS_AVAILABLE (XCODE_VERSION_MAJOR >= 0x1100)
+#define XCN_CLOUD_KIT_IS_AVAILABLE (XCODE_VERSION_MAJOR >= 0x1100)
 
 #endif /* XCNMacroDefinions_h */
