@@ -25,9 +25,7 @@
     return ([_productName isEqualToString:optionSet.productName] &&
             [_organizationName isEqualToString:optionSet.organizationName] &&
             [_organizationIdentifier isEqualToString:optionSet.organizationIdentifier] &&
-            (_hasUnitTests == optionSet.hasUnitTests) &&
-            (_hasUITests == optionSet.hasUITests) &&
-            (_useCoreData == optionSet.useCoreData) &&
+            (_feature == optionSet.feature) &&
             (_language == optionSet.language) &&
             (_userInterface == optionSet.userInterface) &&
             [_outputURL isEqual:optionSet.outputURL]);
@@ -47,9 +45,7 @@
     return (_productName.hash ^
             _organizationName.hash ^
             _organizationIdentifier.hash ^
-            _hasUnitTests ^
-            _hasUITests ^
-            _useCoreData ^
+            _feature ^
             _language ^
             _userInterface ^
             _outputURL.hash);
@@ -62,9 +58,7 @@
     copied.productName = _productName;
     copied.organizationName = _organizationName;
     copied.organizationIdentifier = _organizationIdentifier;
-    copied.hasUnitTests = _hasUnitTests;
-    copied.hasUITests = _hasUITests;
-    copied.useCoreData = _useCoreData;
+    copied.feature = _feature;
     copied.language = _language;
     copied.userInterface = _userInterface;
     copied.outputURL = _outputURL;

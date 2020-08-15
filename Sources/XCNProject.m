@@ -107,11 +107,11 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
         } else if ([identifier isEqualToString:@"bundleIdentifierPrefix"]) {
             option.value = _organizationIdentifier;
         } else if ([identifier isEqualToString:@"hasUnitTests"]) {
-            option.booleanValue = _hasUnitTests;
+            option.booleanValue = (_feature & XCNProjectFeatureUnitTests);
         } else if ([identifier isEqualToString:@"hasUITests"]) {
-            option.booleanValue = _hasUITests;
+            option.booleanValue = (_feature & XCNProjectFeatureUITests);
         } else if ([identifier isEqualToString:@"coreData"]) {
-            option.booleanValue = _useCoreData;
+            option.booleanValue = (_feature & XCNProjectFeatureCoreData);
         } else if ([identifier isEqualToString:@"userInterface"]) {
             option.value = NSStringFromXCNUserInterface(_userInterface);
         }
