@@ -18,9 +18,7 @@
     NSString *productName = @"Example";
     NSString *organizationName = @"Organization";
     NSString *organizationIdentifier = @"com.example";
-    BOOL hasUnitTests = YES;
-    BOOL hasUITests = YES;
-    BOOL useCoreData = YES;
+    XCNProjectFeature feature = XCNProjectFeatureUnitTests | XCNProjectFeatureUITests | XCNProjectFeatureCoreData;
     XCNLanguage language = XCNLanguageObjectiveC;
     XCNUserInterface userInterface = XCNUserInterfaceSwiftUI;
     NSURL *outputURL = [NSURL fileURLWithPath:@"/test"];
@@ -28,9 +26,7 @@
     optionSet.productName = productName;
     optionSet.organizationName = organizationName;
     optionSet.organizationIdentifier = organizationIdentifier;
-    optionSet.hasUnitTests = hasUnitTests;
-    optionSet.hasUITests = hasUITests;
-    optionSet.useCoreData = useCoreData;
+    optionSet.feature = feature;
     optionSet.language = language;
     optionSet.userInterface = userInterface;
     optionSet.outputURL = outputURL;

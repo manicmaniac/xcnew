@@ -7,6 +7,7 @@
 //
 
 #import "XCNLanguage.h"
+#import "XCNProjectFeature.h"
 #import "XCNUserInterface.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -16,9 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *productName;
 @property (nonatomic, copy, nullable) NSString *organizationName;
 @property (nonatomic, copy, nullable) NSString *organizationIdentifier;
-@property (nonatomic) BOOL hasUnitTests;
-@property (nonatomic) BOOL hasUITests;
-@property (nonatomic) BOOL useCoreData;
+@property (nonatomic) XCNProjectFeature feature;
 @property (nonatomic) XCNLanguage language;
 @property (nonatomic) XCNUserInterface userInterface;
 @property (nonatomic, copy) NSURL *outputURL;

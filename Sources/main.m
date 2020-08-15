@@ -20,9 +20,7 @@ int main(int argc, char *const argv[]) {
             XCNProject *project = [[XCNProject alloc] initWithProductName:optionSet.productName];
             project.organizationName = optionSet.organizationName;
             project.organizationIdentifier = optionSet.organizationIdentifier;
-            project.hasUnitTests = optionSet.hasUnitTests;
-            project.hasUITests = optionSet.hasUITests;
-            project.useCoreData = optionSet.useCoreData;
+            project.feature = optionSet.feature;
             project.language = optionSet.language;
             project.userInterface = optionSet.userInterface;
             [project writeToURL:optionSet.outputURL error:&error];

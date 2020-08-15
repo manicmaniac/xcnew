@@ -12,6 +12,7 @@
 #import "XCNErrorsInternal.h"
 #import "XCNMacroDefinitions.h"
 #import "XCNOptionSet.h"
+#import "XCNProjectFeature.h"
 
 @implementation XCNOptionParser
 
@@ -54,13 +55,13 @@
                 optionSet.organizationIdentifier = @(optarg);
                 break;
             case 't':
-                optionSet.hasUnitTests = YES;
+                optionSet.feature |= XCNProjectFeatureUnitTests;
                 break;
             case 'u':
-                optionSet.hasUITests = YES;
+                optionSet.feature |= XCNProjectFeatureUITests;
                 break;
             case 'c':
-                optionSet.useCoreData = YES;
+                optionSet.feature |= XCNProjectFeatureCoreData;
                 break;
             case 'o':
                 optionSet.language = XCNLanguageObjectiveC;
