@@ -32,4 +32,12 @@
         XCTAssert([contents containsString:string], __VA_ARGS__); \
     } while (0)
 
+#define XCNAssertFileDoesNotContainString(path, string, ...) \
+    do { \
+        NSError *error; \
+        NSString *contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error]; \
+        XCTAssertNil(error); \
+        XCTAssertFalse([contents containsString:string], __VA_ARGS__); \
+    } while (0)
+
 #endif /* XCNTestAssertions_h */
