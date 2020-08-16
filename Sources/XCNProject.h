@@ -6,6 +6,7 @@
 //  Copyright © 2019 Ryosuke Ito. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "XCNLanguage.h"
 #import "XCNProjectFeature.h"
 #import "XCNUserInterface.h"
