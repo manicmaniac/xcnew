@@ -14,6 +14,7 @@ typedef NS_OPTIONS(NSUInteger, XCNProjectFeature) {
     XCNProjectFeatureUnitTests = 1 << 0,
     XCNProjectFeatureUITests = 1 << 1,
     XCNProjectFeatureCoreData = 1 << 2,
+    XCNProjectFeatureCloudKit = 1 << 3,
 };
 
 NS_ASSUME_NONNULL_END

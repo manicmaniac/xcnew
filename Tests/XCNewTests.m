@@ -141,6 +141,40 @@
 }
 #endif
 
+#if XCN_CLOUD_KIT_IS_AVAILABLE
+- (void)testExecuteWithAllValidArgumentsEnablingCloudKit {
+    NSString *stdoutString, *stderrString;
+    NSString *path = @"./Example/../Example/";
+    NSArray *arguments = @[ @"--organization-name=Organization",
+                            @"--organization-identifier=com.example",
+                            @"--has-unit-tests",
+                            @"--has-ui-tests",
+                            @"--use-cloud-kit",
+                            @"--", // GNU style option scanning terminator
+                            @"ProductName",
+                            path ];
+    path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    XCNAssertDirectoryExistsAtPath(path);
+    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Example.xcdatamodeld/Example.xcdatamodel/contents"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleTests/Info.plist"]);
+    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
+    NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
+    XCNAssertFileExistsAtPath(appDelegatePath);
+    XCNAssertFileContainsString(appDelegatePath, @"Organization");
+    XCNAssertFileContainsString(appDelegatePath, @"NSPersistentCloudKitContainer");
+    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
+    }
+}
+#endif
+
 - (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
     NSString *stdoutString, *stderrString;
     NSString *path = @"./Example/../Example/";
@@ -166,6 +200,7 @@
     NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
     XCNAssertFileExistsAtPath(appDelegatePath);
     XCNAssertFileContainsString(appDelegatePath, @"Organization");
+    XCNAssertFileDoesNotContainString(appDelegatePath, @"NSPersistentCloudKitContainer");
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);

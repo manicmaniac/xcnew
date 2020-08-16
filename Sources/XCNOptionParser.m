@@ -63,6 +63,9 @@
             case 'c':
                 optionSet.feature |= XCNProjectFeatureCoreData;
                 break;
+            case 'C':
+                optionSet.feature |= (XCNProjectFeatureCoreData | XCNProjectFeatureCloudKit);
+                break;
             case 'o':
                 optionSet.language = XCNLanguageObjectiveC;
                 break;
@@ -111,9 +114,15 @@
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING
 #endif
 
+#if XCN_CLOUD_KIT_IS_AVAILABLE
+#define XCN_CLOUD_KIT_SHORT_OPTION_STRING "C"
+#else
+#define XCN_CLOUD_KIT_SHORT_OPTION_STRING
+#endif
+
 static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
                            "\n"
-                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
+                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING XCN_CLOUD_KIT_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
                            "    -h, --help                     Show this help and exit\n"
@@ -123,6 +132,9 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "    -t, --has-unit-tests           Enable unit tests\n"
                            "    -u, --has-ui-tests             Enable UI tests\n"
                            "    -c, --use-core-data            Enable Core Data template\n"
+#if XCN_CLOUD_KIT_IS_AVAILABLE
+                           "    -C, --use-cloud-kit            Enable Core Data with CloudKit template (overrides -c option)\n"
+#endif
                            "    -o, --objc                     Use Objective-C (default: Swift)\n"
 #if XCN_SWIFT_UI_IS_AVAILABLE
                            "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
@@ -132,7 +144,7 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
                            "    [OUTPUT_DIR]                   Optional directory name of the project";
 
-static const char shortOptions[] = "hvn:i:tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING;
+static const char shortOptions[] = "hvn:i:tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING XCN_CLOUD_KIT_SHORT_OPTION_STRING;
 
 static const struct option longOptions[] = {
     {"help", no_argument, NULL, 'h'},
@@ -142,6 +154,9 @@ static const struct option longOptions[] = {
     {"has-unit-tests", no_argument, NULL, 't'},
     {"has-ui-tests", no_argument, NULL, 'u'},
     {"use-core-data", no_argument, NULL, 'c'},
+#if XCN_CLOUD_KIT_IS_AVAILABLE
+    {"use-cloud-kit", no_argument, NULL, 'C'},
+#endif
     {"objc", no_argument, NULL, 'o'},
 #if XCN_SWIFT_UI_IS_AVAILABLE
     {"swift-ui", no_argument, NULL, 's'},
