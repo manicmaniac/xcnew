@@ -5,6 +5,11 @@ BUILD_DIR = build
 XCODEBUILD = xcodebuild -project xcnew.xcodeproj -scheme xcnew -configuration Release BUILD_DIR=$(BUILD_DIR)
 EXECUTABLE = $(BUILD_DIR)/Release/xcnew
 
+%.1: %.mxml
+	@echo "Warning: Some version of xml2man does not support option descriptions." >&2
+	@echo "         Please make sure every option is described in generated manual." >&2
+	xcrun xml2man -f $< $@
+
 all: $(EXECUTABLE)
 
 install:
@@ -21,6 +26,8 @@ clean:
 
 distclean: clean
 	$(RM) -R $(BUILD_DIR)
+
+manpages: Sources/xcnew.1
 
 $(EXECUTABLE):
 	$(XCODEBUILD) build
