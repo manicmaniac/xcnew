@@ -13,6 +13,8 @@
 .Op Fl i|--organization-identifier Ar ORG_ID
 .Op Fl t|--has-unit-tests
 .Op Fl u|--has-ui-tests
+.Op Fl c|--use-core-data
+.Op Fl C|--use-cloud-kit
 .Op Fl s|--swift-ui
 .Ar PRODUCT_NAME
 .Op Ar OUTPUT_DIR
@@ -31,6 +33,10 @@ Specify organization's identifier
 Enable unit tests
 .It Fl u|--has-ui-tests
 Enable \&UI tests
+.It Fl c|--use-core-data
+Enable Core Data template
+.It Fl C|--use-cloud-kit
+Enable Core Data with CloudKit template (overrides \&-c option)
 .It Fl s|--swift-ui
 Enable Swift \&UI (available only when Swift \&UI \&is supported)
 .It Ar "PRODUCT_NAME"
@@ -41,22 +47,22 @@ Optional directory name \&of the project
 .Sh ENVIRONMENT
 .Bl -tag -width XXXXX
 .It DEVELOPER_DIR
-Overrides the active developer directory. See documentation for
+Overrides the active developer directory. See documentation for 
 .Sy xcode-select(1).
 .It DVTSDKLogLevel
 Set log level for Xcode private frameworks (default 1).
 .El
 .Pp
 .Sh DIAGNOSTICS
-The
+The 
 .Nm xcnew
 command returns 0 \&on success, others \&on failure.
 .Pp
 .Sh SEE ALSO
-.Xr xcode-select 1 ,
-.Xr xcodebuild 1
+.Xr xcode-select 1 ,  
+.Xr xcodebuild 1  
 .Sh BUGS
-Since
+Since 
 .Nm xcnew
 \&is depends \&on Xcode private frameworks, \&it cannot work \&as expected when the path \&of Xcode has been changed since \&it was built.
 .Pp
