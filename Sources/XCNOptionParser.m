@@ -10,7 +10,6 @@
 
 #import <getopt.h>
 #import "XCNErrorsInternal.h"
-#import "XCNMacroDefinitions.h"
 #import "XCNOptionSet.h"
 #import "XCNProjectFeature.h"
 

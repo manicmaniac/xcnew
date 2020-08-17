@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XCNErrors.h"
 #import "XCNOptionParser.h"
 #import "XCNOptionSet.h"
 #import "XCNProject.h"
