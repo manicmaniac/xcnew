@@ -56,7 +56,8 @@ sed -i '' -e '7i\
 cat <<-EOF >PrivateHeaders/IDEFoundation/IDEInitialization.h
 @class NSError;
 
-extern void IDEInitialize(int, NSError *__autoreleasing _Nullable *_Nullable);
+extern BOOL IDEInitialize(int initializationOptions, NSError *__autoreleasing _Nullable *_Nullable error);
+extern BOOL IDEInitializationCompleted(int *_Nullable initializationOptions);
 EOF
 
 # Re-format all files.

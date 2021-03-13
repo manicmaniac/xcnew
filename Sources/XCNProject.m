@@ -23,13 +23,6 @@
 
 // MARK: Public
 
-+ (void)initialize {
-    [super initialize];
-    if (self == [XCNProject self]) {
-        IDEInitialize(1, NULL);
-    }
-}
-
 - (instancetype)initWithProductName:(NSString *)productName {
     NSParameterAssert(productName != nil);
     self = [super init];
@@ -42,6 +35,9 @@
 
 - (BOOL)writeToURL:(NSURL *)url error:(NSError *__autoreleasing  _Nullable *)error {
     NSParameterAssert(url != nil);
+    if (![XCNProject initializeIDEIfNeededWithError:error]) {
+        return NO;
+    }
     if (![_fileManager createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:error]) {
         return NO;
     }
@@ -84,6 +80,15 @@
 // MARK: Private
 
 static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
+
++ (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *)error {
+    @synchronized (self) {
+        if (!IDEInitializationCompleted(NULL)) {
+            return IDEInitialize(1, error);
+        }
+        return YES;
+    }
+}
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
     for (IDETemplate *template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
