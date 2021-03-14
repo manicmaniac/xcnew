@@ -17,6 +17,9 @@
 		5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFBF22F7437700EA7295 /* XCNProject.m */; };
 		5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
 		5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
+		5B2F804525FC95D20018752D /* XCNProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFBF22F7437700EA7295 /* XCNProject.m */; };
+		5B2F804725FC97850018752D /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
+		5B2F804825FC97850018752D /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */; };
 		5B35519423F5D75B000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
 		5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */; };
 		5B35519823F5D87C000E5EA1 /* XCNUserInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */; };
@@ -24,6 +27,7 @@
 		5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
 		5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
+		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
 		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
@@ -90,6 +94,7 @@
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
+		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
 		5B9B42CB24982AE700119B10 /* IDEInitialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEInitialization.h; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
@@ -108,6 +113,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5B2F804625FC965C0018752D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B2F804725FC97850018752D /* DVTFoundation.framework in Frameworks */,
+				5B2F804825FC97850018752D /* IDEFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -117,6 +131,7 @@
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
+				5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */,
 				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
@@ -222,6 +237,7 @@
 			buildConfigurationList = 5B1F0F4022F7A2BA00A7AFFA /* Build configuration list for PBXNativeTarget "xcnew-tests" */;
 			buildPhases = (
 				5B1F0F3522F7A2BA00A7AFFA /* Sources */,
+				5B2F804625FC965C0018752D /* Frameworks */,
 				5BDE4A922490D8C800292480 /* Resources */,
 				5B1F0F4122F7A2FA00A7AFFA /* CopyFiles */,
 			);
@@ -313,6 +329,8 @@
 				5B1F0F3C22F7A2BA00A7AFFA /* XCNewTests.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */,
+				5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */,
+				5B2F804525FC95D20018752D /* XCNProject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,11 +354,22 @@
 		5B1F0F3E22F7A2BA00A7AFFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_DIR)/../Frameworks",
+					"$(DEVELOPER_DIR)/../SharedFrameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/PrivateHeaders",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
+					"$(DEVELOPER_DIR)/../Frameworks",
+					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.manicmaniac.xcnew-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -350,11 +379,22 @@
 		5B1F0F3F22F7A2BA00A7AFFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_DIR)/../Frameworks",
+					"$(DEVELOPER_DIR)/../SharedFrameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/PrivateHeaders",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
+					"$(DEVELOPER_DIR)/../Frameworks",
+					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.manicmaniac.xcnew-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
