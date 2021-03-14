@@ -21,7 +21,16 @@
     NSFileManager *_fileManager;
 }
 
+static const NSLock *_templateInstantiationLock;
+
 // MARK: Public
+
++ (void)initialize {
+    [super initialize];
+    if (self == [XCNProject self]) {
+        _templateInstantiationLock = [[NSLock alloc] init];
+    }
+}
 
 - (instancetype)initWithProductName:(NSString *)productName {
     NSParameterAssert(productName != nil);
@@ -33,8 +42,9 @@
     return self;
 }
 
-- (BOOL)writeToURL:(NSURL *)url error:(NSError *__autoreleasing  _Nullable *)error {
+- (BOOL)writeToURL:(NSURL *)url timeout:(NSTimeInterval)timeout error:(NSError *__autoreleasing _Nullable *)error {
     NSParameterAssert(url != nil);
+    NSParameterAssert(timeout > 0);
     if (![XCNProject initializeIDEIfNeededWithError:error]) {
         return NO;
     }
@@ -65,15 +75,26 @@
     IDETemplateInstantiationContext *context = [kind newTemplateInstantiationContext];
     context.documentTemplate = template;
     context.documentFilePath = [DVTFilePath filePathForFileURL:url];
-    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+    __block NSError *instantiationError;
     [kind.factory instantiateTemplateForContext:context
                                         options:nil
-                                       whenDone:^{
-                                           // As far as I know, this block is always called from the main thread but it's not guaranteed.
-                                           // Anyway `CFRunLoop` is a thread-safe object so it doesn't matter even if a subthread calls this block.
-                                           CFRunLoopStop(runLoop);
+                                       whenDone:^(NSArray<DVTFilePath *> *paths, void *_unknown, NSError *error) {
+                                           [paths makeObjectsPerformSelector:@selector(removeAssociatesWithRole:) withObject:@"PBXContainerAssociateRole"];
+                                           instantiationError = error;
+                                           [_templateInstantiationLock unlock];
                                        }];
-    CFRunLoopRun();
+    if (![_templateInstantiationLock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:timeout]]) {
+        if (error) {
+            NSString *failureReason = [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout];
+            *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(failureReason);
+        }
+        return NO;
+    } else if (instantiationError) {
+        if (error) {
+            *error = instantiationError;
+        }
+        return NO;
+    }
     return YES;
 }
 
@@ -82,7 +103,7 @@
 static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
 
 + (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *)error {
-    @synchronized (self) {
+    @synchronized(self) {
         if (!IDEInitializationCompleted(NULL)) {
             return IDEInitialize(1, error);
         }

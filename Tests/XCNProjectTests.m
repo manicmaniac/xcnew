@@ -41,7 +41,7 @@
 - (void)testWriteToURL {
     XCNProject *project = [[XCNProject alloc] initWithProductName:@"Product"];
     NSError *error = nil;
-    XCTAssertTrue([project writeToURL:_temporaryDirectoryURL error:&error]);
+    XCTAssertTrue([project writeToURL:_temporaryDirectoryURL timeout:60 error:&error]);
     XCTAssertNil(error);
 }
 
