@@ -1,4 +1,4 @@
-.PHONY: all install uninstall check clean distclean
+.PHONY: all install uninstall check clean distclean format
 
 PREFIX = /usr/local
 BUILD_DIR = build
@@ -26,6 +26,9 @@ clean:
 
 distclean: clean
 	$(RM) -R $(BUILD_DIR)
+
+format:
+	find Sources Tests -type f -name '*.[hm]' -exec clang-format -i {} +
 
 manpages: Sources/xcnew.1
 
