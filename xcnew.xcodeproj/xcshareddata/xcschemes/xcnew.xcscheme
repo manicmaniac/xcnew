@@ -20,6 +20,20 @@
                ReferencedContainer = "container:xcnew.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5B5364CA2602D710007E7F20"
+               BuildableName = "xcnew-integration-tests.xctest"
+               BlueprintName = "xcnew-integration-tests"
+               ReferencedContainer = "container:xcnew.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -55,18 +69,6 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5B1F0F3822F7A2BA00A7AFFA"
-               BuildableName = "xcnew-tests.xctest"
-               BlueprintName = "xcnew-tests"
-               ReferencedContainer = "container:xcnew.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "5B5364A62602C8F8007E7F20"
                BuildableName = "DVTFoundationTests.xctest"
                BlueprintName = "DVTFoundationTests"
@@ -82,6 +84,30 @@
                BlueprintIdentifier = "5B5364B62602CB37007E7F20"
                BuildableName = "IDEFoundationTests.xctest"
                BlueprintName = "IDEFoundationTests"
+               ReferencedContainer = "container:xcnew.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5B1F0F3822F7A2BA00A7AFFA"
+               BuildableName = "xcnew-tests.xctest"
+               BlueprintName = "xcnew-tests"
+               ReferencedContainer = "container:xcnew.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5B5364CA2602D710007E7F20"
+               BuildableName = "xcnew-integration-tests.xctest"
+               BlueprintName = "xcnew-integration-tests"
                ReferencedContainer = "container:xcnew.xcodeproj">
             </BuildableReference>
          </TestableReference>

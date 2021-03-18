@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B1F0F3C22F7A2BA00A7AFFA /* XCNewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */; };
-		5B1F0F4222F7A30F00A7AFFA /* xcnew in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B20A2EE22F0BB0300EA7295 /* xcnew */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */; };
 		5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
 		5B20A2F922F0BB8500EA7295 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20A2F822F0BB8500EA7295 /* main.m */; };
@@ -33,22 +31,24 @@
 		5B5364C12602CBFD007E7F20 /* IDETemplateKindTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */; };
 		5B5364C22602CBFD007E7F20 /* IDETemplateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596A26011AE600DC1E89 /* IDETemplateTests.m */; };
 		5B5364C32602CC01007E7F20 /* XCNIDEFoundationTestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596D26011FDD00DC1E89 /* XCNIDEFoundationTestHelpers.m */; };
+		5B5364D32602D766007E7F20 /* xcnew-integration-tests.sb in Resources */ = {isa = PBXBuildFile; fileRef = 5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */; };
+		5B5364D42602D76C007E7F20 /* XCNewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */; };
+		5B5364D72602D82C007E7F20 /* xcnew in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B20A2EE22F0BB0300EA7295 /* xcnew */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
 		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
-		5BDE4A932490D8CF00292480 /* xcnew-tests.sb in Resources */ = {isa = PBXBuildFile; fileRef = 5BDE4A912490D8BE00292480 /* xcnew-tests.sb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5B1F0F4122F7A2FA00A7AFFA /* CopyFiles */ = {
+		5B5364D62602D826007E7F20 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				5B1F0F4222F7A30F00A7AFFA /* xcnew in CopyFiles */,
+				5B5364D72602D82C007E7F20 /* xcnew in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +104,8 @@
 		5B5364B02602C957007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B5364B72602CB37007E7F20 /* IDEFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDEFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5364BB2602CB37007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-integration-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
 		5B9B42CB24982AE700119B10 /* IDEInitialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEInitialization.h; sourceTree = "<group>"; };
@@ -111,7 +113,7 @@
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
 		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
 		5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSetTests.m; sourceTree = "<group>"; };
-		5BDE4A912490D8BE00292480 /* xcnew-tests.sb */ = {isa = PBXFileReference; lastKnownFileType = text; path = "xcnew-tests.sb"; sourceTree = "<group>"; };
+		5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */ = {isa = PBXFileReference; lastKnownFileType = text; path = "xcnew-integration-tests.sb"; sourceTree = "<group>"; };
 		5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTFilePathTests.m; sourceTree = "<group>"; };
 		5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateKindTests.m; sourceTree = "<group>"; };
 		5BE7596A26011AE600DC1E89 /* IDETemplateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateTests.m; sourceTree = "<group>"; };
@@ -155,6 +157,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5B5364C82602D710007E7F20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -164,6 +173,7 @@
 				5BE75964260106D300DC1E89 /* DVTFoundationTests */,
 				5BE7596726010C5100DC1E89 /* IDEFoundationTests */,
 				5B5364C42602CCD0007E7F20 /* xcnew-tests */,
+				5B5364C62602D6E9007E7F20 /* xcnew-integration-tests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -186,6 +196,7 @@
 				5B1F0F3922F7A2BA00A7AFFA /* xcnew-tests.xctest */,
 				5B5364A72602C8F8007E7F20 /* DVTFoundationTests.xctest */,
 				5B5364B72602CB37007E7F20 /* IDEFoundationTests.xctest */,
+				5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -247,11 +258,8 @@
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
 				5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */,
-				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
-				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
 				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
-				5BDE4A912490D8BE00292480 /* xcnew-tests.sb */,
 			);
 			path = "xcnew-tests";
 			sourceTree = "<group>";
@@ -280,6 +288,17 @@
 				5B37114B23F81570004CD497 /* Info.plist */,
 			);
 			path = xcnew;
+			sourceTree = "<group>";
+		};
+		5B5364C62602D6E9007E7F20 /* xcnew-integration-tests */ = {
+			isa = PBXGroup;
+			children = (
+				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
+				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
+				5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */,
+				5B5364D52602D7D9007E7F20 /* Info.plist */,
+			);
+			path = "xcnew-integration-tests";
 			sourceTree = "<group>";
 		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
@@ -313,7 +332,6 @@
 				5B1F0F3522F7A2BA00A7AFFA /* Sources */,
 				5B2F804625FC965C0018752D /* Frameworks */,
 				5BDE4A922490D8C800292480 /* Resources */,
-				5B1F0F4122F7A2FA00A7AFFA /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -375,6 +393,24 @@
 			productReference = 5B5364B72602CB37007E7F20 /* IDEFoundationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		5B5364CA2602D710007E7F20 /* xcnew-integration-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B5364D02602D710007E7F20 /* Build configuration list for PBXNativeTarget "xcnew-integration-tests" */;
+			buildPhases = (
+				5B5364C72602D710007E7F20 /* Sources */,
+				5B5364C82602D710007E7F20 /* Frameworks */,
+				5B5364C92602D710007E7F20 /* Resources */,
+				5B5364D62602D826007E7F20 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "xcnew-integration-tests";
+			productName = "xcnew-integration-tests";
+			productReference = 5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -398,6 +434,9 @@
 					5B5364B62602CB37007E7F20 = {
 						CreatedOnToolsVersion = 11.7;
 					};
+					5B5364CA2602D710007E7F20 = {
+						CreatedOnToolsVersion = 11.7;
+					};
 				};
 			};
 			buildConfigurationList = 5B20A2E922F0BB0300EA7295 /* Build configuration list for PBXProject "xcnew" */;
@@ -413,9 +452,10 @@
 			projectRoot = "";
 			targets = (
 				5B20A2ED22F0BB0300EA7295 /* xcnew */,
-				5B1F0F3822F7A2BA00A7AFFA /* xcnew-tests */,
 				5B5364A62602C8F8007E7F20 /* DVTFoundationTests */,
 				5B5364B62602CB37007E7F20 /* IDEFoundationTests */,
+				5B1F0F3822F7A2BA00A7AFFA /* xcnew-tests */,
+				5B5364CA2602D710007E7F20 /* xcnew-integration-tests */,
 			);
 		};
 /* End PBXProject section */
@@ -435,11 +475,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5B5364C92602D710007E7F20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B5364D32602D766007E7F20 /* xcnew-integration-tests.sb in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5BDE4A922490D8C800292480 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BDE4A932490D8CF00292480 /* xcnew-tests.sb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +503,6 @@
 				5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */,
 				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
-				5B1F0F3C22F7A2BA00A7AFFA /* XCNewTests.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */,
 				5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */,
@@ -493,6 +539,14 @@
 				5B5364C22602CBFD007E7F20 /* IDETemplateTests.m in Sources */,
 				5B5364C12602CBFD007E7F20 /* IDETemplateKindTests.m in Sources */,
 				5B5364C32602CC01007E7F20 /* XCNIDEFoundationTestHelpers.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B5364C72602D710007E7F20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B5364D42602D76C007E7F20 /* XCNewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +868,34 @@
 			};
 			name = Release;
 		};
+		5B5364D12602D710007E7F20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Tests/xcnew-integration-tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.manicmaniac.xcnew-integration-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5B5364D22602D710007E7F20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Tests/xcnew-integration-tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.manicmaniac.xcnew-integration-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -858,6 +940,15 @@
 			buildConfigurations = (
 				5B5364BD2602CB37007E7F20 /* Debug */,
 				5B5364BE2602CB37007E7F20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5B5364D02602D710007E7F20 /* Build configuration list for PBXNativeTarget "xcnew-integration-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B5364D12602D710007E7F20 /* Debug */,
+				5B5364D22602D710007E7F20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

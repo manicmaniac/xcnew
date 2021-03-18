@@ -28,7 +28,7 @@
     _previousDirectoryURL = [NSURL fileURLWithPath:_fileManager.currentDirectoryPath];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executableURL = [NSURL fileURLWithPath:@"xcnew" relativeToURL:bundle.executableURL];
-    _sandboxProfileURL = [bundle URLForResource:@"xcnew-tests" withExtension:@"sb"];
+    _sandboxProfileURL = [bundle URLForResource:@"xcnew-integration-tests" withExtension:@"sb"];
     NSError *error;
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                   inDomain:NSUserDomainMask
