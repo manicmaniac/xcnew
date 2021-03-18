@@ -1,2 +1,2 @@
-Sources/xcnew.1 -diff linguist-generated
-Tests/xcnew-tests.sb linguist-language=Scheme
+Sources/xcnew/xcnew.1 -diff linguist-generated
+Tests/xcnew-tests/xcnew-tests.sb linguist-language=Scheme

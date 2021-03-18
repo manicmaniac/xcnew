@@ -61,6 +61,30 @@
                ReferencedContainer = "container:xcnew.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5B5364A62602C8F8007E7F20"
+               BuildableName = "DVTFoundationTests.xctest"
+               BlueprintName = "DVTFoundationTests"
+               ReferencedContainer = "container:xcnew.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5B5364B62602CB37007E7F20"
+               BuildableName = "IDEFoundationTests.xctest"
+               BlueprintName = "IDEFoundationTests"
+               ReferencedContainer = "container:xcnew.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
