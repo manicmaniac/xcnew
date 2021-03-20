@@ -36,14 +36,20 @@
                                                     create:YES
                                                      error:&error];
     if (!_temporaryDirectoryURL) {
+        self.continueAfterFailure = NO;
         return XCTFail(@"%@", error);
     }
-    [_fileManager changeCurrentDirectoryPath:_temporaryDirectoryURL.path];
+    if (![self changeCurrentDirectoryURL:_temporaryDirectoryURL error:&error]) {
+        self.continueAfterFailure = NO;
+        return XCTFail(@"%@", error);
+    }
 }
 
 - (void)tearDown {
     NSError *error;
-    [_fileManager changeCurrentDirectoryPath:_previousDirectoryURL.path];
+    if (![self changeCurrentDirectoryURL:_previousDirectoryURL error:&error]) {
+        XCTFail(@"%@", error);
+    }
     if (![_fileManager removeItemAtPath:_temporaryDirectoryURL.path error:&error]) {
         XCTFail(@"%@", error);
     }
@@ -217,6 +223,14 @@
     if (![_fileManager setAttributes:@{NSFileImmutable : @YES} ofItemAtPath:path error:&error]) {
         return XCTFail(@"%@", error);
     }
+    __weak typeof(self) wself = self;
+    [self addTeardownBlock:^{
+        __strong typeof(wself) self = wself;
+        NSError *error;
+        if (![self->_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:path error:&error]) {
+            XCTFail(@"%@", error);
+        }
+    }];
     NSArray *arguments = @[ @"ProductName", path ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 1);
     XCTAssertEqualObjects(stdoutString, @"");
@@ -224,9 +238,6 @@
     NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Inaccessible.xcodeproj/project.pbxproj"]);
-    if (![_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:path error:&error]) {
-        XCTFail(@"%@", error);
-    }
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
@@ -260,6 +271,20 @@
     }
     [task waitUntilExit];
     return task.terminationStatus;
+}
+
+- (BOOL)changeCurrentDirectoryURL:(NSURL *)url error:(NSError **)error {
+    errno = 0;
+    BOOL success = [_fileManager changeCurrentDirectoryPath:url.path];
+    if (!success) {
+        errno_t code = errno;
+        if (error && code) {
+            *error = [NSError errorWithDomain:NSPOSIXErrorDomain
+                                         code:(NSInteger)code
+                                     userInfo:@{NSLocalizedDescriptionKey : @(strerror(code))}];
+        }
+    }
+    return success;
 }
 
 @end
