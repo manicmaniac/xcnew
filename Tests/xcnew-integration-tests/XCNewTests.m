@@ -106,7 +106,6 @@
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
-    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
@@ -139,7 +138,6 @@
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
-    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
@@ -172,7 +170,6 @@
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
-    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
@@ -205,7 +202,6 @@
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
-    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
     XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
@@ -244,7 +240,6 @@
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 1);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
-    NSLog(@"%@", [_fileManager contentsOfDirectoryAtPath:path error:nil]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
     XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Inaccessible.xcodeproj/project.pbxproj"]);
     if (self.testRun.failureCount) {
