@@ -69,7 +69,6 @@
 		5B1F0F3922F7A2BA00A7AFFA /* xcnew-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNewTests.m; sourceTree = "<group>"; };
 		5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNTestAssertions.h; sourceTree = "<group>"; };
 		5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNErrorsTests.m; sourceTree = "<group>"; };
 		5B1F0F5722F88EE700A7AFFA /* XCNMacroDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNMacroDefinitions.h; sourceTree = "<group>"; };
 		5B20A2EE22F0BB0300EA7295 /* xcnew */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xcnew; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,7 +293,6 @@
 			isa = PBXGroup;
 			children = (
 				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
-				5B1F0F4622F8324B00A7AFFA /* XCNTestAssertions.h */,
 				5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */,
 				5B5364D52602D7D9007E7F20 /* Info.plist */,
 			);

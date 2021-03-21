@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "XCNMacroDefinitions.h"
-#import "XCNTestAssertions.h"
 
 @interface XCNewTests : XCTestCase
 @end
@@ -59,7 +58,7 @@
     if (![self changeCurrentDirectoryURL:_previousDirectoryURL error:&error]) {
         XCTFail(@"%@", error);
     }
-    if (![_fileManager removeItemAtPath:_temporaryDirectoryURL.path error:&error]) {
+    if (![_fileManager removeItemAtURL:_temporaryDirectoryURL error:&error]) {
         XCTFail(@"%@", error);
     }
 }
@@ -105,17 +104,24 @@
     NSArray *arguments = @[ @"Example" ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertDirectoryExistsAtPath(path);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/Example.xcdatamodeld/Example.xcdatamodel/contents"]);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"ExampleTests/Info.plist"]);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
-    NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
-    XCNAssertFileExistsAtPath(appDelegatePath);
-    XCNAssertFileContainsString(appDelegatePath, @"Example");
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+
+    NSError *error;
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
+    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleTests"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleUITests"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
@@ -134,20 +140,25 @@
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
-    path = [_currentDirectoryURL URLByAppendingPathComponent:path].standardizedURL.path;
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertDirectoryExistsAtPath(path);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Example.xcdatamodeld/Example.xcdatamodel/contents"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleTests/Info.plist"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
-    NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
-    XCNAssertFileExistsAtPath(appDelegatePath);
-    XCNAssertFileContainsString(appDelegatePath, @"Organization");
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    NSError *error;
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
+    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
+    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
@@ -166,21 +177,26 @@
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
-    path = [_currentDirectoryURL URLByAppendingPathComponent:path].standardizedURL.path;
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertDirectoryExistsAtPath(path);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Example.xcdatamodeld/Example.xcdatamodel/contents"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleTests/Info.plist"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
-    NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
-    XCNAssertFileExistsAtPath(appDelegatePath);
-    XCNAssertFileContainsString(appDelegatePath, @"Organization");
-    XCNAssertFileContainsString(appDelegatePath, @"NSPersistentCloudKitContainer");
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    NSError *error;
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
+    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
+    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
+    XCTAssertTrue([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
@@ -198,21 +214,26 @@
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
-    path = [_currentDirectoryURL URLByAppendingPathComponent:path].standardizedURL.path;
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertDirectoryExistsAtPath(path);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example.xcodeproj/project.pbxproj"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Info.plist"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"Example/Example.xcdatamodeld/Example.xcdatamodel/contents"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleTests/Info.plist"]);
-    XCNAssertFileExistsAtPath([path stringByAppendingPathComponent:@"ExampleUITests/Info.plist"]);
-    NSString *appDelegatePath = [path stringByAppendingPathComponent:@"Example/AppDelegate.swift"];
-    XCNAssertFileExistsAtPath(appDelegatePath);
-    XCNAssertFileContainsString(appDelegatePath, @"Organization");
-    XCNAssertFileDoesNotContainString(appDelegatePath, @"NSPersistentCloudKitContainer");
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Example/ContentView.swift"]);
+    NSError *error;
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
+    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
+    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
+    XCTAssertFalse([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
@@ -220,28 +241,33 @@
 
 - (void)testExecuteWithInaccessiblePath {
     NSString *stdoutString, *stderrString;
-    NSString *path = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"].path;
+    NSURL *url = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"];
     NSError *error;
-    if (![_fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error]) {
+    if (![_fileManager createDirectoryAtURL:url withIntermediateDirectories:NO attributes:nil error:&error]) {
         return XCTFail(@"%@", error);
     }
-    if (![_fileManager setAttributes:@{NSFileImmutable : @YES} ofItemAtPath:path error:&error]) {
+    if (![_fileManager setAttributes:@{NSFileImmutable : @YES} ofItemAtPath:url.path error:&error]) {
         return XCTFail(@"%@", error);
     }
     __weak typeof(self) wself = self;
     [self addTeardownBlock:^{
         __strong typeof(wself) self = wself;
         NSError *error;
-        if (![self->_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:path error:&error]) {
+        if (![self->_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:url.path error:&error]) {
             XCTFail(@"%@", error);
         }
     }];
-    NSArray *arguments = @[ @"ProductName", path ];
+    NSArray *arguments = @[ @"ProductName", url.path ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 1);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertDirectoryExistsAtPath(path);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@".git/"]);
-    XCNAssertFileOrDirectoryDoesNotExistAtPath([path stringByAppendingPathComponent:@"Inaccessible.xcodeproj/project.pbxproj"]);
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:url
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Inaccessible.xcodeproj"].fileWrappers[@"project.pbxproj"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
