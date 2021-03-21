@@ -40,7 +40,7 @@
     }
     _currentDirectoryURL = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Current"];
     if (![_fileManager createDirectoryAtURL:_currentDirectoryURL
-                withIntermediateDirectories:false
+                withIntermediateDirectories:NO
                                  attributes:nil
                                       error:&error]) {
         self.continueAfterFailure = NO;
