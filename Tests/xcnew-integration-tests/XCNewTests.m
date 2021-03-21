@@ -16,6 +16,7 @@
 @implementation XCNewTests {
     NSFileManager *_fileManager;
     NSURL *_temporaryDirectoryURL;
+    NSURL *_currentDirectoryURL;
     NSURL *_previousDirectoryURL;
     NSURL *_executableURL;
     NSURL *_sandboxProfileURL;
@@ -25,7 +26,6 @@
 
 - (void)setUp {
     _fileManager = NSFileManager.defaultManager;
-    _previousDirectoryURL = [NSURL fileURLWithPath:_fileManager.currentDirectoryPath];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executableURL = [NSURL fileURLWithPath:@"xcnew" relativeToURL:bundle.executableURL];
     _sandboxProfileURL = [bundle URLForResource:@"xcnew-integration-tests" withExtension:@"sb"];
@@ -39,7 +39,16 @@
         self.continueAfterFailure = NO;
         return XCTFail(@"%@", error);
     }
-    if (![self changeCurrentDirectoryURL:_temporaryDirectoryURL error:&error]) {
+    _currentDirectoryURL = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Current"];
+    if (![_fileManager createDirectoryAtURL:_currentDirectoryURL
+                withIntermediateDirectories:false
+                                 attributes:nil
+                                      error:&error]) {
+        self.continueAfterFailure = NO;
+        return XCTFail(@"%@", error);
+    }
+    _previousDirectoryURL = [NSURL fileURLWithPath:_fileManager.currentDirectoryPath];
+    if (![self changeCurrentDirectoryURL:_currentDirectoryURL error:&error]) {
         self.continueAfterFailure = NO;
         return XCTFail(@"%@", error);
     }
@@ -126,7 +135,7 @@
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
-    path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
+    path = [_currentDirectoryURL URLByAppendingPathComponent:path].standardizedURL.path;
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
@@ -159,7 +168,7 @@
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
-    path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
+    path = [_currentDirectoryURL URLByAppendingPathComponent:path].standardizedURL.path;
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
@@ -192,7 +201,7 @@
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
                             path ];
-    path = [_fileManager.currentDirectoryPath stringByAppendingPathComponent:path].stringByStandardizingPath;
+    path = [_currentDirectoryURL URLByAppendingPathComponent:path].standardizedURL.path;
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
     XCNAssertDirectoryExistsAtPath(path);
