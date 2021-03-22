@@ -1,9 +1,12 @@
 (version 1)
 
 (deny default)
-(allow process-exec)
+(allow process-exec
+    (regex #"xcnew$"))
 (allow ipc-posix-shm*)
 (allow mach-lookup)
 (allow file-read*)
 (allow file-write*
     (subpath "/private/var/folders"))
+(allow sysctl-read
+    (sysctl-name "machdep.cpu.core_count"))
