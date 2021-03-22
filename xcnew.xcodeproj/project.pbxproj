@@ -739,6 +739,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
+					"$(DEVELOPER_DIR)/../PlugIns",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -764,6 +765,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
+					"$(DEVELOPER_DIR)/../PlugIns",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
