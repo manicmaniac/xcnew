@@ -110,7 +110,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWithUnitTests {
     _project.feature |= XCNProjectFeatureUnitTests;
-    NSError *error = nil;
+    NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
@@ -128,7 +128,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWithUITests {
     _project.feature |= XCNProjectFeatureUITests;
-    NSError *error = nil;
+    NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
@@ -146,7 +146,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWithCoreData {
     _project.feature |= XCNProjectFeatureCoreData;
-    NSError *error = nil;
+    NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
@@ -166,7 +166,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWithCoreDataCloudKit {
     _project.feature |= (XCNProjectFeatureCoreData | XCNProjectFeatureCloudKit);
-    NSError *error = nil;
+    NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
@@ -186,7 +186,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWithObjectiveC {
     _project.language = XCNLanguageObjectiveC;
-    NSError *error = nil;
+    NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
@@ -205,7 +205,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWithStoryboard {
     _project.userInterface = XCNUserInterfaceStoryboard;
-    NSError *error = nil;
+    NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
