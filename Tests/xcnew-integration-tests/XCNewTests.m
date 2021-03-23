@@ -16,7 +16,6 @@
     NSFileManager *_fileManager;
     NSURL *_temporaryDirectoryURL;
     NSURL *_currentDirectoryURL;
-    NSURL *_previousDirectoryURL;
     NSURL *_executableURL;
     NSURL *_sandboxProfileURL;
 }
@@ -46,18 +45,10 @@
         self.continueAfterFailure = NO;
         return XCTFail(@"%@", error);
     }
-    _previousDirectoryURL = [NSURL fileURLWithPath:_fileManager.currentDirectoryPath];
-    if (![self changeCurrentDirectoryURL:_currentDirectoryURL error:&error]) {
-        self.continueAfterFailure = NO;
-        return XCTFail(@"%@", error);
-    }
 }
 
 - (void)tearDown {
     NSError *error;
-    if (![self changeCurrentDirectoryURL:_previousDirectoryURL error:&error]) {
-        XCTFail(@"%@", error);
-    }
     if (![_fileManager removeItemAtURL:_temporaryDirectoryURL error:&error]) {
         XCTFail(@"%@", error);
     }
@@ -278,6 +269,7 @@
 - (int)runWithArguments:(NSArray<NSString *> *)arguments standardOutput:(NSString **)stdoutString standardError:(NSString **)stderrString {
     NSFileHandle *stdoutFileHandle, *stderrFileHandle;
     NSTask *task = [[NSTask alloc] init];
+    task.currentDirectoryURL = _currentDirectoryURL;
     task.launchPath = @"/usr/bin/sandbox-exec";
     task.arguments = [@[ @"-f", _sandboxProfileURL.path, _executableURL.path ] arrayByAddingObjectsFromArray:arguments];
     if (stdoutString) {
@@ -301,20 +293,6 @@
     }
     [task waitUntilExit];
     return task.terminationStatus;
-}
-
-- (BOOL)changeCurrentDirectoryURL:(NSURL *)url error:(NSError **)error {
-    errno = 0;
-    BOOL success = [_fileManager changeCurrentDirectoryPath:url.path];
-    if (!success) {
-        errno_t code = errno;
-        if (error && code) {
-            *error = [NSError errorWithDomain:NSPOSIXErrorDomain
-                                         code:(NSInteger)code
-                                     userInfo:@{NSLocalizedDescriptionKey : @(strerror(code))}];
-        }
-    }
-    return success;
 }
 
 @end
