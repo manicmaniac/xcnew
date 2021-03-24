@@ -16,6 +16,7 @@ OBJC_EXPORT NSErrorDomain const XCNErrorDomain;
 typedef NS_ERROR_ENUM(XCNErrorDomain, XCNError) {
     XCNFileWriteUnknownError = 1,
     XCNIDEFoundationInconsistencyError = 100,
+    XCNIDEFoundationTimeoutError = 101,
     XCNInvalidArgumentError = 110,
     XCNWrongNumberOfArgumentError = 111,
     XCNUnknownError = 125

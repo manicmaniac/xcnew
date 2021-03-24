@@ -33,6 +33,14 @@ NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ..
     return [NSError errorWithDomain:XCNErrorDomain code:XCNIDEFoundationInconsistencyError userInfo:userInfo];
 }
 
+NSError *XCNIDEFoundationTimeoutErrorCreateWithFailureReason(NSString *failureReason) {
+    NSCParameterAssert(failureReason != nil);
+    static NSString *const localizedDescription = @"Operation timed out.";
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription,
+                               NSLocalizedFailureReasonErrorKey : failureReason};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNIDEFoundationTimeoutError userInfo:userInfo];
+}
+
 NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption) {
     NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '-%c'.", shortOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
