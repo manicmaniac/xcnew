@@ -6,11 +6,11 @@
 //  Copyright © 2021 Ryosuke Ito. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import <IDEFoundation/IDEInitialization.h>
-#import "CDStructures.h" // To satisfy <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateKind.h>
+#import <XCTest/XCTest.h>
+#import "CDStructures.h" // To satisfy <IDEFoundation/IDETemplate.h>
 #import "XCNIDEFoundationTestHelpers.h"
 
 @interface IDETemplateTests : XCTestCase

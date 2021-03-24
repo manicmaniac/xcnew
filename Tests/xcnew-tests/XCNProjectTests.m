@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "XCNProject.h"
 #import "XCNMacroDefinitions.h"
+#import "XCNProject.h"
 
 @interface XCNProjectTests : XCTestCase
 
@@ -64,7 +64,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
-
 }
 
 - (void)testWriteToURLWithOrganizationName {
@@ -223,7 +222,7 @@ static NSString *const kProductName = @"Example";
 }
 
 - (NSFileWrapper *)fileWrapper {
-    @synchronized (self) {
+    @synchronized(self) {
         if (!_fileWrapper) {
             NSError *error;
             _fileWrapper = [[NSFileWrapper alloc] initWithURL:_url
