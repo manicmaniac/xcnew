@@ -27,6 +27,7 @@
     NSString *_type;
     NSString *_placeholder;
     NSString *_defaultValue;
+    NSString *_overrideValue;
     NSString *_value;
     NSString *_prefix;
     NSString *_suffix;
@@ -58,6 +59,7 @@
 @property (copy, nonatomic) NSString *suffix;                       // @synthesize suffix=_suffix;
 @property (copy, nonatomic) NSString *prefix;                       // @synthesize prefix=_prefix;
 @property (copy, nonatomic) NSString *value;                        // @synthesize value=_value;
+@property (copy) NSString *overrideValue;                           // @synthesize overrideValue=_overrideValue;
 @property (copy) NSString *defaultValue;                            // @synthesize defaultValue=_defaultValue;
 @property (copy) NSString *placeholder;                             // @synthesize placeholder=_placeholder;
 @property (copy) NSString *type;                                    // @synthesize type=_type;
@@ -87,6 +89,7 @@
 - (BOOL)validateValue:(id *)arg1 forKey:(id)arg2 error:(id *)arg3;
 - (BOOL)isValue:(id)arg1 usableWithOptions:(id)arg2;
 - (BOOL)isUsableWithOptions:(id)arg1;
+- (id)description;
 - (id)init;
 - (id)initWithOptionInfo:(id)arg1 filePath:(id)arg2;
 

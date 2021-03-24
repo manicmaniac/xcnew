@@ -1,6 +1,6 @@
 + xcodebuild -version
-Xcode 11.7
-Build version 11E801a
+Xcode 12.0
+Build version 12A7209
 + class-dump --version
 class-dump 3.5 (64 bit) (Debug version compiled Aug  5 2019 01:19:33) compiled Aug  5 2019 01:19:33
 + clang-format --version
