@@ -20,7 +20,11 @@
 - (void)setUp {
     _fileManager = NSFileManager.defaultManager;
     NSError *error;
-    _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:_fileManager.temporaryDirectory create:YES error:&error];
+    _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
+                                                  inDomain:NSUserDomainMask
+                                         appropriateForURL:_fileManager.temporaryDirectory
+                                                    create:YES
+                                                     error:&error];
     if (!_temporaryDirectoryURL) {
         self.continueAfterFailure = NO;
         XCTFail(@"%@", error);
