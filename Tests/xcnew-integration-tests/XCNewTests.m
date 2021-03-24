@@ -25,7 +25,7 @@
 - (void)setUp {
     _fileManager = NSFileManager.defaultManager;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    _executableURL = [NSURL fileURLWithPath:@"xcnew" relativeToURL:bundle.executableURL];
+    _executableURL = [bundle URLForAuxiliaryExecutable:@"xcnew"];
     _sandboxProfileURL = [bundle URLForResource:@"xcnew-integration-tests" withExtension:@"sb"];
     NSError *error;
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
