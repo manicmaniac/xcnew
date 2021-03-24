@@ -5,6 +5,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDStructures.h"
 
 #import <IDEFoundation/IDETemplateOptionParent-Protocol.h>
 

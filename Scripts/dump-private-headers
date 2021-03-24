@@ -42,14 +42,14 @@ find PrivateHeaders -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EO
     s/\(id \*_field2;\)$/__unsafe_unretained \1/
 EOF
 
-# Add missing header `<os/lock.h>`
-sed -i '' -e '7i\
-#import <os/lock.h>' PrivateHeaders/DVTFoundation/DVTFilePath.h
-
 # Add missing import for `CDStructures.h`
-sed -i '' -e '7i\
+sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
 #import "CDStructures.h"' PrivateHeaders/DVTFoundation/DVTFilePath.h \
                           PrivateHeaders/IDEFoundation/IDETemplate.h
+
+# Add missing header `<os/lock.h>`
+sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
+#import <os/lock.h>' PrivateHeaders/DVTFoundation/DVTFilePath.h
 
 # Manually add type of block which cannot be extracted with `class-dump`
 sed -i '' -f /dev/fd/0 PrivateHeaders/IDEFoundation/IDETemplateFactory.h <<-'EOF'
@@ -63,7 +63,7 @@ EOF
 
 # Manually add C function which cannot be extracted with `class-dump`
 cat <<-EOF >PrivateHeaders/IDEFoundation/IDEInitialization.h
-@class NSError;
+#import <Foundation/Foundation.h>
 
 extern BOOL IDEInitialize(int initializationOptions, NSError *__autoreleasing _Nullable *_Nullable error);
 extern BOOL IDEInitializationCompleted(int *_Nullable initializationOptions);
