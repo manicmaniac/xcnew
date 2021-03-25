@@ -100,6 +100,29 @@ static const NSLock *_templateInstantiationLock;
     return YES;
 }
 
+- (void)setLanguage:(XCNLanguage)language {
+    if (language == XCNLanguageObjectiveC) {
+        _userInterface = XCNUserInterfaceStoryboard;
+        _lifecycle = XCNAppLifecycleCocoa;
+    }
+    _language = language;
+}
+
+- (void)setUserInterface:(XCNUserInterface)userInterface {
+    if (userInterface == XCNUserInterfaceSwiftUI) {
+        _language = XCNLanguageSwift;
+    }
+    _userInterface = userInterface;
+}
+
+- (void)setLifecycle:(XCNAppLifecycle)lifecycle {
+    if (lifecycle == XCNAppLifecycleSwiftUI) {
+        _language = XCNLanguageSwift;
+        _userInterface = XCNUserInterfaceSwiftUI;
+    }
+    _lifecycle = lifecycle;
+}
+
 // MARK: Private
 
 static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
