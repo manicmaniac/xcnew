@@ -281,6 +281,32 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
+- (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
+    _project.userInterface = XCNUserInterfaceSwiftUI;
+    _project.lifecycle = XCNAppLifecycleSwiftUI;
+    _project.language = XCNLanguageObjectiveC;
+    XCTAssertEqual(_project.userInterface, XCNUserInterfaceStoryboard);
+    XCTAssertEqual(_project.lifecycle, XCNAppLifecycleCocoa);
+}
+
+- (void)testSetUserInterfaceSwiftUIWhenObjectiveCIsSetAsLanguage {
+    _project.language = XCNLanguageObjectiveC;
+    _project.userInterface = XCNUserInterfaceSwiftUI;
+    XCTAssertEqual(_project.language, XCNLanguageSwift);
+}
+
+- (void)testSetLifecycleSwiftUIWhenObjectiveCIsSetAsLanguage {
+    _project.language = XCNLanguageObjectiveC;
+    _project.lifecycle = XCNAppLifecycleSwiftUI;
+    XCTAssertEqual(_project.language, XCNLanguageSwift);
+}
+
+- (void)testSetLifecycleSwiftUIWhenStoryboardIsSetAsUserInterface {
+    _project.userInterface = XCNUserInterfaceStoryboard;
+    _project.lifecycle = XCNAppLifecycleSwiftUI;
+    XCTAssertEqual(_project.userInterface, XCNUserInterfaceSwiftUI);
+}
+
 - (NSFileWrapper *)fileWrapper {
     @synchronized(self) {
         if (!_fileWrapper) {
