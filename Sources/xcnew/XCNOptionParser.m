@@ -54,16 +54,20 @@
                 optionSet.organizationIdentifier = @(optarg);
                 break;
             case 't':
+#if XCN_TEST_OPTION_IS_UNIFIED
+                optionSet.feature |= (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests);
+#else
                 optionSet.feature |= XCNProjectFeatureUnitTests;
                 break;
             case 'u':
                 optionSet.feature |= XCNProjectFeatureUITests;
                 break;
+#endif
             case 'c':
                 optionSet.feature |= XCNProjectFeatureCoreData;
                 break;
             case 'C':
-                optionSet.feature |= (XCNProjectFeatureCoreData | XCNProjectFeatureCloudKit);
+                optionSet.feature |= XCNProjectFeatureCloudKit;
                 break;
             case 'o':
                 optionSet.language = XCNLanguageObjectiveC;
@@ -71,6 +75,11 @@
 #if XCN_SWIFT_UI_IS_AVAILABLE
             case 's':
                 optionSet.userInterface = XCNUserInterfaceSwiftUI;
+                break;
+#endif
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+            case 'S':
+                optionSet.lifecycle = XCNAppLifecycleSwiftUI;
                 break;
 #endif
             case '?':
@@ -113,30 +122,54 @@
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING
 #endif
 
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+#define XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING "S"
+#else
+#define XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING
+#endif
+
 #if XCN_CLOUD_KIT_IS_AVAILABLE
 #define XCN_CLOUD_KIT_SHORT_OPTION_STRING "C"
 #else
 #define XCN_CLOUD_KIT_SHORT_OPTION_STRING
 #endif
 
+#if XCN_TEST_OPTION_IS_UNIFIED
+#define XCN_UI_TESTS_SHORT_OPTION_STRING
+#else
+#define XCN_UI_TESTS_SHORT_OPTION_STRING "u"
+#endif
+
 static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
                            "\n"
-                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tuco" XCN_SWIFT_UI_SHORT_OPTION_STRING XCN_CLOUD_KIT_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
+                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tco"
+                           XCN_UI_TESTS_SHORT_OPTION_STRING
+                           XCN_SWIFT_UI_SHORT_OPTION_STRING
+                           XCN_CLOUD_KIT_SHORT_OPTION_STRING
+                           XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING
+                           "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
                            "    -h, --help                     Show this help and exit\n"
                            "    -v, --version                  Show version and exit\n"
                            "    -n, --organization-name        Specify organization's name\n"
                            "    -i, --organization-identifier  Specify organization's identifier\n"
+#if XCN_TEST_OPTION_IS_UNIFIED
+                           "    -t, --has-tests                Enable unit and UI tests\n"
+#else
                            "    -t, --has-unit-tests           Enable unit tests\n"
                            "    -u, --has-ui-tests             Enable UI tests\n"
+#endif
                            "    -c, --use-core-data            Enable Core Data template\n"
 #if XCN_CLOUD_KIT_IS_AVAILABLE
                            "    -C, --use-cloud-kit            Enable Core Data with CloudKit template (overrides -c option)\n"
 #endif
-                           "    -o, --objc                     Use Objective-C (default: Swift)\n"
+                           "    -o, --objc                     Use Objective-C instead of Swift (overridden by -s and -S options)\n"
 #if XCN_SWIFT_UI_IS_AVAILABLE
-                           "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
+                           "    -s, --swift-ui                 Use Swift UI instead of Storyboard\n"
+#endif
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+                           "    -S, --swift-ui-lifecycle       Use Swift UI lifecycle (overrides -s option)"
 #endif
                            "\n"
                            "Arguments:\n"
@@ -150,8 +183,12 @@ static const struct option longOptions[] = {
     {"version", no_argument, NULL, 'v'},
     {"organization-name", required_argument, NULL, 'n'},
     {"organization-identifier", required_argument, NULL, 'i'},
+#if XCN_TEST_OPTION_IS_UNIFIED
+    {"has-tests", no_argument, NULL, 't'},
+#else
     {"has-unit-tests", no_argument, NULL, 't'},
     {"has-ui-tests", no_argument, NULL, 'u'},
+#endif
     {"use-core-data", no_argument, NULL, 'c'},
 #if XCN_CLOUD_KIT_IS_AVAILABLE
     {"use-cloud-kit", no_argument, NULL, 'C'},
@@ -159,6 +196,9 @@ static const struct option longOptions[] = {
     {"objc", no_argument, NULL, 'o'},
 #if XCN_SWIFT_UI_IS_AVAILABLE
     {"swift-ui", no_argument, NULL, 's'},
+#endif
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+    {"swift-ui-lifecycle", no_argument, NULL, 'S'},
 #endif
     {NULL, 0, NULL, 0},
 };

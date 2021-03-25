@@ -124,8 +124,12 @@
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
+#if XCN_TEST_OPTION_IS_UNIFIED
+                            @"--has-tests",
+#else
                             @"--has-unit-tests",
                             @"--has-ui-tests",
+#endif
                             @"--use-core-data",
                             @"--swift-ui",
                             @"--", // GNU style option scanning terminator
@@ -147,7 +151,11 @@
     XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
     NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+#if XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
     XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
+#else
+    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
+#endif
     XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
     XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
     if (self.testRun.failureCount) {
@@ -162,8 +170,12 @@
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
+#if XCN_TEST_OPTION_IS_UNIFIED
+                            @"--has-tests",
+#else
                             @"--has-unit-tests",
                             @"--has-ui-tests",
+#endif
                             @"--use-cloud-kit",
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
@@ -184,7 +196,11 @@
     XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
     NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+#if XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
     XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
+#else
+    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
+#endif
     XCTAssertTrue([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
     XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
     XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
@@ -199,8 +215,12 @@
     NSString *path = @"./Example/../Example/";
     NSArray *arguments = @[ @"--organization-name=Organization",
                             @"--organization-identifier=com.example",
+#if XCN_TEST_OPTION_IS_UNIFIED
+                            @"--has-tests",
+#else
                             @"--has-unit-tests",
                             @"--has-ui-tests",
+#endif
                             @"--use-core-data",
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
@@ -221,7 +241,11 @@
     XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
     NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+#if XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
     XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
+#else
+    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
+#endif
     XCTAssertFalse([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
     XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);

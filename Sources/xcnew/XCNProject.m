@@ -9,6 +9,7 @@
 #import "XCNProject.h"
 
 #import <DVTFoundation/DVTFilePath.h>
+#import <DVTFoundation/DVTPlatform.h>
 #import <IDEFoundation/IDEInitialization.h>
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateFactory.h>
@@ -16,6 +17,7 @@
 #import <IDEFoundation/IDETemplateKind.h>
 #import <IDEFoundation/IDETemplateOption.h>
 #import "XCNErrorsInternal.h"
+#import "XCNMacroDefinitions.h"
 
 @implementation XCNProject {
     NSFileManager *_fileManager;
@@ -98,6 +100,29 @@ static const NSLock *_templateInstantiationLock;
     return YES;
 }
 
+- (void)setLanguage:(XCNLanguage)language {
+    if (language == XCNLanguageObjectiveC) {
+        _userInterface = XCNUserInterfaceStoryboard;
+        _lifecycle = XCNAppLifecycleCocoa;
+    }
+    _language = language;
+}
+
+- (void)setUserInterface:(XCNUserInterface)userInterface {
+    if (userInterface == XCNUserInterfaceSwiftUI) {
+        _language = XCNLanguageSwift;
+    }
+    _userInterface = userInterface;
+}
+
+- (void)setLifecycle:(XCNAppLifecycle)lifecycle {
+    if (lifecycle == XCNAppLifecycleSwiftUI) {
+        _language = XCNLanguageSwift;
+        _userInterface = XCNUserInterfaceSwiftUI;
+    }
+    _lifecycle = lifecycle;
+}
+
 // MARK: Private
 
 static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
@@ -112,9 +137,13 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 }
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
-    for (IDETemplate *template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
-        if ([template.identifier hasSuffix:@"Single View App.xctemplate"]) {
-            return template;
+    DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
+    NSString *singleViewAppTemplateName = (XCODE_VERSION_MAJOR >= 0x1200) ? @"App" : @"Single View App";
+    for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
+        if (!_template.hiddenFromChooser &&
+            [_template.templateName isEqualToString:singleViewAppTemplateName] &&
+            [_template.templatePlatforms containsObject:iPhoneOSPlatform]) {
+            return _template;
         }
     }
     return nil;
@@ -132,16 +161,23 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = _organizationName;
         } else if ([identifier isEqualToString:@"bundleIdentifierPrefix"]) {
             option.value = _organizationIdentifier;
+#if XCN_TEST_OPTION_IS_UNIFIED
+        } else if ([identifier isEqualToString:@"hasUnitAndUITests"]) {
+            option.booleanValue = ((_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests) && ((_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests);
+#else
         } else if ([identifier isEqualToString:@"hasUnitTests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUnitTests);
+            option.booleanValue = (_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests;
         } else if ([identifier isEqualToString:@"hasUITests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUITests);
+            option.booleanValue = (_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests;
+#endif
         } else if ([identifier isEqualToString:@"coreData"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureCoreData);
+            option.booleanValue = (_feature & XCNProjectFeatureCoreData) == XCNProjectFeatureCoreData;
         } else if ([identifier isEqualToString:@"coreDataCloudKit"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureCloudKit);
+            option.booleanValue = (_feature & XCNProjectFeatureCloudKit) == XCNProjectFeatureCloudKit;
         } else if ([identifier isEqualToString:@"userInterface"]) {
             option.value = NSStringFromXCNUserInterface(_userInterface);
+        } else if ([identifier isEqualToString:@"appLifecycle"]) {
+            option.value = NSStringFromXCNAppLifecycle(_lifecycle);
         }
     }
 }

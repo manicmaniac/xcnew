@@ -24,6 +24,9 @@
 		5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */; };
 		5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
 		5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */; };
+		5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */; };
+		5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */; };
+		5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */; };
 		5B5364AF2602C915007E7F20 /* DVTFilePathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */; };
 		5B5364B22602CA3F007E7F20 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
 		5B5364BF2602CB9B007E7F20 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
@@ -98,6 +101,10 @@
 		5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNLanguageTests.m; sourceTree = "<group>"; };
 		5B35529824E7A4F90035E983 /* XCNProjectFeature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNProjectFeature.h; sourceTree = "<group>"; };
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B39EA61260BCA630028A910 /* DVTPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTPlatform.h; sourceTree = "<group>"; };
+		5B39EAA9260BD5510028A910 /* XCNAppLifecycle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNAppLifecycle.h; sourceTree = "<group>"; };
+		5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycle.m; sourceTree = "<group>"; };
+		5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycleTests.m; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
 		5B5364A72602C8F8007E7F20 /* DVTFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVTFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5364B02602C957007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +253,7 @@
 				5B20AFBD22F73EBF00EA7295 /* CDStructures.h */,
 				5B20AFBA22F73E2000EA7295 /* DVTFilePath.h */,
 				5B20AFBB22F73E5E00EA7295 /* DVTFileSystemRepresentationProviding-Protocol.h */,
+				5B39EA61260BCA630028A910 /* DVTPlatform.h */,
 			);
 			path = DVTFoundation;
 			sourceTree = "<group>";
@@ -253,6 +261,7 @@
 		5B5364C42602CCD0007E7F20 /* xcnew-tests */ = {
 			isa = PBXGroup;
 			children = (
+				5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */,
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
@@ -266,6 +275,8 @@
 		5B5364C52602CD32007E7F20 /* xcnew */ = {
 			isa = PBXGroup;
 			children = (
+				5B39EAA9260BD5510028A910 /* XCNAppLifecycle.h */,
+				5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */,
 				5B20AFC422F74B7300EA7295 /* XCNErrors.h */,
 				5B20AFC722F74CCB00EA7295 /* XCNErrorsInternal.h */,
 				5B20AFC522F74B7300EA7295 /* XCNErrors.m */,
@@ -502,8 +513,10 @@
 				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
+				5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */,
 				5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */,
 				5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */,
+				5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */,
 				5B2F804525FC95D20018752D /* XCNProject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,6 +531,7 @@
 				5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */,
 				5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */,
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
+				5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */,
 				5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
