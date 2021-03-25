@@ -15,7 +15,7 @@ contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
 
 # Dump necessary headers in DVTFoundation.framework.
 class-dump -H \
-           -C '^DVTFile(Path|SystemRepresentationProviding)$' \
+           -C '^DVT(FilePath|FileSystemRepresentationProviding|Platform)$' \
            -o 'PrivateHeaders/DVTFoundation' \
            "$contents_dir/SharedFrameworks/DVTFoundation.framework"
 rm -f 'PrivateHeaders/DVTFoundation/NSString-DVTFileSystemRepresentationProviding.h'
