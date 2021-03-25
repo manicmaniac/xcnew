@@ -9,6 +9,7 @@
 #import "XCNProject.h"
 
 #import <DVTFoundation/DVTFilePath.h>
+#import <DVTFoundation/DVTPlatform.h>
 #import <IDEFoundation/IDEInitialization.h>
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateFactory.h>
@@ -16,6 +17,7 @@
 #import <IDEFoundation/IDETemplateKind.h>
 #import <IDEFoundation/IDETemplateOption.h>
 #import "XCNErrorsInternal.h"
+#import "XCNMacroDefinitions.h"
 
 @implementation XCNProject {
     NSFileManager *_fileManager;
@@ -112,9 +114,13 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 }
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
-    for (IDETemplate *template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
-        if ([template.identifier hasSuffix:@"Single View App.xctemplate"]) {
-            return template;
+    DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
+    NSString *singleViewAppTemplateName = (XCODE_VERSION_MAJOR >= 0x1200) ? @"App" : @"Single View App";
+    for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
+        if (!_template.hiddenFromChooser &&
+            [_template.templateName isEqualToString:singleViewAppTemplateName] &&
+            [_template.templatePlatforms containsObject:iPhoneOSPlatform]) {
+            return _template;
         }
     }
     return nil;
