@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XCNAppLifecycle.h"
 #import "XCNLanguage.h"
 #import "XCNProjectFeature.h"
 #import "XCNUserInterface.h"
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) XCNProjectFeature feature;
 @property (nonatomic) XCNLanguage language;
 @property (nonatomic) XCNUserInterface userInterface;
+@property (nonatomic) XCNAppLifecycle lifecycle;
 @property (nonatomic, copy) NSURL *outputURL;
 
 - (BOOL)isEqualToOptionSet:(XCNOptionSet *)optionSet;
