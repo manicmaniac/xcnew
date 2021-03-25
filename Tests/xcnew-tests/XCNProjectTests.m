@@ -219,7 +219,7 @@ static NSString *const kProductName = @"Example";
 
 #if XCN_CLOUD_KIT_IS_AVAILABLE
 - (void)testWriteToURLWithCoreDataCloudKit {
-    _project.feature |= (XCNProjectFeatureCoreData | XCNProjectFeatureCloudKit);
+    _project.feature |= XCNProjectFeatureCloudKit;
     NSError *error;
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);

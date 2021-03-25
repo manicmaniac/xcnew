@@ -140,17 +140,17 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = _organizationIdentifier;
 #if XCN_TEST_OPTION_IS_UNIFIED
         } else if ([identifier isEqualToString:@"hasUnitAndUITests"]) {
-            option.booleanValue = ((_feature & XCNProjectFeatureUnitTests) && (_feature & XCNProjectFeatureUITests));
+            option.booleanValue = ((_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests) && ((_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests);
 #else
         } else if ([identifier isEqualToString:@"hasUnitTests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUnitTests);
+            option.booleanValue = (_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests;
         } else if ([identifier isEqualToString:@"hasUITests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUITests);
+            option.booleanValue = (_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests;
 #endif
         } else if ([identifier isEqualToString:@"coreData"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureCoreData);
+            option.booleanValue = (_feature & XCNProjectFeatureCoreData) == XCNProjectFeatureCoreData;
         } else if ([identifier isEqualToString:@"coreDataCloudKit"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureCloudKit);
+            option.booleanValue = (_feature & XCNProjectFeatureCloudKit) == XCNProjectFeatureCloudKit;
         } else if ([identifier isEqualToString:@"userInterface"]) {
             option.value = NSStringFromXCNUserInterface(_userInterface);
         } else if ([identifier isEqualToString:@"appLifecycle"]) {

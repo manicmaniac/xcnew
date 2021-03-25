@@ -67,7 +67,7 @@
                 optionSet.feature |= XCNProjectFeatureCoreData;
                 break;
             case 'C':
-                optionSet.feature |= (XCNProjectFeatureCoreData | XCNProjectFeatureCloudKit);
+                optionSet.feature |= XCNProjectFeatureCloudKit;
                 break;
             case 'o':
                 optionSet.language = XCNLanguageObjectiveC;
