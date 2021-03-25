@@ -30,7 +30,7 @@ distclean: clean
 format:
 	find Sources Tests -type f -name '*.[hm]' -exec clang-format -i {} +
 
-manpages: Sources/xcnew.1
+manpages: Sources/xcnew/xcnew.1
 
 $(EXECUTABLE):
 	$(XCODEBUILD) build

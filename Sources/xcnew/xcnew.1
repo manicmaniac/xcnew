@@ -11,11 +11,14 @@
 .Op Fl v|--version
 .Op Fl n|--organization-name Ar ORG_NAME
 .Op Fl i|--organization-identifier Ar ORG_ID
+.Op Fl t|--has-tests
 .Op Fl t|--has-unit-tests
 .Op Fl u|--has-ui-tests
 .Op Fl c|--use-core-data
 .Op Fl C|--use-cloud-kit
+.Op Fl o|--objc
 .Op Fl s|--swift-ui
+.Op Fl S|--swift-ui-lifecycle
 .Ar PRODUCT_NAME
 .Op Ar OUTPUT_DIR
 .Sh OPTIONS
@@ -29,16 +32,22 @@ Show version and exit
 Specify organization's name
 .It Fl i|--organization-identifier
 Specify organization's identifier
+.It Fl t|--has-tests
+[Only appears \&in Xcode \&>= 12] Enable unit and \&UI tests
 .It Fl t|--has-unit-tests
-Enable unit tests
+[Only appears \&in Xcode \&< 12] Enable unit tests
 .It Fl u|--has-ui-tests
-Enable \&UI tests
+[Only appears \&in Xcode \&< 12] Enable \&UI tests
 .It Fl c|--use-core-data
 Enable Core Data template
 .It Fl C|--use-cloud-kit
 Enable Core Data with CloudKit template (overrides \&-c option)
+.It Fl o|--objc
+Use Objective-C instead \&of Swift (overridden \&by \&-s and \&-S options)
 .It Fl s|--swift-ui
-Enable Swift \&UI (available only when Swift \&UI \&is supported)
+[Only appears \&in Xcode \&>= 11] Use Swift \&UI instead \&of Storyboard
+.It Fl S|--swift-ui-lifecycle
+[Only appears \&in Xcode \&>= 12] Use Swift \&UI lifecycle (overrides \&-s option)
 .It Ar "PRODUCT_NAME"
 Required TARGET_NAME \&of project.pbxproj
 .It Ar "OUTPUT_DIR"

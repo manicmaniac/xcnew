@@ -77,6 +77,11 @@
                 optionSet.userInterface = XCNUserInterfaceSwiftUI;
                 break;
 #endif
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+            case 'S':
+                optionSet.lifecycle = XCNAppLifecycleSwiftUI;
+                break;
+#endif
             case '?':
                 if (error) {
                     *error = XCNInvalidArgumentErrorCreateWithLongOption(argv[optind - 1]);
@@ -117,6 +122,12 @@
 #define XCN_SWIFT_UI_SHORT_OPTION_STRING
 #endif
 
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+#define XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING "S"
+#else
+#define XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING
+#endif
+
 #if XCN_CLOUD_KIT_IS_AVAILABLE
 #define XCN_CLOUD_KIT_SHORT_OPTION_STRING "C"
 #else
@@ -131,7 +142,12 @@
 
 static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
                            "\n"
-                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tco" XCN_UI_TESTS_SHORT_OPTION_STRING XCN_SWIFT_UI_SHORT_OPTION_STRING XCN_CLOUD_KIT_SHORT_OPTION_STRING "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
+                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tco"
+                           XCN_UI_TESTS_SHORT_OPTION_STRING
+                           XCN_SWIFT_UI_SHORT_OPTION_STRING
+                           XCN_CLOUD_KIT_SHORT_OPTION_STRING
+                           XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING
+                           "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
                            "    -h, --help                     Show this help and exit\n"
@@ -148,9 +164,12 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
 #if XCN_CLOUD_KIT_IS_AVAILABLE
                            "    -C, --use-cloud-kit            Enable Core Data with CloudKit template (overrides -c option)\n"
 #endif
-                           "    -o, --objc                     Use Objective-C (default: Swift)\n"
+                           "    -o, --objc                     Use Objective-C instead of Swift (overridden by -s and -S options)\n"
 #if XCN_SWIFT_UI_IS_AVAILABLE
-                           "    -s, --swift-ui                 Use Swift UI (default: Storyboard)\n"
+                           "    -s, --swift-ui                 Use Swift UI instead of Storyboard\n"
+#endif
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+                           "    -S, --swift-ui-lifecycle       Use Swift UI lifecycle (overrides -s option)"
 #endif
                            "\n"
                            "Arguments:\n"
@@ -177,6 +196,9 @@ static const struct option longOptions[] = {
     {"objc", no_argument, NULL, 'o'},
 #if XCN_SWIFT_UI_IS_AVAILABLE
     {"swift-ui", no_argument, NULL, 's'},
+#endif
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+    {"swift-ui-lifecycle", no_argument, NULL, 'S'},
 #endif
     {NULL, 0, NULL, 0},
 };
