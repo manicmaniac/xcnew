@@ -22,4 +22,8 @@
     XCTAssertEqualObjects(NSStringFromXCNLanguage(XCNLanguageObjectiveC), @"Objective-C");
 }
 
+- (void)testNSStringFromXCNLanguageWithInvalidValue {
+    XCTAssertThrowsSpecificNamed(NSStringFromXCNLanguage((XCNLanguage)-1), NSException, NSInvalidArgumentException);
+}
+
 @end

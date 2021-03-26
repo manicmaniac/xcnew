@@ -14,5 +14,7 @@ NSString *NSStringFromXCNAppLifecycle(XCNAppLifecycle lifecycle) {
             return @"Cocoa";
         case XCNAppLifecycleSwiftUI:
             return @"SwiftUI";
+        default:
+            [NSException raise:NSInvalidArgumentException format:@"XCNAppLifecycle %lu doesn't exist.", lifecycle];
     }
 }
