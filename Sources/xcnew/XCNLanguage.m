@@ -14,5 +14,7 @@ NSString *NSStringFromXCNLanguage(XCNLanguage language) {
             return @"Swift";
         case XCNLanguageObjectiveC:
             return @"Objective-C";
+        default:
+            [NSException raise:NSInvalidArgumentException format:@"XCNLanguage %lu doesn't exist.", language];
     }
 }

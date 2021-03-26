@@ -22,5 +22,8 @@
     XCTAssertEqualObjects(NSStringFromXCNAppLifecycle(XCNAppLifecycleCocoa), @"Cocoa");
 }
 
+- (void)testNSStringFromXCNAppLifecycleWithInvalidValue {
+    XCTAssertThrowsSpecificNamed(NSStringFromXCNAppLifecycle((XCNAppLifecycle)-1), NSException, NSInvalidArgumentException);
+}
 
 @end

@@ -14,5 +14,7 @@ NSString *NSStringFromXCNUserInterface(XCNUserInterface userInterface) {
             return @"SwiftUI";
         case XCNUserInterfaceStoryboard:
             return @"Storyboard";
+        default:
+            [NSException raise:NSInvalidArgumentException format:@"XCNUserInterface %lu doesn't exist.", userInterface];
     }
 }

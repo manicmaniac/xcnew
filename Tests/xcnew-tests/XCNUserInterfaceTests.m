@@ -22,4 +22,8 @@
     XCTAssertEqualObjects(NSStringFromXCNUserInterface(XCNUserInterfaceStoryboard), @"Storyboard");
 }
 
+- (void)testNSStringFromXCNUserInterfaceWithInvalidValue {
+    XCTAssertThrowsSpecificNamed(NSStringFromXCNUserInterface((XCNUserInterface)-1), NSException, NSInvalidArgumentException);
+}
+
 @end
