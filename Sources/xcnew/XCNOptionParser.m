@@ -177,7 +177,8 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
                            "    [OUTPUT_DIR]                   Optional directory name of the project";
 
-static const char shortOptions[] = "hvn:i:tuco"
+static const char shortOptions[] = "hvn:i:tco"
+                                   XCN_UI_TESTS_SHORT_OPTION_STRING
                                    XCN_SWIFT_UI_SHORT_OPTION_STRING
                                    XCN_CLOUD_KIT_SHORT_OPTION_STRING
                                    XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING;
