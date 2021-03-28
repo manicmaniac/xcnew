@@ -23,7 +23,7 @@
 
 - (void)testParseArgumentsWithShortOptionC {
     XCNOptionParser *parser = [XCNOptionParser sharedOptionParser];
-    char *argv[] = { "xcnew", "-C", "Example", NULL };
+    char *argv[] = {"xcnew", "-C", "Example", NULL};
     int argc = 3;
     NSError *error;
     XCNOptionSet *optionSet = [parser parseArguments:argv count:argc error:&error];
@@ -33,7 +33,7 @@
 
 - (void)testParseArgumentsWithShortOptionS {
     XCNOptionParser *parser = [XCNOptionParser sharedOptionParser];
-    char *argv[] = { "xcnew", "-S", "Example", NULL };
+    char *argv[] = {"xcnew", "-S", "Example", NULL};
     int argc = 3;
     NSError *error;
     XCNOptionSet *optionSet = [parser parseArguments:argv count:argc error:&error];
