@@ -19,6 +19,7 @@ uninstall:
 	$(RM) $(PREFIX)/bin/xcnew $(PREFIX)/share/man/man1/xcnew.1
 
 check:
+	exit 1
 	$(XCODEBUILD) test
 
 clean:
