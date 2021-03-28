@@ -22,6 +22,7 @@ int main(int argc, char *const argv[]) {
             project.feature = optionSet.feature;
             project.language = optionSet.language;
             project.userInterface = optionSet.userInterface;
+            project.lifecycle = optionSet.lifecycle;
             [project writeToURL:optionSet.outputURL timeout:60 error:&error];
         }
         if (error) {
