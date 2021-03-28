@@ -35,7 +35,7 @@
     NSParameterAssert(argv != NULL);
     NSParameterAssert(argc > 0);
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
-    NSAssert([NSThread isMainThread], @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
+    NSAssert(NSThread.isMainThread, @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
     opterr = 0; // Disable auto-generated error messages.
     optind = optreset = 1; // Must be set to 1 to be reentrant.
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
