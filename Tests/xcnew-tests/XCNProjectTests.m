@@ -241,6 +241,71 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
+#if XCN_SWIFT_UI_IS_AVAILABLE
+
+- (void)testWriteToURLWithSwiftUI {
+    _project.userInterface = XCNUserInterfaceSwiftUI;
+    NSError *error;
+    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertNil(error);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.m"]);
+    NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
+    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
+}
+
+#endif
+
+- (void)testWriteToURLWithCocoaLifecycle {
+    _project.lifecycle = XCNAppLifecycleCocoa;
+    NSError *error;
+    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertNil(error);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.m"]);
+    NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
+    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
+}
+
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+
+- (void)testWriteToURLWithSwiftUILifecycle {
+    _project.lifecycle = XCNAppLifecycleSwiftUI;
+    NSError *error;
+    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertNil(error);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.m"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"]);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"].isRegularFile);
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
+    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
+}
+
+#endif
+
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceSwiftUI;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
