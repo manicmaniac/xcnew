@@ -12,14 +12,9 @@
 
 // MARK: Public
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _language = XCNLanguageSwift;
-        _userInterface = XCNUserInterfaceStoryboard;
-    }
-    return self;
-}
+static_assert(XCNAppLifecycleCocoa == 0, "The default value of -[XCNOptionSet lifecycle] is XCNAppLifecycleCocoa.");
+static_assert(XCNLanguageSwift == 0, "The default value of -[XCNOptionSet language] is XCNLanguageSwift.");
+static_assert(XCNUserInterfaceStoryboard == 0, "The default value of -[XCNOptionSet userInterface] is XCNLanguageStoryboard.");
 
 - (BOOL)isEqualToOptionSet:(XCNOptionSet *)optionSet {
     return ([_productName isEqualToString:optionSet.productName] &&

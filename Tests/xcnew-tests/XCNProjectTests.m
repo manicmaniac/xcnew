@@ -58,12 +58,7 @@ static NSString *const kProductName = @"Example";
     NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
@@ -85,12 +80,7 @@ static NSString *const kProductName = @"Example";
     } else {
         XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
     }
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
@@ -111,12 +101,7 @@ static NSString *const kProductName = @"Example";
     NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
@@ -133,12 +118,7 @@ static NSString *const kProductName = @"Example";
     NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
@@ -157,12 +137,7 @@ static NSString *const kProductName = @"Example";
     NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
@@ -179,12 +154,7 @@ static NSString *const kProductName = @"Example";
     NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
@@ -205,12 +175,7 @@ static NSString *const kProductName = @"Example";
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
     XCTAssertTrue([appDelegateContents containsString:@"NSPersistentContainer"]);
     XCTAssertFalse([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
@@ -230,12 +195,7 @@ static NSString *const kProductName = @"Example";
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
     XCTAssertFalse([appDelegateContents containsString:@"NSPersistentContainer"]);
     XCTAssertTrue([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
-    if (XCN_SWIFT_UI_IS_AVAILABLE) {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-        XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"]);
-    } else {
-        XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    }
+    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
