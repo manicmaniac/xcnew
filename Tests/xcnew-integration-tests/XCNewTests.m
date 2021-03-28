@@ -210,6 +210,60 @@
 }
 #endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+- (void)testExecuteWithSwiftUILifecycleShortOption {
+    NSString *stdoutString, *stderrString;
+    NSArray *arguments = @[ @"-S", @"Example" ];
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    NSError *error;
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:@"Example"]
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"]);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
+    }
+}
+
+- (void)testExecuteWithSwiftUILifecycleLongOption {
+    NSString *stdoutString, *stderrString;
+    NSArray *arguments = @[ @"--swift-ui-lifecycle", @"Example" ];
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    NSError *error;
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:@"Example"]
+                                                            options:(NSFileWrapperReadingOptions)0
+                                                              error:&error];
+    if (!fileWrapper) {
+        return XCTFail(@"%@", error);
+    }
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"]);
+    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"]);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"].isRegularFile);
+    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
+    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
+    if (self.testRun.failureCount) {
+        XCTFail(@"%@", stderrString);
+    }
+}
+#endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+
 - (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
     NSString *stdoutString, *stderrString;
     NSString *path = @"./Example/../Example/";
