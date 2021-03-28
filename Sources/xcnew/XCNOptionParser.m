@@ -141,13 +141,16 @@
 #define XCN_UI_TESTS_SHORT_OPTION_STRING "u"
 #endif
 
+#define XCN_CONDITIONAL_SHORT_OPTION_STRING \
+    XCN_UI_TESTS_SHORT_OPTION_STRING \
+    XCN_SWIFT_UI_SHORT_OPTION_STRING \
+    XCN_CLOUD_KIT_SHORT_OPTION_STRING \
+    XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING
+
 static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
                            "\n"
                            "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tco"
-                           XCN_UI_TESTS_SHORT_OPTION_STRING
-                           XCN_SWIFT_UI_SHORT_OPTION_STRING
-                           XCN_CLOUD_KIT_SHORT_OPTION_STRING
-                           XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING
+                           XCN_CONDITIONAL_SHORT_OPTION_STRING
                            "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
@@ -177,11 +180,7 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
                            "    [OUTPUT_DIR]                   Optional directory name of the project";
 
-static const char shortOptions[] = "hvn:i:tco"
-                                   XCN_UI_TESTS_SHORT_OPTION_STRING
-                                   XCN_SWIFT_UI_SHORT_OPTION_STRING
-                                   XCN_CLOUD_KIT_SHORT_OPTION_STRING
-                                   XCN_SWIFT_UI_LIFECYCLE_SHORT_OPTION_STRING;
+static const char shortOptions[] = "hvn:i:tco" XCN_CONDITIONAL_SHORT_OPTION_STRING;
 
 static const struct option longOptions[] = {
     {"help", no_argument, NULL, 'h'},
