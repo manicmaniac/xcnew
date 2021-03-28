@@ -17,6 +17,10 @@
 
 @implementation XCNOptionParserTests
 
+// getopt_long(3) included in Xcode 11 or less seems not reentrant even though it exports optreset.
+// To make another executable to test the parser behavior is a possible option but too much.
+#if XCODE_VERSION_MAJOR >= 0x1200
+
 - (void)testParseArgumentsWithShortOptionC {
     XCNOptionParser *parser = [XCNOptionParser sharedOptionParser];
     char *argv[] = { "xcnew", "-C", "Example", NULL };
@@ -36,5 +40,7 @@
     XCTAssertNotNil(optionSet);
     XCTAssertEqual(optionSet.lifecycle, XCNAppLifecycleSwiftUI);
 }
+
+#endif // XCODE_VERSION_MAJOR >= 0x1200
 
 @end
