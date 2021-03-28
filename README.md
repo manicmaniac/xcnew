@@ -1,7 +1,8 @@
 xcnew
 =====
 
-[![Build Status](https://travis-ci.org/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.org/manicmaniac/xcnew)
+[![GitHub Actions](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml/badge.svg)](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml)
+[![Travis CI](https://travis-ci.org/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.org/manicmaniac/xcnew)
 
 A command line interface to make a project for iOS Single View App.
 
@@ -33,17 +34,18 @@ Usage
         -v, --version                  Show version and exit
         -n, --organization-name        Specify organization's name
         -i, --organization-identifier  Specify organization's identifier
-        -t, --has-unit-tests           Enable unit tests
-        -u, --has-ui-tests             Enable UI tests
+        -t, --has-tests                [Only appears in Xcode >= 12] Enable unit and UI tests
+        -t, --has-unit-tests           [Only appears in Xcode < 12] Enable unit tests
+        -u, --has-ui-tests             [Only appears in Xcode < 12] Enable UI tests
         -c, --use-core-data            Enable Core Data template
-        -o, --objc                     Use Objective-C (default: Swift)
-        -s, --swift-ui                 Use Swift UI (default: Storyboard)
+        -C, --use-cloud-kit            Enable Core Data with CloudKit template (overrides -c option)
+        -o, --objc                     Use Objective-C instead of Swift (overridden by -s and -S options)
+        -s, --swift-ui                 [Only appears in Xcode >= 11] Use Swift UI instead of Storyboard
+        -S, --swift-ui-lifecycle       [Only appears in Xcode >= 12] Use Swift UI lifecycle (overrides -s option)
     
     Arguments:
         <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj
         [OUTPUT_DIR]                   Optional directory name of the project
-
-Note: `-s, --swift-ui` option appears only if you build `xcnew` with Xcode `>= 11.0`.
 
 How it works?
 -------------
