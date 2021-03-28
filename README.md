@@ -1,7 +1,8 @@
 xcnew
 =====
 
-[![Build Status](https://travis-ci.org/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.org/manicmaniac/xcnew)
+[![GitHub Actions](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml/badge.svg)](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml)
+[![Travis CI](https://travis-ci.org/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.org/manicmaniac/xcnew)
 
 A command line interface to make a project for iOS Single View App.
 
