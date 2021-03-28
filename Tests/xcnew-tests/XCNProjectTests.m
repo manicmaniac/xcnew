@@ -201,7 +201,7 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
-#endif
+#endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
 - (void)testWriteToURLWithObjectiveC {
     _project.language = XCNLanguageObjectiveC;
@@ -262,7 +262,7 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
-#endif
+#endif // XCN_SWIFT_UI_IS_AVAILABLE
 
 - (void)testWriteToURLWithCocoaLifecycle {
     _project.lifecycle = XCNAppLifecycleCocoa;
@@ -304,7 +304,7 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
-#endif
+#endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceSwiftUI;

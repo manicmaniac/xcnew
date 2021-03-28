@@ -129,7 +129,7 @@
 #else
                             @"--has-unit-tests",
                             @"--has-ui-tests",
-#endif
+#endif // XCN_TEST_OPTION_IS_UNIFIED
                             @"--use-core-data",
                             @"--swift-ui",
                             @"--", // GNU style option scanning terminator
@@ -155,14 +155,14 @@
     XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
 #else
     XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-#endif
+#endif // XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
     XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
     XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
     if (self.testRun.failureCount) {
         XCTFail(@"%@", stderrString);
     }
 }
-#endif
+#endif // XCN_SWIFT_UI_IS_AVAILABLE
 
 #if XCN_CLOUD_KIT_IS_AVAILABLE
 - (void)testExecuteWithAllValidArgumentsEnablingCloudKit {
@@ -175,7 +175,7 @@
 #else
                             @"--has-unit-tests",
                             @"--has-ui-tests",
-#endif
+#endif // XCN_TEST_OPTION_IS_UNIFIED
                             @"--use-cloud-kit",
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
@@ -200,7 +200,7 @@
     XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
 #else
     XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-#endif
+#endif // XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
     XCTAssertTrue([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
     XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
     XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
@@ -208,7 +208,7 @@
         XCTFail(@"%@", stderrString);
     }
 }
-#endif
+#endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
 - (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
     NSString *stdoutString, *stderrString;
@@ -220,7 +220,7 @@
 #else
                             @"--has-unit-tests",
                             @"--has-ui-tests",
-#endif
+#endif // XCN_TEST_OPTION_IS_UNIFIED
                             @"--use-core-data",
                             @"--", // GNU style option scanning terminator
                             @"ProductName",
@@ -245,7 +245,7 @@
     XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
 #else
     XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-#endif
+#endif // XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
     XCTAssertFalse([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
     XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
