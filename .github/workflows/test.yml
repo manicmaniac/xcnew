@@ -3,6 +3,9 @@ on: [push]
 jobs:
   unit-test:
     runs-on: macOS-10.15
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -12,6 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run unit tests
-        run: set -o pipefail && make check | xcpretty
+        run: make check | xcpretty
       - name: Install
-        run: set -o pipefail && make install | xcpretty
+        run: make install | xcpretty
