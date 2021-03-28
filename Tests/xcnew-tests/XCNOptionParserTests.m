@@ -17,12 +17,6 @@
 
 @implementation XCNOptionParserTests
 
-- (void)setUp {
-    optind = 1;
-    opterr = 1;
-    optreset = 1;
-}
-
 - (void)testParseArgumentsWithShortOptionC {
     XCNOptionParser *parser = [XCNOptionParser sharedOptionParser];
     char *argv[] = { "xcnew", "-C", "Example", NULL };
