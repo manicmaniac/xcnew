@@ -15,24 +15,26 @@
 @implementation XCNOptionSetTests
 
 - (void)testCopy {
-    NSString *productName = @"Example";
-    NSString *organizationName = @"Organization";
-    NSString *organizationIdentifier = @"com.example";
-    XCNProjectFeature feature = XCNProjectFeatureUnitTests | XCNProjectFeatureUITests | XCNProjectFeatureCoreData;
-    XCNLanguage language = XCNLanguageObjectiveC;
-    XCNUserInterface userInterface = XCNUserInterfaceSwiftUI;
-    NSURL *outputURL = [NSURL fileURLWithPath:@"/test"];
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
-    optionSet.productName = productName;
-    optionSet.organizationName = organizationName;
-    optionSet.organizationIdentifier = organizationIdentifier;
-    optionSet.feature = feature;
-    optionSet.language = language;
-    optionSet.userInterface = userInterface;
-    optionSet.outputURL = outputURL;
+    optionSet.productName = @"Example";
+    optionSet.organizationName = @"Organization";
+    optionSet.organizationIdentifier = @"com.example";
+    optionSet.feature = XCNProjectFeatureCloudKit;
+    optionSet.language = XCNLanguageObjectiveC;
+    optionSet.userInterface = XCNUserInterfaceSwiftUI;
+    optionSet.lifecycle = XCNAppLifecycleSwiftUI;
+    optionSet.outputURL = [NSURL fileURLWithPath:@"/test"];
     XCNOptionSet *copied = [optionSet copy];
     XCTAssertNotEqual(optionSet, copied);
     XCTAssertEqualObjects(optionSet, copied);
+    XCTAssertEqualObjects(copied.productName, optionSet.productName);
+    XCTAssertEqualObjects(copied.organizationName, optionSet.organizationName);
+    XCTAssertEqualObjects(copied.organizationIdentifier, optionSet.organizationIdentifier);
+    XCTAssertEqual(copied.feature, optionSet.feature);
+    XCTAssertEqual(copied.language, optionSet.language);
+    XCTAssertEqual(copied.userInterface, optionSet.userInterface);
+    XCTAssertEqual(copied.lifecycle, optionSet.lifecycle);
+    XCTAssertEqualObjects(copied.outputURL, optionSet.outputURL);
 }
 
 @end

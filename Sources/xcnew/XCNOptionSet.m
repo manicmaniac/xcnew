@@ -23,6 +23,7 @@ static_assert(XCNUserInterfaceStoryboard == 0, "The default value of -[XCNOption
             (_feature == optionSet.feature) &&
             (_language == optionSet.language) &&
             (_userInterface == optionSet.userInterface) &&
+            (_lifecycle == optionSet.lifecycle) &&
             [_outputURL isEqual:optionSet.outputURL]);
 }
 
@@ -43,6 +44,7 @@ static_assert(XCNUserInterfaceStoryboard == 0, "The default value of -[XCNOption
             _feature ^
             _language ^
             _userInterface ^
+            _lifecycle ^
             _outputURL.hash);
 }
 
@@ -56,6 +58,7 @@ static_assert(XCNUserInterfaceStoryboard == 0, "The default value of -[XCNOption
     copied.feature = _feature;
     copied.language = _language;
     copied.userInterface = _userInterface;
+    copied.lifecycle = _lifecycle;
     copied.outputURL = _outputURL;
     return copied;
 }
