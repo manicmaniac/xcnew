@@ -13,6 +13,8 @@
 #import "XCNOptionSet.h"
 #import "XCNProjectFeature.h"
 
+extern const unsigned char xcnewVersionString[];
+
 @implementation XCNOptionParser
 
 // MARK: Public
@@ -46,7 +48,7 @@
                 puts(help);
                 return nil;
             case 'v':
-                puts([[NSBundle.mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
+                fputs((const char *)xcnewVersionString, stdout); // Use fputs(1) because the string ends with a newline.
                 return nil;
             case 'n':
                 optionSet.organizationName = @(optarg);

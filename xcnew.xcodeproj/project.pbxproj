@@ -40,6 +40,7 @@
 		5B6128272610F89000B048A1 /* XCNOptionParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6128262610F89000B048A1 /* XCNOptionParserTests.m */; };
 		5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
+		5B70FEF526115C4000F9E0A0 /* xcnew_vers_stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5B70FEF426115C4000F9E0A0 /* xcnew_vers_stub.c */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
@@ -116,6 +117,7 @@
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserTests.m; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
+		5B70FEF426115C4000F9E0A0 /* xcnew_vers_stub.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xcnew_vers_stub.c; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
 		5B9B42CB24982AE700119B10 /* IDEInitialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEInitialization.h; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
@@ -272,6 +274,7 @@
 				5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
+				5B70FEF426115C4000F9E0A0 /* xcnew_vers_stub.c */,
 			);
 			path = "xcnew-tests";
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */,
+				5B70FEF526115C4000F9E0A0 /* xcnew_vers_stub.c in Sources */,
 				5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */,
 				5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */,
 				5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */,
@@ -744,6 +748,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 0.5.1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
@@ -761,8 +766,11 @@
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 					"$(DEVELOPER_DIR)/../PlugIns",
 				);
+				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_STRING = "\"$(CURRENT_PROJECT_VERSION)\"";
 			};
 			name = Debug;
 		};
@@ -770,6 +778,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 0.5.1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/../Frameworks",
@@ -787,8 +796,11 @@
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 					"$(DEVELOPER_DIR)/../PlugIns",
 				);
+				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_STRING = "\"$(CURRENT_PROJECT_VERSION)\"";
 			};
 			name = Release;
 		};
