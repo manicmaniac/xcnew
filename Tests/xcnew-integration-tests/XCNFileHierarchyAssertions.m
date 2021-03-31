@@ -65,26 +65,8 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
 // MARK: Private
 
 static NSURL *XCNFindFileHierarchySpecificationURLWithName(NSString *specificationName) {
-    NSArray *specificationNameVariants = @[
-#if XCODE_VERSION_MAJOR >= 0x1200
-        [specificationName stringByAppendingString:@"@Xcode12"],
-#endif
-#if XCODE_VERSION_MAJOR >= 0x1100
-        [specificationName stringByAppendingString:@"@Xcode11"],
-#endif
-#if XCODE_VERSION_MAJOR >= 0x1000
-        [specificationName stringByAppendingString:@"@Xcode10"],
-#endif
-        specificationName,
-    ];
     NSBundle *bundle = [NSBundle bundleWithIdentifier:@"com.github.manicmaniac.xcnew-integration-tests"];
-    for (NSString *specificationNameVariant in specificationNameVariants) {
-        NSURL *url = [bundle URLForResource:specificationNameVariant withExtension:@"dist"];
-        if (url) {
-            return url;
-        }
-    }
-    return nil;
+    return [bundle URLForResource:specificationName withExtension:@"dist"];
 }
 
 static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line, NSError *error) {

@@ -96,7 +96,8 @@
     NSArray *arguments = @[ productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/default");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/default" : @"Fixtures/default@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 #if XCN_TEST_OPTION_IS_UNIFIED
@@ -115,7 +116,8 @@
     NSArray *arguments = @[ @"-t", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/unit-tests");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/unit-tests" : @"Fixtures/unit-tests@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 - (void)testExecuteWithUITests {
@@ -124,7 +126,8 @@
     NSArray *arguments = @[ @"-u", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/ui-tests");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/ui-tests" : @"Fixtures/ui-tests@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 #endif // XCN_TEST_OPTION_IS_UNIFIED
 
@@ -134,7 +137,8 @@
     NSArray *arguments = @[ @"-c", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/core-data");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/core-data" : @"Fixtures/core-data@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 #if XCN_CLOUD_KIT_IS_AVAILABLE
@@ -154,7 +158,8 @@
     NSArray *arguments = @[ @"-o", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/objective-c");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/objective-c" : @"Fixtures/objective-c@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 #if XCN_SWIFT_UI_IS_AVAILABLE
