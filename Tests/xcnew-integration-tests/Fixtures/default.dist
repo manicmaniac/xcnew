@@ -1,0 +1,37 @@
+
+/set type=file mode=0755
+.               type=dir
+
+Example         type=dir
+
+/set type=file mode=0644
+Example         type=dir mode=0755
+    AppDelegate.swift
+    Info.plist 
+    SceneDelegate.swift
+    ViewController.swift
+
+Assets.xcassets type=dir mode=0755
+    Contents.json
+..
+
+
+Base.lproj      type=dir mode=0755
+    LaunchScreen.storyboard
+    Main.storyboard
+..
+
+..
+
+
+/set type=file mode=0755
+Example.xcodeproj \
+                type=dir
+    project.pbxproj \
+                mode=0644
+..
+
+..
+
+..
+

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */; };
 		5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
+		5B1FF6AD2613F122005136E4 /* XCNFileHierarchyAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FF6AC2613F122005136E4 /* XCNFileHierarchyAssertions.m */; };
+		5B1FF6E026140C61005136E4 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5B1FF6DF26140C61005136E4 /* Fixtures */; };
 		5B20A2F922F0BB8500EA7295 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20A2F822F0BB8500EA7295 /* main.m */; };
 		5B20ADE322F0BDBB00EA7295 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */; };
 		5B20ADE822F0C18700EA7295 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
@@ -76,6 +78,9 @@
 		5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNErrorsTests.m; sourceTree = "<group>"; };
 		5B1F0F5722F88EE700A7AFFA /* XCNMacroDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNMacroDefinitions.h; sourceTree = "<group>"; };
+		5B1FF6AB2613F122005136E4 /* XCNFileHierarchyAssertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNFileHierarchyAssertions.h; sourceTree = "<group>"; };
+		5B1FF6AC2613F122005136E4 /* XCNFileHierarchyAssertions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNFileHierarchyAssertions.m; sourceTree = "<group>"; };
+		5B1FF6DF26140C61005136E4 /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = "<group>"; };
 		5B20A2EE22F0BB0300EA7295 /* xcnew */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xcnew; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B20A2F822F0BB8500EA7295 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEFoundation.framework; path = ../Frameworks/IDEFoundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -307,6 +312,9 @@
 		5B5364C62602D6E9007E7F20 /* xcnew-integration-tests */ = {
 			isa = PBXGroup;
 			children = (
+				5B1FF6DF26140C61005136E4 /* Fixtures */,
+				5B1FF6AB2613F122005136E4 /* XCNFileHierarchyAssertions.h */,
+				5B1FF6AC2613F122005136E4 /* XCNFileHierarchyAssertions.m */,
 				5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */,
 				5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */,
 				5B5364D52602D7D9007E7F20 /* Info.plist */,
@@ -492,6 +500,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B1FF6E026140C61005136E4 /* Fixtures in Resources */,
 				5B5364D32602D766007E7F20 /* xcnew-integration-tests.sb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,6 +573,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B1FF6AD2613F122005136E4 /* XCNFileHierarchyAssertions.m in Sources */,
 				5B5364D42602D76C007E7F20 /* XCNewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,59 @@
+
+/set type=file mode=0755
+.               type=dir
+
+Example         type=dir
+
+/set type=file mode=0644
+Example         type=dir mode=0755
+    AppDelegate.swift
+    Info.plist 
+    SceneDelegate.swift
+    ViewController.swift
+
+/set type=file mode=0755
+Assets.xcassets type=dir
+    Contents.json \
+                mode=0644
+
+/set type=file mode=0644
+AccentColor.colorset \
+                type=dir mode=0755
+    Contents.json
+..
+
+..
+
+
+Base.lproj      type=dir mode=0755
+    LaunchScreen.storyboard
+    Main.storyboard
+..
+
+..
+
+
+/set type=file mode=0755
+Example.xcodeproj \
+                type=dir
+    project.pbxproj \
+                mode=0644
+..
+
+
+/set type=file mode=0644
+ExampleTests    type=dir mode=0755
+    ExampleTests.swift
+    Info.plist 
+..
+
+
+ExampleUITests  type=dir mode=0755
+    ExampleUITests.swift
+    Info.plist 
+..
+
+..
+
+..
+
