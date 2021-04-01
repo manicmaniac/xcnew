@@ -306,6 +306,29 @@ static NSString *const kProductName = @"Example";
 
 #endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
+- (void)testWriteToURLWhenDirectoryIsImmutable {
+    NSURL *url = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"];
+    NSError *error;
+    if (![_fileManager createDirectoryAtURL:url
+                withIntermediateDirectories:NO
+                                 attributes:@{NSFileImmutable: @YES}
+                                      error:&error]) {
+        return XCTFail(@"%@", error);
+    }
+    __weak typeof (self) wself = self;
+    [self addTeardownBlock:^{
+        __strong typeof (wself) self = wself;
+        NSError *error;
+        if (![self->_fileManager setAttributes:@{NSFileImmutable: @NO}
+                                  ofItemAtPath:url.path
+                                         error:&error]) {
+            XCTFail(@"%@", error);
+        }
+    }];
+    XCTAssertFalse([_project writeToURL:url timeout:10 error:&error]);
+    XCTAssertNotNil(error);
+}
+
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceSwiftUI;
     _project.lifecycle = XCNAppLifecycleSwiftUI;

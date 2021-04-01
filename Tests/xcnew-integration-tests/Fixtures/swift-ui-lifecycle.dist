@@ -1,0 +1,52 @@
+
+/set type=file mode=0755
+.               type=dir
+
+Example         type=dir
+
+/set type=file mode=0644
+Example         type=dir mode=0755
+    ContentView.swift
+    ExampleApp.swift
+    Info.plist 
+
+/set type=file mode=0755
+Assets.xcassets type=dir
+    Contents.json \
+                mode=0644
+
+/set type=file mode=0644
+AccentColor.colorset \
+                type=dir mode=0755
+    Contents.json
+..
+
+..
+
+
+/set type=file mode=0755
+Preview\040Content \
+                type=dir
+
+/set type=file mode=0644
+Preview\040Assets.xcassets \
+                type=dir mode=0755
+    Contents.json
+..
+
+..
+
+..
+
+
+/set type=file mode=0755
+Example.xcodeproj \
+                type=dir
+    project.pbxproj \
+                mode=0644
+..
+
+..
+
+..
+

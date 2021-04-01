@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "XCNFileHierarchyAssertions.h"
 #import "XCNMacroDefinitions.h"
 
 @interface XCNewTests : XCTestCase
@@ -89,258 +90,99 @@
     XCTAssertEqualObjects(stderrString, @"");
 }
 
-- (void)testExecuteWithMinimalValidArguments {
+- (void)testExecuteWithDefaultOptions {
     NSString *stdoutString, *stderrString;
-    NSString *path = @"Example";
-    NSArray *arguments = @[ @"Example" ];
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-
-    NSError *error;
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleTests"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleUITests"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/default" : @"Fixtures/default@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
-#if XCN_SWIFT_UI_IS_AVAILABLE
-- (void)testExecuteWithAllValidArgumentsEnablingSwiftUI {
-    NSString *stdoutString, *stderrString;
-    NSString *path = @"./Example/../Example/";
-    NSArray *arguments = @[ @"--organization-name=Organization",
-                            @"--organization-identifier=com.example",
 #if XCN_TEST_OPTION_IS_UNIFIED
-                            @"--has-tests",
-#else
-                            @"--has-unit-tests",
-                            @"--has-ui-tests",
-#endif // XCN_TEST_OPTION_IS_UNIFIED
-                            @"--use-core-data",
-                            @"--swift-ui",
-                            @"--", // GNU style option scanning terminator
-                            @"ProductName",
-                            path ];
+- (void)testExecuteWithTests {
+    NSString *stdoutString, *stderrString;
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-t", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    NSError *error;
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-#if XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
-    XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
-#else
-    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-#endif // XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/tests");
 }
-#endif // XCN_SWIFT_UI_IS_AVAILABLE
+#else
+- (void)testExecuteWithUnitTests {
+    NSString *stdoutString, *stderrString;
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-t", productName ];
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/unit-tests" : @"Fixtures/unit-tests@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+}
+
+- (void)testExecuteWithUITests {
+    NSString *stdoutString, *stderrString;
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-u", productName ];
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/ui-tests" : @"Fixtures/ui-tests@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+}
+#endif // XCN_TEST_OPTION_IS_UNIFIED
+
+- (void)testExecuteWithCoreData {
+    NSString *stdoutString, *stderrString;
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-c", productName ];
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/core-data" : @"Fixtures/core-data@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+}
 
 #if XCN_CLOUD_KIT_IS_AVAILABLE
-- (void)testExecuteWithAllValidArgumentsEnablingCloudKit {
+- (void)testExecuteWithCloudKit {
     NSString *stdoutString, *stderrString;
-    NSString *path = @"./Example/../Example/";
-    NSArray *arguments = @[ @"--organization-name=Organization",
-                            @"--organization-identifier=com.example",
-#if XCN_TEST_OPTION_IS_UNIFIED
-                            @"--has-tests",
-#else
-                            @"--has-unit-tests",
-                            @"--has-ui-tests",
-#endif // XCN_TEST_OPTION_IS_UNIFIED
-                            @"--use-cloud-kit",
-                            @"--", // GNU style option scanning terminator
-                            @"ProductName",
-                            path ];
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-C", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    NSError *error;
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-#if XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
-    XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
-#else
-    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-#endif // XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
-    XCTAssertTrue([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/cloud-kit");
 }
 #endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
-#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
-- (void)testExecuteWithSwiftUILifecycleShortOption {
+- (void)testExecuteWithObjectiveC {
     NSString *stdoutString, *stderrString;
-    NSArray *arguments = @[ @"-S", @"Example" ];
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-o", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    NSError *error;
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:@"Example"]
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"]);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/objective-c" : @"Fixtures/objective-c@xcode10");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
-- (void)testExecuteWithSwiftUILifecycleLongOption {
+#if XCN_SWIFT_UI_IS_AVAILABLE
+- (void)testExecuteWithSwiftUI {
     NSString *stdoutString, *stderrString;
-    NSArray *arguments = @[ @"--swift-ui-lifecycle", @"Example" ];
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-s", productName ];
     XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
     XCTAssertEqualObjects(stdoutString, @"");
-    NSError *error;
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:@"Example"]
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"]);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"].isRegularFile);
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui");
+}
+#endif // XCN_SWIFT_UI_IS_AVAILABLE
+
+#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
+- (void)testExecuteWithSwiftUILifecycle {
+    NSString *stdoutString, *stderrString;
+    NSString *productName = @"Example";
+    NSArray *arguments = @[ @"-S", productName ];
+    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
+    XCTAssertEqualObjects(stdoutString, @"");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui-lifecycle");
 }
 #endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
-
-- (void)testExecuteWithAllValidArgumentsDisablingSwiftUI {
-    NSString *stdoutString, *stderrString;
-    NSString *path = @"./Example/../Example/";
-    NSArray *arguments = @[ @"--organization-name=Organization",
-                            @"--organization-identifier=com.example",
-#if XCN_TEST_OPTION_IS_UNIFIED
-                            @"--has-tests",
-#else
-                            @"--has-unit-tests",
-                            @"--has-ui-tests",
-#endif // XCN_TEST_OPTION_IS_UNIFIED
-                            @"--use-core-data",
-                            @"--", // GNU style option scanning terminator
-                            @"ProductName",
-                            path ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
-    NSError *error;
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[_currentDirectoryURL URLByAppendingPathComponent:path]
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"].isDirectory);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertTrue(fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-#if XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
-    XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
-#else
-    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-#endif // XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE
-    XCTAssertFalse([appDelegateContents containsString:@"NSPersistentCloudKitContainer"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ContentView.swift"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
-}
-
-- (void)testExecuteWithInaccessiblePath {
-    NSString *stdoutString, *stderrString;
-    NSURL *url = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"];
-    NSError *error;
-    if (![_fileManager createDirectoryAtURL:url withIntermediateDirectories:NO attributes:nil error:&error]) {
-        return XCTFail(@"%@", error);
-    }
-    if (![_fileManager setAttributes:@{NSFileImmutable : @YES} ofItemAtPath:url.path error:&error]) {
-        return XCTFail(@"%@", error);
-    }
-    __weak typeof(self) wself = self;
-    [self addTeardownBlock:^{
-        __strong typeof(wself) self = wself;
-        NSError *error;
-        if (![self->_fileManager setAttributes:@{NSFileImmutable : @NO} ofItemAtPath:url.path error:&error]) {
-            XCTFail(@"%@", error);
-        }
-    }];
-    NSArray *arguments = @[ @"ProductName", url.path ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 1);
-    XCTAssertEqualObjects(stdoutString, @"");
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:url
-                                                            options:(NSFileWrapperReadingOptions)0
-                                                              error:&error];
-    if (!fileWrapper) {
-        return XCTFail(@"%@", error);
-    }
-    XCTAssertNil(fileWrapper.fileWrappers[@".git"]);
-    XCTAssertNil(fileWrapper.fileWrappers[@"Inaccessible.xcodeproj"].fileWrappers[@"project.pbxproj"]);
-    if (self.testRun.failureCount) {
-        XCTFail(@"%@", stderrString);
-    }
-}
 
 // MARK: Private
 
