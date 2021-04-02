@@ -15,20 +15,20 @@
 
 @implementation XCNOptionParser
 
+static XCNOptionParser *_sharedOptionParser;
+
 // MARK: Public
 
 + (void)initialize {
     [super initialize];
-    NSAssert(self == [XCNOptionParser class], @"XCNOptionParser mustn't be inherited.");
+    if (self != [XCNOptionParser class]) {
+        [NSException raise:NSInternalInconsistencyException format:@"%@ mustn't be inherited.", [XCNOptionParser class]];
+    }
+    _sharedOptionParser = [[XCNOptionParser alloc] init];
 }
 
 + (XCNOptionParser *)sharedOptionParser {
-    static XCNOptionParser *instance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instance = [[self alloc] init];
-    });
-    return instance;
+    return _sharedOptionParser;
 }
 
 - (nullable XCNOptionSet *)parseArguments:(char *const _Nullable *)argv count:(int)argc error:(NSError *_Nullable __autoreleasing *)error {
