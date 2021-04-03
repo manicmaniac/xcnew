@@ -208,7 +208,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 - (void)parameterizedTestParseArguments:(NSArray<NSString *> *)arguments predicate:(NSPredicate *)predicate file:(NSString *)file line:(NSUInteger)line {
     XCNOptionParser *parser = XCNOptionParser.sharedOptionParser;
     int argc = (int)arguments.count;
-    char *argv[ARG_MAX] = {0};
+    char **argv = calloc(argc + 1, sizeof(char *));
     for (int i = 0; i < argc; i++) {
         argv[i] = strdup(arguments[i].UTF8String);
     }
@@ -217,6 +217,7 @@ static NSArray<NSInvocation *> *_testInvocations;
     for (int i = 0; i < argc; i++) {
         free(argv[i]);
     }
+    free(argv);
     close(STDOUT_FILENO);
     NSData *outputData = _outputPipe.fileHandleForReading.availableData;
     NSString *output = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
