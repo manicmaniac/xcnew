@@ -24,7 +24,7 @@ static XCNOptionParser *_sharedOptionParser;
     if (self != [XCNOptionParser class]) {
         [NSException raise:NSInternalInconsistencyException format:@"%@ mustn't be inherited.", [XCNOptionParser class]];
     }
-    _sharedOptionParser = [[XCNOptionParser alloc] init];
+    _sharedOptionParser = [[self alloc] init];
 }
 
 + (XCNOptionParser *)sharedOptionParser {
