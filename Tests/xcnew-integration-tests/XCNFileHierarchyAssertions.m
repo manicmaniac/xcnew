@@ -46,9 +46,11 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
                     XCNTestCaseRecordFailureWithDescription(self, outputString, file, line, nil);
                     break;
                 default: {
-                    NSError *error = [NSError errorWithDomain:XCNMtreeErrorDomain code:task.terminationStatus userInfo:@{
-                        NSLocalizedDescriptionKey: errorString
-                    }];
+                    NSError *error = [NSError errorWithDomain:XCNMtreeErrorDomain
+                                                         code:task.terminationStatus
+                                                     userInfo:@{
+                                                         NSLocalizedDescriptionKey : errorString
+                                                     }];
                     XCNTestCaseRecordFailureWithDescription(self, errorString, file, line, error);
                     break;
                 }
@@ -81,7 +83,9 @@ static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSStri
                                          attachments:@[]];
     [testCase recordIssue:issue];
 #else
-    [testCase recordFailureWithDescription:description inFile:file atLine:line expected:!error];
+    [testCase recordFailureWithDescription:description
+                                    inFile:file
+                                    atLine:line
+                                  expected:!error];
 #endif
 }
-
