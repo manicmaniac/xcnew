@@ -7,12 +7,30 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <objc/runtime.h>
 #import "XCNOptionSet.h"
 
 @interface XCNOptionSetTests : XCTestCase
 @end
 
 @implementation XCNOptionSetTests
+
+- (void)testIsEqualWithSameAddress {
+    XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
+    XCTAssertTrue([optionSet isEqual:optionSet]);
+}
+
+- (void)testIsEqualWithOtherClass {
+    XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
+    XCTAssertFalse([optionSet isEqual:[[NSObject alloc] init]]);
+}
+
+- (void)testHash {
+    XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
+    NSUInteger originalHash = optionSet.hash;
+    optionSet.productName = @"Example";
+    XCTAssertNotEqual(optionSet.hash, originalHash);
+}
 
 - (void)testCopy {
     XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
