@@ -30,6 +30,14 @@
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
+- (void)testXCNIDEFoundationTimeoutErrorCreateWithFailureReason {
+    NSError *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(@"foo");
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 101);
+    XCTAssertEqualObjects(error.localizedDescription, @"Operation timed out.");
+    XCTAssertEqualObjects(error.localizedFailureReason, @"foo");
+}
+
 - (void)testXCNInvalidArgumentErrorCreateWithShortOption {
     NSError *error = XCNInvalidArgumentErrorCreateWithShortOption('X');
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
