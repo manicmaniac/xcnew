@@ -173,6 +173,13 @@ static NSArray<NSInvocation *> *_testInvocations;
                                                                                XCNAppLifecycleSwiftUI]
                                          file:@__FILE__
                                          line:__LINE__],
+                [self invocationWithArguments:@[ @"xcnew", @"Example", @"Output" ]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.productName = 'Example' &&"
+                                                                               @"optionSet.outputURL.lastPathComponent = 'Output'"]
+                                         file:@__FILE__
+                                         line:__LINE__],
                 // Abnormal states
                 [self invocationWithArguments:@[ @"xcnew" ]
                                     predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ &&"
