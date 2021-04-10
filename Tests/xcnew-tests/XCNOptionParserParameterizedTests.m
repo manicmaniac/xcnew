@@ -36,143 +36,215 @@ static NSArray<NSInvocation *> *_testInvocations;
             _testInvocations = [super.testInvocations arrayByAddingObjectsFromArray:@[
                 // Normal states
                 [self invocationWithArguments:@[ @"xcnew", @"-h" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS 'Usage' AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS 'Usage' &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--help" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS 'Usage' AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS 'Usage' &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-v" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS $version AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS $version &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--version" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS $version AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS $version &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationName = 'Organization'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationName = 'Organization'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--organization-name", @"Organization", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationName = 'Organization'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationName = 'Organization'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationIdentifier = 'com.github.manicmaniac'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationIdentifier = 'com.github.manicmaniac'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier", @"com.github.manicmaniac", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationIdentifier = 'com.github.manicmaniac'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationIdentifier = 'com.github.manicmaniac'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-t", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND (optionSet.feature & %lu) = %lu",
-                                                                               XCNProjectFeatureUnitTests, XCNProjectFeatureUnitTests]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"(optionSet.feature & %lu) = %lu",
+                                                                               XCNProjectFeatureUnitTests,
+                                                                               XCNProjectFeatureUnitTests]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--has-tests", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND (optionSet.feature & %lu) = %lu",
-                                                                               (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests), (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests)]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"(optionSet.feature & %lu) = %lu",
+                                                                               (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests),
+                                                                               (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests)]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-c", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND (optionSet.feature & %lu) = %lu",
-                                                                               XCNProjectFeatureCoreData, XCNProjectFeatureCoreData]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"(optionSet.feature & %lu) = %lu",
+                                                                               XCNProjectFeatureCoreData,
+                                                                               XCNProjectFeatureCoreData]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--use-core-data", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND (optionSet.feature & %lu) = %lu",
-                                                                               XCNProjectFeatureCoreData, XCNProjectFeatureCoreData]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"(optionSet.feature & %lu) = %lu",
+                                                                               XCNProjectFeatureCoreData,
+                                                                               XCNProjectFeatureCoreData]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-C", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND (optionSet.feature & %lu) = %lu",
-                                                                               XCNProjectFeatureCloudKit, XCNProjectFeatureCloudKit]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"(optionSet.feature & %lu) = %lu",
+                                                                               XCNProjectFeatureCloudKit,
+                                                                               XCNProjectFeatureCloudKit]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--use-cloud-kit", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND (optionSet.feature & %lu) = %lu",
-                                                                               XCNProjectFeatureCloudKit, XCNProjectFeatureCloudKit]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"(optionSet.feature & %lu) = %lu",
+                                                                               XCNProjectFeatureCloudKit,
+                                                                               XCNProjectFeatureCloudKit]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-o", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.language = %lu",
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.language = %lu",
                                                                                XCNLanguageObjectiveC]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--objc", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.language = %lu",
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.language = %lu",
                                                                                XCNLanguageObjectiveC]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-s", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.userInterface = %lu",
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.userInterface = %lu",
                                                                                XCNUserInterfaceSwiftUI]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--swift-ui", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.userInterface = %lu",
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.userInterface = %lu",
                                                                                XCNUserInterfaceSwiftUI]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-S", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.lifecycle = %lu",
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.lifecycle = %lu",
                                                                                XCNAppLifecycleSwiftUI]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--swift-ui-lifecycle", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.lifecycle = %lu",
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.lifecycle = %lu",
                                                                                XCNAppLifecycleSwiftUI]
                                          file:@__FILE__
                                          line:__LINE__],
                 // Abnormal states
                 [self invocationWithArguments:@[ @"xcnew" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ AND output = '' AND error.code == %lu AND optionSet == NULL",
-                                                                               XCNErrorDomain, XCNWrongNumberOfArgumentError]
+                                    predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ &&"
+                                                                               @"output = '' &&"
+                                                                               @"error.code == %lu &&"
+                                                                               @"optionSet == NULL",
+                                                                               XCNErrorDomain,
+                                                                               XCNWrongNumberOfArgumentError]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-X" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ AND output = '' AND error.code == %lu AND optionSet == NULL",
-                                                                               XCNErrorDomain, XCNInvalidArgumentError]
+                                    predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ &&"
+                                                                               @"output = '' &&"
+                                                                               @"error.code == %lu &&"
+                                                                               @"optionSet == NULL",
+                                                                               XCNErrorDomain,
+                                                                               XCNInvalidArgumentError]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--invalid" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ AND output = '' AND error.code == %lu AND optionSet == NULL",
-                                                                               XCNErrorDomain, XCNInvalidArgumentError]
+                                    predicate:[NSPredicate predicateWithFormat:@"error.domain == %@ &&"
+                                                                               @"output = '' &&"
+                                                                               @"error.code == %lu &&"
+                                                                               @"optionSet == NULL",
+                                                                               XCNErrorDomain,
+                                                                               XCNInvalidArgumentError]
                                          file:@__FILE__
                                          line:__LINE__],
                 // Reverse-ordered options
                 [self invocationWithArguments:@[ @"xcnew", @"Example", @"-n", @"Organization" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationName = 'Organization'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationName = 'Organization'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 // Long options joined by a equal sign
                 [self invocationWithArguments:@[ @"xcnew", @"--organization-name=Organization", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationName = 'Organization'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationName = 'Organization'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 // GNU-style option terminator
                 [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"--", @"Example" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output = '' AND optionSet.organizationName = 'Organization'"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output = '' &&"
+                                                                               @"optionSet.organizationName = 'Organization'"]
                                          file:@__FILE__
                                          line:__LINE__],
                 // Stop parsing when either of -h, --help, -v and --version found
                 [self invocationWithArguments:@[ @"xcnew", @"-h", @"-v" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS 'Usage' AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS 'Usage' &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--help", @"--version" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS 'Usage' AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS 'Usage' &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"-v", @"-h" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS $version AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS $version &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
                 [self invocationWithArguments:@[ @"xcnew", @"--version", @"--help" ]
-                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL AND output CONTAINS $version AND optionSet = NULL"]
+                                    predicate:[NSPredicate predicateWithFormat:@"error = NULL &&"
+                                                                               @"output CONTAINS $version &&"
+                                                                               @"optionSet = NULL"]
                                          file:@__FILE__
                                          line:__LINE__],
             ]];
