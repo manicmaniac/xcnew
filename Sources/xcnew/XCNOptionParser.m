@@ -153,7 +153,7 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
-                           "    -h, --help                     Show this help and exit\n"
+                           "    -h, --help                     Show help and exit\n"
                            "    -v, --version                  Show version and exit\n"
                            "    -n, --organization-name        Specify organization's name\n"
                            "    -i, --organization-identifier  Specify organization's identifier\n"
@@ -172,7 +172,7 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "    -s, --swift-ui                 Use Swift UI instead of Storyboard\n"
 #endif
 #if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
-                           "    -S, --swift-ui-lifecycle       Use Swift UI lifecycle (overrides -s option)"
+                           "    -S, --swift-ui-lifecycle       Use Swift UI lifecycle (overrides -s option)\n"
 #endif
                            "\n"
                            "Arguments:\n"

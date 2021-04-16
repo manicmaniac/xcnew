@@ -30,7 +30,7 @@ Usage
     Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tucos] <PRODUCT_NAME> [OUTPUT_DIR]
     
     Options:
-        -h, --help                     Show this help and exit
+        -h, --help                     Show help and exit
         -v, --version                  Show version and exit
         -n, --organization-name        Specify organization's name
         -i, --organization-identifier  Specify organization's identifier

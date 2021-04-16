@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+from collections import namedtuple
+from difflib import unified_diff
+import re
+import sys
+
+
+Option = namedtuple('Option', ['short_option', 'long_option', 'description'])
+
+
+def load_manpage(path):
+    options = []
+    with open(path) as f:
+        while True:
+            line = f.readline()
+            if line == '':
+                break
+            if line.startswith('.It Fl '):
+                short_option = '-' + line[7]
+                long_option = line[9:-1]
+                line = f.readline()
+                if line == '':
+                    raise RuntimeError('Unexpected EOF: {}'.format(path))
+                description = line[:-1].replace('\\&', '')
+                options.append(Option(short_option, long_option, description))
+        return options
+
+
+_help_line_re = re.compile(r' *(-[0-9A-Za-z]), (--[0-9A-Za-z-]+) +([^\\\n]*)(\\n)?')
+
+
+def load_help_text(path):
+    options = []
+    with open(path) as f:
+        inside_help_text = False
+        for line in f:
+            if not inside_help_text and line.startswith('static const char help[] = '):
+                inside_help_text = True
+            elif inside_help_text and ';' in line:
+                inside_help_text = False
+            elif inside_help_text and ', --' in line:
+                matched = _help_line_re.search(line)
+                if matched:
+                    short_option = matched.group(1)
+                    long_option = matched.group(2)
+                    description = matched.group(3)
+                    options.append(Option(short_option, long_option, description))
+    return options
+
+
+def load_readme(path):
+    options = []
+    with open(path) as f:
+        inside_options_section = False
+        for line in f:
+            if not inside_options_section and 'Options:' in line:
+                inside_options_section = True
+            elif inside_options_section and 'Arguments:' in line:
+                inside_options_section = False
+            elif inside_options_section and ', --' in line:
+                matched = _help_line_re.search(line)
+                if matched:
+                    short_option = matched.group(1)
+                    long_option = matched.group(2)
+                    description = matched.group(3)
+                    options.append(Option(short_option, long_option, description))
+    return options
+
+
+def options_to_lines(options):
+    return ['{o.short_option}, {o.long_option}  {o.description}\n'.format(o=option) for option in options]
+
+
+_warning_re = re.compile(r'\[.*\] ')
+
+
+def remove_warnings(lines):
+    return [_warning_re.sub('', line) for line in lines]
+
+
+if __name__ == '__main__':
+    MANPAGE_PATH = 'Sources/xcnew/xcnew.1'
+    HELP_TEXT_PATH = 'Sources/xcnew/XCNOptionParser.m'
+    README_PATH = 'README.md'
+    manpage = options_to_lines(load_manpage(MANPAGE_PATH))
+    help_text = options_to_lines(load_help_text(HELP_TEXT_PATH))
+    readme = options_to_lines(load_readme(README_PATH))
+    diff_manpage_and_readme = unified_diff(manpage, readme, MANPAGE_PATH, README_PATH)
+    success = True
+    for line in diff_manpage_and_readme:
+        print(line, end='')
+        success = False
+    diff_manpage_and_help = unified_diff(remove_warnings(manpage), help_text, MANPAGE_PATH, HELP_TEXT_PATH)
+    for line in diff_manpage_and_help:
+        print(line, end='')
+        success = False
+    if not success:
+        sys.exit(1)
