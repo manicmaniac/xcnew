@@ -262,7 +262,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 
 + (instancetype)testCaseWithSelector:(SEL)selector {
     NSString *selectorName = NSStringFromSelector(selector);
-    for (NSInvocation *invocation in _testInvocations) {
+    for (NSInvocation *invocation in [self class].testInvocations) {
         if ([selectorName isEqualToString:NSStringFromSelector(invocation.selector)]) {
             return [self testCaseWithInvocation:invocation];
         }
