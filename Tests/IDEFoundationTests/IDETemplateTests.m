@@ -11,7 +11,6 @@
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateKind.h>
 #import <XCTest/XCTest.h>
-#import "CDStructures.h" // To satisfy <IDEFoundation/IDETemplate.h>
 #import "XCNIDEFoundationTestHelpers.h"
 #import "XCNMacroDefinitions.h"
 
