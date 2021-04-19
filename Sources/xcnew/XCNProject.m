@@ -23,16 +23,7 @@
     NSFileManager *_fileManager;
 }
 
-static const NSLock *_templateInstantiationLock;
-
 // MARK: Public
-
-+ (void)initialize {
-    [super initialize];
-    if (self == [XCNProject self]) {
-        _templateInstantiationLock = [[NSLock alloc] init];
-    }
-}
 
 - (instancetype)initWithProductName:(NSString *)productName {
     NSParameterAssert(productName != nil);
@@ -77,15 +68,16 @@ static const NSLock *_templateInstantiationLock;
     IDETemplateInstantiationContext *context = [kind newTemplateInstantiationContext];
     context.documentTemplate = template;
     context.documentFilePath = [DVTFilePath filePathForFileURL:url];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSError *instantiationError;
     [kind.factory instantiateTemplateForContext:context
                                         options:nil
                                        whenDone:^(NSArray<DVTFilePath *> *paths, void *_unknown, NSError *error) {
                                            [paths makeObjectsPerformSelector:@selector(removeAssociatesWithRole:) withObject:@"PBXContainerAssociateRole"];
                                            instantiationError = error;
-                                           [_templateInstantiationLock unlock];
+                                           dispatch_semaphore_signal(semaphore);
                                        }];
-    if (![_templateInstantiationLock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:timeout]]) {
+    if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
         if (error) {
             NSString *failureReason = [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout];
             *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(failureReason);
