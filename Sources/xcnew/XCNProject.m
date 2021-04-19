@@ -83,7 +83,8 @@
             *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(failureReason);
         }
         return NO;
-    } else if (instantiationError) {
+    }
+    if (instantiationError) {
         if (error) {
             *error = instantiationError;
         }
