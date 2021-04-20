@@ -83,7 +83,8 @@
             *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(failureReason);
         }
         return NO;
-    } else if (instantiationError) {
+    }
+    if (instantiationError) {
         if (error) {
             *error = instantiationError;
         }
@@ -121,10 +122,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 
 + (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *)error {
     @synchronized(self) {
-        if (!IDEInitializationCompleted(NULL)) {
-            return IDEInitialize(1, error);
-        }
-        return YES;
+        return IDEInitializationCompleted(NULL) || IDEInitialize(1, error);
     }
 }
 
