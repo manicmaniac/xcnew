@@ -283,7 +283,7 @@ static NSArray<NSInvocation *> *_testInvocations;
     }
     free(argv);
     close(STDOUT_FILENO);
-    NSData *outputData = _outputPipe.fileHandleForReading.availableData;
+    NSData *outputData = [_outputPipe.fileHandleForReading readDataToEndOfFile];
     NSString *output = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
     expectationBlock(optionSet, output, error);
 }
