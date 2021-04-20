@@ -42,6 +42,12 @@ static NSArray<NSInvocation *> *_testInvocations;
                                       XCTAssertTrue([output containsString:@"Usage"]);
                                       XCTAssertNil(error);
                                   }],
+                [self invocationWithArguments:@[ @"xcnew", @"--help" ]
+                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                      XCTAssertNil(optionSet);
+                                      XCTAssertTrue([output containsString:@"Usage"]);
+                                      XCTAssertNil(error);
+                                  }],
                 [self invocationWithArguments:@[ @"xcnew", @"-v" ]
                                   expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
                                       XCTAssertNil(optionSet);
