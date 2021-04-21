@@ -289,7 +289,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
-    if ([NSStringFromSelector(anInvocation.selector) hasPrefix:@"test"]) {
+    if ([self selectorHasTestPrefix:anInvocation.selector]) {
         anInvocation.selector = @selector(parameterizedTestParseArguments:expectation:);
         return [anInvocation invoke];
     }
@@ -297,7 +297,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    if ([NSStringFromSelector(aSelector) hasPrefix:@"test"]) {
+    if ([self selectorHasTestPrefix:aSelector]) {
         aSelector = @selector(parameterizedTestParseArguments:expectation:);
     }
     return [super methodSignatureForSelector:aSelector];
@@ -318,6 +318,10 @@ static NSArray<NSInvocation *> *_testInvocations;
 + (SEL)selectorForArguments:(NSArray<NSString *> *)arguments {
     NSString *selectorName = [NSString stringWithFormat:@"testParseArguments (%@)", [arguments componentsJoinedByString:@" "]];
     return NSSelectorFromString(selectorName);
+}
+
+- (BOOL)selectorHasTestPrefix:(SEL)selector {
+    return [NSStringFromSelector(selector) hasPrefix:@"test"];
 }
 
 @end
