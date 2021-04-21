@@ -6,7 +6,11 @@
 //  Copyright © 2021 Ryosuke Ito. All rights reserved.
 //
 
+#import <IDEFoundation/IDETemplate.h>
+#import <IDEFoundation/IDETemplateKind.h>
 #import <XCTest/XCTest.h>
+#import <objc/runtime.h>
+#import "XCNErrors.h"
 #import "XCNMacroDefinitions.h"
 #import "XCNProject.h"
 
@@ -328,6 +332,47 @@ static NSString *const kProductName = @"Example";
     XCTAssertNotNil(error);
 }
 
+- (void)testWriteToURLWhenIDEInitializationFails {
+    [self temporarilyReplaceClassMethodOfClass:[XCNProject class]
+                                      selector:NSSelectorFromString(@"initializeIDEIfNeededWithError:")
+                                implementation:imp_implementationWithBlock(^BOOL(Class self, NSError **error) {
+                                    if (error) {
+                                        *error = [NSError errorWithDomain:XCNErrorDomain
+                                                                     code:XCNIDEFoundationInconsistencyError
+                                                                 userInfo:nil];
+                                    }
+                                    return NO;
+                                })];
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+}
+
+- (void)testWriteToURLWhenIDETemplateKindIsNotFound {
+    [self temporarilyReplaceClassMethodOfClass:[IDETemplateKind class]
+                                      selector:@selector(templateKindForIdentifier:)
+                                implementation:imp_implementationWithBlock(^IDETemplateKind *(Class self, NSString *identifier) {
+                                    return nil;
+                                })];
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+}
+
+- (void)testWriteToURLWhenIDETemplateIsNotFound {
+    [self temporarilyReplaceInstanceMethodOfClass:[XCNProject class]
+                                         selector:NSSelectorFromString(@"singleViewAppProjectTemplateForKind:")
+                                   implementation:imp_implementationWithBlock(^IDETemplate *(XCNProject *self, IDETemplateKind *kind) {
+                                       return nil;
+                                   })];
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+}
+
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceSwiftUI;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
@@ -354,6 +399,8 @@ static NSString *const kProductName = @"Example";
     XCTAssertEqual(_project.userInterface, XCNUserInterfaceSwiftUI);
 }
 
+// MARK: Private
+
 - (NSFileWrapper *)fileWrapper {
     @synchronized(self) {
         if (!_fileWrapper) {
@@ -369,6 +416,25 @@ static NSString *const kProductName = @"Example";
         }
         return _fileWrapper;
     }
+}
+
+- (void)temporarilyReplaceClassMethodOfClass:(Class)class selector:(SEL)selector implementation:(IMP)newImplementation {
+    Class metaClass = object_getClass(class);
+    Method method = class_getClassMethod(class, selector);
+    [self temporarilyReplaceMethod:method ofClass:metaClass selector:selector implementation:newImplementation];
+}
+
+- (void)temporarilyReplaceInstanceMethodOfClass:(Class)class selector:(SEL)selector implementation:(IMP)newImplementation {
+    Method method = class_getInstanceMethod(class, selector);
+    [self temporarilyReplaceMethod:method ofClass:class selector:selector implementation:newImplementation];
+}
+
+- (void)temporarilyReplaceMethod:(Method)method ofClass:(Class)class selector:(SEL)selector implementation:(IMP)newImplementation {
+    const char *types = method_getTypeEncoding(method);
+    IMP originalImplementation = class_replaceMethod(class, selector, newImplementation, types);
+    [self addTeardownBlock:^{
+        class_replaceMethod(class, selector, originalImplementation, types);
+    }];
 }
 
 @end
