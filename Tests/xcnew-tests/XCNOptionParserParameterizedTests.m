@@ -239,7 +239,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 + (instancetype)testCaseWithSelector:(SEL)selector {
-    for (NSInvocation *invocation in [self class].testInvocations) {
+    for (NSInvocation *invocation in self.testInvocations) {
         if (sel_isEqual(selector, invocation.selector)) {
             return [self testCaseWithInvocation:invocation];
         }
