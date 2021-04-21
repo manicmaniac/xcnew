@@ -270,14 +270,13 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 - (void)parameterizedTestParseArguments:(NSArray<NSString *> *)arguments expectation:(void (^)(XCNOptionSet *, NSString *, NSError *))expectationBlock {
-    XCNOptionParser *parser = XCNOptionParser.sharedOptionParser;
     int argc = (int)arguments.count;
     char **argv = calloc(argc + 1, sizeof(char *));
     for (int i = 0; i < argc; i++) {
         argv[i] = strdup(arguments[i].UTF8String);
     }
     NSError *error;
-    XCNOptionSet *optionSet = [parser parseArguments:argv count:argc error:&error];
+    XCNOptionSet *optionSet = [XCNOptionParser.sharedOptionParser parseArguments:argv count:argc error:&error];
     for (int i = 0; i < argc; i++) {
         free(argv[i]);
     }
