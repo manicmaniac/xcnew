@@ -315,13 +315,12 @@ static NSString *const kProductName = @"Example";
                                       error:&error]) {
         return XCTFail(@"%@", error);
     }
-    __weak typeof(self) wself = self;
+    NSFileManager *fileManager = _fileManager;
     [self addTeardownBlock:^{
-        __strong typeof(wself) self = wself;
         NSError *error;
-        if (![self->_fileManager setAttributes:@{NSFileImmutable : @NO}
-                                  ofItemAtPath:url.path
-                                         error:&error]) {
+        if (![fileManager setAttributes:@{NSFileImmutable : @NO}
+                           ofItemAtPath:url.path
+                                  error:&error]) {
             XCTFail(@"%@", error);
         }
     }];
