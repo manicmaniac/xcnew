@@ -6,7 +6,7 @@
 //  Copyright © 2019 Ryosuke Ito. All rights reserved.
 //
 
-#import "XCNProject.h"
+#import "XCNProjectInternal.h"
 
 #import <DVTFoundation/DVTFilePath.h>
 #import <DVTFoundation/DVTPlatform.h>
@@ -120,7 +120,7 @@
 
 static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
 
-+ (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *)error {
++ (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *_Nullable)error {
     @synchronized(self) {
         return IDEInitializationCompleted(NULL) || IDEInitialize(1, error);
     }
