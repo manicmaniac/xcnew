@@ -57,6 +57,13 @@
         }
         return NO;
     }
+    IDETemplateFactory *factory = kind.factory;
+    if (!factory) {
+        if (error) {
+            *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"A kind associated with kind '%@' not found.", kind);
+        }
+        return NO;
+    }
     IDETemplate *template = [self singleViewAppProjectTemplateForKind:kind];
     if (!template) {
         if (error) {
@@ -70,13 +77,13 @@
     context.documentFilePath = [DVTFilePath filePathForFileURL:url];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSError *instantiationError;
-    [kind.factory instantiateTemplateForContext:context
-                                        options:nil
-                                       whenDone:^(NSArray<DVTFilePath *> *paths, void *_unknown, NSError *error) {
-                                           [paths makeObjectsPerformSelector:@selector(removeAssociatesWithRole:) withObject:@"PBXContainerAssociateRole"];
-                                           instantiationError = error;
-                                           dispatch_semaphore_signal(semaphore);
-                                       }];
+    [factory instantiateTemplateForContext:context
+                                   options:nil
+                                  whenDone:^(NSArray<DVTFilePath *> *paths, void *_unknown, NSError *error) {
+                                      [paths makeObjectsPerformSelector:@selector(removeAssociatesWithRole:) withObject:@"PBXContainerAssociateRole"];
+                                      instantiationError = error;
+                                      dispatch_semaphore_signal(semaphore);
+                                  }];
     if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
         if (error) {
             NSString *failureReason = [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout];
