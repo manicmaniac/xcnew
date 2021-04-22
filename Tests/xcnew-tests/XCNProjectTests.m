@@ -12,7 +12,7 @@
 #import <objc/runtime.h>
 #import "XCNErrors.h"
 #import "XCNMacroDefinitions.h"
-#import "XCNProject.h"
+#import "XCNProjectInternal.h"
 
 @interface XCNProjectTests : XCTestCase
 
@@ -334,7 +334,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWhenIDEInitializationFails {
     [self temporarilyReplaceClassMethodOfClass:[XCNProject class]
-                                      selector:NSSelectorFromString(@"initializeIDEIfNeededWithError:")
+                                      selector:@selector(initializeIDEIfNeededWithError:)
                                 implementation:imp_implementationWithBlock(^BOOL(Class self, NSError **error) {
                                     if (error) {
                                         *error = [NSError errorWithDomain:XCNErrorDomain
@@ -363,7 +363,7 @@ static NSString *const kProductName = @"Example";
 
 - (void)testWriteToURLWhenIDETemplateIsNotFound {
     [self temporarilyReplaceInstanceMethodOfClass:[XCNProject class]
-                                         selector:NSSelectorFromString(@"singleViewAppProjectTemplateForKind:")
+                                         selector:@selector(singleViewAppProjectTemplateForKind:)
                                    implementation:imp_implementationWithBlock(^IDETemplate *(XCNProject *self, IDETemplateKind *kind) {
                                        return nil;
                                    })];

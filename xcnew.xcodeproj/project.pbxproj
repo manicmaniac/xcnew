@@ -108,6 +108,7 @@
 		5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNLanguageTests.m; sourceTree = "<group>"; };
 		5B35529824E7A4F90035E983 /* XCNProjectFeature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNProjectFeature.h; sourceTree = "<group>"; };
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B393EE626310FB600948B46 /* XCNProjectInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNProjectInternal.h; sourceTree = "<group>"; };
 		5B39EA61260BCA630028A910 /* DVTPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTPlatform.h; sourceTree = "<group>"; };
 		5B39EAA9260BD5510028A910 /* XCNAppLifecycle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNAppLifecycle.h; sourceTree = "<group>"; };
 		5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycle.m; sourceTree = "<group>"; };
@@ -297,6 +298,7 @@
 				5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */,
 				5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */,
 				5B20AFBE22F7437700EA7295 /* XCNProject.h */,
+				5B393EE626310FB600948B46 /* XCNProjectInternal.h */,
 				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
 				5B35529824E7A4F90035E983 /* XCNProjectFeature.h */,
 				5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */,
