@@ -56,162 +56,157 @@
 }
 
 - (void)testRunWithNoArguments {
-    NSString *stdoutString, *stderrString;
-    XCTAssertEqual([self runWithArguments:@[] standardOutput:&stdoutString standardError:&stderrString], 111);
-    XCTAssertEqualObjects(stdoutString, @"");
-    XCTAssertEqualObjects(stderrString, @"xcnew: Wrong number of arguments (0 for 1..2).\n");
+    NSString *outputString, *errorString;
+    XCTAssertEqual([self runWithArguments:@[] output:&outputString error:&errorString], 111);
+    XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"xcnew: Wrong number of arguments (0 for 1..2).\n");
 }
 
 - (void)testRunWithInvalidShortOptionArguments {
-    NSString *stdoutString, *stderrString;
-    XCTAssertEqual([self runWithArguments:@[ @"-X" ] standardOutput:&stdoutString standardError:&stderrString], 110);
-    XCTAssertEqualObjects(stdoutString, @"");
-    XCTAssertEqualObjects(stderrString, @"xcnew: Unrecognized option '-X'.\n");
+    NSString *outputString, *errorString;
+    XCTAssertEqual([self runWithArguments:@[ @"-X" ] output:&outputString error:&errorString], 110);
+    XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"xcnew: Unrecognized option '-X'.\n");
 }
 
 - (void)testRunWithInvalidLongOptionArguments {
-    NSString *stdoutString, *stderrString;
-    XCTAssertEqual([self runWithArguments:@[ @"--invalid" ] standardOutput:&stdoutString standardError:&stderrString], 110);
-    XCTAssertEqualObjects(stdoutString, @"");
-    XCTAssertEqualObjects(stderrString, @"xcnew: Unrecognized option '--invalid'.\n");
+    NSString *outputString, *errorString;
+    XCTAssertEqual([self runWithArguments:@[ @"--invalid" ] output:&outputString error:&errorString], 110);
+    XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"xcnew: Unrecognized option '--invalid'.\n");
 }
 
 - (void)testRunWithHelp {
-    NSString *stdoutString, *stderrString;
-    XCTAssertEqual([self runWithArguments:@[ @"-h" ] standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertTrue([stdoutString containsString:@"Usage"]);
-    XCTAssertEqualObjects(stderrString, @"");
+    NSString *outputString, *errorString;
+    XCTAssertEqual([self runWithArguments:@[ @"-h" ] output:&outputString error:&errorString], 0);
+    XCTAssertTrue([outputString containsString:@"Usage"]);
+    XCTAssertEqualObjects(errorString, @"");
 }
 
 - (void)testRunWithVersion {
-    NSString *stdoutString, *stderrString;
-    XCTAssertEqual([self runWithArguments:@[ @"-v" ] standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertTrue([stdoutString containsString:@"."]);
-    XCTAssertEqualObjects(stderrString, @"");
+    NSString *outputString, *errorString;
+    XCTAssertEqual([self runWithArguments:@[ @"-v" ] output:&outputString error:&errorString], 0);
+    XCTAssertTrue([outputString containsString:@"."]);
+    XCTAssertEqualObjects(errorString, @"");
 }
 
 - (void)testExecuteWithDefaultOptions {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/default" : @"Fixtures/default@xcode10");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 #if XCN_TEST_OPTION_IS_UNIFIED
 - (void)testExecuteWithTests {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-t", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/tests");
 }
 #else
 - (void)testExecuteWithUnitTests {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-t", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/unit-tests" : @"Fixtures/unit-tests@xcode10");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 - (void)testExecuteWithUITests {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-u", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/ui-tests" : @"Fixtures/ui-tests@xcode10");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 #endif // XCN_TEST_OPTION_IS_UNIFIED
 
 - (void)testExecuteWithCoreData {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-c", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/core-data" : @"Fixtures/core-data@xcode10");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 #if XCN_CLOUD_KIT_IS_AVAILABLE
 - (void)testExecuteWithCloudKit {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-C", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/cloud-kit");
 }
 #endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
 - (void)testExecuteWithObjectiveC {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-o", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/objective-c" : @"Fixtures/objective-c@xcode10");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
 #if XCN_SWIFT_UI_IS_AVAILABLE
 - (void)testExecuteWithSwiftUI {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-s", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui");
 }
 #endif // XCN_SWIFT_UI_IS_AVAILABLE
 
 #if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 - (void)testExecuteWithSwiftUILifecycle {
-    NSString *stdoutString, *stderrString;
+    NSString *outputString, *errorString;
     NSString *productName = @"Example";
     NSArray *arguments = @[ @"-S", productName ];
-    XCTAssertEqual([self runWithArguments:arguments standardOutput:&stdoutString standardError:&stderrString], 0);
-    XCTAssertEqualObjects(stdoutString, @"");
+    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
+    XCTAssertEqualObjects(outputString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui-lifecycle");
 }
 #endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
 // MARK: Private
 
-- (int)runWithArguments:(NSArray<NSString *> *)arguments standardOutput:(NSString **)stdoutString standardError:(NSString **)stderrString {
-    NSFileHandle *stdoutFileHandle, *stderrFileHandle;
+- (int)runWithArguments:(NSArray<NSString *> *)arguments output:(NSString **)outputString error:(NSString **)errorString {
     NSTask *task = [[NSTask alloc] init];
     task.currentDirectoryURL = _currentDirectoryURL;
-    task.launchPath = @"/usr/bin/sandbox-exec";
+    task.executableURL = [NSURL fileURLWithPath:@"/usr/bin/sandbox-exec"];
     task.arguments = [@[ @"-f", _sandboxProfileURL.path, _executableURL.path ] arrayByAddingObjectsFromArray:arguments];
-    if (stdoutString) {
-        NSPipe *stdoutPipe = [NSPipe pipe];
-        stdoutFileHandle = stdoutPipe.fileHandleForReading;
-        task.standardOutput = stdoutPipe;
-    }
-    if (stderrString) {
-        NSPipe *stderrPipe = [NSPipe pipe];
-        stderrFileHandle = stderrPipe.fileHandleForReading;
-        task.standardError = stderrPipe;
-    }
+    NSPipe *outputPipe = [NSPipe pipe];
+    task.standardOutput = outputPipe;
+    NSPipe *errorPipe = [NSPipe pipe];
+    task.standardError = errorPipe;
     [task launch];
-    if (stdoutString) {
-        NSData *stdoutData = [stdoutFileHandle readDataToEndOfFile];
-        *stdoutString = [[NSString alloc] initWithData:stdoutData encoding:NSUTF8StringEncoding];
-    }
-    if (stderrString) {
-        NSData *stderrData = [stderrFileHandle readDataToEndOfFile];
-        *stderrString = [[NSString alloc] initWithData:stderrData encoding:NSUTF8StringEncoding];
-    }
     [task waitUntilExit];
+    [outputPipe.fileHandleForWriting closeFile];
+    [errorPipe.fileHandleForWriting closeFile];
+    if (outputString) {
+        NSData *outputData = [outputPipe.fileHandleForReading readDataToEndOfFile];
+        *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
+    }
+    if (errorString) {
+        NSData *errorData = [errorPipe.fileHandleForReading readDataToEndOfFile];
+        *errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
+    }
     return task.terminationStatus;
 }
 

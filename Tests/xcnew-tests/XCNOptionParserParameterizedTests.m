@@ -239,7 +239,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 + (instancetype)testCaseWithSelector:(SEL)selector {
-    for (NSInvocation *invocation in [self class].testInvocations) {
+    for (NSInvocation *invocation in self.testInvocations) {
         if (sel_isEqual(selector, invocation.selector)) {
             return [self testCaseWithInvocation:invocation];
         }
@@ -270,14 +270,13 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 - (void)parameterizedTestParseArguments:(NSArray<NSString *> *)arguments expectation:(void (^)(XCNOptionSet *, NSString *, NSError *))expectationBlock {
-    XCNOptionParser *parser = XCNOptionParser.sharedOptionParser;
     int argc = (int)arguments.count;
     char **argv = calloc(argc + 1, sizeof(char *));
     for (int i = 0; i < argc; i++) {
         argv[i] = strdup(arguments[i].UTF8String);
     }
     NSError *error;
-    XCNOptionSet *optionSet = [parser parseArguments:argv count:argc error:&error];
+    XCNOptionSet *optionSet = [XCNOptionParser.sharedOptionParser parseArguments:argv count:argc error:&error];
     for (int i = 0; i < argc; i++) {
         free(argv[i]);
     }
@@ -289,7 +288,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
-    if ([NSStringFromSelector(anInvocation.selector) hasPrefix:@"test"]) {
+    if ([self selectorHasTestPrefix:anInvocation.selector]) {
         anInvocation.selector = @selector(parameterizedTestParseArguments:expectation:);
         return [anInvocation invoke];
     }
@@ -297,7 +296,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    if ([NSStringFromSelector(aSelector) hasPrefix:@"test"]) {
+    if ([self selectorHasTestPrefix:aSelector]) {
         aSelector = @selector(parameterizedTestParseArguments:expectation:);
     }
     return [super methodSignatureForSelector:aSelector];
@@ -318,6 +317,10 @@ static NSArray<NSInvocation *> *_testInvocations;
 + (SEL)selectorForArguments:(NSArray<NSString *> *)arguments {
     NSString *selectorName = [NSString stringWithFormat:@"testParseArguments (%@)", [arguments componentsJoinedByString:@" "]];
     return NSSelectorFromString(selectorName);
+}
+
+- (BOOL)selectorHasTestPrefix:(SEL)selector {
+    return [NSStringFromSelector(selector) hasPrefix:@"test"];
 }
 
 @end
