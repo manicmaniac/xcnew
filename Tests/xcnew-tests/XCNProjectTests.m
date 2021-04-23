@@ -7,7 +7,10 @@
 //
 
 #import <IDEFoundation/IDETemplate.h>
+#import <IDEFoundation/IDETemplateFactory.h>
+#import <IDEFoundation/IDETemplateInstantiationContext.h>
 #import <IDEFoundation/IDETemplateKind.h>
+#import <IDEFoundation/IDETemplateOption.h>
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
 #import "XCNErrors.h"
@@ -385,6 +388,44 @@ static NSString *const kProductName = @"Example";
     XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+}
+
+- (void)testWriteToURLWhenTemplateInstantiationTimedOut {
+    [self temporarilyReplaceClassMethodOfClass:[IDETemplateKind class]
+                                      selector:@selector(templateKindForIdentifier:)
+                                implementation:imp_implementationWithBlock(^IDETemplateKind *(Class self, NSString *identifier) {
+                                    return [[IDETemplateKind alloc] init];
+                                })];
+    [self temporarilyReplaceInstanceMethodOfClass:[IDETemplateKind class]
+                                         selector:@selector(factory)
+                                   implementation:imp_implementationWithBlock(^IDETemplateFactory * {
+                                       return [[IDETemplateFactory alloc] init];
+                                   })];
+    [self temporarilyReplaceInstanceMethodOfClass:[XCNProject class]
+                                         selector:@selector(singleViewAppProjectTemplateForKind:)
+                                   implementation:imp_implementationWithBlock(^(IDETemplateKind *kind) {
+                                       IDETemplate *template = [[IDETemplate alloc] init];
+                                       return template;
+                                   })];
+    [self temporarilyReplaceInstanceMethodOfClass:[XCNProject class]
+                                         selector:NSSelectorFromString(@"configureTemplateOptions:")
+                                   implementation:imp_implementationWithBlock(^(NSArray<IDETemplateOption *> *templateOptions){
+                                                      // Do nothing.
+                                                  })];
+    [self temporarilyReplaceInstanceMethodOfClass:[IDETemplateKind class]
+                                         selector:@selector(newTemplateInstantiationContext)
+                                   implementation:imp_implementationWithBlock(^IDETemplateInstantiationContext * {
+                                       return nil;
+                                   })];
+    [self temporarilyReplaceInstanceMethodOfClass:[IDETemplateFactory class]
+                                         selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                   implementation:imp_implementationWithBlock(^(IDETemplateInstantiationContext *context, id options, void (^whenDone)(NSArray<DVTFilePath *> *, void *, NSError *)){
+                                                      // Do nothing.
+                                                  })];
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, XCNIDEFoundationTimeoutError);
 }
 
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
