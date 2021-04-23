@@ -373,6 +373,20 @@ static NSString *const kProductName = @"Example";
     XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
 }
 
+- (void)testWriteToURLWhenIDETemplateFactoryIsNotFound {
+    [self temporarilyReplaceClassMethodOfClass:[IDETemplateKind class]
+                                      selector:@selector(templateKindForIdentifier:)
+                                implementation:imp_implementationWithBlock(^IDETemplateKind *(Class self, NSString *identifier) {
+                                    IDETemplateKind *templateKind = [[IDETemplateKind alloc] init];
+                                    NSAssert(!templateKind.factory, @"templateKind.factory must be nil");
+                                    return templateKind;
+                                })];
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+}
+
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceSwiftUI;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
