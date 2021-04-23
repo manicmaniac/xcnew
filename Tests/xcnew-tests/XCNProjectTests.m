@@ -8,9 +8,7 @@
 
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateFactory.h>
-#import <IDEFoundation/IDETemplateInstantiationContext.h>
 #import <IDEFoundation/IDETemplateKind.h>
-#import <IDEFoundation/IDETemplateOption.h>
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
 #import "XCNErrors.h"
@@ -391,37 +389,12 @@ static NSString *const kProductName = @"Example";
 }
 
 - (void)testWriteToURLWhenTemplateInstantiationTimedOut {
-    [self temporarilyReplaceClassMethodOfClass:[IDETemplateKind class]
-                                      selector:@selector(templateKindForIdentifier:)
-                                implementation:imp_implementationWithBlock(^IDETemplateKind *(Class self, NSString *identifier) {
-                                    return [[IDETemplateKind alloc] init];
-                                })];
-    [self temporarilyReplaceInstanceMethodOfClass:[IDETemplateKind class]
-                                         selector:@selector(factory)
-                                   implementation:imp_implementationWithBlock(^IDETemplateFactory * {
-                                       return [[IDETemplateFactory alloc] init];
-                                   })];
-    [self temporarilyReplaceInstanceMethodOfClass:[XCNProject class]
-                                         selector:@selector(singleViewAppProjectTemplateForKind:)
-                                   implementation:imp_implementationWithBlock(^(IDETemplateKind *kind) {
-                                       IDETemplate *template = [[IDETemplate alloc] init];
-                                       return template;
-                                   })];
-    [self temporarilyReplaceInstanceMethodOfClass:[XCNProject class]
-                                         selector:NSSelectorFromString(@"configureTemplateOptions:")
-                                   implementation:imp_implementationWithBlock(^(NSArray<IDETemplateOption *> *templateOptions){
-                                                      // Do nothing.
-                                                  })];
-    [self temporarilyReplaceInstanceMethodOfClass:[IDETemplateKind class]
-                                         selector:@selector(newTemplateInstantiationContext)
-                                   implementation:imp_implementationWithBlock(^IDETemplateInstantiationContext * {
-                                       return nil;
-                                   })];
-    [self temporarilyReplaceInstanceMethodOfClass:[IDETemplateFactory class]
-                                         selector:@selector(instantiateTemplateForContext:options:whenDone:)
-                                   implementation:imp_implementationWithBlock(^(IDETemplateInstantiationContext *context, id options, void (^whenDone)(NSArray<DVTFilePath *> *, void *, NSError *)){
-                                                      // Do nothing.
-                                                  })];
+    id<NSObject> observation = [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
+                                                                                 selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                                                           implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)){
+                                                                                              // Do nothing.
+                                                                                          })];
+    [observation self]; // To suppress an unused variable warning.
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
@@ -490,6 +463,21 @@ static NSString *const kProductName = @"Example";
     [self addTeardownBlock:^{
         class_replaceMethod(class, selector, originalImplementation, types);
     }];
+}
+
+- (id<NSObject>)temporarilyReplaceInstanceMethodOfObservedClassNamed:(NSString *)className selector:(SEL)selector implementation:(IMP)newImplementation {
+    Class class = NSClassFromString(className);
+    if (class) {
+        [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
+        return nil;
+    }
+    return [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
+                                                           object:nil
+                                                            queue:nil
+                                                       usingBlock:^(NSNotification *notification) {
+                                                           Class class = [notification.object classNamed:className];
+                                                           [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
+                                                       }];
 }
 
 @end
