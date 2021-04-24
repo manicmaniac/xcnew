@@ -311,6 +311,16 @@ static NSString *const kProductName = @"Example";
 
 #endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
+- (void)testWriteToURLWhenDirectoryAlreadyExists {
+    NSError *error;
+    if (![_fileManager createDirectoryAtURL:_url withIntermediateDirectories:NO attributes:nil error:&error]) {
+        self.continueAfterFailure = NO;
+        XCTFail(@"%@", error);
+    }
+    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertNil(error);
+}
+
 - (void)testWriteToURLWhenDirectoryIsImmutable {
     NSURL *url = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"];
     NSError *error;
