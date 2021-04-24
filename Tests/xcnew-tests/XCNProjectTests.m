@@ -401,6 +401,20 @@ static NSString *const kProductName = @"Example";
     XCTAssertEqual(error.code, XCNIDEFoundationTimeoutError);
 }
 
+- (void)testWriteToURLWhenTemplateInstantiationFailed {
+    id<NSObject> observation = [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
+                                                                                 selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                                                           implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)) {
+                                                                               NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
+                                                                               whenDone(nil, nil, error);
+                                                                           })];
+    [observation self]; // To suppress an unused variable warning.
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
+    XCTAssertEqualObjects(error.domain, NSCocoaErrorDomain);
+    XCTAssertEqual(error.code, NSFileWriteUnknownError);
+}
+
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceSwiftUI;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
