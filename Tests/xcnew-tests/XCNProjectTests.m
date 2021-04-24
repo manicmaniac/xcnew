@@ -321,6 +321,17 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(error);
 }
 
+- (void)testWriteToURLWhenFileAlreadyExists {
+    NSError *error;
+    if (![[NSData data] writeToURL:_url options:NSDataWritingWithoutOverwriting error:&error]) {
+        self.continueAfterFailure = NO;
+        XCTFail(@"%@", error);
+    }
+    XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertEqualObjects(error.domain, NSCocoaErrorDomain);
+    XCTAssertEqual(error.code, NSFileWriteFileExistsError);
+}
+
 - (void)testWriteToURLWhenDirectoryIsImmutable {
     NSURL *url = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"];
     NSError *error;
