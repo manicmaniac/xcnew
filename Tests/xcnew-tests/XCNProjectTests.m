@@ -7,6 +7,7 @@
 //
 
 #import <IDEFoundation/IDETemplate.h>
+#import <IDEFoundation/IDETemplateFactory.h>
 #import <IDEFoundation/IDETemplateKind.h>
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
@@ -310,6 +311,27 @@ static NSString *const kProductName = @"Example";
 
 #endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
+- (void)testWriteToURLWhenDirectoryAlreadyExists {
+    NSError *error;
+    if (![_fileManager createDirectoryAtURL:_url withIntermediateDirectories:NO attributes:nil error:&error]) {
+        self.continueAfterFailure = NO;
+        XCTFail(@"%@", error);
+    }
+    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertNil(error);
+}
+
+- (void)testWriteToURLWhenFileAlreadyExists {
+    NSError *error;
+    if (![[NSData data] writeToURL:_url options:NSDataWritingWithoutOverwriting error:&error]) {
+        self.continueAfterFailure = NO;
+        XCTFail(@"%@", error);
+    }
+    XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
+    XCTAssertEqualObjects(error.domain, NSCocoaErrorDomain);
+    XCTAssertEqual(error.code, NSFileWriteFileExistsError);
+}
+
 - (void)testWriteToURLWhenDirectoryIsImmutable {
     NSURL *url = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Inaccessible"];
     NSError *error;
@@ -319,12 +341,13 @@ static NSString *const kProductName = @"Example";
                                       error:&error]) {
         return XCTFail(@"%@", error);
     }
-    NSFileManager *fileManager = _fileManager;
+    __unsafe_unretained typeof(self) unretainedSelf = self;
     [self addTeardownBlock:^{
+        typeof(unretainedSelf) self = unretainedSelf;
         NSError *error;
-        if (![fileManager setAttributes:@{NSFileImmutable : @NO}
-                           ofItemAtPath:url.path
-                                  error:&error]) {
+        if (![self->_fileManager setAttributes:@{NSFileImmutable : @NO}
+                                  ofItemAtPath:url.path
+                                         error:&error]) {
             XCTFail(@"%@", error);
         }
     }];
@@ -385,6 +408,33 @@ static NSString *const kProductName = @"Example";
     XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+}
+
+- (void)testWriteToURLWhenTemplateInstantiationTimedOut {
+    id<NSObject> observation = [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
+                                                                                 selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                                                           implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)){
+                                                                                              // Do nothing.
+                                                                                          })];
+    [observation self]; // To suppress an unused variable warning.
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, XCNIDEFoundationTimeoutError);
+}
+
+- (void)testWriteToURLWhenTemplateInstantiationFailed {
+    id<NSObject> observation = [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
+                                                                                 selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                                                           implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)) {
+                                                                               NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
+                                                                               whenDone(nil, nil, error);
+                                                                           })];
+    [observation self]; // To suppress an unused variable warning.
+    NSError *error;
+    XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
+    XCTAssertEqualObjects(error.domain, NSCocoaErrorDomain);
+    XCTAssertEqual(error.code, NSFileWriteUnknownError);
 }
 
 - (void)testSetLanguageObjectiveCWhenSwiftUIIsSetAsUserInterface {
@@ -449,6 +499,21 @@ static NSString *const kProductName = @"Example";
     [self addTeardownBlock:^{
         class_replaceMethod(class, selector, originalImplementation, types);
     }];
+}
+
+- (id<NSObject>)temporarilyReplaceInstanceMethodOfObservedClassNamed:(NSString *)className selector:(SEL)selector implementation:(IMP)newImplementation {
+    Class class = NSClassFromString(className);
+    if (class) {
+        [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
+        return nil;
+    }
+    return [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
+                                                           object:nil
+                                                            queue:nil
+                                                       usingBlock:^(NSNotification *notification) {
+                                                           Class class = [notification.object classNamed:className];
+                                                           [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
+                                                       }];
 }
 
 @end

@@ -54,7 +54,16 @@
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNWrongNumberOfArgumentsErrorCreateWithRange {
+- (void)testXCNWrongNumberOfArgumentsErrorCreateWithRangeWithShortRange {
+    NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 0);
+    NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, 4);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 111);
+    XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1).");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
+- (void)testXCNWrongNumberOfArgumentsErrorCreateWithRangeWithLongRange {
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
     NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, 4);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
