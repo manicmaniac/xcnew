@@ -67,7 +67,8 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
 // MARK: Private
 
 static NSURL *XCNFindFileHierarchySpecificationURLWithName(NSString *specificationName) {
-    NSBundle *bundle = [NSBundle bundleWithIdentifier:@"com.github.manicmaniac.xcnew-integration-tests"];
+    NSBundle *bundle = [NSBundle bundleWithIdentifier:@OS_STRINGIFY(PRODUCT_BUNDLE_IDENTIFIER)];
+    NSCAssert(bundle != nil, @"The correct PRODUCT_BUNDLE_IDENTIFIER must be provided");
     return [bundle URLForResource:specificationName withExtension:@"dist"];
 }
 
