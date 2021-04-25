@@ -414,8 +414,8 @@ static NSString *const kProductName = @"Example";
     [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
                                                       selector:@selector(instantiateTemplateForContext:options:whenDone:)
                                                 implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)){
-        // Do nothing.
-    })];
+                                                                   // Do nothing.
+                                                               })];
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
@@ -426,9 +426,9 @@ static NSString *const kProductName = @"Example";
     [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
                                                       selector:@selector(instantiateTemplateForContext:options:whenDone:)
                                                 implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)) {
-        NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
-        whenDone(nil, nil, error);
-    })];
+                                                    NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
+                                                    whenDone(nil, nil, error);
+                                                })];
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
     XCTAssertEqualObjects(error.domain, NSCocoaErrorDomain);
@@ -507,15 +507,15 @@ static NSString *const kProductName = @"Example";
     __weak NSNotificationCenter *notificationCenter = NSNotificationCenter.defaultCenter;
     __weak typeof(self) wself = self;
     __weak __block id<NSObject> observer = [notificationCenter addObserverForName:NSBundleDidLoadNotification
-                                                                    object:nil
-                                                                     queue:nil
-                                                                usingBlock:^(NSNotification *notification) {
-        Class class = [notification.object classNamed:className];
-        if (class) {
-            [wself temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
-            [notificationCenter removeObserver:observer];
-        }
-    }];
+                                                                           object:nil
+                                                                            queue:nil
+                                                                       usingBlock:^(NSNotification *notification) {
+                                                                           Class class = [notification.object classNamed:className];
+                                                                           if (class) {
+                                                                               [wself temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
+                                                                               [notificationCenter removeObserver:observer];
+                                                                           }
+                                                                       }];
     [self addTeardownBlock:^{
         [notificationCenter removeObserver:observer];
     }];
