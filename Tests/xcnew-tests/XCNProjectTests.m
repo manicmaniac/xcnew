@@ -411,12 +411,11 @@ static NSString *const kProductName = @"Example";
 }
 
 - (void)testWriteToURLWhenTemplateInstantiationTimedOut {
-    id<NSObject> observation = [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
-                                                                                 selector:@selector(instantiateTemplateForContext:options:whenDone:)
-                                                                           implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)){
-                                                                                              // Do nothing.
-                                                                                          })];
-    [observation self]; // To suppress an unused variable warning.
+    [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
+                                                      selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                                implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)){
+        // Do nothing.
+    })];
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
@@ -424,13 +423,12 @@ static NSString *const kProductName = @"Example";
 }
 
 - (void)testWriteToURLWhenTemplateInstantiationFailed {
-    id<NSObject> observation = [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
-                                                                                 selector:@selector(instantiateTemplateForContext:options:whenDone:)
-                                                                           implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)) {
-                                                                               NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
-                                                                               whenDone(nil, nil, error);
-                                                                           })];
-    [observation self]; // To suppress an unused variable warning.
+    [self temporarilyReplaceInstanceMethodOfObservedClassNamed:@"Xcode3ProjectTemplateFactory"
+                                                      selector:@selector(instantiateTemplateForContext:options:whenDone:)
+                                                implementation:imp_implementationWithBlock(^(id self, id context, id options, void (^whenDone)(id, void *, id)) {
+        NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
+        whenDone(nil, nil, error);
+    })];
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
     XCTAssertEqualObjects(error.domain, NSCocoaErrorDomain);
@@ -501,19 +499,26 @@ static NSString *const kProductName = @"Example";
     }];
 }
 
-- (id<NSObject>)temporarilyReplaceInstanceMethodOfObservedClassNamed:(NSString *)className selector:(SEL)selector implementation:(IMP)newImplementation {
+- (void)temporarilyReplaceInstanceMethodOfObservedClassNamed:(NSString *)className selector:(SEL)selector implementation:(IMP)newImplementation {
     Class class = NSClassFromString(className);
     if (class) {
-        [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
-        return nil;
+        return [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
     }
-    return [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
-                                                           object:nil
-                                                            queue:nil
-                                                       usingBlock:^(NSNotification *notification) {
-                                                           Class class = [notification.object classNamed:className];
-                                                           [self temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
-                                                       }];
+    __weak NSNotificationCenter *notificationCenter = NSNotificationCenter.defaultCenter;
+    __weak typeof(self) wself = self;
+    __weak __block id<NSObject> observer = [notificationCenter addObserverForName:NSBundleDidLoadNotification
+                                                                    object:nil
+                                                                     queue:nil
+                                                                usingBlock:^(NSNotification *notification) {
+        Class class = [notification.object classNamed:className];
+        if (class) {
+            [wself temporarilyReplaceInstanceMethodOfClass:class selector:selector implementation:newImplementation];
+            [notificationCenter removeObserver:observer];
+        }
+    }];
+    [self addTeardownBlock:^{
+        [notificationCenter removeObserver:observer];
+    }];
 }
 
 @end
