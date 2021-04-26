@@ -8,7 +8,7 @@
 
 #import "XCNFileHierarchyAssertions.h"
 
-static NSURL *XCNFindFileHierarchySpecificationURLWithName(NSString *specificationName);
+static NSURL *XCNFindFileHierarchySpecificationURLWithName(XCTestCase *testCase, NSString *specificationName);
 static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line, NSError *error);
 
 // MARK: Public
@@ -16,7 +16,7 @@ static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSStri
 NSErrorDomain const XCNMtreeErrorDomain = @"XCNMtreeErrorDomain";
 
 void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationName(XCTestCase *self, NSURL *url, NSString *specificationName, NSString *file, NSUInteger line) {
-    NSURL *specificationURL = XCNFindFileHierarchySpecificationURLWithName(specificationName);
+    NSURL *specificationURL = XCNFindFileHierarchySpecificationURLWithName(self, specificationName);
     XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(self, url, specificationURL, file, line);
 }
 
@@ -66,9 +66,8 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
 
 // MARK: Private
 
-static NSURL *XCNFindFileHierarchySpecificationURLWithName(NSString *specificationName) {
-    NSBundle *bundle = [NSBundle bundleWithIdentifier:@OS_STRINGIFY(PRODUCT_BUNDLE_IDENTIFIER)];
-    NSCAssert(bundle != nil, @"The correct PRODUCT_BUNDLE_IDENTIFIER must be provided");
+static NSURL *XCNFindFileHierarchySpecificationURLWithName(XCTestCase *testCase, NSString *specificationName) {
+    NSBundle *bundle = [NSBundle bundleForClass:[testCase class]];
     return [bundle URLForResource:specificationName withExtension:@"dist"];
 }
 
