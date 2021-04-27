@@ -1,4 +1,4 @@
-.PHONY: all install uninstall check clean distclean format
+.PHONY: all install uninstall check clean distclean format manpages
 
 PREFIX = /usr/local
 BUILD_DIR = build
