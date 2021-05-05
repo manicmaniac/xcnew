@@ -26,6 +26,8 @@
     int _originalStandardOutputFileDescriptor;
 }
 
+typedef void (^XCNOptionParserExpectation)(XCNOptionSet *, NSString *, NSError *);
+
 static NSArray<NSInvocation *> *_testInvocations;
 
 // MARK: Public
@@ -269,7 +271,7 @@ static NSArray<NSInvocation *> *_testInvocations;
     XCTAssertThrowsSpecificNamed([XCNSubclassedOptionParser self], NSException, NSInternalInconsistencyException);
 }
 
-- (void)parameterizedTestParseArguments:(NSArray<NSString *> *)arguments expectation:(void (^)(XCNOptionSet *, NSString *, NSError *))expectationBlock {
+- (void)parameterizedTestParseArguments:(NSArray<NSString *> *)arguments expectation:(XCNOptionParserExpectation)expectationBlock {
     int argc = (int)arguments.count;
     char **argv = calloc(argc + 1, sizeof(char *));
     for (int i = 0; i < argc; i++) {
@@ -304,7 +306,7 @@ static NSArray<NSInvocation *> *_testInvocations;
 
 // MARK: Private
 
-+ (NSInvocation *)invocationWithArguments:(NSArray<NSString *> *)arguments expectation:(void (^)(XCNOptionSet *, NSString *, NSError *))expectationBlock {
++ (NSInvocation *)invocationWithArguments:(NSArray<NSString *> *)arguments expectation:(XCNOptionParserExpectation)expectationBlock {
     NSMethodSignature *methodSignature = [self instanceMethodSignatureForSelector:@selector(parameterizedTestParseArguments:expectation:)];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
     invocation.selector = [self selectorForArguments:arguments];
