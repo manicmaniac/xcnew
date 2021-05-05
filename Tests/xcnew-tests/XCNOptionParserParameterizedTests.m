@@ -273,7 +273,7 @@ static NSArray<NSInvocation *> *_testInvocations;
     int argc = (int)arguments.count;
     char **argv = calloc(argc + 1, sizeof(char *));
     for (int i = 0; i < argc; i++) {
-        argv[i] = strdup(arguments[i].UTF8String);
+        argv[i] = strdup(arguments[i].fileSystemRepresentation);
     }
     NSError *error;
     XCNOptionSet *optionSet = [XCNOptionParser.sharedOptionParser parseArguments:argv count:argc error:&error];
