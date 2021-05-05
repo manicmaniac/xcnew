@@ -195,7 +195,12 @@
     task.standardOutput = outputPipe;
     NSPipe *errorPipe = [NSPipe pipe];
     task.standardError = errorPipe;
-    [task launch];
+    NSError *error;
+    if (![task launchAndReturnError:&error]) {
+        self.continueAfterFailure = NO;
+        XCTFail(@"%@", error);
+        return -1;
+    }
     [task waitUntilExit];
     [outputPipe.fileHandleForWriting closeFile];
     [errorPipe.fileHandleForWriting closeFile];

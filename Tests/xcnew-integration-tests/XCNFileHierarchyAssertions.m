@@ -29,7 +29,10 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
     task.standardOutput = outputPipe;
     NSPipe *errorPipe = [NSPipe pipe];
     task.standardError = errorPipe;
-    [task launch];
+    NSError *error;
+    if (![task launchAndReturnError:&error]) {
+        return XCNTestCaseRecordFailureWithDescription(self, error.localizedDescription, file, line, error);
+    }
     [task waitUntilExit];
     [outputPipe.fileHandleForWriting closeFile];
     [errorPipe.fileHandleForWriting closeFile];
