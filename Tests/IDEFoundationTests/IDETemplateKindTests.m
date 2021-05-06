@@ -7,6 +7,7 @@
 //
 
 #import <IDEFoundation/IDEInitialization.h>
+#import <IDEFoundation/IDETemplateFactory.h>
 #import <IDEFoundation/IDETemplateKind.h>
 #import <XCTest/XCTest.h>
 #import "XCNIDEFoundationTestHelpers.h"
@@ -30,7 +31,7 @@
 
 - (void)testFactory {
     IDETemplateKind *templateKind = [IDETemplateKind templateKindForIdentifier:XCNXcode3ProjectTemplateKindIdentifier];
-    XCTAssertEqualObjects(NSStringFromClass([(id)templateKind.factory class]), @"Xcode3ProjectTemplateFactory");
+    XCTAssertTrue([templateKind.factory isMemberOfClass:NSClassFromString(@"Xcode3ProjectTemplateFactory")]);
 }
 
 - (void)testNewTemplateInstantiationContext {
