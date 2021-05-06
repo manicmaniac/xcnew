@@ -14,58 +14,58 @@
 
 @implementation XCNErrorsTests
 
-- (void)testXCNFileWriteUnknownErrorCreateWithPath {
-    NSError *error = XCNFileWriteUnknownErrorCreateWithPath(@"/path/to/file");
+- (void)testXCNErrorFileWriteUnknownWithPath {
+    NSError *error = XCNErrorFileWriteUnknownWithPath(@"/path/to/file");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 1);
     XCTAssertEqualObjects(error.localizedDescription, @"Cannot write at path '/path/to/file'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNIDEFoundationInconsistencyErrorCreateWithFormat {
-    NSError *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"%@ %@ %@", @"foo", @"bar", @"baz");
+- (void)testXCNErrorIDEFoundationInconsistencyWithFormat {
+    NSError *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"%@ %@ %@", @"foo", @"bar", @"baz");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 100);
     XCTAssertEqualObjects(error.localizedDescription, @"foo bar baz");
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
-- (void)testXCNIDEFoundationTimeoutErrorCreateWithFailureReason {
-    NSError *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(@"foo");
+- (void)testXCNErrorIDEFoundationTimeoutWithFailureReason {
+    NSError *error = XCNErrorIDEFoundationTimeoutWithFailureReason(@"foo");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 101);
     XCTAssertEqualObjects(error.localizedDescription, @"Operation timed out.");
     XCTAssertEqualObjects(error.localizedFailureReason, @"foo");
 }
 
-- (void)testXCNInvalidArgumentErrorCreateWithShortOption {
-    NSError *error = XCNInvalidArgumentErrorCreateWithShortOption('X');
+- (void)testXCNErrorInvalidArgumentWithShortOption {
+    NSError *error = XCNErrorInvalidArgumentWithShortOption('X');
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 110);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNInvalidArgumentErrorCreateWithLongOption {
-    NSError *error = XCNInvalidArgumentErrorCreateWithLongOption("--invalid");
+- (void)testXCNErrorInvalidArgumentWithLongOption {
+    NSError *error = XCNErrorInvalidArgumentWithLongOption("--invalid");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 110);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--invalid'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNWrongNumberOfArgumentsErrorCreateWithRangeWithShortRange {
+- (void)testXCNErrorWrongNumberOfArgumentsWithRangeWithShortRange {
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 0);
-    NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, 4);
+    NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 111);
     XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1).");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNWrongNumberOfArgumentsErrorCreateWithRangeWithLongRange {
+- (void)testXCNErrorWrongNumberOfArgumentsWithRangeWithLongRange {
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
-    NSError *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, 4);
+    NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 111);
     XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1..2).");

@@ -14,12 +14,12 @@ OBJC_EXPORT NSErrorDomain const XCNErrorDomain;
 
 // clang-format off
 typedef NS_ERROR_ENUM(XCNErrorDomain, XCNError) {
-    XCNFileWriteUnknownError = 1,
-    XCNIDEFoundationInconsistencyError = 100,
-    XCNIDEFoundationTimeoutError = 101,
-    XCNInvalidArgumentError = 110,
-    XCNWrongNumberOfArgumentError = 111,
-    XCNUnknownError = 125
+    XCNErrorFileWriteUnknown = 1,
+    XCNErrorIDEFoundationInconsistency = 100,
+    XCNErrorIDEFoundationTimeout = 101,
+    XCNErrorInvalidArgument = 110,
+    XCNErrorWrongNumberOfArgument = 111,
+    XCNErrorUnknown = 125
 };
 // clang-format on
 

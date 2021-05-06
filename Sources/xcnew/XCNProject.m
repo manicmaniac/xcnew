@@ -46,28 +46,28 @@
     }
     if (![_fileManager isWritableFileAtPath:url.path]) {
         if (error) {
-            *error = XCNFileWriteUnknownErrorCreateWithPath(url.path);
+            *error = XCNErrorFileWriteUnknownWithPath(url.path);
         }
         return NO;
     }
     IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
-            *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"A template kind with identifier '%@' not found.", kXcode3ProjectTemplateKindIdentifier);
+            *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"A template kind with identifier '%@' not found.", kXcode3ProjectTemplateKindIdentifier);
         }
         return NO;
     }
     IDETemplateFactory *factory = kind.factory;
     if (!factory) {
         if (error) {
-            *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"A kind associated with kind '%@' not found.", kind);
+            *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"A kind associated with kind '%@' not found.", kind);
         }
         return NO;
     }
     IDETemplate *template = [self singleViewAppProjectTemplateForKind:kind];
     if (!template) {
         if (error) {
-            *error = XCNIDEFoundationInconsistencyErrorCreateWithFormat(@"A template for kind '%@' not found.", kind);
+            *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"A template for kind '%@' not found.", kind);
         }
         return NO;
     }
@@ -87,7 +87,7 @@
     if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
         if (error) {
             NSString *failureReason = [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout];
-            *error = XCNIDEFoundationTimeoutErrorCreateWithFailureReason(failureReason);
+            *error = XCNErrorIDEFoundationTimeoutWithFailureReason(failureReason);
         }
         return NO;
     }

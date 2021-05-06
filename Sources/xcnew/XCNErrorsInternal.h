@@ -10,11 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-OBJC_EXPORT NSError *XCNFileWriteUnknownErrorCreateWithPath(NSString *path);
-OBJC_EXPORT NSError *XCNIDEFoundationInconsistencyErrorCreateWithFormat(NSString *format, ...) NS_FORMAT_FUNCTION(1, 2);
-OBJC_EXPORT NSError *XCNIDEFoundationTimeoutErrorCreateWithFailureReason(NSString *failureReason);
-OBJC_EXPORT NSError *XCNInvalidArgumentErrorCreateWithShortOption(char shortOption);
-OBJC_EXPORT NSError *XCNInvalidArgumentErrorCreateWithLongOption(const char *longOption);
-OBJC_EXPORT NSError *XCNWrongNumberOfArgumentsErrorCreateWithRange(NSRange acceptableRange, int actual);
+OBJC_EXPORT NSError *XCNErrorFileWriteUnknownWithPath(NSString *path);
+OBJC_EXPORT NSError *XCNErrorIDEFoundationInconsistencyWithFormat(NSString *format, ...) NS_FORMAT_FUNCTION(1, 2);
+OBJC_EXPORT NSError *XCNErrorIDEFoundationTimeoutWithFailureReason(NSString *failureReason);
+OBJC_EXPORT NSError *XCNErrorInvalidArgumentWithShortOption(char shortOption);
+OBJC_EXPORT NSError *XCNErrorInvalidArgumentWithLongOption(const char *longOption);
+OBJC_EXPORT NSError *XCNErrorWrongNumberOfArgumentsWithRange(NSRange acceptableRange, int actual);
 
 NS_ASSUME_NONNULL_END

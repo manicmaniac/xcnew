@@ -172,21 +172,21 @@ static NSArray<NSInvocation *> *_testInvocations;
                                       XCTAssertNil(optionSet);
                                       XCTAssertEqualObjects(output, @"");
                                       XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-                                      XCTAssertEqual(error.code, XCNWrongNumberOfArgumentError);
+                                      XCTAssertEqual(error.code, XCNErrorWrongNumberOfArgument);
                                   }],
                 [self invocationWithArguments:@[ @"xcnew", @"-X" ]
                                   expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
                                       XCTAssertNil(optionSet);
                                       XCTAssertEqualObjects(output, @"");
                                       XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-                                      XCTAssertEqual(error.code, XCNInvalidArgumentError);
+                                      XCTAssertEqual(error.code, XCNErrorInvalidArgument);
                                   }],
                 [self invocationWithArguments:@[ @"xcnew", @"--invalid" ]
                                   expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
                                       XCTAssertNil(optionSet);
                                       XCTAssertEqualObjects(output, @"");
                                       XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-                                      XCTAssertEqual(error.code, XCNInvalidArgumentError);
+                                      XCTAssertEqual(error.code, XCNErrorInvalidArgument);
                                   }],
                 // Reverse-ordered options
                 [self invocationWithArguments:@[ @"xcnew", @"Example", @"-n", @"Organization" ]
