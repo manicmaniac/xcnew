@@ -85,12 +85,12 @@ static XCNOptionParser *_sharedOptionParser;
 #endif
             case '?':
                 if (error) {
-                    *error = XCNInvalidArgumentErrorCreateWithLongOption(argv[optind - 1]);
+                    *error = XCNErrorInvalidArgumentWithLongOption(argv[optind - 1]);
                 }
                 return nil;
             default:
                 if (error) {
-                    *error = XCNInvalidArgumentErrorCreateWithShortOption(optopt);
+                    *error = XCNErrorInvalidArgumentWithShortOption(optopt);
                 }
                 return nil;
         }
@@ -108,7 +108,7 @@ static XCNOptionParser *_sharedOptionParser;
         default:
             if (error) {
                 NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
-                *error = XCNWrongNumberOfArgumentsErrorCreateWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
+                *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
             }
             return nil;
     }

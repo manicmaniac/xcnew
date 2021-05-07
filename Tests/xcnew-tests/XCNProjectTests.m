@@ -361,7 +361,7 @@ static NSString *const kProductName = @"Example";
                                 implementation:imp_implementationWithBlock(^BOOL(Class self, NSError **error) {
                                     if (error) {
                                         *error = [NSError errorWithDomain:XCNErrorDomain
-                                                                     code:XCNIDEFoundationInconsistencyError
+                                                                     code:XCNErrorIDEFoundationInconsistency
                                                                  userInfo:nil];
                                     }
                                     return NO;
@@ -369,7 +369,7 @@ static NSString *const kProductName = @"Example";
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+    XCTAssertEqual(error.code, XCNErrorIDEFoundationInconsistency);
 }
 
 - (void)testWriteToURLWhenIDETemplateKindIsNotFound {
@@ -381,7 +381,7 @@ static NSString *const kProductName = @"Example";
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+    XCTAssertEqual(error.code, XCNErrorIDEFoundationInconsistency);
 }
 
 - (void)testWriteToURLWhenIDETemplateIsNotFound {
@@ -393,7 +393,7 @@ static NSString *const kProductName = @"Example";
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+    XCTAssertEqual(error.code, XCNErrorIDEFoundationInconsistency);
 }
 
 - (void)testWriteToURLWhenIDETemplateFactoryIsNotFound {
@@ -407,7 +407,7 @@ static NSString *const kProductName = @"Example";
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, XCNIDEFoundationInconsistencyError);
+    XCTAssertEqual(error.code, XCNErrorIDEFoundationInconsistency);
 }
 
 - (void)testWriteToURLWhenTemplateInstantiationTimedOut {
@@ -419,7 +419,7 @@ static NSString *const kProductName = @"Example";
     NSError *error;
     XCTAssertFalse([_project writeToURL:_url timeout:(NSTimeInterval)DBL_MIN error:&error]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, XCNIDEFoundationTimeoutError);
+    XCTAssertEqual(error.code, XCNErrorIDEFoundationTimeout);
 }
 
 - (void)testWriteToURLWhenTemplateInstantiationFailed {

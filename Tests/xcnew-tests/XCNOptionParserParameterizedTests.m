@@ -32,212 +32,214 @@ static NSArray<NSInvocation *> *_testInvocations;
 
 // MARK: Public
 
-+ (NSArray<NSInvocation *> *)testInvocations {
-    @synchronized(self) {
-        if (!_testInvocations) {
-            NSString *version = [[NSBundle bundleForClass:self] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
-            _testInvocations = [super.testInvocations arrayByAddingObjectsFromArray:@[
-                // Normal states
-                [self invocationWithArguments:@[ @"xcnew", @"-h" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:@"Usage"]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--help" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:@"Usage"]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-v" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:version]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--version" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:version]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--organization-name", @"Organization", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationIdentifier, @"com.github.manicmaniac");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier", @"com.github.manicmaniac", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationIdentifier, @"com.github.manicmaniac");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-t", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.feature & XCNProjectFeatureUnitTests, XCNProjectFeatureUnitTests);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--has-tests", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.feature & XCNProjectFeatureUnitTests | XCNProjectFeatureUITests,
-                                                     XCNProjectFeatureUnitTests | XCNProjectFeatureUITests);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-c", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.feature & XCNProjectFeatureCoreData, XCNProjectFeatureCoreData);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--use-core-data", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.feature & XCNProjectFeatureCoreData, XCNProjectFeatureCoreData);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-C", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.feature & XCNProjectFeatureCloudKit, XCNProjectFeatureCloudKit);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--use-cloud-kit", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.feature & XCNProjectFeatureCloudKit, XCNProjectFeatureCloudKit);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-o", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.language, XCNLanguageObjectiveC);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--objc", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.language, XCNLanguageObjectiveC);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-s", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.userInterface, XCNUserInterfaceSwiftUI);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--swift-ui", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.userInterface, XCNUserInterfaceSwiftUI);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-S", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.lifecycle, XCNAppLifecycleSwiftUI);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--swift-ui-lifecycle", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqual(optionSet.lifecycle, XCNAppLifecycleSwiftUI);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"Example", @"Output" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.productName, @"Example");
-                                      XCTAssertEqualObjects(optionSet.outputURL.lastPathComponent, @"Output");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                // Abnormal states
-                [self invocationWithArguments:@[ @"xcnew" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-                                      XCTAssertEqual(error.code, XCNWrongNumberOfArgumentError);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-X" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-                                      XCTAssertEqual(error.code, XCNInvalidArgumentError);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--invalid" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-                                      XCTAssertEqual(error.code, XCNInvalidArgumentError);
-                                  }],
-                // Reverse-ordered options
-                [self invocationWithArguments:@[ @"xcnew", @"Example", @"-n", @"Organization" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                // Long options joined by a equal sign
-                [self invocationWithArguments:@[ @"xcnew", @"--organization-name=Organization", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                // GNU-style option terminator
-                [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"--", @"Example" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
-                                      XCTAssertEqualObjects(output, @"");
-                                      XCTAssertNil(error);
-                                  }],
-                // Stop parsing when either of -h, --help, -v and --version found
-                [self invocationWithArguments:@[ @"xcnew", @"-h", @"-v" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:@"Usage"]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--help", @"--version" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:@"Usage"]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"-v", @"-h" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:version]);
-                                      XCTAssertNil(error);
-                                  }],
-                [self invocationWithArguments:@[ @"xcnew", @"--version", @"--help" ]
-                                  expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
-                                      XCTAssertNil(optionSet);
-                                      XCTAssertTrue([output containsString:version]);
-                                      XCTAssertNil(error);
-                                  }]
-            ]];
-        }
-        return _testInvocations;
++ (void)initialize {
+    [super initialize];
+    if (self == [XCNOptionParserParameterizedTests class]) {
+        NSString *version = [[NSBundle bundleForClass:self] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
+        _testInvocations = [super.testInvocations arrayByAddingObjectsFromArray:@[
+            // Normal states
+            [self invocationWithArguments:@[ @"xcnew", @"-h" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:@"Usage"]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--help" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:@"Usage"]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-v" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:version]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--version" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:version]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-name", @"Organization", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationIdentifier, @"com.github.manicmaniac");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier", @"com.github.manicmaniac", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationIdentifier, @"com.github.manicmaniac");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-t", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.feature & XCNProjectFeatureUnitTests, XCNProjectFeatureUnitTests);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--has-tests", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.feature & XCNProjectFeatureUnitTests | XCNProjectFeatureUITests,
+                                                 XCNProjectFeatureUnitTests | XCNProjectFeatureUITests);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-c", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.feature & XCNProjectFeatureCoreData, XCNProjectFeatureCoreData);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--use-core-data", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.feature & XCNProjectFeatureCoreData, XCNProjectFeatureCoreData);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-C", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.feature & XCNProjectFeatureCloudKit, XCNProjectFeatureCloudKit);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--use-cloud-kit", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.feature & XCNProjectFeatureCloudKit, XCNProjectFeatureCloudKit);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-o", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.language, XCNLanguageObjectiveC);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--objc", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.language, XCNLanguageObjectiveC);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-s", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.userInterface, XCNUserInterfaceSwiftUI);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--swift-ui", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.userInterface, XCNUserInterfaceSwiftUI);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-S", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.lifecycle, XCNAppLifecycleSwiftUI);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--swift-ui-lifecycle", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqual(optionSet.lifecycle, XCNAppLifecycleSwiftUI);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"Example", @"Output" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.productName, @"Example");
+                                  XCTAssertEqualObjects(optionSet.outputURL.lastPathComponent, @"Output");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            // Abnormal states
+            [self invocationWithArguments:@[ @"xcnew" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorWrongNumberOfArgument);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-X" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidArgument);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--invalid" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidArgument);
+                              }],
+            // Reverse-ordered options
+            [self invocationWithArguments:@[ @"xcnew", @"Example", @"-n", @"Organization" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            // Long options joined by a equal sign
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-name=Organization", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            // GNU-style option terminator
+            [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"--", @"Example" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertEqualObjects(optionSet.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertNil(error);
+                              }],
+            // Stop parsing when either of -h, --help, -v and --version found
+            [self invocationWithArguments:@[ @"xcnew", @"-h", @"-v" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:@"Usage"]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--help", @"--version" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:@"Usage"]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"-v", @"-h" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:version]);
+                                  XCTAssertNil(error);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--version", @"--help" ]
+                              expectation:^(XCNOptionSet *optionSet, NSString *output, NSError *error) {
+                                  XCTAssertNil(optionSet);
+                                  XCTAssertTrue([output containsString:version]);
+                                  XCTAssertNil(error);
+                              }]
+        ]];
     }
+}
+
++ (NSArray<NSInvocation *> *)testInvocations {
+    return _testInvocations;
 }
 
 + (instancetype)testCaseWithSelector:(SEL)selector {
