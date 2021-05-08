@@ -3,7 +3,7 @@
 # A utility script to dump Xcode private headers that are used in `xcnew`.
 #
 # This tool needs the following commands to be installed:
-# See `PrivateHeaders/versions.txt` to know which version of the tools are needed.
+# See `Library/Frameworks/.versions` to know which version of the tools are needed.
 #
 # - [Xcode](https://developer.apple.com/download/more/)
 # - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
@@ -16,18 +16,16 @@ contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
 # Dump necessary headers in DVTFoundation.framework.
 class-dump -H \
            -C '^DVT(FilePath|FileSystemRepresentationProviding|Platform)$' \
-           -o 'PrivateHeaders/DVTFoundation' \
+           -o Library/Frameworks/DVTFoundation.framework/Headers \
            "$contents_dir/SharedFrameworks/DVTFoundation.framework"
-rm -f 'PrivateHeaders/DVTFoundation/NSString-DVTFileSystemRepresentationProviding.h'
 
 # Dump necessary headers in IDEFoundation.framework.
 class-dump -H \
            -C '^IDETemplate(|Factory|InstantiationContext|Kind|Option|OptionParent)$' \
-           -o 'PrivateHeaders/IDEFoundation' \
+           -o Library/Frameworks/IDEFoundation.framework/Headers \
            "$contents_dir/Frameworks/IDEFoundation.framework"
-rm -f 'PrivateHeaders/IDEFoundation/CDStructures.h'
 
-find PrivateHeaders -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
+find Library/Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
     # Remove C++ destructor declaration, which is not permitted in Objective-C class.
     /^- (void)\.cxx_destruct;$/d
 
@@ -42,17 +40,22 @@ find PrivateHeaders -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EO
     s/\(id \*_field2;\)$/__unsafe_unretained \1/
 EOF
 
+# Remove garbage.
+sed -i '' -e '/#pragma mark Typedef/,$d' Library/Frameworks/DVTFoundation.framework/Headers/CDStructures.h
+sed -i '' -e '/#pragma mark Typedef/,$d' Library/Frameworks/IDEFoundation.framework/Headers/CDStructures.h
+
 # Add missing import for `CDStructures.h`
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import "CDStructures.h"' PrivateHeaders/DVTFoundation/DVTFilePath.h \
-                          PrivateHeaders/IDEFoundation/IDETemplate.h
+#import <DVTFoundation/CDStructures.h>' Library/Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
+sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
+#import <IDEFoundation/CDStructures.h>' Library/Frameworks/IDEFoundation.framework/Headers/IDETemplate.h
 
 # Add missing header `<os/lock.h>`
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <os/lock.h>' PrivateHeaders/DVTFoundation/DVTFilePath.h
+#import <os/lock.h>' Library/Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
 
 # Manually add type of block which cannot be extracted with `class-dump`
-sed -i '' -f /dev/fd/0 PrivateHeaders/IDEFoundation/IDETemplateFactory.h <<-'EOF'
+sed -i '' -f /dev/fd/0 Library/Frameworks/IDEFoundation.framework/Headers/IDETemplateFactory.h <<-'EOF'
     /#import <Foundation\/Foundation.h>/{
         G
         a\
@@ -62,7 +65,7 @@ sed -i '' -f /dev/fd/0 PrivateHeaders/IDEFoundation/IDETemplateFactory.h <<-'EOF
 EOF
 
 # Manually add C function which cannot be extracted with `class-dump`
-cat <<-EOF >PrivateHeaders/IDEFoundation/IDEInitialization.h
+cat <<-EOF >Library/Frameworks/IDEFoundation.framework/Headers/IDEInitialization.h
 #import <Foundation/Foundation.h>
 
 extern BOOL IDEInitialize(int initializationOptions, NSError *__autoreleasing _Nullable *_Nullable error);
@@ -70,7 +73,7 @@ extern BOOL IDEInitializationCompleted(int *_Nullable initializationOptions);
 EOF
 
 # Re-format all files.
-find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} +
+find Library/Frameworks -type f -name '*.h' -exec clang-format -i {} +
 
 # To reproduce the result, tool versions are recorded.
 (
@@ -79,4 +82,20 @@ find PrivateHeaders -type f -name '*.h' -exec clang-format -i {} +
     xcodebuild -version
     class-dump --version
     clang-format --version
-) >PrivateHeaders/versions.txt
+) >Library/Frameworks/.versions
+
+xcrun tapi installapi \
+    -target x86_64-apple-macosx10.14 \
+    -install_name '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation' \
+    -F Library/Frameworks \
+    -extra-public-header Library/Frameworks/DVTFoundation.framework/Headers \
+    -o Library/Frameworks/DVTFoundation.framework/DVTFoundation.tbd \
+    "$contents_dir/SharedFrameworks/DVTFoundation.framework"
+
+xcrun tapi installapi \
+    -target x86_64-apple-macosx10.14 \
+    -install_name '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation' \
+    -F Library/Frameworks \
+    -extra-public-header Library/Frameworks/IDEFoundation.framework/Headers \
+    -o Library/Frameworks/IDEFoundation.framework/IDEFoundation.tbd \
+    "$contents_dir/Frameworks/IDEFoundation.framework"

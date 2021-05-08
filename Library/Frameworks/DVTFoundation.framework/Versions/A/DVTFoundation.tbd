@@ -1,0 +1,23 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ x86_64-macos ]
+flags:           [ not_app_extension_safe, installapi ]
+install-name:    '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation'
+current-version: 0
+compatibility-version: 0
+exports:
+  - targets:         [ x86_64-macos ]
+    objc-classes:    [ DVTFilePath, DVTPlatform ]
+    objc-ivars:      [ DVTFilePath._associates, DVTFilePath._associatesLock, DVTFilePath._childPathsLock, 
+                       DVTFilePath._childfsaPaths, DVTFilePath._cleanRemoveFromParent, 
+                       DVTFilePath._fileURL, DVTFilePath._fsrep, DVTFilePath._fsrepLength, 
+                       DVTFilePath._hasResolvedVnode, DVTFilePath._numAssociates, 
+                       DVTFilePath._numObservers, DVTFilePath._parentPath, DVTFilePath._pathString, 
+                       DVTFilePath._presumedType, DVTFilePath._validationState, DVTFilePath._vnode, 
+                       DVTPlatform._SDKs, DVTPlatform._alternateNames, DVTPlatform._deviceProperties, 
+                       DVTPlatform._family, DVTPlatform._iconPath, DVTPlatform._identifier, 
+                       DVTPlatform._internalPropertyListDictionary, DVTPlatform._isDeploymentPlatform, 
+                       DVTPlatform._minimumSDKVersion, DVTPlatform._name, DVTPlatform._platformDirectoryName, 
+                       DVTPlatform._platformPath, DVTPlatform._platformVersion, DVTPlatform._propertyListDictionary, 
+                       DVTPlatform._userDescription ]
+...

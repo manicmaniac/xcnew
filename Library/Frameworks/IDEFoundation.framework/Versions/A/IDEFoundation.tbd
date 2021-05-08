@@ -1,0 +1,47 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ x86_64-macos ]
+flags:           [ not_app_extension_safe, installapi ]
+install-name:    '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation'
+current-version: 0
+compatibility-version: 0
+exports:
+  - targets:         [ x86_64-macos ]
+    symbols:         [ _IDEInitializationCompleted, _IDEInitialize ]
+    objc-classes:    [ IDETemplate, IDETemplateFactory, IDETemplateInstantiationContext, 
+                       IDETemplateKind, IDETemplateOption ]
+    objc-ivars:      [ IDETemplate._allowedTypes, IDETemplate._buildableType, IDETemplate._chooserOnly, 
+                       IDETemplate._defaultCompletionName, IDETemplate._filePath, 
+                       IDETemplate._hiddenFromChooser, IDETemplate._hiddenFromLibrary, 
+                       IDETemplate._isDebug, IDETemplate._mainTemplateFile, IDETemplate._nameOfInitialFileForEditor, 
+                       IDETemplate._optionWithAllowedTypes, IDETemplate._optionWithMainTemplateFiles, 
+                       IDETemplate._sortOrder, IDETemplate._supportsSwiftPackage, 
+                       IDETemplate._templateCategory, IDETemplate._templateDescription, 
+                       IDETemplate._templateIdentifier, IDETemplate._templateInfo, 
+                       IDETemplate._templateKind, IDETemplate._templateName, IDETemplate._templateOptions, 
+                       IDETemplate._templatePlatforms, IDETemplate._templateSummary, 
+                       IDETemplate._workspace, IDETemplateInstantiationContext._alwaysReplaceFiles, 
+                       IDETemplateInstantiationContext._createdWorkspace, IDETemplateInstantiationContext._destinationBuildables, 
+                       IDETemplateInstantiationContext._destinationGroup, IDETemplateInstantiationContext._destinationIndex, 
+                       IDETemplateInstantiationContext._documentFilePath, IDETemplateInstantiationContext._documentTemplate, 
+                       IDETemplateInstantiationContext._instantiatedItems, IDETemplateInstantiationContext._nameOfInitialFileForEditor, 
+                       IDETemplateInstantiationContext._primaryInstantiatedItem, 
+                       IDETemplateInstantiationContext._reuseFileReferences, IDETemplateInstantiationContext._showsCrossPlatformSection, 
+                       IDETemplateInstantiationContext._showsOtherSection, IDETemplateInstantiationContext._team, 
+                       IDETemplateInstantiationContext._templateFilter, IDETemplateInstantiationContext._workspace, 
+                       IDETemplateKind._assistantIdentifier, IDETemplateKind._conformedToTemplateKinds, 
+                       IDETemplateKind._extension, IDETemplateKind._factory, IDETemplateKind._instantiationContextClass, 
+                       IDETemplateOption._allowedTypes, IDETemplateOption._defaultValue, 
+                       IDETemplateOption._disabledByConstraints, IDETemplateOption._displayValue, 
+                       IDETemplateOption._emptyReplacement, IDETemplateOption._enabled, 
+                       IDETemplateOption._fallbackHeader, IDETemplateOption._identifier, 
+                       IDETemplateOption._indented, IDETemplateOption._mainTemplateFiles, 
+                       IDETemplateOption._name, IDETemplateOption._notPersisted, 
+                       IDETemplateOption._optionDescription, IDETemplateOption._overrideValue, 
+                       IDETemplateOption._parent, IDETemplateOption._placeholder, 
+                       IDETemplateOption._prefix, IDETemplateOption._required, IDETemplateOption._requiredOptions, 
+                       IDETemplateOption._requiredOptionsForDisplayValues, IDETemplateOption._sortOrder, 
+                       IDETemplateOption._subclassCache, IDETemplateOption._suffix, 
+                       IDETemplateOption._suffixes, IDETemplateOption._type, IDETemplateOption._value, 
+                       IDETemplateOption._values, IDETemplateOption._variables ]
+...
