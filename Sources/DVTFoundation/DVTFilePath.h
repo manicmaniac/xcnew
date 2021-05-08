@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <CDStructures.h>
+#import <DVTFoundation/CDStructures.h>
 #import <Foundation/Foundation.h>
 #import <os/lock.h>
 

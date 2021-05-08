@@ -12,32 +12,23 @@
 set -e
 
 contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
-local_frameworks_dir='Library/Frameworks'
 
 # Dump necessary headers in DVTFoundation.framework.
 class-dump -H \
            -C '^DVT(FilePath|FileSystemRepresentationProviding|Platform)$' \
-           -o "$local_frameworks_dir/DVTFoundation.framework/Headers" \
+           -o 'Sources/DVTFoundation' \
            "$contents_dir/SharedFrameworks/DVTFoundation.framework"
 
 # Dump necessary headers in IDEFoundation.framework.
 class-dump -H \
            -C '^IDETemplate(|Factory|InstantiationContext|Kind|Option|OptionParent)$' \
-           -o "$local_frameworks_dir/IDEFoundation.framework/Headers" \
+           -o 'Sources/IDEFoundation' \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 
-sed -f /dev/fd/0 "$local_frameworks_dir/DVTFoundation.framework/Headers/CDStructures.h" <<-'EOF' >'Library/class-dump/include/CDStructures.h'
-    # Add missing imports.
-    6a\
-    #import <Foundation/Foundation.h>
+# Remove garbages.
+echo 'Sources/DVTFoundation/CDStructures.h' 'Sources/IDEFoundation/CDStructures.h' | xargs -n 1 sed -i '' -e '/#pragma mark Typedef/,$d'
 
-    # Specify ownership for ARC compatibility.
-    s/id \*/__unsafe_unretained &/g
-EOF
-
-find "$local_frameworks_dir" -type f -name 'CDStructures.h' -delete
-
-find "$local_frameworks_dir" -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
+find 'Sources/DVTFoundation' 'Sources/IDEFoundation' -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
     # Remove C++ destructor declaration, which is not permitted in Objective-C class.
     /^- (void)\.cxx_destruct;$/d
 
@@ -54,15 +45,16 @@ EOF
 
 # Add missing import for `CDStructures.h`
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <CDStructures.h>' "$local_frameworks_dir/DVTFoundation.framework/Headers/DVTFilePath.h" \
-                          "$local_frameworks_dir/IDEFoundation.framework/Headers/IDETemplate.h"
+#import <DVTFoundation/CDStructures.h>' 'Sources/DVTFoundation/DVTFilePath.h'
+sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
+#import <IDEFoundation/CDStructures.h>' 'Sources/IDEFoundation/IDETemplate.h'
 
 # Add missing header `<os/lock.h>`
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <os/lock.h>' "$local_frameworks_dir/DVTFoundation.framework/Headers/DVTFilePath.h"
+#import <os/lock.h>' 'Sources/DVTFoundation/DVTFilePath.h'
 
 # Manually add type of block which cannot be extracted with `class-dump`
-sed -i '' -f /dev/fd/0 "$local_frameworks_dir/IDEFoundation.framework/Headers/IDETemplateFactory.h" <<-'EOF'
+sed -i '' -f /dev/fd/0 'Sources/IDEFoundation/IDETemplateFactory.h' <<-'EOF'
     /#import <Foundation\/Foundation.h>/{
         G
         a\
@@ -71,16 +63,8 @@ sed -i '' -f /dev/fd/0 "$local_frameworks_dir/IDEFoundation.framework/Headers/ID
     /instantiateTemplateForContext/s/CDUnknownBlockType/void (^)(NSArray<DVTFilePath *> *filePaths, void *_unknown, NSError *error)/
 EOF
 
-# Manually add C function which cannot be extracted with `class-dump`
-cat <<-EOF >"$local_frameworks_dir/IDEFoundation.framework/Headers/IDEInitialization.h"
-#import <Foundation/Foundation.h>
-
-extern BOOL IDEInitialize(int initializationOptions, NSError *__autoreleasing _Nullable *_Nullable error);
-extern BOOL IDEInitializationCompleted(int *_Nullable initializationOptions);
-EOF
-
 # Re-format all files.
-find "$local_frameworks_dir" -type f -name '*.h' -exec clang-format -i {} +
+find 'Sources/DVTFoundation' 'Sources/IDEFoundation' -type f -name '*.h' -exec clang-format -i {} +
 
 # To reproduce the result, tool versions are recorded.
 (
@@ -89,4 +73,4 @@ find "$local_frameworks_dir" -type f -name '*.h' -exec clang-format -i {} +
     xcodebuild -version
     class-dump --version
     clang-format --version
-) >"$local_frameworks_dir/.versions"
+) | tee 'Sources/DVTFoundation/.versions' >'Sources/IDEFoundation/.versions'

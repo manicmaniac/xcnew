@@ -35,14 +35,28 @@
 		5B6128272610F89000B048A1 /* XCNOptionParserParameterizedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */; };
 		5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
+		5B6EB6B92646CEAE005CD724 /* DVTFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB6B72646CEAE005CD724 /* DVTFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7572646D8AA005CD724 /* DVTFileSystemRepresentationProviding-Protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7552646D89D005CD724 /* DVTFileSystemRepresentationProviding-Protocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7582646D8AA005CD724 /* DVTFilePath.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7542646D89D005CD724 /* DVTFilePath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7592646D8AA005CD724 /* DVTPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7562646D89D005CD724 /* DVTPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB77B2646D9A1005CD724 /* IDEFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7792646D9A1005CD724 /* IDEFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7942646D9CC005CD724 /* IDETemplateKind.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB78D2646D9CC005CD724 /* IDETemplateKind.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7952646D9CC005CD724 /* IDETemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB78E2646D9CC005CD724 /* IDETemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7962646D9CC005CD724 /* IDETemplateFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB78F2646D9CC005CD724 /* IDETemplateFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7972646D9CC005CD724 /* IDEInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7902646D9CC005CD724 /* IDEInitialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7982646D9CC005CD724 /* IDETemplateOptionParent-Protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7912646D9CC005CD724 /* IDETemplateOptionParent-Protocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7992646D9CC005CD724 /* IDETemplateOption.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7922646D9CC005CD724 /* IDETemplateOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB79A2646D9CC005CD724 /* IDETemplateInstantiationContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7932646D9CC005CD724 /* IDETemplateInstantiationContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7C72646DD2E005CD724 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */; };
+		5B6EB7C82646DD2E005CD724 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB7772646D9A1005CD724 /* IDEFoundation.framework */; };
+		5B6EB7D02646DD36005CD724 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */; };
+		5B6EB7D12646DD3C005CD724 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */; };
+		5B6EB7D22646DD3C005CD724 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB7772646D9A1005CD724 /* IDEFoundation.framework */; };
+		5B6EB7D32646DD42005CD724 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */; };
+		5B6EB7D42646DD42005CD724 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6EB7772646D9A1005CD724 /* IDEFoundation.framework */; };
+		5B6EB7DD2646DD94005CD724 /* CDStructures.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7DC2646DD94005CD724 /* CDStructures.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B6EB7ED2646DE03005CD724 /* CDStructures.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6EB7EC2646DE03005CD724 /* CDStructures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
-		5B905A9C26468092000B4D43 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9026467F68000B4D43 /* IDEFoundation.framework */; };
-		5B905A9E26468094000B4D43 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9026467F68000B4D43 /* IDEFoundation.framework */; };
-		5B905A9F26468094000B4D43 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9026467F68000B4D43 /* IDEFoundation.framework */; };
-		5B905AA02646809A000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
-		5B905AA12646809C000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
-		5B905AA22646809C000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
-		5B905AA32646809D000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
 		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
@@ -110,12 +124,25 @@
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
-		5B6EB6A52646AD2F005CD724 /* CDStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
+		5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVTFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B6EB6B72646CEAE005CD724 /* DVTFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTFoundation.h; sourceTree = "<group>"; };
+		5B6EB7542646D89D005CD724 /* DVTFilePath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVTFilePath.h; path = Sources/DVTFoundation/DVTFilePath.h; sourceTree = SOURCE_ROOT; };
+		5B6EB7552646D89D005CD724 /* DVTFileSystemRepresentationProviding-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "DVTFileSystemRepresentationProviding-Protocol.h"; path = "Sources/DVTFoundation/DVTFileSystemRepresentationProviding-Protocol.h"; sourceTree = SOURCE_ROOT; };
+		5B6EB7562646D89D005CD724 /* DVTPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVTPlatform.h; path = Sources/DVTFoundation/DVTPlatform.h; sourceTree = SOURCE_ROOT; };
+		5B6EB7772646D9A1005CD724 /* IDEFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IDEFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B6EB7792646D9A1005CD724 /* IDEFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEFoundation.h; sourceTree = "<group>"; };
+		5B6EB78D2646D9CC005CD724 /* IDETemplateKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDETemplateKind.h; path = Sources/IDEFoundation/IDETemplateKind.h; sourceTree = SOURCE_ROOT; };
+		5B6EB78E2646D9CC005CD724 /* IDETemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDETemplate.h; path = Sources/IDEFoundation/IDETemplate.h; sourceTree = SOURCE_ROOT; };
+		5B6EB78F2646D9CC005CD724 /* IDETemplateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDETemplateFactory.h; path = Sources/IDEFoundation/IDETemplateFactory.h; sourceTree = SOURCE_ROOT; };
+		5B6EB7902646D9CC005CD724 /* IDEInitialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDEInitialization.h; path = Sources/IDEFoundation/IDEInitialization.h; sourceTree = SOURCE_ROOT; };
+		5B6EB7912646D9CC005CD724 /* IDETemplateOptionParent-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "IDETemplateOptionParent-Protocol.h"; path = "Sources/IDEFoundation/IDETemplateOptionParent-Protocol.h"; sourceTree = SOURCE_ROOT; };
+		5B6EB7922646D9CC005CD724 /* IDETemplateOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDETemplateOption.h; path = Sources/IDEFoundation/IDETemplateOption.h; sourceTree = SOURCE_ROOT; };
+		5B6EB7932646D9CC005CD724 /* IDETemplateInstantiationContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDETemplateInstantiationContext.h; path = Sources/IDEFoundation/IDETemplateInstantiationContext.h; sourceTree = SOURCE_ROOT; };
+		5B6EB7DC2646DD94005CD724 /* CDStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
+		5B6EB7EC2646DE03005CD724 /* CDStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
 		5B905A8D26467F68000B4D43 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
 		5B905A8E26467F68000B4D43 /* diff-usages */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "diff-usages"; sourceTree = "<group>"; };
-		5B905A9026467F68000B4D43 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
-		5B905A9126467F68000B4D43 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
 		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
@@ -133,8 +160,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B905AA02646809A000B4D43 /* DVTFoundation.framework in Frameworks */,
-				5B905A9C26468092000B4D43 /* IDEFoundation.framework in Frameworks */,
+				5B6EB7C72646DD2E005CD724 /* DVTFoundation.framework in Frameworks */,
+				5B6EB7C82646DD2E005CD724 /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,8 +169,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B905AA32646809D000B4D43 /* DVTFoundation.framework in Frameworks */,
-				5B905A9F26468094000B4D43 /* IDEFoundation.framework in Frameworks */,
+				5B6EB7D32646DD42005CD724 /* DVTFoundation.framework in Frameworks */,
+				5B6EB7D42646DD42005CD724 /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B905AA12646809C000B4D43 /* DVTFoundation.framework in Frameworks */,
+				5B6EB7D02646DD36005CD724 /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,8 +186,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B905AA22646809C000B4D43 /* DVTFoundation.framework in Frameworks */,
-				5B905A9E26468094000B4D43 /* IDEFoundation.framework in Frameworks */,
+				5B6EB7D12646DD3C005CD724 /* DVTFoundation.framework in Frameworks */,
+				5B6EB7D22646DD3C005CD724 /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +230,8 @@
 				5B5364A72602C8F8007E7F20 /* DVTFoundationTests.xctest */,
 				5B5364B72602CB37007E7F20 /* IDEFoundationTests.xctest */,
 				5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */,
+				5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */,
+				5B6EB7772646D9A1005CD724 /* IDEFoundation.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,6 +239,8 @@
 		5B20A2F022F0BB0300EA7295 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5B6EB6B62646CEAE005CD724 /* DVTFoundation */,
+				5B6EB7782646D9A1005CD724 /* IDEFoundation */,
 				5B5364C52602CD32007E7F20 /* xcnew */,
 			);
 			path = Sources;
@@ -272,27 +303,37 @@
 			path = "xcnew-integration-tests";
 			sourceTree = "<group>";
 		};
-		5B6EB6A32646AD2F005CD724 /* class-dump */ = {
+		5B6EB6B62646CEAE005CD724 /* DVTFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				5B6EB6A42646AD2F005CD724 /* include */,
+				5B6EB7EC2646DE03005CD724 /* CDStructures.h */,
+				5B6EB6B72646CEAE005CD724 /* DVTFoundation.h */,
+				5B6EB7542646D89D005CD724 /* DVTFilePath.h */,
+				5B6EB7552646D89D005CD724 /* DVTFileSystemRepresentationProviding-Protocol.h */,
+				5B6EB7562646D89D005CD724 /* DVTPlatform.h */,
 			);
-			path = "class-dump";
+			path = DVTFoundation;
 			sourceTree = "<group>";
 		};
-		5B6EB6A42646AD2F005CD724 /* include */ = {
+		5B6EB7782646D9A1005CD724 /* IDEFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				5B6EB6A52646AD2F005CD724 /* CDStructures.h */,
+				5B6EB7DC2646DD94005CD724 /* CDStructures.h */,
+				5B6EB7792646D9A1005CD724 /* IDEFoundation.h */,
+				5B6EB7902646D9CC005CD724 /* IDEInitialization.h */,
+				5B6EB78E2646D9CC005CD724 /* IDETemplate.h */,
+				5B6EB78F2646D9CC005CD724 /* IDETemplateFactory.h */,
+				5B6EB7932646D9CC005CD724 /* IDETemplateInstantiationContext.h */,
+				5B6EB78D2646D9CC005CD724 /* IDETemplateKind.h */,
+				5B6EB7922646D9CC005CD724 /* IDETemplateOption.h */,
+				5B6EB7912646D9CC005CD724 /* IDETemplateOptionParent-Protocol.h */,
 			);
-			path = include;
+			path = IDEFoundation;
 			sourceTree = "<group>";
 		};
 		5B905A8B26467F68000B4D43 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				5B6EB6A32646AD2F005CD724 /* class-dump */,
-				5B905A8F26467F68000B4D43 /* Frameworks */,
 				5B905A8C26467F68000B4D43 /* Scripts */,
 			);
 			path = Library;
@@ -305,15 +346,6 @@
 				5B905A8E26467F68000B4D43 /* diff-usages */,
 			);
 			path = Scripts;
-			sourceTree = "<group>";
-		};
-		5B905A8F26467F68000B4D43 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5B905A9026467F68000B4D43 /* IDEFoundation.framework */,
-				5B905A9126467F68000B4D43 /* DVTFoundation.framework */,
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
@@ -338,6 +370,37 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5B6EB6B02646CEAE005CD724 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B6EB7ED2646DE03005CD724 /* CDStructures.h in Headers */,
+				5B6EB7582646D8AA005CD724 /* DVTFilePath.h in Headers */,
+				5B6EB7572646D8AA005CD724 /* DVTFileSystemRepresentationProviding-Protocol.h in Headers */,
+				5B6EB6B92646CEAE005CD724 /* DVTFoundation.h in Headers */,
+				5B6EB7592646D8AA005CD724 /* DVTPlatform.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B6EB7722646D9A1005CD724 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B6EB77B2646D9A1005CD724 /* IDEFoundation.h in Headers */,
+				5B6EB7DD2646DD94005CD724 /* CDStructures.h in Headers */,
+				5B6EB7972646D9CC005CD724 /* IDEInitialization.h in Headers */,
+				5B6EB7952646D9CC005CD724 /* IDETemplate.h in Headers */,
+				5B6EB7962646D9CC005CD724 /* IDETemplateFactory.h in Headers */,
+				5B6EB79A2646D9CC005CD724 /* IDETemplateInstantiationContext.h in Headers */,
+				5B6EB7942646D9CC005CD724 /* IDETemplateKind.h in Headers */,
+				5B6EB7992646D9CC005CD724 /* IDETemplateOption.h in Headers */,
+				5B6EB7982646D9CC005CD724 /* IDETemplateOptionParent-Protocol.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		5B1F0F3822F7A2BA00A7AFFA /* xcnew-tests */ = {
@@ -426,6 +489,38 @@
 			productReference = 5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		5B6EB6B42646CEAE005CD724 /* DVTFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B6EB6BA2646CEAE005CD724 /* Build configuration list for PBXNativeTarget "DVTFoundation" */;
+			buildPhases = (
+				5B6EB6B02646CEAE005CD724 /* Headers */,
+				5B6EB6C92646CF09005CD724 /* Generate Text-based Stubs */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DVTFoundation;
+			productName = DVTFoundation;
+			productReference = 5B6EB6B52646CEAE005CD724 /* DVTFoundation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5B6EB7762646D9A1005CD724 /* IDEFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B6EB77C2646D9A1005CD724 /* Build configuration list for PBXNativeTarget "IDEFoundation" */;
+			buildPhases = (
+				5B6EB7722646D9A1005CD724 /* Headers */,
+				5B6EB7A22646DA3B005CD724 /* Generate Text-based Stubs */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IDEFoundation;
+			productName = IDEFoundation;
+			productReference = 5B6EB7772646D9A1005CD724 /* IDEFoundation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -452,6 +547,12 @@
 					5B5364CA2602D710007E7F20 = {
 						CreatedOnToolsVersion = 11.7;
 					};
+					5B6EB6B42646CEAE005CD724 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					5B6EB7762646D9A1005CD724 = {
+						CreatedOnToolsVersion = 12.4;
+					};
 				};
 			};
 			buildConfigurationList = 5B20A2E922F0BB0300EA7295 /* Build configuration list for PBXProject "xcnew" */;
@@ -467,7 +568,9 @@
 			projectRoot = "";
 			targets = (
 				5B20A2ED22F0BB0300EA7295 /* xcnew */,
+				5B6EB6B42646CEAE005CD724 /* DVTFoundation */,
 				5B5364A62602C8F8007E7F20 /* DVTFoundationTests */,
+				5B6EB7762646D9A1005CD724 /* IDEFoundation */,
 				5B5364B62602CB37007E7F20 /* IDEFoundationTests */,
 				5B1F0F3822F7A2BA00A7AFFA /* xcnew-tests */,
 				5B5364CA2602D710007E7F20 /* xcnew-integration-tests */,
@@ -507,6 +610,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B6EB6C92646CF09005CD724 /* Generate Text-based Stubs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(DEVELOPER_DIR)/../SharedFrameworks/DVTFoundation.framework/DVTFoundation",
+			);
+			name = "Generate Text-based Stubs";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH).tbd",
+				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)/$(EXECUTABLE_NAME).tbd",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "tapi stubify -o \"$SCRIPT_OUTPUT_FILE_0\" \"$SCRIPT_INPUT_FILE_0\"\nln -fs \"$SCRIPT_OUTPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_1\"\n";
+		};
+		5B6EB7A22646DA3B005CD724 /* Generate Text-based Stubs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(DEVELOPER_DIR)/../Frameworks/IDEFoundation.framework/IDEFoundation",
+			);
+			name = "Generate Text-based Stubs";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH).tbd",
+				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)/$(EXECUTABLE_NAME).tbd",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "tapi stubify -o \"$SCRIPT_OUTPUT_FILE_0\" \"$SCRIPT_INPUT_FILE_0\"\nln -fs \"$SCRIPT_OUTPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_1\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B1F0F3522F7A2BA00A7AFFA /* Sources */ = {
@@ -647,10 +795,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/Frameworks",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -666,10 +810,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/class-dump/include",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -720,10 +860,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/Frameworks",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "XCODE_VERSION_MAJOR=0x$(XCODE_VERSION_MAJOR)";
@@ -733,10 +869,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/class-dump/include",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -870,6 +1002,38 @@
 			};
 			name = Release;
 		};
+		5B6EB6BB2646CEAE005CD724 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		5B6EB6BC2646CEAE005CD724 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		5B6EB77D2646D9A1005CD724 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		5B6EB77E2646D9A1005CD724 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -923,6 +1087,24 @@
 			buildConfigurations = (
 				5B5364D12602D710007E7F20 /* Debug */,
 				5B5364D22602D710007E7F20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5B6EB6BA2646CEAE005CD724 /* Build configuration list for PBXNativeTarget "DVTFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B6EB6BB2646CEAE005CD724 /* Debug */,
+				5B6EB6BC2646CEAE005CD724 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5B6EB77C2646D9A1005CD724 /* Build configuration list for PBXNativeTarget "IDEFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B6EB77D2646D9A1005CD724 /* Debug */,
+				5B6EB77E2646D9A1005CD724 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

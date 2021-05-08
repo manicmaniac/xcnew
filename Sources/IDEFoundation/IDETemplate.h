@@ -4,8 +4,8 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <CDStructures.h>
 #import <Foundation/Foundation.h>
+#import <IDEFoundation/CDStructures.h>
 
 #import <IDEFoundation/IDETemplateOptionParent-Protocol.h>
 
