@@ -3,7 +3,7 @@
 # A utility script to dump Xcode private headers that are used in `xcnew`.
 #
 # This tool needs the following commands to be installed:
-# See `Library/Frameworks/.versions` to know which version of the tools are needed.
+# See `Frameworks/.versions` to know which version of the tools are needed.
 #
 # - [Xcode](https://developer.apple.com/download/more/)
 # - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
@@ -16,16 +16,16 @@ contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
 # Dump necessary headers in DVTFoundation.framework.
 class-dump -H \
            -C '^DVT(FilePath|FileSystemRepresentationProviding|Platform)$' \
-           -o Library/Frameworks/DVTFoundation.framework/Headers \
+           -o Frameworks/DVTFoundation.framework/Headers \
            "$contents_dir/SharedFrameworks/DVTFoundation.framework"
 
 # Dump necessary headers in IDEFoundation.framework.
 class-dump -H \
            -C '^IDETemplate(|Factory|InstantiationContext|Kind|Option|OptionParent)$' \
-           -o Library/Frameworks/IDEFoundation.framework/Headers \
+           -o Frameworks/IDEFoundation.framework/Headers \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 
-find Library/Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
+find Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
     # Remove C++ destructor declaration, which is not permitted in Objective-C class.
     /^- (void)\.cxx_destruct;$/d
 
@@ -41,21 +41,21 @@ find Library/Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<
 EOF
 
 # Remove garbage.
-sed -i '' -e '/#pragma mark Typedef/,$d' Library/Frameworks/DVTFoundation.framework/Headers/CDStructures.h
-sed -i '' -e '/#pragma mark Typedef/,$d' Library/Frameworks/IDEFoundation.framework/Headers/CDStructures.h
+sed -i '' -e '/#pragma mark Typedef/,$d' Frameworks/DVTFoundation.framework/Headers/CDStructures.h
+sed -i '' -e '/#pragma mark Typedef/,$d' Frameworks/IDEFoundation.framework/Headers/CDStructures.h
 
 # Add missing import for `CDStructures.h`
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <DVTFoundation/CDStructures.h>' Library/Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
+#import <DVTFoundation/CDStructures.h>' Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <IDEFoundation/CDStructures.h>' Library/Frameworks/IDEFoundation.framework/Headers/IDETemplate.h
+#import <IDEFoundation/CDStructures.h>' Frameworks/IDEFoundation.framework/Headers/IDETemplate.h
 
 # Add missing header `<os/lock.h>`
 sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <os/lock.h>' Library/Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
+#import <os/lock.h>' Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
 
 # Manually add type of block which cannot be extracted with `class-dump`
-sed -i '' -f /dev/fd/0 Library/Frameworks/IDEFoundation.framework/Headers/IDETemplateFactory.h <<-'EOF'
+sed -i '' -f /dev/fd/0 Frameworks/IDEFoundation.framework/Headers/IDETemplateFactory.h <<-'EOF'
     /#import <Foundation\/Foundation.h>/{
         G
         a\
@@ -65,7 +65,7 @@ sed -i '' -f /dev/fd/0 Library/Frameworks/IDEFoundation.framework/Headers/IDETem
 EOF
 
 # Re-format all files.
-find Library/Frameworks -type f -name '*.h' -exec clang-format -i {} +
+find Frameworks -type f -name '*.h' -exec clang-format -i {} +
 
 # To reproduce the result, tool versions are recorded.
 (
@@ -74,4 +74,4 @@ find Library/Frameworks -type f -name '*.h' -exec clang-format -i {} +
     xcodebuild -version
     class-dump --version
     clang-format --version
-) >Library/Frameworks/.versions
+) >Frameworks/.versions

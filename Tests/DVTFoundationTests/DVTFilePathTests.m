@@ -6,7 +6,7 @@
 //  Copyright © 2021 Ryosuke Ito. All rights reserved.
 //
 
-#import <DVTFoundation/DVTFilePath.h>
+#import <DVTFoundation/DVTFoundation.h>
 #import <XCTest/XCTest.h>
 
 @interface DVTFilePathTests : XCTestCase

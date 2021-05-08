@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <IDEFoundation/IDEInitialization.h>
+#import <IDEFoundation/IDEFoundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

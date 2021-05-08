@@ -6,9 +6,7 @@
 //  Copyright © 2021 Ryosuke Ito. All rights reserved.
 //
 
-#import <IDEFoundation/IDEInitialization.h>
-#import <IDEFoundation/IDETemplateFactory.h>
-#import <IDEFoundation/IDETemplateKind.h>
+#import <IDEFoundation/IDEFoundation.h>
 #import <XCTest/XCTest.h>
 #import "XCNIDEFoundationTestHelpers.h"
 
