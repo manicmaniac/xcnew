@@ -4,9 +4,9 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
+#import <DVTFoundation/CDStructures.h>
 #import <Foundation/Foundation.h>
 #import <os/lock.h>
-#import "CDStructures.h"
 
 #import <DVTFoundation/DVTFileSystemRepresentationProviding-Protocol.h>
 

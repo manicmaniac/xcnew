@@ -1,0 +1,10 @@
+---
+archs:           [ x86_64 ]
+platform:        macosx
+install-name:    '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation'
+current-version: 0
+compatibility-version: 0
+exports:
+  - archs:           [ x86_64 ]
+    objc-classes:    [ _DVTFilePath, _DVTPlatform ]
+...
