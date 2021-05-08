@@ -10,7 +10,7 @@ How to create headers
 
 Their headers are generated with a script `Scripts/dump-private-headers`.
 
-The script records last-used tool versions in `Library/Frameworks/.versions`.
+The script records last-used tool versions in `Frameworks/.versions`.
 
 How to create text-based API files
 ----------------------------------
@@ -21,17 +21,17 @@ Their stub API files (`.tbd`) can be generated with the following script.
 xcrun tapi installapi \
     -target x86_64-apple-macosx \
     -install_name '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation' \
-    -F Library/Frameworks \
-    -extra-public-header Library/Frameworks/DVTFoundation.framework/Headers \
-    -o Library/Frameworks/DVTFoundation.framework/DVTFoundation.tbd \
+    -F Frameworks \
+    -extra-public-header Frameworks/DVTFoundation.framework/Headers \
+    -o Frameworks/DVTFoundation.framework/DVTFoundation.tbd \
     "$DEVELOPER_DIR/../SharedFrameworks/DVTFoundation.framework"
 
 xcrun tapi installapi \
     -target x86_64-apple-macosx \
     -install_name '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation' \
-    -F Library/Frameworks \
-    -extra-public-header Library/Frameworks/IDEFoundation.framework/Headers \
-    -o Library/Frameworks/IDEFoundation.framework/IDEFoundation.tbd \
+    -F Frameworks \
+    -extra-public-header Frameworks/IDEFoundation.framework/Headers \
+    -o Frameworks/IDEFoundation.framework/IDEFoundation.tbd \
     "$DEVELOPER_DIR/../Frameworks/IDEFoundation.framework"
 ```
 
