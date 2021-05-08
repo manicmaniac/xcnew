@@ -64,14 +64,6 @@ sed -i '' -f /dev/fd/0 Library/Frameworks/IDEFoundation.framework/Headers/IDETem
     /instantiateTemplateForContext/s/CDUnknownBlockType/void (^)(NSArray<DVTFilePath *> *filePaths, void *_unknown, NSError *error)/
 EOF
 
-# Manually add C function which cannot be extracted with `class-dump`
-cat <<-EOF >Library/Frameworks/IDEFoundation.framework/Headers/IDEInitialization.h
-#import <Foundation/Foundation.h>
-
-extern BOOL IDEInitialize(int initializationOptions, NSError *__autoreleasing _Nullable *_Nullable error);
-extern BOOL IDEInitializationCompleted(int *_Nullable initializationOptions);
-EOF
-
 # Re-format all files.
 find Library/Frameworks -type f -name '*.h' -exec clang-format -i {} +
 
