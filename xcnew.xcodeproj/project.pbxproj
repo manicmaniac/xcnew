@@ -35,13 +35,6 @@
 		5B6128272610F89000B048A1 /* XCNOptionParserParameterizedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */; };
 		5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
-		5B6DFC2C2646F622002DC8D0 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC262646F296002DC8D0 /* DVTFoundation.framework */; };
-		5B6DFC2D2646F626002DC8D0 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC262646F296002DC8D0 /* DVTFoundation.framework */; };
-		5B6DFC332646F627002DC8D0 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC262646F296002DC8D0 /* DVTFoundation.framework */; };
-		5B6DFC392646F628002DC8D0 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC262646F296002DC8D0 /* DVTFoundation.framework */; };
-		5B6DFC3F2646F62A002DC8D0 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC252646F295002DC8D0 /* IDEFoundation.framework */; };
-		5B6DFC402646F62B002DC8D0 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC252646F295002DC8D0 /* IDEFoundation.framework */; };
-		5B6DFC412646F62C002DC8D0 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6DFC252646F295002DC8D0 /* IDEFoundation.framework */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
@@ -120,11 +113,11 @@
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
-		5B6DFC252646F295002DC8D0 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
-		5B6DFC262646F296002DC8D0 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
-		5B6DFC7A2646F951002DC8D0 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
-		5B6DFC7B2646F951002DC8D0 /* diff-usages */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "diff-usages"; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
+		5B96C8AB26472813009C4C13 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
+		5B96C8AC26472813009C4C13 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
+		5B96C8AF26472827009C4C13 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
+		5B96C8B026472827009C4C13 /* diff-usages */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "diff-usages"; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
 		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
@@ -142,8 +135,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B6DFC3F2646F62A002DC8D0 /* IDEFoundation.framework in Frameworks */,
-				5B6DFC2C2646F622002DC8D0 /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,8 +142,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B6DFC412646F62C002DC8D0 /* IDEFoundation.framework in Frameworks */,
-				5B6DFC392646F628002DC8D0 /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +149,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B6DFC2D2646F626002DC8D0 /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,8 +156,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B6DFC402646F62B002DC8D0 /* IDEFoundation.framework in Frameworks */,
-				5B6DFC332646F627002DC8D0 /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +178,8 @@
 			children = (
 				5B20A2F022F0BB0300EA7295 /* Sources */,
 				5B1F0F3A22F7A2BA00A7AFFA /* Tests */,
-				5B6DFC232646F20B002DC8D0 /* Library */,
+				5B96C8A926472813009C4C13 /* Frameworks */,
+				5B96C8AE26472827009C4C13 /* Scripts */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -274,29 +261,20 @@
 			path = "xcnew-integration-tests";
 			sourceTree = "<group>";
 		};
-		5B6DFC232646F20B002DC8D0 /* Library */ = {
+		5B96C8A926472813009C4C13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5B6DFC242646F216002DC8D0 /* Frameworks */,
-				5B6DFC792646F951002DC8D0 /* Scripts */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		5B6DFC242646F216002DC8D0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5B6DFC262646F296002DC8D0 /* DVTFoundation.framework */,
-				5B6DFC252646F295002DC8D0 /* IDEFoundation.framework */,
+				5B96C8AB26472813009C4C13 /* IDEFoundation.framework */,
+				5B96C8AC26472813009C4C13 /* DVTFoundation.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
-		5B6DFC792646F951002DC8D0 /* Scripts */ = {
+		5B96C8AE26472827009C4C13 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				5B6DFC7A2646F951002DC8D0 /* dump-private-headers */,
-				5B6DFC7B2646F951002DC8D0 /* diff-usages */,
+				5B96C8AF26472827009C4C13 /* dump-private-headers */,
+				5B96C8B026472827009C4C13 /* diff-usages */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
