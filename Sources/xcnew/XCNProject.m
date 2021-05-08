@@ -8,14 +8,8 @@
 
 #import "XCNProjectInternal.h"
 
-#import <DVTFoundation/DVTFilePath.h>
-#import <DVTFoundation/DVTPlatform.h>
-#import <IDEFoundation/IDEInitialization.h>
-#import <IDEFoundation/IDETemplate.h>
-#import <IDEFoundation/IDETemplateFactory.h>
-#import <IDEFoundation/IDETemplateInstantiationContext.h>
-#import <IDEFoundation/IDETemplateKind.h>
-#import <IDEFoundation/IDETemplateOption.h>
+#import <DVTFoundation/DVTFoundation.h>
+#import <IDEFoundation/IDEFoundation.h>
 #import "XCNErrorsInternal.h"
 #import "XCNMacroDefinitions.h"
 
