@@ -4,6 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
+#import <Foundation/Foundation.h>
 #pragma mark Function Pointers and Blocks
 
 typedef void (*CDUnknownFunctionPointerType)(void); // return type and parameters are unknown
@@ -44,7 +45,7 @@ typedef struct {
 
 typedef struct {
     struct _NSRange range;
-    NSUInteger hash;
+    unsigned long long hash;
     unsigned long long type;
 } CDStruct_3dd9eb72;
 
@@ -58,3 +59,4 @@ typedef union {
     } independent;
     unsigned long long combined;
 } CDUnion_7de6e739;
+

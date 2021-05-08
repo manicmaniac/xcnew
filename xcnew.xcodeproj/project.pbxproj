@@ -12,14 +12,10 @@
 		5B1FF6AD2613F122005136E4 /* XCNFileHierarchyAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FF6AC2613F122005136E4 /* XCNFileHierarchyAssertions.m */; };
 		5B1FF6E026140C61005136E4 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5B1FF6DF26140C61005136E4 /* Fixtures */; };
 		5B20A2F922F0BB8500EA7295 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20A2F822F0BB8500EA7295 /* main.m */; };
-		5B20ADE322F0BDBB00EA7295 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */; };
-		5B20ADE822F0C18700EA7295 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
 		5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFBF22F7437700EA7295 /* XCNProject.m */; };
 		5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
 		5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
 		5B2F804525FC95D20018752D /* XCNProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFBF22F7437700EA7295 /* XCNProject.m */; };
-		5B2F804725FC97850018752D /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
-		5B2F804825FC97850018752D /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */; };
 		5B35519423F5D75B000E5EA1 /* XCNLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519323F5D75B000E5EA1 /* XCNLanguage.m */; };
 		5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */; };
 		5B35519823F5D87C000E5EA1 /* XCNUserInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */; };
@@ -30,9 +26,6 @@
 		5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */; };
 		5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */; };
 		5B5364AF2602C915007E7F20 /* DVTFilePathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */; };
-		5B5364B22602CA3F007E7F20 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
-		5B5364BF2602CB9B007E7F20 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */; };
-		5B5364C02602CB9F007E7F20 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */; };
 		5B5364C12602CBFD007E7F20 /* IDETemplateKindTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */; };
 		5B5364C22602CBFD007E7F20 /* IDETemplateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596A26011AE600DC1E89 /* IDETemplateTests.m */; };
 		5B5364C32602CC01007E7F20 /* XCNIDEFoundationTestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596D26011FDD00DC1E89 /* XCNIDEFoundationTestHelpers.m */; };
@@ -43,6 +36,13 @@
 		5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
+		5B905A9C26468092000B4D43 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9026467F68000B4D43 /* IDEFoundation.framework */; };
+		5B905A9E26468094000B4D43 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9026467F68000B4D43 /* IDEFoundation.framework */; };
+		5B905A9F26468094000B4D43 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9026467F68000B4D43 /* IDEFoundation.framework */; };
+		5B905AA02646809A000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
+		5B905AA12646809C000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
+		5B905AA22646809C000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
+		5B905AA32646809D000B4D43 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B905A9126467F68000B4D43 /* DVTFoundation.framework */; };
 		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
 		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
@@ -83,17 +83,6 @@
 		5B1FF6DF26140C61005136E4 /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = "<group>"; };
 		5B20A2EE22F0BB0300EA7295 /* xcnew */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xcnew; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B20A2F822F0BB8500EA7295 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEFoundation.framework; path = ../Frameworks/IDEFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../SharedFrameworks/DVTFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		5B20AFAD22F73DDB00EA7295 /* IDETemplateFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDETemplateFactory.h; sourceTree = "<group>"; };
-		5B20AFAE22F73DDB00EA7295 /* IDETemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDETemplate.h; sourceTree = "<group>"; };
-		5B20AFAF22F73DDB00EA7295 /* IDETemplateInstantiationContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDETemplateInstantiationContext.h; sourceTree = "<group>"; };
-		5B20AFB022F73DDB00EA7295 /* IDETemplateKind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDETemplateKind.h; sourceTree = "<group>"; };
-		5B20AFB222F73DDB00EA7295 /* IDETemplateOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDETemplateOption.h; sourceTree = "<group>"; };
-		5B20AFB422F73DDB00EA7295 /* IDETemplateOptionParent-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IDETemplateOptionParent-Protocol.h"; sourceTree = "<group>"; };
-		5B20AFBA22F73E2000EA7295 /* DVTFilePath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTFilePath.h; sourceTree = "<group>"; };
-		5B20AFBB22F73E5E00EA7295 /* DVTFileSystemRepresentationProviding-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DVTFileSystemRepresentationProviding-Protocol.h"; sourceTree = "<group>"; };
-		5B20AFBD22F73EBF00EA7295 /* CDStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
 		5B20AFBE22F7437700EA7295 /* XCNProject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNProject.h; sourceTree = "<group>"; };
 		5B20AFBF22F7437700EA7295 /* XCNProject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProject.m; sourceTree = "<group>"; };
 		5B20AFC422F74B7300EA7295 /* XCNErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNErrors.h; sourceTree = "<group>"; };
@@ -109,7 +98,6 @@
 		5B35529824E7A4F90035E983 /* XCNProjectFeature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNProjectFeature.h; sourceTree = "<group>"; };
 		5B37114B23F81570004CD497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B393EE626310FB600948B46 /* XCNProjectInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNProjectInternal.h; sourceTree = "<group>"; };
-		5B39EA61260BCA630028A910 /* DVTPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTPlatform.h; sourceTree = "<group>"; };
 		5B39EAA9260BD5510028A910 /* XCNAppLifecycle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNAppLifecycle.h; sourceTree = "<group>"; };
 		5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycle.m; sourceTree = "<group>"; };
 		5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycleTests.m; sourceTree = "<group>"; };
@@ -122,8 +110,12 @@
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
+		5B6EB6A52646AD2F005CD724 /* CDStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
-		5B9B42CB24982AE700119B10 /* IDEInitialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEInitialization.h; sourceTree = "<group>"; };
+		5B905A8D26467F68000B4D43 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
+		5B905A8E26467F68000B4D43 /* diff-usages */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "diff-usages"; sourceTree = "<group>"; };
+		5B905A9026467F68000B4D43 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
+		5B905A9126467F68000B4D43 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
 		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
@@ -141,8 +133,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B20ADE822F0C18700EA7295 /* DVTFoundation.framework in Frameworks */,
-				5B20ADE322F0BDBB00EA7295 /* IDEFoundation.framework in Frameworks */,
+				5B905AA02646809A000B4D43 /* DVTFoundation.framework in Frameworks */,
+				5B905A9C26468092000B4D43 /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B2F804725FC97850018752D /* DVTFoundation.framework in Frameworks */,
-				5B2F804825FC97850018752D /* IDEFoundation.framework in Frameworks */,
+				5B905AA32646809D000B4D43 /* DVTFoundation.framework in Frameworks */,
+				5B905A9F26468094000B4D43 /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B5364B22602CA3F007E7F20 /* DVTFoundation.framework in Frameworks */,
+				5B905AA12646809C000B4D43 /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,8 +159,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B5364BF2602CB9B007E7F20 /* DVTFoundation.framework in Frameworks */,
-				5B5364C02602CB9F007E7F20 /* IDEFoundation.framework in Frameworks */,
+				5B905AA22646809C000B4D43 /* DVTFoundation.framework in Frameworks */,
+				5B905A9E26468094000B4D43 /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,10 +189,9 @@
 			isa = PBXGroup;
 			children = (
 				5B20A2F022F0BB0300EA7295 /* Sources */,
-				5B20A2FA22F0BC1900EA7295 /* PrivateHeaders */,
 				5B1F0F3A22F7A2BA00A7AFFA /* Tests */,
+				5B905A8B26467F68000B4D43 /* Library */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
-				5B20ADE022F0BDBA00EA7295 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -222,49 +213,6 @@
 				5B5364C52602CD32007E7F20 /* xcnew */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		5B20A2FA22F0BC1900EA7295 /* PrivateHeaders */ = {
-			isa = PBXGroup;
-			children = (
-				5B20AFB922F73E2000EA7295 /* DVTFoundation */,
-				5B20AFAC22F73DDB00EA7295 /* IDEFoundation */,
-			);
-			path = PrivateHeaders;
-			sourceTree = "<group>";
-		};
-		5B20ADE022F0BDBA00EA7295 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5B20ADE722F0C18600EA7295 /* DVTFoundation.framework */,
-				5B20ADE122F0BDBA00EA7295 /* IDEFoundation.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5B20AFAC22F73DDB00EA7295 /* IDEFoundation */ = {
-			isa = PBXGroup;
-			children = (
-				5B9B42CB24982AE700119B10 /* IDEInitialization.h */,
-				5B20AFAE22F73DDB00EA7295 /* IDETemplate.h */,
-				5B20AFAD22F73DDB00EA7295 /* IDETemplateFactory.h */,
-				5B20AFAF22F73DDB00EA7295 /* IDETemplateInstantiationContext.h */,
-				5B20AFB022F73DDB00EA7295 /* IDETemplateKind.h */,
-				5B20AFB222F73DDB00EA7295 /* IDETemplateOption.h */,
-				5B20AFB422F73DDB00EA7295 /* IDETemplateOptionParent-Protocol.h */,
-			);
-			path = IDEFoundation;
-			sourceTree = "<group>";
-		};
-		5B20AFB922F73E2000EA7295 /* DVTFoundation */ = {
-			isa = PBXGroup;
-			children = (
-				5B20AFBD22F73EBF00EA7295 /* CDStructures.h */,
-				5B20AFBA22F73E2000EA7295 /* DVTFilePath.h */,
-				5B20AFBB22F73E5E00EA7295 /* DVTFileSystemRepresentationProviding-Protocol.h */,
-				5B39EA61260BCA630028A910 /* DVTPlatform.h */,
-			);
-			path = DVTFoundation;
 			sourceTree = "<group>";
 		};
 		5B5364C42602CCD0007E7F20 /* xcnew-tests */ = {
@@ -322,6 +270,50 @@
 				5B5364D52602D7D9007E7F20 /* Info.plist */,
 			);
 			path = "xcnew-integration-tests";
+			sourceTree = "<group>";
+		};
+		5B6EB6A32646AD2F005CD724 /* class-dump */ = {
+			isa = PBXGroup;
+			children = (
+				5B6EB6A42646AD2F005CD724 /* include */,
+			);
+			path = "class-dump";
+			sourceTree = "<group>";
+		};
+		5B6EB6A42646AD2F005CD724 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				5B6EB6A52646AD2F005CD724 /* CDStructures.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		5B905A8B26467F68000B4D43 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				5B6EB6A32646AD2F005CD724 /* class-dump */,
+				5B905A8F26467F68000B4D43 /* Frameworks */,
+				5B905A8C26467F68000B4D43 /* Scripts */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		5B905A8C26467F68000B4D43 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				5B905A8D26467F68000B4D43 /* dump-private-headers */,
+				5B905A8E26467F68000B4D43 /* diff-usages */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		5B905A8F26467F68000B4D43 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5B905A9026467F68000B4D43 /* IDEFoundation.framework */,
+				5B905A9126467F68000B4D43 /* DVTFoundation.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
@@ -586,15 +578,6 @@
 		5B1F0F3E22F7A2BA00A7AFFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -611,15 +594,6 @@
 		5B1F0F3F22F7A2BA00A7AFFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -673,6 +647,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -688,6 +666,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/class-dump/include",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -738,6 +720,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "XCODE_VERSION_MAJOR=0x$(XCODE_VERSION_MAJOR)";
@@ -747,6 +733,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)$(LOCAL_LIBRARY_DIR)/class-dump/include",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -760,15 +750,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -786,15 +767,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -811,14 +783,6 @@
 		5B5364AC2602C8F8007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = Tests/DVTFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -834,14 +798,6 @@
 		5B5364AD2602C8F8007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = Tests/DVTFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -857,15 +813,6 @@
 		5B5364BD2602CB37007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = Tests/IDEFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -882,15 +829,6 @@
 		5B5364BE2602CB37007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/PrivateHeaders",
-				);
 				INFOPLIST_FILE = Tests/IDEFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
