@@ -1,0 +1,7 @@
+framework module IDEFoundation [extern_c] [system] {
+    umbrella header "IDEFoundation.h"
+    export *
+    module * {
+        export *
+    }
+}

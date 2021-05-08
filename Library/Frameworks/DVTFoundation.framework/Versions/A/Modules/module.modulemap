@@ -1,0 +1,7 @@
+framework module DVTFoundation [extern_c] [system] {
+    umbrella header "DVTFoundation.h"
+    export *
+    module * {
+        export *
+    }
+}
