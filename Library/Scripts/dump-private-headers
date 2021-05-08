@@ -83,19 +83,3 @@ find Library/Frameworks -type f -name '*.h' -exec clang-format -i {} +
     class-dump --version
     clang-format --version
 ) >Library/Frameworks/.versions
-
-xcrun tapi installapi \
-    -target x86_64-apple-macosx10.14 \
-    -install_name '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation' \
-    -F Library/Frameworks \
-    -extra-public-header Library/Frameworks/DVTFoundation.framework/Headers \
-    -o Library/Frameworks/DVTFoundation.framework/DVTFoundation.tbd \
-    "$contents_dir/SharedFrameworks/DVTFoundation.framework"
-
-xcrun tapi installapi \
-    -target x86_64-apple-macosx10.14 \
-    -install_name '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation' \
-    -F Library/Frameworks \
-    -extra-public-header Library/Frameworks/IDEFoundation.framework/Headers \
-    -o Library/Frameworks/IDEFoundation.framework/IDEFoundation.tbd \
-    "$contents_dir/Frameworks/IDEFoundation.framework"
