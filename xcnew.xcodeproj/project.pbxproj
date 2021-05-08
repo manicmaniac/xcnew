@@ -48,6 +48,16 @@
 		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5B96C88E26472044009C4C13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B20A2E622F0BB0300EA7295 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B20A2ED22F0BB0300EA7295;
+			remoteInfo = xcnew;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		5B5364D62602D826007E7F20 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -160,13 +170,6 @@
 			files = (
 				5B6DFC402646F62B002DC8D0 /* IDEFoundation.framework in Frameworks */,
 				5B6DFC332646F627002DC8D0 /* DVTFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5B5364C82602D710007E7F20 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +331,6 @@
 			buildPhases = (
 				5B1F0F3522F7A2BA00A7AFFA /* Sources */,
 				5B2F804625FC965C0018752D /* Frameworks */,
-				5BDE4A922490D8C800292480 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -362,7 +364,6 @@
 			buildPhases = (
 				5B5364A32602C8F8007E7F20 /* Sources */,
 				5B5364A42602C8F8007E7F20 /* Frameworks */,
-				5B5364A52602C8F8007E7F20 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -379,7 +380,6 @@
 			buildPhases = (
 				5B5364B32602CB37007E7F20 /* Sources */,
 				5B5364B42602CB37007E7F20 /* Frameworks */,
-				5B5364B52602CB37007E7F20 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -395,13 +395,13 @@
 			buildConfigurationList = 5B5364D02602D710007E7F20 /* Build configuration list for PBXNativeTarget "xcnew-integration-tests" */;
 			buildPhases = (
 				5B5364C72602D710007E7F20 /* Sources */,
-				5B5364C82602D710007E7F20 /* Frameworks */,
 				5B5364C92602D710007E7F20 /* Resources */,
 				5B5364D62602D826007E7F20 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5B96C88F26472044009C4C13 /* PBXTargetDependency */,
 			);
 			name = "xcnew-integration-tests";
 			productName = "xcnew-integration-tests";
@@ -458,33 +458,12 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5B5364A52602C8F8007E7F20 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5B5364B52602CB37007E7F20 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5B5364C92602D710007E7F20 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				5B1FF6E026140C61005136E4 /* Fixtures in Resources */,
 				5B5364D32602D766007E7F20 /* xcnew-integration-tests.sb in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5BDE4A922490D8C800292480 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +534,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5B96C88F26472044009C4C13 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5B20A2ED22F0BB0300EA7295 /* xcnew */;
+			targetProxy = 5B96C88E26472044009C4C13 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5B1F0F3E22F7A2BA00A7AFFA /* Debug */ = {
