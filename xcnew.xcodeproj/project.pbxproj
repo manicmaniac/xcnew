@@ -480,7 +480,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if ! type tapi-analyze 2>/dev/null; then\n    exit 0\nfi\n\n# `tapi-analyze` returns 0 even when the binary cannot launch.\n# See https://unix.stackexchange.com/a/387918\nif { tapi-analyze \"$SCRIPT_INPUT_FILE_0\" 2>&1 >&3 3>&- | grep '^' >&2; } 3>&1; then\n    exit 1\nfi\n";
+			shellScript = "# `tapi-analyze` is only bundled Xcode 12 or later.\nif ! type tapi-analyze >/dev/null 2>&1; then\n    exit 0\nfi\n\n# `tapi-analyze` returns 0 even when the binary cannot launch.\nif { tapi-analyze \"$SCRIPT_INPUT_FILE_0\" 2>&1 >/dev/null | grep '^'; }; then\n    exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
