@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
+		5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
+		5B11B3B02647B21B00653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
+		5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
+		5B11B3B72647B22000653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
+		5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
+		5B11B3BE2647B22200653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
 		5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */; };
 		5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
 		5B1FF6AD2613F122005136E4 /* XCNFileHierarchyAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FF6AC2613F122005136E4 /* XCNFileHierarchyAssertions.m */; };
@@ -135,6 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */,
+				5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +151,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3BE2647B22200653ABF /* DVTFoundation.framework in Frameworks */,
+				5B11B3B02647B21B00653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3B72647B22000653ABF /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +168,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */,
+				5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +339,7 @@
 			buildPhases = (
 				5B20A2EA22F0BB0300EA7295 /* Sources */,
 				5B20A2EB22F0BB0300EA7295 /* Frameworks */,
+				5B11B38F2647ADC600653ABF /* Analyze Executable */,
 				5BC9EE2322FDF76100D67BD1 /* Copy Files */,
 			);
 			buildRules = (
@@ -446,6 +461,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B11B38F2647ADC600653ABF /* Analyze Executable */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Analyze Executable";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# `tapi-analyze` is only bundled Xcode 12 or later.\nif ! type tapi-analyze >/dev/null 2>&1; then\n    exit 0\nfi\n\n# `tapi-analyze` returns 0 even when the binary cannot launch.\nif { tapi-analyze \"$SCRIPT_INPUT_FILE_0\" 2>&1 >/dev/null | grep '^'; }; then\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B1F0F3522F7A2BA00A7AFFA /* Sources */ = {
