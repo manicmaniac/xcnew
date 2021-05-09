@@ -35,7 +35,7 @@ class Option(namedtuple('_Option', ['short_option', 'long_option', 'description'
 
 
 class Usage(namedtuple('_Usage', ['options', 'path'])):
-    _manpage_option_re = re.compile(r'^\.It Fl (\w)\|--([\w-]+)$')
+    _manpage_option_re = re.compile(r'^\.It Fl (\w) Li or Fl -([\w-]+)$')
     _source_option_re = re.compile(r'\s*-(\w), --([\w-]+)\s+([^\\\n]+)(?:\\n)?')
     _readme_option_re = _source_option_re
 
@@ -98,7 +98,7 @@ class Usage(namedtuple('_Usage', ['options', 'path'])):
         -s, --spam  Spam
         """
         for line in lines:
-            matched = cls._manpage_option_re.search(line)
+            matched = cls._manpage_option_re.search(line.replace(r'\&', ''))
             if matched:
                 description = next(lines).rstrip().replace(r'\&', '')
                 yield Option(*matched.groups(), description=description)
