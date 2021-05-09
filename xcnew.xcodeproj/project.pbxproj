@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
+		5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
+		5B11B3B02647B21B00653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
+		5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
+		5B11B3B72647B22000653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
+		5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
+		5B11B3BE2647B22200653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
 		5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */; };
 		5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFC522F74B7300EA7295 /* XCNErrors.m */; };
 		5B1FF6AD2613F122005136E4 /* XCNFileHierarchyAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FF6AC2613F122005136E4 /* XCNFileHierarchyAssertions.m */; };
@@ -135,6 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */,
+				5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +151,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3BE2647B22200653ABF /* DVTFoundation.framework in Frameworks */,
+				5B11B3B02647B21B00653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3B72647B22000653ABF /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +168,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */,
+				5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
