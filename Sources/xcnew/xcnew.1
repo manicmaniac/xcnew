@@ -1,5 +1,5 @@
 .\" Automatically generated from mdocxml
-.Dd February 14, 2020
+.Dd May 10, 2021
 .Dt "XCNEW" 1
 .Os "Darwin" ""
 .Sh NAME
@@ -7,46 +7,46 @@
 .Nd \&A command line interface \&to make \&a project for iOS Single View App.
 .Sh SYNOPSIS
 .Nm
-.Op Fl h|--help
-.Op Fl v|--version
-.Op Fl n|--organization-name Ar ORG_NAME
-.Op Fl i|--organization-identifier Ar ORG_ID
-.Op Fl t|--has-tests
-.Op Fl t|--has-unit-tests
-.Op Fl u|--has-ui-tests
-.Op Fl c|--use-core-data
-.Op Fl C|--use-cloud-kit
-.Op Fl o|--objc
-.Op Fl s|--swift-ui
-.Op Fl S|--swift-ui-lifecycle
+.Op { Fl \&h  | Fl -help Li }
+.Op { Fl \&v  | Fl -version Li }
+.Op { Fl \&n  | Fl -organization-name Li } Ar ORG_NAME
+.Op { Fl \&i  | Fl -organization-identifier Li } Ar ORG_ID
+.Op { Fl \&t  | Fl -has-tests Li }
+.Op { Fl \&t  | Fl -has-unit-tests Li }
+.Op { Fl \&u  | Fl -has-ui-tests Li }
+.Op { Fl \&c  | Fl -use-core-data Li }
+.Op { Fl \&C  | Fl -use-cloud-kit Li }
+.Op { Fl \&o  | Fl -objc Li }
+.Op { Fl \&s  | Fl -swift-ui Li }
+.Op { Fl \&S  | Fl -swift-ui-lifecycle Li }
 .Ar PRODUCT_NAME
 .Op Ar OUTPUT_DIR
 .Sh OPTIONS
 The available options are as follows:
-.Bl -tag -width XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-.It Fl h|--help
+.Bl -tag -width XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+.It Fl \&h Li or Fl -help
 Show help and exit
-.It Fl v|--version
+.It Fl \&v Li or Fl -version
 Show version and exit
-.It Fl n|--organization-name
+.It Fl \&n Li or Fl -organization-name
 Specify organization's name
-.It Fl i|--organization-identifier
+.It Fl \&i Li or Fl -organization-identifier
 Specify organization's identifier
-.It Fl t|--has-tests
+.It Fl \&t Li or Fl -has-tests
 [Only appears \&in Xcode \&>= 12] Enable unit and \&UI tests
-.It Fl t|--has-unit-tests
+.It Fl \&t Li or Fl -has-unit-tests
 [Only appears \&in Xcode \&< 12] Enable unit tests
-.It Fl u|--has-ui-tests
+.It Fl \&u Li or Fl -has-ui-tests
 [Only appears \&in Xcode \&< 12] Enable \&UI tests
-.It Fl c|--use-core-data
+.It Fl \&c Li or Fl -use-core-data
 Enable Core Data template
-.It Fl C|--use-cloud-kit
+.It Fl \&C Li or Fl -use-cloud-kit
 Enable Core Data with CloudKit template (overrides \&-c option)
-.It Fl o|--objc
+.It Fl \&o Li or Fl -objc
 Use Objective-C instead \&of Swift (overridden \&by \&-s and \&-S options)
-.It Fl s|--swift-ui
+.It Fl \&s Li or Fl -swift-ui
 [Only appears \&in Xcode \&>= 11] Use Swift \&UI instead \&of Storyboard
-.It Fl S|--swift-ui-lifecycle
+.It Fl \&S Li or Fl -swift-ui-lifecycle
 [Only appears \&in Xcode \&>= 12] Use Swift \&UI lifecycle (overrides \&-s option)
 .It Ar "PRODUCT_NAME"
 Required TARGET_NAME \&of project.pbxproj
