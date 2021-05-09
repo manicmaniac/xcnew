@@ -339,6 +339,7 @@
 			buildPhases = (
 				5B20A2EA22F0BB0300EA7295 /* Sources */,
 				5B20A2EB22F0BB0300EA7295 /* Frameworks */,
+				5B11B38F2647ADC600653ABF /* Analyze Executable */,
 				5BC9EE2322FDF76100D67BD1 /* Copy Files */,
 			);
 			buildRules = (
@@ -460,6 +461,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B11B38F2647ADC600653ABF /* Analyze Executable */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Analyze Executable";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if ! type tapi-analyze 2>/dev/null; then\n    exit 0\nfi\n\n# `tapi-analyze` returns 0 even when the binary cannot launch.\n# See https://unix.stackexchange.com/a/387918\nif { tapi-analyze \"$SCRIPT_INPUT_FILE_0\" 2>&1 >&3 3>&- | grep '^' >&2; } 3>&1; then\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B1F0F3522F7A2BA00A7AFFA /* Sources */ = {
