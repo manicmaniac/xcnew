@@ -736,6 +736,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"$(inherited)",
+					"-Wimplicit-fallthrough",
+				);
 			};
 			name = Debug;
 		};
@@ -753,6 +757,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"$(inherited)",
+					"-Wimplicit-fallthrough",
+				);
 			};
 			name = Release;
 		};
