@@ -57,6 +57,7 @@ static XCNOptionParser *_sharedOptionParser;
             case 't':
 #if XCN_TEST_OPTION_IS_UNIFIED
                 optionSet.feature |= (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests);
+                break;
 #else
                 optionSet.feature |= XCNProjectFeatureUnitTests;
                 break;
