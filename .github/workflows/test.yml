@@ -11,7 +11,7 @@ jobs:
       matrix:
         xcode: ["12.5", "12.4", "12", "11.7", "11.2.1"]
         include:
-        - macos: macOS-11.0
+        - macos: macOS-11
           xcode: "12.5"
         - macos: macOS-10.15
           xcode: "12.4"
