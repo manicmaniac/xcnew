@@ -2,14 +2,25 @@ name: Test
 on: [push]
 jobs:
   unit-test:
-    runs-on: macOS-10.15
+    runs-on: ${{ matrix.macos }}
     defaults:
       run:
         shell: bash
     strategy:
       fail-fast: false
       matrix:
-        xcode: ["12.4", "12", "11.7", "11.2.1"]
+        xcode: ["12.5", "12.4", "12", "11.7", "11.2.1"]
+        include:
+        - macos: macOS-11
+          xcode: "12.5"
+        - macos: macOS-10.15
+          xcode: "12.4"
+        - macos: macOS-10.15
+          xcode: "12"
+        - macos: macOS-10.15
+          xcode: "11.7"
+        - macos: macOS-10.15
+          xcode: "11.2.1"
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
     steps:
