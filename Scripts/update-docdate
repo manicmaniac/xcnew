@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+"""
+A script to update <docdate> in manpages.
+"""
+
+from argparse import ArgumentParser
+import datetime as dt
+from distutils.util import strtobool
+import fileinput
+import os
+import re
+import sys
+
+
+_docdate_line_re = re.compile(r'^(?P<prefix>\s*<docdate>).*(?P<suffix></docdate>\s*)$')
+
+
+def substitute_docdate(new_docdate, lines):
+    """
+    >>> for line in substitute_docdate('Sep 29, 2021', ['<docdate>Sep 28, 2021</docdate>']):
+    ...     print(line)
+    <docdate>Sep 29, 2021</docdate>
+    """
+    replacement = r'\g<prefix>{0}\g<suffix>'.format(new_docdate)
+    for line in lines:
+        yield _docdate_line_re.sub(replacement, line)
+
+
+def format_date(date):
+    """
+    >>> date = dt.date(2021, 9, 2)
+    >>> print(format_date(date))
+    Sep 2, 2021
+    """
+    return date.strftime('%b {0}, %Y').format(date.day)
+
+
+def _main(argv=sys.argv):
+    if strtobool(os.getenv('DOCTEST', '0')):
+        import doctest
+        return doctest.testmod()
+    today = format_date(dt.date.today())
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument('-d', '--date', default=today, help='new date (default: {0})'.format(today))
+    parser.add_argument('-i', '--inplace', action='store_true', help='edit files in-place')
+    parser.add_argument('files', nargs='+', metavar='FILE', help='path to files to edit')
+    args = parser.parse_args(argv[1:])
+    for line in substitute_docdate(args.date, fileinput.input(files=args.files, inplace=args.inplace)):
+        sys.stdout.write(line)
+
+
+if __name__ == '__main__':
+    _main()
