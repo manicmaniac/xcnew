@@ -14,42 +14,50 @@
 
 @implementation XCNErrorsTests
 
-- (void)testXCNErrorFileWriteUnknownWithPath {
-    NSError *error = XCNErrorFileWriteUnknownWithPath(@"/path/to/file");
+- (void)testXCNErrorFileWriteUnknownWithURL {
+    NSError *error = XCNErrorFileWriteUnknownWithURL([NSURL URLWithString:@"file:///path/to/file"]);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 1);
     XCTAssertEqualObjects(error.localizedDescription, @"Cannot write at path '/path/to/file'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNErrorIDEFoundationInconsistencyWithFormat {
-    NSError *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"%@ %@ %@", @"foo", @"bar", @"baz");
+- (void)testXCNErrorTemplateKindNotFoundWithIdentifier {
+    NSError *error = XCNErrorTemplateKindNotFoundWithIdentifier(@"com.github.manicmaniac.xcnew.template");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, 100);
-    XCTAssertEqualObjects(error.localizedDescription, @"foo bar baz");
+    XCTAssertEqual(error.code, 2);
+    XCTAssertEqualObjects(error.localizedDescription, @"A template kind with identifier 'com.github.manicmaniac.xcnew.template' not found.");
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
-- (void)testXCNErrorIDEFoundationTimeoutWithFailureReason {
-    NSError *error = XCNErrorIDEFoundationTimeoutWithFailureReason(@"foo");
+- (void)testXCNErrorTemplateNotFoundWithKindIdentifier {
+    NSError *error = XCNErrorTemplateNotFoundWithKindIdentifier(@"com.github.manicmaniac.xcnew.template");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, 101);
+    XCTAssertEqual(error.code, 3);
+    XCTAssertEqualObjects(error.localizedDescription, @"A template for kind 'com.github.manicmaniac.xcnew.template' not found.");
+    XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
+}
+
+- (void)testXCNErrorTemplateFactoryTimeoutWithTimeout {
+    NSError *error = XCNErrorTemplateFactoryTimeoutWithTimeout(42);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 4);
     XCTAssertEqualObjects(error.localizedDescription, @"Operation timed out.");
-    XCTAssertEqualObjects(error.localizedFailureReason, @"foo");
+    XCTAssertEqualObjects(error.localizedFailureReason, @"IDETemplateFactory hasn't finished in 42 seconds.");
 }
 
-- (void)testXCNErrorInvalidArgumentWithShortOption {
-    NSError *error = XCNErrorInvalidArgumentWithShortOption('X');
+- (void)testXCNErrorTemplateFactoryNotFoundWithKindIdentifier {
+    NSError *error = XCNErrorTemplateFactoryNotFoundWithKindIdentifier(@"com.github.manicmaniac.xcnew.template");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, 110);
-    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
-    XCTAssertNil(error.localizedFailureReason);
+    XCTAssertEqual(error.code, 5);
+    XCTAssertEqualObjects(error.localizedDescription, @"A template factory associated with kind 'com.github.manicmaniac.xcnew.template' not found.");
+    XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
-- (void)testXCNErrorInvalidArgumentWithLongOption {
-    NSError *error = XCNErrorInvalidArgumentWithLongOption("--invalid");
+- (void)testXCNErrorInvalidOptionWithString {
+    NSError *error = XCNErrorInvalidOptionWithString(@"--invalid");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, 110);
+    XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--invalid'.");
     XCTAssertNil(error.localizedFailureReason);
 }
@@ -58,7 +66,7 @@
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 0);
     NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, 111);
+    XCTAssertEqual(error.code, 7);
     XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1).");
     XCTAssertNil(error.localizedFailureReason);
 }
@@ -67,7 +75,7 @@
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
     NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
-    XCTAssertEqual(error.code, 111);
+    XCTAssertEqual(error.code, 7);
     XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1..2).");
     XCTAssertNil(error.localizedFailureReason);
 }

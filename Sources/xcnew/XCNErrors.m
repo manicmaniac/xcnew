@@ -14,44 +14,54 @@ NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 
 // MARK: Internal
 
-NSError *XCNErrorFileWriteUnknownWithPath(NSString *path) {
-    NSCParameterAssert(path != nil);
-    NSString *localizedDescription = [NSString stringWithFormat:@"Cannot write at path '%@'.", path];
+NSError *XCNErrorFileWriteUnknownWithURL(NSURL *url) {
+    NSCParameterAssert(url != nil);
+    NSString *localizedDescription = [NSString stringWithFormat:@"Cannot write at path '%@'.", url.path];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorFileWriteUnknown userInfo:userInfo];
 }
 
-NSError *XCNErrorIDEFoundationInconsistencyWithFormat(NSString *format, ...) {
-    NSCParameterAssert(format != nil);
-    va_list args;
-    va_start(args, format);
-    NSString *localizedDescription = [[NSString alloc] initWithFormat:format arguments:args];
-    va_end(args);
+NSError *XCNErrorTemplateKindNotFoundWithIdentifier(NSString *templateKindIdentifier) {
+    NSCParameterAssert(templateKindIdentifier != nil);
+    NSString *localizedDescription = [NSString stringWithFormat:@"A template kind with identifier '%@' not found.", templateKindIdentifier];
     static NSString *const localizedFailureReason = @"This error means Xcode changes interface to manipulate project files.";
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription,
                                NSLocalizedFailureReasonErrorKey : localizedFailureReason};
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorIDEFoundationInconsistency userInfo:userInfo];
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateKindNotFound userInfo:userInfo];
 }
 
-NSError *XCNErrorIDEFoundationTimeoutWithFailureReason(NSString *failureReason) {
-    NSCParameterAssert(failureReason != nil);
-    static NSString *const localizedDescription = @"Operation timed out.";
+NSError *XCNErrorTemplateNotFoundWithKindIdentifier(NSString *templateKindIdentifier) {
+    NSCParameterAssert(templateKindIdentifier != nil);
+    NSString *localizedDescription = [NSString stringWithFormat:@"A template for kind '%@' not found.", templateKindIdentifier];
+    static NSString *const localizedFailureReason = @"This error means Xcode changes interface to manipulate project files.";
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription,
-                               NSLocalizedFailureReasonErrorKey : failureReason};
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorIDEFoundationTimeout userInfo:userInfo];
+                               NSLocalizedFailureReasonErrorKey : localizedFailureReason};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateNotFound userInfo:userInfo];
 }
 
-NSError *XCNErrorInvalidArgumentWithShortOption(char shortOption) {
-    NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '-%c'.", shortOption];
-    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorInvalidArgument userInfo:userInfo];
+NSError *XCNErrorTemplateFactoryNotFoundWithKindIdentifier(NSString *templateKindIdentifier) {
+    NSCParameterAssert(templateKindIdentifier != nil);
+    NSString *localizedDescription = [NSString stringWithFormat:@"A template factory associated with kind '%@' not found.", templateKindIdentifier];
+    static NSString *const localizedFailureReason = @"This error means Xcode changes interface to manipulate project files.";
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription,
+                               NSLocalizedFailureReasonErrorKey : localizedFailureReason};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryNotFound userInfo:userInfo];
 }
 
-NSError *XCNErrorInvalidArgumentWithLongOption(const char *longOption) {
+NSError *XCNErrorTemplateFactoryTimeoutWithTimeout(NSTimeInterval timeout) {
+    NSCParameterAssert(timeout > 0);
+    static NSString *const localizedDescription = @"Operation timed out.";
+    NSString *localizedFailureReason = [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout];
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription,
+                               NSLocalizedFailureReasonErrorKey : localizedFailureReason};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryTimeout userInfo:userInfo];
+}
+
+NSError *XCNErrorInvalidOptionWithString(NSString *longOption) {
     NSCParameterAssert(longOption != NULL);
-    NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '%s'.", longOption];
+    NSString *localizedDescription = [NSString stringWithFormat:@"Unrecognized option '%@'.", longOption];
     NSDictionary *userInfo = @{NSLocalizedDescriptionKey : localizedDescription};
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorInvalidArgument userInfo:userInfo];
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorInvalidOption userInfo:userInfo];
 }
 
 NSError *XCNErrorWrongNumberOfArgumentsWithRange(NSRange acceptableRange, int actual) {
