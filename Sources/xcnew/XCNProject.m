@@ -40,28 +40,28 @@
     }
     if (![_fileManager isWritableFileAtPath:url.path]) {
         if (error) {
-            *error = XCNErrorFileWriteUnknownWithPath(url.path);
+            *error = XCNErrorFileWriteUnknownWithURL(url);
         }
         return NO;
     }
     IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
-            *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"A template kind with identifier '%@' not found.", kXcode3ProjectTemplateKindIdentifier);
+            *error = XCNErrorTemplateKindNotFoundWithIdentifier(kXcode3ProjectTemplateKindIdentifier);
         }
         return NO;
     }
     IDETemplateFactory *factory = kind.factory;
     if (!factory) {
         if (error) {
-            *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"A kind associated with kind '%@' not found.", kind);
+            *error = XCNErrorTemplateFactoryNotFoundWithKindIdentifier(kXcode3ProjectTemplateKindIdentifier);
         }
         return NO;
     }
     IDETemplate *template = [self singleViewAppProjectTemplateForKind:kind];
     if (!template) {
         if (error) {
-            *error = XCNErrorIDEFoundationInconsistencyWithFormat(@"A template for kind '%@' not found.", kind);
+            *error = XCNErrorTemplateNotFoundWithKindIdentifier(kXcode3ProjectTemplateKindIdentifier);
         }
         return NO;
     }
@@ -80,8 +80,7 @@
                                   }];
     if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
         if (error) {
-            NSString *failureReason = [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout];
-            *error = XCNErrorIDEFoundationTimeoutWithFailureReason(failureReason);
+            *error = XCNErrorTemplateFactoryTimeoutWithTimeout(timeout);
         }
         return NO;
     }
