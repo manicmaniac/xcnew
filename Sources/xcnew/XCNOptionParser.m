@@ -9,9 +9,13 @@
 #import "XCNOptionParser.h"
 
 #import <getopt.h>
+#import "XCNAppLifecycle.h"
 #import "XCNErrorsInternal.h"
-#import "XCNOptionSet.h"
+#import "XCNLanguage.h"
+#import "XCNOptionParseResult.h"
+#import "XCNProject.h"
 #import "XCNProjectFeature.h"
+#import "XCNUserInterface.h"
 
 @implementation XCNOptionParser
 
@@ -31,14 +35,19 @@ static XCNOptionParser *_sharedOptionParser;
     return _sharedOptionParser;
 }
 
-- (nullable XCNOptionSet *)parseArguments:(char *const _Nullable *)argv count:(int)argc error:(NSError *_Nullable __autoreleasing *)error {
+- (nullable XCNOptionParseResult *)parseArguments:(char *const _Nullable *)argv count:(int)argc error:(NSError *_Nullable __autoreleasing *)error {
     NSParameterAssert(argv != NULL);
     NSParameterAssert(argc > 0);
     // Must be called on the main thread because `getopt_long(3)` is not thread-safe.
     NSAssert(NSThread.isMainThread, @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
     opterr = 0;            // Disable auto-generated error messages.
     optind = optreset = 1; // Must be set to 1 to be reentrant.
-    XCNOptionSet *optionSet = [[XCNOptionSet alloc] init];
+    NSString *organizationName;
+    NSString *organizationIdentifier;
+    XCNProjectFeature feature = 0;
+    XCNLanguage language = 0;
+    XCNUserInterface userInterface = 0;
+    XCNAppLifecycle lifecycle = 0;
     int shortOption;
     while ((shortOption = getopt_long(argc, argv, shortOptions, longOptions, NULL)) != -1) {
         switch (shortOption) {
@@ -49,39 +58,39 @@ static XCNOptionParser *_sharedOptionParser;
                 puts([[NSBundle.mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
                 return nil;
             case 'n':
-                optionSet.organizationName = @(optarg);
+                organizationName = @(optarg);
                 break;
             case 'i':
-                optionSet.organizationIdentifier = @(optarg);
+                organizationIdentifier = @(optarg);
                 break;
             case 't':
 #if XCN_TEST_OPTION_IS_UNIFIED
-                optionSet.feature |= (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests);
+                feature |= (XCNProjectFeatureUnitTests | XCNProjectFeatureUITests);
                 break;
 #else
-                optionSet.feature |= XCNProjectFeatureUnitTests;
+                feature |= XCNProjectFeatureUnitTests;
                 break;
             case 'u':
-                optionSet.feature |= XCNProjectFeatureUITests;
+                feature |= XCNProjectFeatureUITests;
                 break;
 #endif
             case 'c':
-                optionSet.feature |= XCNProjectFeatureCoreData;
+                feature |= XCNProjectFeatureCoreData;
                 break;
             case 'C':
-                optionSet.feature |= XCNProjectFeatureCloudKit;
+                feature |= XCNProjectFeatureCloudKit;
                 break;
             case 'o':
-                optionSet.language = XCNLanguageObjectiveC;
+                language = XCNLanguageObjectiveC;
                 break;
 #if XCN_SWIFT_UI_IS_AVAILABLE
             case 's':
-                optionSet.userInterface = XCNUserInterfaceSwiftUI;
+                userInterface = XCNUserInterfaceSwiftUI;
                 break;
 #endif
 #if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
             case 'S':
-                optionSet.lifecycle = XCNAppLifecycleSwiftUI;
+                lifecycle = XCNAppLifecycleSwiftUI;
                 break;
 #endif
             case '?':
@@ -95,23 +104,22 @@ static XCNOptionParser *_sharedOptionParser;
         }
     }
     int numberOfRestArguments = argc - optind;
-    switch (numberOfRestArguments) {
-        case 2:
-            optionSet.productName = @(argv[optind]);
-            optionSet.outputURL = [NSURL fileURLWithPath:@(argv[optind + 1])];
-            break;
-        case 1:
-            optionSet.productName = @(argv[optind]);
-            optionSet.outputURL = [NSURL fileURLWithPath:optionSet.productName];
-            break;
-        default:
-            if (error) {
-                NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
-                *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
-            }
-            return nil;
+    if (numberOfRestArguments != 1 && numberOfRestArguments != 2) {
+        if (error) {
+            NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
+            *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
+        }
+        return nil;
     }
-    return optionSet;
+    XCNProject *project = [[XCNProject alloc] initWithProductName:@(argv[optind])];
+    project.organizationName = organizationName;
+    project.organizationIdentifier = organizationIdentifier;
+    project.feature = feature;
+    project.language = language;
+    project.userInterface = userInterface;
+    project.lifecycle = lifecycle;
+    NSURL *outputURL = [NSURL fileURLWithPath:@(argv[optind + (numberOfRestArguments - 1)])];
+    return [[XCNOptionParseResult alloc] initWithProject:project outputURL:outputURL];
 }
 
 // MARK: Private

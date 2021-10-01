@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class XCNOptionSet;
+@class XCNOptionParseResult;
 
 XCN_FINAL_CLASS
 @interface XCNOptionParser : NSObject
@@ -20,7 +20,7 @@ XCN_FINAL_CLASS
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
-- (nullable XCNOptionSet *)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc error:(NSError *__autoreleasing _Nullable *)error;
+- (nullable XCNOptionParseResult *)parseArguments:(char *const _Nullable *_Nullable)argv count:(int)argc error:(NSError *__autoreleasing _Nullable *)error;
 
 @end
 
