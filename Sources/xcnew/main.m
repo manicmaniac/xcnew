@@ -7,24 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XCNOptionParseResult.h"
 #import "XCNOptionParser.h"
-#import "XCNOptionSet.h"
 #import "XCNProject.h"
 
 int main(int argc, char *const argv[]) {
     @autoreleasepool {
         NSError *error;
-        XCNOptionSet *optionSet = [XCNOptionParser.sharedOptionParser parseArguments:argv count:argc error:&error];
-        if (optionSet) {
-            XCNProject *project = [[XCNProject alloc] initWithProductName:optionSet.productName];
-            project.organizationName = optionSet.organizationName;
-            project.organizationIdentifier = optionSet.organizationIdentifier;
-            project.feature = optionSet.feature;
-            project.language = optionSet.language;
-            project.userInterface = optionSet.userInterface;
-            project.lifecycle = optionSet.lifecycle;
-            [project writeToURL:optionSet.outputURL timeout:60 error:&error];
-        }
+        XCNOptionParseResult *result = [XCNOptionParser.sharedOptionParser parseArguments:argv count:argc error:&error];
+        [result.project writeToURL:result.outputURL timeout:60 error:&error];
         if (error) {
             NSMutableString *message = [NSMutableString stringWithFormat:@"xcnew: %@", error.localizedDescription];
             if (error.localizedFailureReason) {

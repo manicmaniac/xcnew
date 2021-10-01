@@ -42,10 +42,9 @@
 		5B6128272610F89000B048A1 /* XCNOptionParserParameterizedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */; };
 		5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
 		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
+		5B6533EE2706A218007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
+		5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
-		5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
-		5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */; };
-		5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,15 +119,14 @@
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
 		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
+		5B6533EC2706A218007BFBB4 /* XCNOptionParseResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionParseResult.h; sourceTree = "<group>"; };
+		5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParseResult.m; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
 		5B96C8AB26472813009C4C13 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
 		5B96C8AC26472813009C4C13 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
 		5B96C8AF26472827009C4C13 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
 		5B96C8B026472827009C4C13 /* diff-usages */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "diff-usages"; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
-		5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionSet.h; sourceTree = "<group>"; };
-		5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSet.m; sourceTree = "<group>"; };
-		5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionSetTests.m; sourceTree = "<group>"; };
 		5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */ = {isa = PBXFileReference; lastKnownFileType = text; path = "xcnew-integration-tests.sb"; sourceTree = "<group>"; };
 		5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTFilePathTests.m; sourceTree = "<group>"; };
 		5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateKindTests.m; sourceTree = "<group>"; };
@@ -225,7 +223,6 @@
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */,
-				5BC9EE2E22FFFE2800D67BD1 /* XCNOptionSetTests.m */,
 				5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
@@ -246,8 +243,8 @@
 				5B1F0F5722F88EE700A7AFFA /* XCNMacroDefinitions.h */,
 				5B20AFCC22F7567C00EA7295 /* XCNOptionParser.h */,
 				5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */,
-				5BC9EE2822FFF63100D67BD1 /* XCNOptionSet.h */,
-				5BC9EE2922FFF63100D67BD1 /* XCNOptionSet.m */,
+				5B6533EC2706A218007BFBB4 /* XCNOptionParseResult.h */,
+				5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */,
 				5B20AFBE22F7437700EA7295 /* XCNProject.h */,
 				5B393EE626310FB600948B46 /* XCNProjectInternal.h */,
 				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
@@ -493,13 +490,12 @@
 				5B35519823F5D87C000E5EA1 /* XCNUserInterfaceTests.m in Sources */,
 				5B1F0F4B22F8515700A7AFFA /* XCNErrorsTests.m in Sources */,
 				5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */,
-				5BC9EE3022FFFF1500D67BD1 /* XCNOptionSet.m in Sources */,
 				5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */,
 				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */,
-				5BC9EE2F22FFFE2800D67BD1 /* XCNOptionSetTests.m in Sources */,
+				5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */,
 				5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */,
 				5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */,
 				5B2F804525FC95D20018752D /* XCNProject.m in Sources */,
@@ -511,8 +507,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B35519423F5D75B000E5EA1 /* XCNLanguage.m in Sources */,
+				5B6533EE2706A218007BFBB4 /* XCNOptionParseResult.m in Sources */,
 				5B20A2F922F0BB8500EA7295 /* main.m in Sources */,
-				5BC9EE2A22FFF63100D67BD1 /* XCNOptionSet.m in Sources */,
 				5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */,
 				5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */,
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
