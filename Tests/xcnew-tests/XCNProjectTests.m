@@ -124,8 +124,10 @@ static NSString *const kProductName = @"Example";
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
+#if !XCN_INFOPLIST_GENERATION_IS_AVAILABLE
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
+#endif // !XCN_INFOPLIST_GENERATION_IS_AVAILABLE
 }
 
 #if !XCN_TEST_OPTION_IS_UNIFIED
@@ -295,7 +297,9 @@ static NSString *const kProductName = @"Example";
     XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
     XCTAssertNil(error);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
+#if !XCN_INFOPLIST_GENERATION_IS_AVAILABLE
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
+#endif // !XCN_INFOPLIST_GENERATION_IS_AVAILABLE
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.m"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"]);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"ExampleApp.swift"].isRegularFile);
