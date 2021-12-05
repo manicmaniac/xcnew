@@ -6,10 +6,9 @@ Example         type=dir
 
 /set type=file mode=0644
 Example         type=dir mode=0755
-    AppDelegate.swift
+    ContentView.swift
+    ExampleApp.swift
     Info.plist 
-    SceneDelegate.swift
-    ViewController.swift
 
 /set type=file mode=0755
 Assets.xcassets type=dir
@@ -25,9 +24,16 @@ AccentColor.colorset \
 ..
 
 
-Base.lproj      type=dir mode=0755
-    LaunchScreen.storyboard
-    Main.storyboard
+/set type=file mode=0755
+Preview\040Content \
+                type=dir
+
+/set type=file mode=0644
+Preview\040Assets.xcassets \
+                type=dir mode=0755
+    Contents.json
+..
+
 ..
 
 ..
@@ -38,18 +44,6 @@ Example.xcodeproj \
                 type=dir
     project.pbxproj \
                 mode=0644
-..
-
-
-/set type=file mode=0644
-ExampleTests    type=dir mode=0755
-    ExampleTests.swift
-..
-
-
-ExampleUITests  type=dir mode=0755
-    ExampleUITests.swift
-    ExampleUITestsLaunchTests.swift
 ..
 
 ..

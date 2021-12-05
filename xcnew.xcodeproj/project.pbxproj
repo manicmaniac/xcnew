@@ -406,7 +406,7 @@
 			attributes = {
 				CLASSPREFIX = XCN;
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "Ryosuke Ito";
 				TargetAttributes = {
 					5B1F0F3822F7A2BA00A7AFFA = {

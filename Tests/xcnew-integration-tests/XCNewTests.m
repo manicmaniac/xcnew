@@ -107,7 +107,8 @@
     NSArray *arguments = @[ @"-t", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/tests");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/tests" : @"Fixtures/tests@xcode12");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 #else
 - (void)testExecuteWithUnitTests {
@@ -180,7 +181,8 @@
     NSArray *arguments = @[ @"-S", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui-lifecycle");
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/swift-ui-lifecycle" : @"Fixtures/swift-ui-lifecycle@xcode12");
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 #endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 

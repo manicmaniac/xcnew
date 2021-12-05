@@ -44,12 +44,13 @@ Example.xcodeproj \
 /set type=file mode=0644
 ExampleTests    type=dir mode=0755
     ExampleTests.swift
+    Info.plist 
 ..
 
 
 ExampleUITests  type=dir mode=0755
     ExampleUITests.swift
-    ExampleUITestsLaunchTests.swift
+    Info.plist 
 ..
 
 ..

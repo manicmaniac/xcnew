@@ -8,7 +8,6 @@ Example         type=dir
 Example         type=dir mode=0755
     ContentView.swift
     ExampleApp.swift
-    Info.plist 
 
 /set type=file mode=0755
 Assets.xcassets type=dir
