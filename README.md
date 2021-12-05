@@ -3,6 +3,7 @@ xcnew
 
 [![GitHub Actions](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml/badge.svg)](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml)
 [![Travis CI](https://travis-ci.com/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.com/manicmaniac/xcnew)
+[![Xcode](https://img.shields.io/badge/xcode-10%20%7C%2011%20%7C%2012%20%7C%2013-blue)](https://github.com/manicmaniac/xcnew#supported-xcode-versions)
 
 A command line interface to make a project for iOS Single View App.
 
@@ -46,6 +47,11 @@ Usage
     Arguments:
         <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj
         [OUTPUT_DIR]                   Optional directory name of the project
+
+Supported Xcode versions
+------------------------
+
+`Xcode >= 10.1 && Xcode <= 13.1`.
 
 How it works?
 -------------
