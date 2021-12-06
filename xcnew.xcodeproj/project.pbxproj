@@ -45,6 +45,7 @@
 		5B6533EE2706A218007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
+		5BA08FF5275E9E1300CC3916 /* DVTPlatformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		5B96C8AC26472813009C4C13 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
 		5B96C8AF26472827009C4C13 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
 		5B96C8B026472827009C4C13 /* diff-usages */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "diff-usages"; sourceTree = "<group>"; };
+		5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTPlatformTests.m; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */ = {isa = PBXFileReference; lastKnownFileType = text; path = "xcnew-integration-tests.sb"; sourceTree = "<group>"; };
 		5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTFilePathTests.m; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */,
+				5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */,
 				5B5364B02602C957007E7F20 /* Info.plist */,
 			);
 			path = DVTFoundationTests;
@@ -522,6 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B5364AF2602C915007E7F20 /* DVTFilePathTests.m in Sources */,
+				5BA08FF5275E9E1300CC3916 /* DVTPlatformTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
