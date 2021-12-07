@@ -25,8 +25,7 @@
     IDETemplateKind *templateKind = [IDETemplateKind templateKindForIdentifier:XCNXcode3ProjectTemplateKindIdentifier];
     NSArray<IDETemplateKind *> *availableTemplates = [IDETemplate availableTemplatesOfTemplateKind:templateKind];
     XCTAssertGreaterThan(availableTemplates.count, 0);
-    NSString *singleViewAppTemplateName = (XCODE_VERSION_MAJOR >= 0x1200) ? @"App" : @"Single View App";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(SELF, $x, $x.hiddenFromChooser = NO AND $x.templateName = %@ AND ANY $x.templatePlatforms.identifier = 'com.apple.platform.iphoneos').@count == 1", singleViewAppTemplateName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(SELF, $x, $x.identifier = 'com.apple.dt.unit.singleViewApplication' AND ANY $x.templatePlatforms.identifier = 'com.apple.platform.iphoneos').@count == 1"];
     XCTAssertTrue([predicate evaluateWithObject:availableTemplates], @"'%@' is not true", predicate);
 }
 
