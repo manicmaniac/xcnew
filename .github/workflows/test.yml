@@ -30,6 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run unit tests
-        run: make check | xcpretty
+        run: make check
       - name: Install
         run: make install | xcpretty
