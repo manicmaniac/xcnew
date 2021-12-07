@@ -27,6 +27,13 @@
     XCTAssertGreaterThan(availableTemplates.count, 0);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(SELF, $x, $x.identifier = 'com.apple.dt.unit.singleViewApplication' AND ANY $x.templatePlatforms.identifier = 'com.apple.platform.iphoneos').@count == 1"];
     XCTAssertTrue([predicate evaluateWithObject:availableTemplates], @"'%@' is not true", predicate);
+    if (self.testRun.failureCount > 0) {
+        for (IDETemplate *template in availableTemplates) {
+            if ([template.templateName isEqualToString:(XCODE_VERSION_MAJOR >= 0x1200) ? @"App" : @"Single View App"]) {
+                XCTFail(@"identifier may be %@ (%@)", template.identifier, [template.templatePlatforms valueForKeyPath:@"identifier"]);
+            }
+        }
+    }
 }
 
 @end
