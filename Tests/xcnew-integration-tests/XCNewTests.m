@@ -88,8 +88,7 @@
     NSArray *arguments = @[ productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/default" : @"Fixtures/default@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/default");
 }
 
 - (void)testExecuteWithTests {
@@ -108,8 +107,7 @@
     NSArray *arguments = @[ @"-c", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/core-data" : @"Fixtures/core-data@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/core-data");
 }
 
 - (void)testExecuteWithCloudKit {
@@ -127,8 +125,7 @@
     NSArray *arguments = @[ @"-o", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/objective-c" : @"Fixtures/objective-c@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/objective-c");
 }
 
 - (void)testExecuteWithSwiftUI {

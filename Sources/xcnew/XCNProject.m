@@ -128,10 +128,9 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
     DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
-    NSString *singleViewAppTemplateName = (XCODE_VERSION_MAJOR >= 0x1200) ? @"App" : @"Single View App";
     for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
         if (!_template.hiddenFromChooser &&
-            [_template.templateName isEqualToString:singleViewAppTemplateName] &&
+            [_template.templateName isEqualToString:@"App"] &&
             [_template.templatePlatforms containsObject:iPhoneOSPlatform]) {
             return _template;
         }
