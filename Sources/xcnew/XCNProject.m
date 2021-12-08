@@ -151,15 +151,8 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = _organizationName;
         } else if ([identifier isEqualToString:@"bundleIdentifierPrefix"]) {
             option.value = _organizationIdentifier;
-#if XCN_TEST_OPTION_IS_UNIFIED
         } else if ([identifier isEqualToString:@"hasUnitAndUITests"]) {
             option.booleanValue = ((_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests) && ((_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests);
-#else
-        } else if ([identifier isEqualToString:@"hasUnitTests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests;
-        } else if ([identifier isEqualToString:@"hasUITests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests;
-#endif
         } else if ([identifier isEqualToString:@"coreData"]) {
             option.booleanValue = (_feature & XCNProjectFeatureCoreData) == XCNProjectFeatureCoreData;
         } else if ([identifier isEqualToString:@"coreDataCloudKit"]) {

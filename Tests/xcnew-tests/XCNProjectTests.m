@@ -78,11 +78,7 @@ static NSString *const kProductName = @"Example";
     NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
     NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
     XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    if (XCN_ORGANIZATION_IS_INCLUDED_IN_APP_DELEGATE) {
-        XCTAssertTrue([appDelegateContents containsString:@"Organization"]);
-    } else {
-        XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-    }
+    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
     XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
     XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
@@ -130,44 +126,6 @@ static NSString *const kProductName = @"Example";
 #endif // !XCN_INFOPLIST_GENERATION_IS_AVAILABLE
 }
 
-#if !XCN_TEST_OPTION_IS_UNIFIED
-
-- (void)testWriteToURLWithUnitTests {
-    _project.feature |= XCNProjectFeatureUnitTests;
-    NSError *error;
-    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
-    XCTAssertNil(error);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"ExampleTests"].fileWrappers[@"Info.plist"].isRegularFile);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
-}
-
-- (void)testWriteToURLWithUITests {
-    _project.feature |= XCNProjectFeatureUITests;
-    NSError *error;
-    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
-    XCTAssertNil(error);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"ExampleUITests"].fileWrappers[@"Info.plist"].isRegularFile);
-}
-
-#endif // !XCN_TEST_OPTION_IS_UNIFIED
-
 - (void)testWriteToURLWithCoreData {
     _project.feature |= XCNProjectFeatureCoreData;
     NSError *error;
@@ -187,7 +145,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
-#if XCN_CLOUD_KIT_IS_AVAILABLE
 - (void)testWriteToURLWithCoreDataCloudKit {
     _project.feature |= XCNProjectFeatureCloudKit;
     NSError *error;
@@ -206,7 +163,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
-#endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
 - (void)testWriteToURLWithObjectiveC {
     _project.language = XCNLanguageObjectiveC;
@@ -246,8 +202,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
-#if XCN_SWIFT_UI_IS_AVAILABLE
-
 - (void)testWriteToURLWithSwiftUI {
     _project.userInterface = XCNUserInterfaceSwiftUI;
     NSError *error;
@@ -266,8 +220,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
-
-#endif // XCN_SWIFT_UI_IS_AVAILABLE
 
 - (void)testWriteToURLWithCocoaLifecycle {
     _project.lifecycle = XCNAppLifecycleCocoa;
@@ -289,8 +241,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
-#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
-
 - (void)testWriteToURLWithSwiftUILifecycle {
     _project.lifecycle = XCNAppLifecycleSwiftUI;
     NSError *error;
@@ -310,8 +260,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
-
-#endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
 - (void)testWriteToURLWhenDirectoryAlreadyExists {
     NSError *error;
