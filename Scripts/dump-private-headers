@@ -5,7 +5,7 @@
 # This tool needs the following commands to be installed:
 # See `Frameworks/.versions` to know which version of the tools are needed.
 #
-# - [Xcode](https://developer.apple.com/download/more/)
+# - [Xcode](https://developer.apple.com/download/all/)
 # - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
 # - [class-dump](http://github.com/manicmaniac/class-dump)
 
