@@ -1,7 +1,7 @@
 + xcodebuild -version
-Xcode 12.4
-Build version 12D4e
+Xcode 13.1
+Build version 13A1030d
 + class-dump --version
-class-dump 3.5 (64 bit) (Debug version compiled Aug  5 2019 01:19:33) compiled Aug  5 2019 01:19:33
+class-dump 3.5 (64 bit) (forked by @manicmaniac) compiled Dec  9 2021 04:28:16
 + clang-format --version
-clang-format version 8.0.1 (tags/RELEASE_801/final)
+clang-format version 11.1.0
