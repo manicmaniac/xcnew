@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,7 +46,25 @@
 		5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BA08FF5275E9E1300CC3916 /* DVTPlatformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */; };
+		5BA08FF927614ABE00CC3916 /* xcnew.mxml in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		5BA08FF827614A3100CC3916 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.mxml";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(BUILT_PRODUCTS_DIR)/$(INPUT_FILE_BASE).1",
+			);
+			runOncePerArchitecture = 0;
+			script = "xml2man -f \"$SCRIPT_INPUT_FILE\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		5B96C88E26472044009C4C13 /* PBXContainerItemProxy */ = {
@@ -119,7 +137,7 @@
 		5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-integration-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
-		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = "<group>"; };
+		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B6533EC2706A218007BFBB4 /* XCNOptionParseResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionParseResult.h; sourceTree = "<group>"; };
 		5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParseResult.m; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
@@ -195,6 +213,7 @@
 				5B96C8A926472813009C4C13 /* Frameworks */,
 				5B96C8AE26472827009C4C13 /* Scripts */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
+				5BA08FFD276151C800CC3916 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -255,7 +274,6 @@
 				5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
 				5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */,
-				5B63AE032414C9CB00730367 /* xcnew.1 */,
 				5B37114B23F81570004CD497 /* Info.plist */,
 			);
 			path = xcnew;
@@ -290,6 +308,14 @@
 				5B96C8B026472827009C4C13 /* diff-usages */,
 			);
 			path = Scripts;
+			sourceTree = "<group>";
+		};
+		5BA08FFD276151C800CC3916 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				5B63AE032414C9CB00730367 /* xcnew.1 */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
@@ -343,6 +369,7 @@
 				5BC9EE2322FDF76100D67BD1 /* Copy Files */,
 			);
 			buildRules = (
+				5BA08FF827614A3100CC3916 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -517,6 +544,7 @@
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
 				5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */,
 				5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */,
+				5BA08FF927614ABE00CC3916 /* xcnew.mxml in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
