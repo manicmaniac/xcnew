@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XCNProject : NSObject
 
 @property (nonatomic, readonly) NSString *productName;
-@property (nonatomic, copy, nullable) NSString *organizationName;
 @property (nonatomic, copy, nullable) NSString *organizationIdentifier;
 @property (nonatomic) XCNProjectFeature feature;
 @property (nonatomic) XCNLanguage language;

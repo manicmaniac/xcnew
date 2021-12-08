@@ -64,24 +64,6 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
-- (void)testWriteToURLWithOrganizationName {
-    _project.organizationName = @"Organization";
-    NSError *error;
-    XCTAssertTrue([_project writeToURL:_url timeout:10 error:&error]);
-    XCTAssertNil(error);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example.xcodeproj"].fileWrappers[@"project.pbxproj"].isRegularFile);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Info.plist"].isRegularFile);
-    NSFileWrapper *appDelegateFileWrapper = self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"AppDelegate.swift"];
-    NSString *appDelegateContents = [[NSString alloc] initWithData:appDelegateFileWrapper.regularFileContents encoding:NSUTF8StringEncoding];
-    XCTAssertTrue([appDelegateContents containsString:@"Example"]);
-    XCTAssertFalse([appDelegateContents containsString:@"Organization"]);
-    XCTAssertTrue(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Base.lproj"].fileWrappers[@"Main.storyboard"].isRegularFile);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@".git"]);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
-    XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
-}
-
 - (void)testWriteToURLWithOrganizationIdentifier {
     static NSString *const organizationIdentifier = @"com.example.organization";
     _project.organizationIdentifier = organizationIdentifier;

@@ -33,7 +33,6 @@ Usage
     Options:
         -h, --help                     Show help and exit
         -v, --version                  Show version and exit
-        -n, --organization-name        Specify organization's name
         -i, --organization-identifier  Specify organization's identifier
         -t, --has-tests                [Only appears in Xcode >= 12] Enable unit and UI tests
         -t, --has-unit-tests           [Only appears in Xcode < 12] Enable unit tests

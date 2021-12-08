@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <manpage>
-  <docdate>May 10, 2021</docdate>
+  <docdate>December 09, 2021</docdate>
   <doctitle>XCNEW</doctitle>
   <os>Darwin</os>
   <section>1</section>
@@ -10,7 +10,6 @@
   <usage>
     <flag optional="1">h<long>help</long><desc>Show help and exit</desc></flag>
     <flag optional="1">v<long>version</long><desc>Show version and exit</desc></flag>
-    <flag optional="1">n<long>organization-name</long><arg>ORG_NAME</arg><desc>Specify organization's name</desc></flag>
     <flag optional="1">i<long>organization-identifier</long><arg>ORG_ID</arg><desc>Specify organization's identifier</desc></flag>
     <flag optional="1">t<long>has-tests</long><desc>[Only appears in Xcode &gt;= 12] Enable unit and UI tests</desc></flag>
     <flag optional="1">t<long>has-unit-tests</long><desc>[Only appears in Xcode &lt; 12] Enable unit tests</desc></flag>

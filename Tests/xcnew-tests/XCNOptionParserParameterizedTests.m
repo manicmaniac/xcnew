@@ -59,18 +59,6 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertTrue([output containsString:version]);
                                   XCTAssertNil(error);
                               }],
-            [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"Example" ]
-                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
-                                  XCTAssertEqualObjects(output, @"");
-                                  XCTAssertNil(error);
-                              }],
-            [self invocationWithArguments:@[ @"xcnew", @"--organization-name", @"Organization", @"Example" ]
-                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
-                                  XCTAssertEqualObjects(output, @"");
-                                  XCTAssertNil(error);
-                              }],
             [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"Example" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
                                   XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
@@ -185,23 +173,23 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
                               }],
             // Reverse-ordered options
-            [self invocationWithArguments:@[ @"xcnew", @"Example", @"-n", @"Organization" ]
+            [self invocationWithArguments:@[ @"xcnew", @"Example", @"-i", @"com.github.manicmaniac" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],
             // Long options joined by a equal sign
-            [self invocationWithArguments:@[ @"xcnew", @"--organization-name=Organization", @"Example" ]
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier=com.github.manicmaniac", @"Example" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],
             // GNU-style option terminator
-            [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"--", @"Example" ]
+            [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"--", @"Example" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],

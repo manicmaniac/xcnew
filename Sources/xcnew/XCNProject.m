@@ -146,8 +146,6 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = NSStringFromXCNLanguage(_language);
         } else if ([identifier isEqualToString:@"productName"]) {
             option.value = _productName;
-        } else if ([identifier isEqualToString:@"organizationName"]) {
-            option.value = _organizationName;
         } else if ([identifier isEqualToString:@"bundleIdentifierPrefix"]) {
             option.value = _organizationIdentifier;
         } else if ([identifier isEqualToString:@"hasUnitAndUITests"]) {

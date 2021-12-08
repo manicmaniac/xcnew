@@ -42,7 +42,6 @@ static XCNOptionParser *_sharedOptionParser;
     NSAssert(NSThread.isMainThread, @"'%@' must be called on the main thread.", NSStringFromSelector(_cmd));
     opterr = 0;            // Disable auto-generated error messages.
     optind = optreset = 1; // Must be set to 1 to be reentrant.
-    NSString *organizationName;
     NSString *organizationIdentifier;
     XCNProjectFeature feature = 0;
     XCNLanguage language = 0;
@@ -57,9 +56,6 @@ static XCNOptionParser *_sharedOptionParser;
             case 'v':
                 puts([[NSBundle.mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
                 return nil;
-            case 'n':
-                organizationName = @(optarg);
-                break;
             case 'i':
                 organizationIdentifier = @(optarg);
                 break;
@@ -100,7 +96,6 @@ static XCNOptionParser *_sharedOptionParser;
         return nil;
     }
     XCNProject *project = [[XCNProject alloc] initWithProductName:@(argv[optind])];
-    project.organizationName = organizationName;
     project.organizationIdentifier = organizationIdentifier;
     project.feature = feature;
     project.language = language;
@@ -114,13 +109,12 @@ static XCNOptionParser *_sharedOptionParser;
 
 static const char help[] = "xcnew - A command line tool to create Xcode project.\n"
                            "\n"
-                           "Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tcosSC"
+                           "Usage: xcnew [-h|-v] [-i ORG_ID] [-tcosSC"
                            "] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                            "\n"
                            "Options:\n"
                            "    -h, --help                     Show help and exit\n"
                            "    -v, --version                  Show version and exit\n"
-                           "    -n, --organization-name        Specify organization's name\n"
                            "    -i, --organization-identifier  Specify organization's identifier\n"
                            "    -t, --has-tests                Enable unit and UI tests\n"
                            "    -c, --use-core-data            Enable Core Data template\n"
@@ -133,12 +127,11 @@ static const char help[] = "xcnew - A command line tool to create Xcode project.
                            "    <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj\n"
                            "    [OUTPUT_DIR]                   Optional directory name of the project";
 
-static const char shortOptions[] = "hvn:i:tcosSC";
+static const char shortOptions[] = "hvi:tcosSC";
 
 static const struct option longOptions[] = {
     {"help", no_argument, NULL, 'h'},
     {"version", no_argument, NULL, 'v'},
-    {"organization-name", required_argument, NULL, 'n'},
     {"organization-identifier", required_argument, NULL, 'i'},
     {"has-tests", no_argument, NULL, 't'},
     {"use-core-data", no_argument, NULL, 'c'},
