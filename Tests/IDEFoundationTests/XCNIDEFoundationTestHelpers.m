@@ -11,13 +11,3 @@
 #import <XCTest/XCTest.h>
 
 NSString *const XCNXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";
-
-void XCNInitializeIDEOrFailTestCase(XCTestCase *self) {
-    if (!IDEInitializationCompleted(NULL)) {
-        NSError *error;
-        if (!IDEInitialize(1, &error)) {
-            self.continueAfterFailure = NO;
-            XCTFail(@"%@", error);
-        }
-    }
-}

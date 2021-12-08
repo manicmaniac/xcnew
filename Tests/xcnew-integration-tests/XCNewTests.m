@@ -23,36 +23,28 @@
 
 // MARK: Public
 
-- (void)setUp {
+- (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executableURL = [bundle URLForAuxiliaryExecutable:@"xcnew"];
     _sandboxProfileURL = [bundle URLForResource:@"xcnew-integration-tests" withExtension:@"sb"];
-    NSError *error;
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                   inDomain:NSUserDomainMask
                                          appropriateForURL:_fileManager.temporaryDirectory
                                                     create:YES
-                                                     error:&error];
+                                                     error:error];
     if (!_temporaryDirectoryURL) {
-        self.continueAfterFailure = NO;
-        return XCTFail(@"%@", error);
+        return NO;
     }
     _currentDirectoryURL = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Current"];
-    if (![_fileManager createDirectoryAtURL:_currentDirectoryURL
-                withIntermediateDirectories:NO
-                                 attributes:nil
-                                      error:&error]) {
-        self.continueAfterFailure = NO;
-        return XCTFail(@"%@", error);
-    }
+    return [_fileManager createDirectoryAtURL:_currentDirectoryURL
+                  withIntermediateDirectories:NO
+                                   attributes:nil
+                                        error:error];
 }
 
-- (void)tearDown {
-    NSError *error;
-    if (![_fileManager removeItemAtURL:_temporaryDirectoryURL error:&error]) {
-        XCTFail(@"%@", error);
-    }
+- (BOOL)tearDownWithError:(NSError *__autoreleasing _Nullable *)error {
+    return [_fileManager removeItemAtURL:_temporaryDirectoryURL error:error];
 }
 
 - (void)testRunWithNoArguments {

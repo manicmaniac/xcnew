@@ -17,8 +17,8 @@
 
 @implementation IDETemplateTests
 
-- (void)setUp {
-    XCNInitializeIDEOrFailTestCase(self);
+- (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
+    return IDEInitializationCompleted(NULL) || IDEInitialize(1, error);
 }
 
 - (void)testAvailableTemplateOfTemplateKind {

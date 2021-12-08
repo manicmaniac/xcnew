@@ -14,12 +14,8 @@
 
 @implementation DVTPlatformTests
 
-- (void)setUp {
-    NSError *error;
-    if (![DVTPlatform loadAllPlatformsReturningError:&error]) {
-        self.continueAfterFailure = NO;
-        XCTFail(@"%@", error);
-    }
+- (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
+    return [DVTPlatform loadAllPlatformsReturningError:error];
 }
 
 - (void)testAllPlatforms {

@@ -29,27 +29,23 @@
 
 static NSString *const kProductName = @"Example";
 
-- (void)setUp {
+- (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
-    NSError *error;
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                   inDomain:NSUserDomainMask
                                          appropriateForURL:_fileManager.temporaryDirectory
                                                     create:YES
-                                                     error:&error];
+                                                     error:error];
     if (!_temporaryDirectoryURL) {
-        [self setContinueAfterFailure:NO];
-        return XCTFail(@"%@", error);
+        return NO;
     }
     _project = [[XCNProject alloc] initWithProductName:kProductName];
     _url = [_temporaryDirectoryURL URLByAppendingPathComponent:kProductName];
+    return YES;
 }
 
-- (void)tearDown {
-    NSError *error;
-    if (![_fileManager removeItemAtURL:_temporaryDirectoryURL error:&error]) {
-        XCTFail(@"%@", error);
-    }
+- (BOOL)tearDownWithError:(NSError *__autoreleasing _Nullable *)error {
+    return [_fileManager removeItemAtURL:_temporaryDirectoryURL error:error];
 }
 
 - (void)testWriteToURLWithDefaultProperties {
