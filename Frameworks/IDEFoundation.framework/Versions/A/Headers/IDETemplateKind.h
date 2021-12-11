@@ -28,7 +28,7 @@
 @property (readonly, copy) NSString *assistantIdentifier; // @synthesize assistantIdentifier=_assistantIdentifier;
 @property (readonly) DVTExtension *extension;             // @synthesize extension=_extension;
 - (id)nextAssistantIdentifierForWorkspace:(id)arg1;
-- (id)newTemplateInstantiationContext;
+- (nonnull IDETemplateInstantiationContext *)newTemplateInstantiationContext;
 - (Class)instantiationContextClass;
 @property (readonly, nonatomic) BOOL prefersStandaloneWorkspace;
 @property (readonly, nonatomic) BOOL requiresProject;

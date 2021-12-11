@@ -61,7 +61,55 @@ sed -i '' -f /dev/fd/0 Frameworks/IDEFoundation.framework/Headers/IDETemplateFac
         a\
         @class DVTFilePath;
     }
-    /instantiateTemplateForContext/s/CDUnknownBlockType/void (^)(NSArray<DVTFilePath *> *filePaths, void *_unknown, NSError *error)/
+EOF
+
+tops -scriptfile /dev/stdin <<-'EOF' Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
+    replacemethod "filePathForFileURL:<arg1>" with same {
+        replace "<arg1_type>" with "(NSURL *_Nonnull)"
+        replace "<arg1_param>" with "url"
+    }
+    replacemethod "removeAssociatesWithRole:<arg1>" with same {
+        replace "<arg1_type>" with "(NSString *_Nonnull)"
+        replace "<arg1_param>" with "role"
+    }
+EOF
+
+tops -scriptfile /dev/stdin <<-'EOF' Frameworks/DVTFoundation.framework/Headers/DVTPlatform.h
+    replacemethod "loadAllPlatformsReturningError:<arg1>" with same {
+        replace "<arg1_type>" with "(NSError *__unsafe_unretained _Nullable *)"
+        replace "<arg1_param>" with "error"
+    }
+    replacemethod "platformForIdentifier:<arg1>" with same {
+        replace "<arg1_type>" with "(NSString *_Nonnull)"
+        replace "<arg1_param>" with "identifier"
+    }
+    replace "+ (id)allPlatforms" with "+ (nonnull NSArray<DVTPlatform *> *)allPlatforms"
+EOF
+
+tops -scriptfile /dev/stdin <<-'EOF' Frameworks/IDEFoundation.framework/Headers/IDETemplateKind.h
+    replacemethod "templateKindForIdentifier:<arg1>" with same {
+        replace "<arg1_type>" with "(NSString *_Nonnull)"
+        replace "<arg1_param>" with "identifier"
+    }
+    replace "- (id)newTemplateInstantiationContext" with "- (nonnull IDETemplateInstantiationContext *)newTemplateInstantiationContext"
+EOF
+
+tops -scriptfile /dev/stdin <<-'EOF' Frameworks/IDEFoundation.framework/Headers/IDETemplateFactory.h
+    replacemethod "instantiateTemplateForContext:<arg1>options:<arg2>whenDone:<arg3>" with same {
+        replace "<arg1_type>" with "(IDETemplateInstantiationContext *_Nonnull)"
+        replace "<arg1_param>" with "context"
+        replace "<arg2_param>" with "options"
+        replace "<arg3_type>" with "(void (^)(NSArray<DVTFilePath *> *filePaths, void *_unknown, NSError *error))"
+        replace "<arg3_param>" with "whenDone"
+    }
+EOF
+
+tops -scriptfile /dev/stdin <<-'EOF' Frameworks/IDEFoundation.framework/Headers/IDETemplate.h
+    replace "+ (id)availableTemplatesOfTemplateKind" with "+ (nonnull NSArray<IDETemplate *> *)availableTemplatesOfTemplateKind"
+    replacemethod "availableTemplatesOfTemplateKind:<arg1>" with same {
+        replace "<arg1_type>" with "(IDETemplateKind *_Nonnull)"
+        replace "<arg1_param>" with "kind"
+    }
 EOF
 
 # Re-format all files.
