@@ -45,6 +45,7 @@
 + (id)keyPathsForValuesAffectingHasValidValue;
 + (id)keyPathsForValuesAffectingDisplayValue;
 + (id)allowedTemplateOptionTypes;
+// - (void).cxx_destruct;
 @property (copy) NSDictionary *requiredOptions;                     // @synthesize requiredOptions=_requiredOptions;
 @property (nonatomic) BOOL disabledByConstraints;                   // @synthesize disabledByConstraints=_disabledByConstraints;
 @property (nonatomic) BOOL enabled;                                 // @synthesize enabled=_enabled;

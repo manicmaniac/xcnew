@@ -21,7 +21,7 @@
     NSArray *_instantiatedItems;
     IDEContainerItem *_primaryInstantiatedItem;
     IDEGroup *_destinationGroup;
-    CDUnknownBlockType _templateFilter;
+    id /* CDUnknownBlockType _templateFilter */;
     unsigned long long _destinationIndex;
     NSArray *_destinationBuildables;
     IDEWorkspace *_createdWorkspace;
@@ -29,6 +29,7 @@
     NSString *_nameOfInitialFileForEditor;
 }
 
+// - (void).cxx_destruct;
 @property (copy) NSString *nameOfInitialFileForEditor;        // @synthesize nameOfInitialFileForEditor=_nameOfInitialFileForEditor;
 @property (retain) id<IDEProvisioningBasicTeam> team;         // @synthesize team=_team;
 @property BOOL reuseFileReferences;                           // @synthesize reuseFileReferences=_reuseFileReferences;
@@ -38,7 +39,7 @@
 @property BOOL showsCrossPlatformSection;                     // @synthesize showsCrossPlatformSection=_showsCrossPlatformSection;
 @property (copy) NSArray *destinationBuildables;              // @synthesize destinationBuildables=_destinationBuildables;
 @property unsigned long long destinationIndex;                // @synthesize destinationIndex=_destinationIndex;
-@property (copy) CDUnknownBlockType templateFilter;           // @synthesize templateFilter=_templateFilter;
+@property (copy) id /* CDUnknownBlockType templateFilter */;  // @synthesize templateFilter=_templateFilter;
 @property (retain) IDEGroup *destinationGroup;                // @synthesize destinationGroup=_destinationGroup;
 @property (retain) IDEContainerItem *primaryInstantiatedItem; // @synthesize primaryInstantiatedItem=_primaryInstantiatedItem;
 @property (copy) NSArray *instantiatedItems;                  // @synthesize instantiatedItems=_instantiatedItems;

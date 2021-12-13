@@ -4,7 +4,6 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <DVTFoundation/CDStructures.h>
 #import <Foundation/Foundation.h>
 #import <os/lock.h>
 
@@ -32,10 +31,10 @@
 }
 
 + (void)_registerStandardCachedFileInfoDerivationFunctionsIfNeeded;
-+ (CDUnknownFunctionPointerType)_cachedInfoDerivationFunctionForKey:(id)arg1 derivationLock:(id *)arg2;
-+ (void)_registerCachedInfoDerivationFunction:(CDUnknownFunctionPointerType)arg1 forKey:(id)arg2 shouldUsePerVnodeLock:(BOOL)arg3;
-+ (void)registerCachedInfoDerivationFunction:(CDUnknownFunctionPointerType)arg1 forKey:(id)arg2;
-+ (id)filePathForFileURL:(id)arg1;
++ (void * /* CDUnknownFunctionPointerType */)_cachedInfoDerivationFunctionForKey:(id)arg1 derivationLock:(id *)arg2;
++ (void)_registerCachedInfoDerivationFunction:(void * /* CDUnknownFunctionPointerType */)arg1 forKey:(id)arg2 shouldUsePerVnodeLock:(BOOL)arg3;
++ (void)registerCachedInfoDerivationFunction:(void * /* CDUnknownFunctionPointerType */)arg1 forKey:(id)arg2;
++ (id)filePathForFileURL:(NSURL *_Nonnull)url;
 + (id)filePathForPathString:(id)arg1;
 + (id)filePathForFileSystemRepresentation:(const char *)arg1;
 + (id)filePathForFileSystemRepresentation:(const char *)arg1 length:(unsigned long long)arg2;
@@ -45,17 +44,18 @@
 + (id)_lookupOrCreateFilePathWithParentPath:(id)arg1 fileSystemRepresentation:(const char *)arg2 length:(unsigned long long)arg3 allowCreation:(BOOL)arg4;
 + (id)rootFilePath;
 + (void)initialize;
+// - (void).cxx_destruct;
 - (id)_descriptionOfAssociates;
 - (id)description;
-- (void)dvt_provideFileSystemRepresentationToBlock:(CDUnknownBlockType)arg1;
+- (void)dvt_provideFileSystemRepresentationToBlock:(id /* CDUnknownBlockType */)arg1;
 - (long long)comparePathString:(id)arg1;
 - (void)simulateFileSystemNotificationAndNotifyAssociatesForUnitTests;
 - (void)removeAllAssociates;
 - (void)removeAssociate:(id)arg1;
-- (void)removeAssociatesWithRole:(id)arg1;
+- (void)removeAssociatesWithRole:(NSString *_Nonnull)role;
 - (void)removeAssociate:(id)arg1 withRole:(id)arg2;
-- (void)addAssociate:(id)arg1 withRole:(id)arg2 observingDidChangeRecursively:(BOOL)arg3 onOperationQueue:(id)arg4 block:(CDUnknownBlockType)arg5;
-- (void)addAssociate:(id)arg1 withRole:(id)arg2 observingDidChangeRecursively:(BOOL)arg3 onDispatchQueue:(id)arg4 block:(CDUnknownBlockType)arg5;
+- (void)addAssociate:(id)arg1 withRole:(id)arg2 observingDidChangeRecursively:(BOOL)arg3 onOperationQueue:(id)arg4 block:(id /* CDUnknownBlockType */)arg5;
+- (void)addAssociate:(id)arg1 withRole:(id)arg2 observingDidChangeRecursively:(BOOL)arg3 onDispatchQueue:(id)arg4 block:(id /* CDUnknownBlockType */)arg5;
 - (void)addAssociate:(id)arg1 withRole:(id)arg2;
 - (id)associatesWithRole:(id)arg1;
 - (id)associatesWithRole:(id)arg1 forAllPathsToSameFile:(BOOL)arg2;
@@ -102,9 +102,9 @@
 - (BOOL)isEqual:(id)arg1;
 - (id)relativePathStringFromFilePath:(id)arg1;
 - (id)relativePathStringFromAncestorFilePath:(id)arg1;
-- (void)invokeWithAccessToFileSystemRepresentation:(CDUnknownBlockType)arg1;
-- (void)invokeWithAccessToFileSystemRepresentationAndLength:(CDUnknownBlockType)arg1;
-- (void)invokeWithAccessToHeapAllocatedFileSystemRepresentationAndLength:(CDUnknownBlockType)arg1;
+- (void)invokeWithAccessToFileSystemRepresentation:(id /* CDUnknownBlockType */)arg1;
+- (void)invokeWithAccessToFileSystemRepresentationAndLength:(id /* CDUnknownBlockType */)arg1;
+- (void)invokeWithAccessToHeapAllocatedFileSystemRepresentationAndLength:(id /* CDUnknownBlockType */)arg1;
 - (const char *)fileNameFSRepReturningLength:(long long *)arg1;
 - (BOOL)_fileNameHasSuffix:(const char *)arg1 suffixLength:(long long)arg2;
 - (BOOL)getFullFileSystemRepresentationIntoBuffer:(char **)arg1 ofLength:(unsigned long long)arg2 allowAllocation:(BOOL)arg3;
@@ -118,7 +118,7 @@
 - (id)filePathForRelativePathString:(id)arg1;
 - (id)filePathForRelativeFileSystemRepresentation:(const char *)arg1;
 - (id)filePathForRelativeFileSystemRepresentation:(const char *)arg1 length:(unsigned long long)arg2;
-- (id)firstAncestorPassingTest:(CDUnknownBlockType)arg1;
+- (id)firstAncestorPassingTest:(id /* CDUnknownBlockType */)arg1;
 - (BOOL)isAncestorOfFilePath:(id)arg1;
 @property (readonly) DVTFilePath *volumeFilePath;
 @property (readonly) DVTFilePath *parentFilePath;
@@ -126,8 +126,8 @@
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
 - (id)init;
-- (void)_invokeWithLockedAssociates:(CDUnknownBlockType)arg1;
-- (void)_invokeWithLockedChildPaths:(CDUnknownBlockType)arg1;
+- (void)_invokeWithLockedAssociates:(id /* CDUnknownBlockType */)arg1;
+- (void)_invokeWithLockedChildPaths:(id /* CDUnknownBlockType */)arg1;
 - (void)dealloc;
 
 @end

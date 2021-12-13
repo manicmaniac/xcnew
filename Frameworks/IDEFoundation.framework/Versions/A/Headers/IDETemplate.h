@@ -5,7 +5,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <IDEFoundation/CDStructures.h>
 
 #import <IDEFoundation/IDETemplateOptionParent-Protocol.h>
 
@@ -42,13 +41,14 @@
 + (id)_allTemplateBearingDirectoriesToHotSwap;
 + (id)_findAllTemplateBearingDirectoriesToHotSwap;
 + (id)_availableTemplatesOfTemplateKind:(id)arg1 templateSearchFilePaths:(id)arg2;
-+ (id)availableTemplatesOfTemplateKind:(id)arg1;
++ (nonnull NSArray<IDETemplate *> *)availableTemplatesOfTemplateKind:(IDETemplateKind *_Nonnull)kind;
 + (id)_templateSearchFilePaths;
 + (id)_templateFolderPathsInDefault:(id)arg1;
 + (id)additionalAvailableTemplatesOfTemplateKind:(id)arg1;
-+ (void)_processChildrenOfFilePath:(id)arg1 enumerator:(CDUnknownBlockType)arg2;
++ (void)_processChildrenOfFilePath:(id)arg1 enumerator:(id /* CDUnknownBlockType */)arg2;
 + (void)initialize;
 + (id)_templateInfoForTemplateAtURL:(id)arg1 error:(id *)arg2;
+// - (void).cxx_destruct;
 @property (retain) IDETemplateOption *optionWithAllowedTypes;      // @synthesize optionWithAllowedTypes=_optionWithAllowedTypes;
 @property (retain) IDETemplateOption *optionWithMainTemplateFiles; // @synthesize optionWithMainTemplateFiles=_optionWithMainTemplateFiles;
 @property BOOL isDebug;                                            // @synthesize isDebug=_isDebug;

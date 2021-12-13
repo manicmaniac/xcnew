@@ -22,9 +22,10 @@
 + (id)playgroundTemplateKind;
 + (id)fileTemplateKind;
 + (id)allTemplateKinds;
-+ (id)templateKindForIdentifier:(id)arg1;
++ (id)templateKindForIdentifier:(NSString *_Nonnull)identifier;
 + (id)_templateKindForExtension:(id)arg1;
 + (void)initialize;
+// - (void).cxx_destruct;
 @property (readonly, copy) NSString *assistantIdentifier; // @synthesize assistantIdentifier=_assistantIdentifier;
 @property (readonly) DVTExtension *extension;             // @synthesize extension=_extension;
 - (id)nextAssistantIdentifierForWorkspace:(id)arg1;

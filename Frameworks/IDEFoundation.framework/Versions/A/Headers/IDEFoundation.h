@@ -6,7 +6,6 @@
 //  Copyright © 2021 Ryosuke Ito. All rights reserved.
 //
 
-#import <IDEFoundation/CDStructures.h>
 #import <IDEFoundation/IDEInitialization.h>
 #import <IDEFoundation/IDETemplate.h>
 #import <IDEFoundation/IDETemplateFactory.h>
