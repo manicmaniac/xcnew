@@ -51,7 +51,7 @@ Usage
 Supported Xcode versions
 ------------------------
 
-`Xcode >= 10.1 && Xcode <= 13.1`.
+`Xcode >= 10.1 && Xcode <= 13.2.1`.
 
 How it works?
 -------------
