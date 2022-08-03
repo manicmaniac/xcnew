@@ -41,12 +41,11 @@
 		5B5364D72602D82C007E7F20 /* xcnew in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B20A2EE22F0BB0300EA7295 /* xcnew */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5B6128272610F89000B048A1 /* XCNOptionParserParameterizedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */; };
 		5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20AFCD22F7567C00EA7295 /* XCNOptionParser.m */; };
-		5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 5B63AE032414C9CB00730367 /* xcnew.1 */; };
 		5B6533EE2706A218007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BA08FF5275E9E1300CC3916 /* DVTPlatformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */; };
-		5BA08FF927614ABE00CC3916 /* xcnew.mxml in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
+		5BD3D460289B1C2C00BDB452 /* xcnew.mxml in Copy Files */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -93,7 +92,7 @@
 			dstPath = /share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
-				5B63AE042414CA1300730367 /* xcnew.1 in Copy Files */,
+				5BD3D460289B1C2C00BDB452 /* xcnew.mxml in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
@@ -544,7 +543,6 @@
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
 				5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */,
 				5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */,
-				5BA08FF927614ABE00CC3916 /* xcnew.mxml in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +751,7 @@
 		5B20A2F622F0BB0300EA7295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLY_RULES_IN_COPY_FILES = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
@@ -774,6 +773,7 @@
 		5B20A2F722F0BB0300EA7295 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLY_RULES_IN_COPY_FILES = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;

@@ -12,13 +12,7 @@ import os.path
 import re
 import subprocess
 import sys
-
-BUILD_COMMAND = [
-    'xcodebuild',
-    '-project', 'xcnew.xcodeproj',
-    '-target', 'xcnew',
-    '-configuration', 'Debug'
-]
+from tempfile import TemporaryDirectory
 
 SOURCE_PATH = 'Sources/xcnew/XCNOptionParser.m'
 README_PATH = 'README.md'
@@ -158,25 +152,18 @@ class Usage(namedtuple('_Usage', ['options', 'path'])):
                 break
 
 
-_built_products_dir_re = re.compile(r'BUILT_PRODUCTS_DIR = (.+)$')
-
-
-def get_manpage_path():
-    for line in subprocess.check_output(BUILD_COMMAND + ['-showBuildSettings'], encoding='utf-8').splitlines():
-        print(line)
-        matched = _built_products_dir_re.search(line)
-        if matched:
-            built_products_dir = matched.group(1)
-            return os.path.join(built_products_dir, 'xcnew.1')
-
-
-def build_manpage():
-    subprocess.check_call(BUILD_COMMAND+ ['-quiet', 'build'])
+def install_manpage(path):
+    args = [
+        'xcodebuild',
+        '-project', 'xcnew.xcodeproj',
+        '-target', 'xcnew',
+        '-configuration', 'Debug'
+    ]
+    subprocess.check_call(args+ ['-quiet', 'install', 'DSTROOT=' + path])
 
 
 def _main(argv=sys.argv):
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument('--manpage', help='path to manpage (default: $BUILT_PRODUCTS_DIR/xcnew.1)')
     parser.add_argument('--source', default=SOURCE_PATH, help='path to Objective-C source code (default: {0})'.format(SOURCE_PATH))
     parser.add_argument('--readme', default=README_PATH, help='path to README (default: {0})'.format(README_PATH))
     parser.add_argument('--test', action='store_true', help='run tests and exit')
@@ -185,8 +172,10 @@ def _main(argv=sys.argv):
         import doctest
         failure_count, _ = doctest.testmod()
         return failure_count % 128
-    build_manpage()
-    manpage_usage = Usage.from_manpage(args.manpage or get_manpage_path())
+    with TemporaryDirectory() as tempdir:
+        install_manpage(tempdir)
+        manpage_path = os.path.join(tempdir, 'share/man/man1/xcnew.1')
+        manpage_usage = Usage.from_manpage(manpage_path)
     source_usage = Usage.from_source(args.source)
     readme_usage = Usage.from_readme(args.readme)
     diff = ''.join(manpage_usage.unified_diff(readme_usage))
