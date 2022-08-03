@@ -34,14 +34,12 @@ Usage
         -h, --help                     Show help and exit
         -v, --version                  Show version and exit
         -i, --organization-identifier  Specify organization's identifier
-        -t, --has-tests                [Only appears in Xcode >= 12] Enable unit and UI tests
-        -t, --has-unit-tests           [Only appears in Xcode < 12] Enable unit tests
-        -u, --has-ui-tests             [Only appears in Xcode < 12] Enable UI tests
+        -t, --has-tests                Enable unit and UI tests
         -c, --use-core-data            Enable Core Data template
         -C, --use-cloud-kit            Enable Core Data with CloudKit template (overrides -c option)
         -o, --objc                     Use Objective-C instead of Swift (overridden by -s and -S options)
-        -s, --swift-ui                 [Only appears in Xcode >= 11] Use Swift UI instead of Storyboard
-        -S, --swift-ui-lifecycle       [Only appears in Xcode >= 12] Use Swift UI lifecycle (overrides -s option)
+        -s, --swift-ui                 Use Swift UI instead of Storyboard
+        -S, --swift-ui-lifecycle       Use Swift UI lifecycle (overrides -s option)
     
     Arguments:
         <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj
