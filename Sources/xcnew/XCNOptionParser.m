@@ -16,6 +16,7 @@
 #import "XCNProject.h"
 #import "XCNProjectFeature.h"
 #import "XCNUserInterface.h"
+#import "xcnew_vers.h"
 
 @implementation XCNOptionParser
 
@@ -54,7 +55,7 @@ static XCNOptionParser *_sharedOptionParser;
                 puts(help);
                 return nil;
             case 'v':
-                puts([[NSBundle.mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
+                puts((const char *)xcnewVersionString);
                 return nil;
             case 'i':
                 organizationIdentifier = @(optarg);
