@@ -143,7 +143,6 @@
 		5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-integration-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
-		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B6533EC2706A218007BFBB4 /* XCNOptionParseResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionParseResult.h; sourceTree = "<group>"; };
 		5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParseResult.m; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
@@ -220,7 +219,6 @@
 				5B96C8A926472813009C4C13 /* Frameworks */,
 				5B96C8AE26472827009C4C13 /* Scripts */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
-				5BA08FFD276151C800CC3916 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -316,14 +314,6 @@
 				5B96C8B026472827009C4C13 /* diff-usages */,
 			);
 			path = Scripts;
-			sourceTree = "<group>";
-		};
-		5BA08FFD276151C800CC3916 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				5B63AE032414C9CB00730367 /* xcnew.1 */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
