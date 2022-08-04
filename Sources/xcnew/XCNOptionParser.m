@@ -16,7 +16,6 @@
 #import "XCNProject.h"
 #import "XCNProjectFeature.h"
 #import "XCNUserInterface.h"
-#import "xcnew_vers.h"
 
 @implementation XCNOptionParser
 
@@ -55,7 +54,13 @@ static XCNOptionParser *_sharedOptionParser;
                 puts(help);
                 return nil;
             case 'v':
-                puts((const char *)xcnewVersionString);
+                // When running xcnew, `NSBundle.mainBundle` is xcnew bundle and also `[NSBundle bundleForClass[self class]]` returns xcnew bundle.
+                // Contrarily when running xcnew-tests, the former indicates Apple's xctest bundle and the latter returns xcnew-tests bundle.
+                // Actually there's no way to get the correct version string in xcnew bundle while xctest is running.
+                // This behavior is really confusing and might break the test.
+                // So all `CFBundleShortVersionString`s in this project must be the same value
+                // and the next line must use `[NSBundle bundleForClass:[self class]`.
+                puts([[[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey] UTF8String]);
                 return nil;
             case 'i':
                 organizationIdentifier = @(optarg);
