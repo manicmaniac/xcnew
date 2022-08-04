@@ -1,0 +1,29 @@
+name: Update Xcode
+on: workflow_dispatch
+jobs:
+  update-xcode:
+    runs-on: macOS-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v3
+    - uses: maxim-lobanov/setup-xcode@v1
+      id: setup-xcode
+      with:
+        xcode-version: latest-stable
+    - run: Scripts/update-xcode
+    - uses: peter-evans/create-pull-request@v4
+      with:
+        title: Support Xcode ${{ steps.setup-xcode.outputs.version }}
+        body: |
+          Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets.
+
+          See https://developer.apple.com/documentation/xcode-release-notes for Xcode release notes.
+
+          This pull request is created by [${{ github.workflow }} workflow](https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/update-xcode.yml).
+        branch: support-xcode-${{ steps.setup-xcode.outputs.version }}
+        commit-message: |
+          Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets
+
+          ./Scripts/update-xcode
