@@ -180,9 +180,8 @@ def _main(argv=sys.argv):
     readme_usage = Usage.from_readme(args.readme)
     diff = ''.join(manpage_usage.unified_diff(readme_usage))
     print(diff, end='')
-    if diff:
-        diff = manpage_usage.without_caveats().unified_diff(source_usage)
-        print(diff, end='')
+    diff = ''.join(manpage_usage.without_caveats().unified_diff(source_usage))
+    print(diff, end='')
     if not diff:
         return 1
     return 0

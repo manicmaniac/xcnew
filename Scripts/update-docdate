@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 A script to update <docdate> in manpages.
@@ -18,9 +18,9 @@ _docdate_line_re = re.compile(r'^(?P<prefix>\s*<docdate>).*(?P<suffix></docdate>
 
 def substitute_docdate(new_docdate, lines):
     """
-    >>> for line in substitute_docdate('Sep 29, 2021', ['<docdate>Sep 28, 2021</docdate>']):
+    >>> for line in substitute_docdate('September 29, 2021', ['<docdate>Septempber 28, 2021</docdate>']):
     ...     print(line)
-    <docdate>Sep 29, 2021</docdate>
+    <docdate>September 29, 2021</docdate>
     """
     replacement = r'\g<prefix>{0}\g<suffix>'.format(new_docdate)
     for line in lines:
@@ -31,9 +31,9 @@ def format_date(date):
     """
     >>> date = dt.date(2021, 9, 2)
     >>> print(format_date(date))
-    Sep 2, 2021
+    September 2, 2021
     """
-    return date.strftime('%b {0}, %Y').format(date.day)
+    return date.strftime('%B {0}, %Y').format(date.day)
 
 
 def _main(argv=sys.argv):

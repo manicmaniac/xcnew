@@ -73,6 +73,13 @@
 			remoteGlobalIDString = 5B20A2ED22F0BB0300EA7295;
 			remoteInfo = xcnew;
 		};
+		5BD3D45E289B00E100BDB452 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B20A2E622F0BB0300EA7295 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B20A2ED22F0BB0300EA7295;
+			remoteInfo = xcnew;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -136,7 +143,6 @@
 		5B5364CB2602D710007E7F20 /* xcnew-integration-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-integration-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5364D52602D7D9007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserParameterizedTests.m; sourceTree = "<group>"; };
-		5B63AE032414C9CB00730367 /* xcnew.1 */ = {isa = PBXFileReference; explicitFileType = text.man; path = xcnew.1; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B6533EC2706A218007BFBB4 /* XCNOptionParseResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionParseResult.h; sourceTree = "<group>"; };
 		5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParseResult.m; sourceTree = "<group>"; };
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
@@ -212,7 +218,6 @@
 				5B96C8A926472813009C4C13 /* Frameworks */,
 				5B96C8AE26472827009C4C13 /* Scripts */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
-				5BA08FFD276151C800CC3916 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -309,14 +314,6 @@
 			path = Scripts;
 			sourceTree = "<group>";
 		};
-		5BA08FFD276151C800CC3916 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				5B63AE032414C9CB00730367 /* xcnew.1 */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +349,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5BD3D45F289B00E100BDB452 /* PBXTargetDependency */,
 			);
 			name = "xcnew-tests";
 			productName = "xcnew-tests";
@@ -435,7 +433,7 @@
 			attributes = {
 				CLASSPREFIX = XCN;
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1330;
 				ORGANIZATIONNAME = "Ryosuke Ito";
 				TargetAttributes = {
 					5B1F0F3822F7A2BA00A7AFFA = {
@@ -582,6 +580,11 @@
 			target = 5B20A2ED22F0BB0300EA7295 /* xcnew */;
 			targetProxy = 5B96C88E26472044009C4C13 /* PBXContainerItemProxy */;
 		};
+		5BD3D45F289B00E100BDB452 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5B20A2ED22F0BB0300EA7295 /* xcnew */;
+			targetProxy = 5BD3D45E289B00E100BDB452 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -654,6 +657,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 0.5.6;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -677,6 +681,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -723,6 +728,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 0.5.6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -740,6 +746,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

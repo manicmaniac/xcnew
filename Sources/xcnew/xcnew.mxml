@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <manpage>
-  <docdate>August 04, 2022</docdate>
+  <docdate>August 4, 2022</docdate>
   <doctitle>XCNEW</doctitle>
   <os>Darwin</os>
   <section>1</section>
@@ -11,14 +11,12 @@
     <flag optional="1">h<long>help</long><desc>Show help and exit</desc></flag>
     <flag optional="1">v<long>version</long><desc>Show version and exit</desc></flag>
     <flag optional="1">i<long>organization-identifier</long><arg>ORG_ID</arg><desc>Specify organization's identifier</desc></flag>
-    <flag optional="1">t<long>has-tests</long><desc>[Only appears in Xcode &gt;= 12] Enable unit and UI tests</desc></flag>
-    <flag optional="1">t<long>has-unit-tests</long><desc>[Only appears in Xcode &lt; 12] Enable unit tests</desc></flag>
-    <flag optional="1">u<long>has-ui-tests</long><desc>[Only appears in Xcode &lt; 12] Enable UI tests</desc></flag>
+    <flag optional="1">t<long>has-tests</long><desc>Enable unit and UI tests</desc></flag>
     <flag optional="1">c<long>use-core-data</long><desc>Enable Core Data template</desc></flag>
     <flag optional="1">C<long>use-cloud-kit</long><desc>Enable Core Data with CloudKit template (overrides -c option)</desc></flag>
     <flag optional="1">o<long>objc</long><desc>Use Objective-C instead of Swift (overridden by -s and -S options)</desc></flag>
-    <flag optional="1">s<long>swift-ui</long><desc>[Only appears in Xcode &gt;= 11] Use Swift UI instead of Storyboard</desc></flag>
-    <flag optional="1">S<long>swift-ui-lifecycle</long><desc>[Only appears in Xcode &gt;= 12] Use Swift UI lifecycle (overrides -s option)</desc></flag>
+    <flag optional="1">s<long>swift-ui</long><desc>Use Swift UI instead of Storyboard</desc></flag>
+    <flag optional="1">S<long>swift-ui-lifecycle</long><desc>Use Swift UI lifecycle (overrides -s option)</desc></flag>
     <arg>PRODUCT_NAME<desc>Required TARGET_NAME of project.pbxproj</desc></arg>
     <arg optional="1">OUTPUT_DIR<desc>Optional directory name of the project</desc></arg>
   </usage>

@@ -26,9 +26,6 @@ class-dump -H \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 
 find Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
-    # Remove C++ destructor declaration, which is not permitted in Objective-C class.
-    /^- (void)\.cxx_destruct;$/d
-
     # Import Foundation.framework instead of importing individual headers.
     s/^#import <objc\/NSObject\.h>$/#import <Foundation\/Foundation.h>/
     /^#import "NS.*$/d
@@ -38,31 +35,13 @@ find Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
 
     # Add an explicit ownership to avoid warnings.
     s/\(id \*_field2;\)$/__unsafe_unretained \1/
+
+    # Remove all instance variables.
+    / *{/,/}/d
 EOF
 
-# Remove garbage.
-sed -i '' -e '/#pragma mark Typedef/,$d' Frameworks/DVTFoundation.framework/Headers/CDStructures.h
-sed -i '' -e '/#pragma mark Typedef/,$d' Frameworks/IDEFoundation.framework/Headers/CDStructures.h
-
-# Add missing import for `CDStructures.h`
-sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <DVTFoundation/CDStructures.h>' Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
-sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <IDEFoundation/CDStructures.h>' Frameworks/IDEFoundation.framework/Headers/IDETemplate.h
-
-# Add missing header `<os/lock.h>`
-sed -i '' -e '/#import <Foundation\/Foundation\.h>/a\
-#import <os/lock.h>' Frameworks/DVTFoundation.framework/Headers/DVTFilePath.h
-
-# Manually add type of block which cannot be extracted with `class-dump`
-sed -i '' -f /dev/fd/0 Frameworks/IDEFoundation.framework/Headers/IDETemplateFactory.h <<-'EOF'
-    /#import <Foundation\/Foundation.h>/{
-        G
-        a\
-        @class DVTFilePath;
-    }
-    /instantiateTemplateForContext/s/CDUnknownBlockType/void (^)(NSArray<DVTFilePath *> *filePaths, void *_unknown, NSError *error)/
-EOF
+# CDStructure.h is not used.
+rm Frameworks/DVTFoundation.framework/Headers/CDStructures.h Frameworks/IDEFoundation.framework/Headers/CDStructures.h
 
 # Re-format all files.
 find Frameworks -type f -name '*.h' -exec clang-format -i {} +
