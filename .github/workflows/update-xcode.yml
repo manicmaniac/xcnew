@@ -15,7 +15,9 @@ jobs:
     - name: Commit changes
       if: ${{ steps.update-xcode.outcome == 'success' }}
       run: |
-        git commit --all --author='Ryosuke Ito <rito.0305@gmail.com>' --file=- <<-EOF
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit --all --file=- <<-EOF
         Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets
 
         ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-12
@@ -26,6 +28,7 @@ jobs:
     - run: Scripts/dump-private-headers
       if: ${{ steps.update-xcode.outcome == 'success' }}
     - uses: peter-evans/create-pull-request@v4
+      if: ${{ steps.update-xcode.outcome == 'success' }}
       with:
         title: Support Xcode ${{ steps.setup-xcode.outputs.version }}
         body: |
