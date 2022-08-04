@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+
+import json
+import re
+import sys
+
+class Workflow(object):
+    _xcodes_re = re.compile(r'xcode: (\[.*\])$')
+    _indent_re = re.compile(r'^( *)')
+
+    def __init__(self, f):
+        self.xcodes = []
+        self.includes = []
+        for line in f:
+            matched = self._xcodes_re.search(line)
+            if matched:
+                self.xcodes = json.loads(matched.group(1))
+        f.seek(0)
+        self.contents = f.read()
+
+    def __str__(self):
+        lines = []
+        for line in self.contents.splitlines(keepends=True):
+            matched = self._xcodes_re.search(line)
+            if matched:
+                indent = self._indent_re.match(line).group(1)
+                lines.append(f'{indent}xcode: {json.dumps(self.xcodes)}\n')
+                continue
+            if 'include:' in line:
+                lines.append(line)
+                indent = self._indent_re.match(line).group(1)
+                for macos, xcode in self.includes:
+                    lines.append(f'{indent}- macos: {macos}\n')
+                    lines.append(f'{indent}  xcode: "{xcode}"\n')
+                continue
+            lines.append(line)
+        return ''.join(lines)
+
+
+class Readme(object):
+    _max_xcode_version_re = re.compile(r'Xcode <= (\d+(\.\d+){0,2})')
+
+    def __init__(self, f):
+        self.contents = f.read()
+        matched = self._max_xcode_version_re.search(self.contents)
+        if not matched:
+            raise RuntimeError(f'Does not contain Xcode version string')
+        self.max_xcode_version = matched.group(1)
+
+    def __str__(self):
+        return self._max_xcode_version_re.sub(
+                f'Xcode <= {self.max_xcode_version}', self.contents)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print(f'usage: {sys.argv[0]} <XCODE_VERSION>')
+    current_xcode_version = sys.argv[1]
+    workflow_path = '.github/workflows/test.yml'
+    readme_path = 'README.md'
+
+    with open(workflow_path) as f:
+        workflow = Workflow(f)
+    if current_xcode_version in workflow.xcodes:
+        sys.exit(0)
+    workflow.xcodes.insert(0, current_xcode_version)
+    workflow.includes.insert(0, ('macOS-latest', current_xcode_version))
+    with open(workflow_path, 'w') as f:
+      f.write(str(workflow))
+
+    with open(readme_path) as f:
+        readme = Readme(f)
+    readme.max_xcode_version = current_xcode_version
+    with open(readme_path, 'w') as f:
+        f.write(str(readme))
