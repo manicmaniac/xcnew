@@ -611,7 +611,10 @@
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
-				OTHER_LDFLAGS = "$(OBJECT_FILE_DIR)-$(CURRENT_VARIANT)/../../xcnew.build/Objects-$(CURRENT_VARIANT)/$(CURRENT_ARCH)/xcnew_vers.o";
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"$(OBJECT_FILE_DIR)-$(CURRENT_VARIANT)/../../xcnew.build/Objects-$(CURRENT_VARIANT)/$(CURRENT_ARCH)/xcnew_vers.o",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.manicmaniac.xcnew-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -628,7 +631,10 @@
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
-				OTHER_LDFLAGS = "$(OBJECT_FILE_DIR)-$(CURRENT_VARIANT)/../../xcnew.build/Objects-$(CURRENT_VARIANT)/$(CURRENT_ARCH)/xcnew_vers.o";
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"$(OBJECT_FILE_DIR)-$(CURRENT_VARIANT)/../../xcnew.build/Objects-$(CURRENT_VARIANT)/$(CURRENT_ARCH)/xcnew_vers.o",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.manicmaniac.xcnew-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
