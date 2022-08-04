@@ -2,7 +2,7 @@ name: Update Xcode
 on: workflow_dispatch
 jobs:
   update-xcode:
-    runs-on: macOS-latest
+    runs-on: macOS-12
     permissions:
       contents: write
       pull-requests: write
@@ -12,7 +12,7 @@ jobs:
       id: setup-xcode
       with:
         xcode-version: latest-stable
-    - run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }}
+    - run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} ${{ jobs.update-xcode.runs-on }}
     - uses: peter-evans/create-pull-request@v4
       with:
         title: Support Xcode ${{ steps.setup-xcode.outputs.version }}
@@ -26,4 +26,4 @@ jobs:
         commit-message: |
           Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets
 
-          ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }}
+          ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} ${{ jobs.update-xcode.runs-on }}
