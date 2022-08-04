@@ -6,13 +6,14 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      workflows: write
     steps:
     - uses: actions/checkout@v3
     - uses: maxim-lobanov/setup-xcode@v1
       id: setup-xcode
       with:
         xcode-version: latest-stable
-    - run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} ${{ jobs.update-xcode.runs-on }}
+    - run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-12
     - uses: peter-evans/create-pull-request@v4
       with:
         title: Support Xcode ${{ steps.setup-xcode.outputs.version }}
@@ -26,4 +27,4 @@ jobs:
         commit-message: |
           Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets
 
-          ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} ${{ jobs.update-xcode.runs-on }}
+          ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-12
