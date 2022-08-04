@@ -53,9 +53,10 @@ class Readme(object):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print(f'usage: {sys.argv[0]} <XCODE_VERSION>')
+    if len(sys.argv) != 3:
+        print(f'usage: {sys.argv[0]} <XCODE_VERSION> <RUNNER>')
     current_xcode_version = sys.argv[1]
+    runner = sys.argv[2]
     workflow_path = '.github/workflows/test.yml'
     readme_path = 'README.md'
 
@@ -64,7 +65,7 @@ if __name__ == '__main__':
     if current_xcode_version in workflow.xcodes:
         sys.exit(0)
     workflow.xcodes.insert(0, current_xcode_version)
-    workflow.includes.insert(0, ('macOS-latest', current_xcode_version))
+    workflow.includes.insert(0, (runner, current_xcode_version))
     with open(workflow_path, 'w') as f:
       f.write(str(workflow))
 
