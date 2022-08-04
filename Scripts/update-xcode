@@ -63,7 +63,7 @@ if __name__ == '__main__':
     with open(workflow_path) as f:
         workflow = Workflow(f)
     if current_xcode_version in workflow.xcodes:
-        sys.exit(0)
+        sys.exit(1)
     workflow.xcodes.insert(0, current_xcode_version)
     workflow.includes.insert(0, (runner, current_xcode_version))
     with open(workflow_path, 'w') as f:
