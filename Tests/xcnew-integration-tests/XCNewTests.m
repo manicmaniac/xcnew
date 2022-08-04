@@ -23,36 +23,28 @@
 
 // MARK: Public
 
-- (void)setUp {
+- (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     _executableURL = [bundle URLForAuxiliaryExecutable:@"xcnew"];
     _sandboxProfileURL = [bundle URLForResource:@"xcnew-integration-tests" withExtension:@"sb"];
-    NSError *error;
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                   inDomain:NSUserDomainMask
                                          appropriateForURL:_fileManager.temporaryDirectory
                                                     create:YES
-                                                     error:&error];
+                                                     error:error];
     if (!_temporaryDirectoryURL) {
-        self.continueAfterFailure = NO;
-        return XCTFail(@"%@", error);
+        return NO;
     }
     _currentDirectoryURL = [_temporaryDirectoryURL URLByAppendingPathComponent:@"Current"];
-    if (![_fileManager createDirectoryAtURL:_currentDirectoryURL
-                withIntermediateDirectories:NO
-                                 attributes:nil
-                                      error:&error]) {
-        self.continueAfterFailure = NO;
-        return XCTFail(@"%@", error);
-    }
+    return [_fileManager createDirectoryAtURL:_currentDirectoryURL
+                  withIntermediateDirectories:NO
+                                   attributes:nil
+                                        error:error];
 }
 
-- (void)tearDown {
-    NSError *error;
-    if (![_fileManager removeItemAtURL:_temporaryDirectoryURL error:&error]) {
-        XCTFail(@"%@", error);
-    }
+- (BOOL)tearDownWithError:(NSError *__autoreleasing _Nullable *)error {
+    return [_fileManager removeItemAtURL:_temporaryDirectoryURL error:error];
 }
 
 - (void)testRunWithNoArguments {
@@ -96,11 +88,9 @@
     NSArray *arguments = @[ productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/default" : @"Fixtures/default@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/default");
 }
 
-#if XCN_TEST_OPTION_IS_UNIFIED
 - (void)testExecuteWithTests {
     NSString *outputString, *errorString;
     NSString *productName = @"Example";
@@ -110,27 +100,6 @@
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/tests" : @"Fixtures/tests@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
-#else
-- (void)testExecuteWithUnitTests {
-    NSString *outputString, *errorString;
-    NSString *productName = @"Example";
-    NSArray *arguments = @[ @"-t", productName ];
-    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
-    XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/unit-tests" : @"Fixtures/unit-tests@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
-}
-
-- (void)testExecuteWithUITests {
-    NSString *outputString, *errorString;
-    NSString *productName = @"Example";
-    NSArray *arguments = @[ @"-u", productName ];
-    XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
-    XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/ui-tests" : @"Fixtures/ui-tests@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
-}
-#endif // XCN_TEST_OPTION_IS_UNIFIED
 
 - (void)testExecuteWithCoreData {
     NSString *outputString, *errorString;
@@ -138,11 +107,9 @@
     NSArray *arguments = @[ @"-c", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/core-data" : @"Fixtures/core-data@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/core-data");
 }
 
-#if XCN_CLOUD_KIT_IS_AVAILABLE
 - (void)testExecuteWithCloudKit {
     NSString *outputString, *errorString;
     NSString *productName = @"Example";
@@ -151,7 +118,6 @@
     XCTAssertEqualObjects(outputString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/cloud-kit");
 }
-#endif // XCN_CLOUD_KIT_IS_AVAILABLE
 
 - (void)testExecuteWithObjectiveC {
     NSString *outputString, *errorString;
@@ -159,11 +125,9 @@
     NSArray *arguments = @[ @"-o", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1100 ? @"Fixtures/objective-c" : @"Fixtures/objective-c@xcode10");
-    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
+    XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/objective-c");
 }
 
-#if XCN_SWIFT_UI_IS_AVAILABLE
 - (void)testExecuteWithSwiftUI {
     NSString *outputString, *errorString;
     NSString *productName = @"Example";
@@ -172,9 +136,7 @@
     XCTAssertEqualObjects(outputString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui");
 }
-#endif // XCN_SWIFT_UI_IS_AVAILABLE
 
-#if XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 - (void)testExecuteWithSwiftUILifecycle {
     NSString *outputString, *errorString;
     NSString *productName = @"Example";
@@ -184,7 +146,6 @@
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/swift-ui-lifecycle" : @"Fixtures/swift-ui-lifecycle@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
-#endif // XCN_SWIFT_UI_LIFECYCLE_IS_AVAILABLE
 
 // MARK: Private
 

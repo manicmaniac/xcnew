@@ -6,10 +6,6 @@
 //  Copyright © 2021 Ryosuke Ito. All rights reserved.
 //
 
-// getopt_long(3) included in Xcode 11 or less seems not reentrant even though it exports optreset.
-// To make another executable to test the parser behavior is a possible option but too much.
-#if XCODE_VERSION_MAJOR >= 0x1200
-
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
 #import "XCNAppLifecycle.h"
@@ -61,18 +57,6 @@ static NSArray<NSInvocation *> *_testInvocations;
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
                                   XCTAssertNil(result);
                                   XCTAssertTrue([output containsString:version]);
-                                  XCTAssertNil(error);
-                              }],
-            [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"Example" ]
-                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
-                                  XCTAssertEqualObjects(output, @"");
-                                  XCTAssertNil(error);
-                              }],
-            [self invocationWithArguments:@[ @"xcnew", @"--organization-name", @"Organization", @"Example" ]
-                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
-                                  XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],
             [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"Example" ]
@@ -189,23 +173,23 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
                               }],
             // Reverse-ordered options
-            [self invocationWithArguments:@[ @"xcnew", @"Example", @"-n", @"Organization" ]
+            [self invocationWithArguments:@[ @"xcnew", @"Example", @"-i", @"com.github.manicmaniac" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],
             // Long options joined by a equal sign
-            [self invocationWithArguments:@[ @"xcnew", @"--organization-name=Organization", @"Example" ]
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier=com.github.manicmaniac", @"Example" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],
             // GNU-style option terminator
-            [self invocationWithArguments:@[ @"xcnew", @"-n", @"Organization", @"--", @"Example" ]
+            [self invocationWithArguments:@[ @"xcnew", @"-i", @"com.github.manicmaniac", @"--", @"Example" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertEqualObjects(result.project.organizationName, @"Organization");
+                                  XCTAssertEqualObjects(result.project.organizationIdentifier, @"com.github.manicmaniac");
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertNil(error);
                               }],
@@ -328,5 +312,3 @@ static NSArray<NSInvocation *> *_testInvocations;
 }
 
 @end
-
-#endif // XCODE_VERSION_MAJOR >= 0x1200

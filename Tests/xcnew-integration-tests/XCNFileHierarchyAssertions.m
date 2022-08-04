@@ -75,7 +75,6 @@ static NSURL *XCNFindFileHierarchySpecificationURLWithName(XCTestCase *testCase,
 }
 
 static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line, NSError *error) {
-#if XCODE_VERSION_MAJOR >= 0x1200
     XCTSourceCodeLocation *location = [[XCTSourceCodeLocation alloc] initWithFilePath:file lineNumber:line];
     XCTSourceCodeContext *context = [[XCTSourceCodeContext alloc] initWithLocation:location];
     XCTIssue *issue = [[XCTIssue alloc] initWithType:XCTIssueTypeThrownError
@@ -85,10 +84,4 @@ static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSStri
                                      associatedError:error
                                          attachments:@[]];
     [testCase recordIssue:issue];
-#else
-    [testCase recordFailureWithDescription:description
-                                    inFile:file
-                                    atLine:line
-                                  expected:!error];
-#endif
 }

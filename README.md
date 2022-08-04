@@ -3,7 +3,7 @@ xcnew
 
 [![GitHub Actions](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml/badge.svg)](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml)
 [![Travis CI](https://travis-ci.com/manicmaniac/xcnew.svg?branch=master)](https://travis-ci.com/manicmaniac/xcnew)
-[![Xcode](https://img.shields.io/badge/xcode-10%20%7C%2011%20%7C%2012%20%7C%2013-blue)](https://github.com/manicmaniac/xcnew#supported-xcode-versions)
+[![Xcode](https://img.shields.io/badge/xcode-12%20%7C%2013-blue)](https://github.com/manicmaniac/xcnew#supported-xcode-versions)
 
 A command line interface to make a project for iOS Single View App.
 
@@ -33,7 +33,6 @@ Usage
     Options:
         -h, --help                     Show help and exit
         -v, --version                  Show version and exit
-        -n, --organization-name        Specify organization's name
         -i, --organization-identifier  Specify organization's identifier
         -t, --has-tests                [Only appears in Xcode >= 12] Enable unit and UI tests
         -t, --has-unit-tests           [Only appears in Xcode < 12] Enable unit tests
@@ -51,7 +50,7 @@ Usage
 Supported Xcode versions
 ------------------------
 
-`Xcode >= 10.1 && Xcode <= 13.2.1`.
+`Xcode >= 12.5 && Xcode <= 13.2.1`.
 
 How it works?
 -------------

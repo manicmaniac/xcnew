@@ -128,10 +128,9 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
     DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
-    NSString *singleViewAppTemplateName = (XCODE_VERSION_MAJOR >= 0x1200) ? @"App" : @"Single View App";
     for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
         if (!_template.hiddenFromChooser &&
-            [_template.templateName isEqualToString:singleViewAppTemplateName] &&
+            [_template.templateName isEqualToString:@"App"] &&
             [_template.templatePlatforms containsObject:iPhoneOSPlatform]) {
             return _template;
         }
@@ -147,19 +146,10 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = NSStringFromXCNLanguage(_language);
         } else if ([identifier isEqualToString:@"productName"]) {
             option.value = _productName;
-        } else if ([identifier isEqualToString:@"organizationName"]) {
-            option.value = _organizationName;
         } else if ([identifier isEqualToString:@"bundleIdentifierPrefix"]) {
             option.value = _organizationIdentifier;
-#if XCN_TEST_OPTION_IS_UNIFIED
         } else if ([identifier isEqualToString:@"hasUnitAndUITests"]) {
             option.booleanValue = ((_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests) && ((_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests);
-#else
-        } else if ([identifier isEqualToString:@"hasUnitTests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUnitTests) == XCNProjectFeatureUnitTests;
-        } else if ([identifier isEqualToString:@"hasUITests"]) {
-            option.booleanValue = (_feature & XCNProjectFeatureUITests) == XCNProjectFeatureUITests;
-#endif
         } else if ([identifier isEqualToString:@"coreData"]) {
             option.booleanValue = (_feature & XCNProjectFeatureCoreData) == XCNProjectFeatureCoreData;
         } else if ([identifier isEqualToString:@"coreDataCloudKit"]) {

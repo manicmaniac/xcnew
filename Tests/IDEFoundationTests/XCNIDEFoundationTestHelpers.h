@@ -15,6 +15,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 OBJC_EXPORT NSString *const XCNXcode3ProjectTemplateKindIdentifier;
 
-OBJC_EXPORT void XCNInitializeIDEOrFailTestCase(XCTestCase *testCase);
-
 NS_ASSUME_NONNULL_END

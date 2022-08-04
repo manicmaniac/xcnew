@@ -17,25 +17,18 @@
     NSURL *_temporaryDirectoryURL;
 }
 
-- (void)setUp {
+- (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
-    NSError *error;
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                   inDomain:NSUserDomainMask
                                          appropriateForURL:_fileManager.temporaryDirectory
                                                     create:YES
-                                                     error:&error];
-    if (!_temporaryDirectoryURL) {
-        self.continueAfterFailure = NO;
-        XCTFail(@"%@", error);
-    }
+                                                     error:error];
+    return !!_temporaryDirectoryURL;
 }
 
-- (void)tearDown {
-    NSError *error;
-    if (![_fileManager removeItemAtURL:_temporaryDirectoryURL error:&error]) {
-        XCTFail(@"%@", error);
-    }
+- (BOOL)tearDownWithError:(NSError *__autoreleasing _Nullable *)error {
+    return [_fileManager removeItemAtURL:_temporaryDirectoryURL error:error];
 }
 
 - (void)testRemoveAssociatesWithRole {
