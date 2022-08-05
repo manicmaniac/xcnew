@@ -97,11 +97,7 @@
     NSArray *arguments = @[ @"-t", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-#if XCODE_VERSION_MAJOR >= 0x1300
-    NSString *specificationName = @"Fixtures/tests";
-#else
-    NSString *specificationName = @"Fixtures/tests@xcode12";
-#endif
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/tests" : @"Fixtures/tests@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
@@ -147,11 +143,7 @@
     NSArray *arguments = @[ @"-S", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
-#if XCODE_VERSION_MAJOR >= 0x1300
-    NSString *specificationName = @"Fixtures/swift-ui-lifecycle";
-#else
-    NSString *specificationName = @"Fixtures/swift-ui-lifecycle@xcode12";
-#endif
+    NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/swift-ui-lifecycle" : @"Fixtures/swift-ui-lifecycle@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
 
