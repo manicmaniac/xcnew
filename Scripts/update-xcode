@@ -4,6 +4,7 @@ import json
 import re
 import subprocess
 import sys
+from urllib.parse import quote, unquote
 
 class Workflow(object):
     _xcodes_re = re.compile(r'xcode: (\[.*\])$')
@@ -39,18 +40,31 @@ class Workflow(object):
 
 
 class Readme(object):
+    _badge_re = re.compile(r'xcode-(.*)-blue')
     _max_xcode_version_re = re.compile(r'Xcode <= (\d+(\.\d+){0,2})')
 
     def __init__(self, f):
-        self.contents = f.read()
-        matched = self._max_xcode_version_re.search(self.contents)
-        if not matched:
+        for line in f:
+            matched = self._badge_re.search(line)
+            if matched:
+                captured = matched.group(1)
+                self.badge_versions = set(unquote(captured).split(' | '))
+            matched = self._max_xcode_version_re.search(line)
+            if matched:
+                self.max_xcode_version = matched.group(1)
+                break
+        else:
             raise RuntimeError(f'Does not contain Xcode version string')
-        self.max_xcode_version = matched.group(1)
+        f.seek(0)
+        self.contents = f.read()
 
     def __str__(self):
-        return self._max_xcode_version_re.sub(
+        contents = self._max_xcode_version_re.sub(
                 f'Xcode <= {self.max_xcode_version}', self.contents)
+        quoted_versions = quote(' | ').join(sorted(self.badge_versions))
+        contents = self._badge_re.sub(
+                f'xcode-{quoted_versions}-blue', contents)
+        return contents
 
 
 def unifdef_source_files(xcode_version):
@@ -86,6 +100,7 @@ if __name__ == '__main__':
 
     with open(readme_path) as f:
         readme = Readme(f)
+    readme.badge_versions.add(current_xcode_version.split('.')[0])
     readme.max_xcode_version = current_xcode_version
     with open(readme_path, 'w') as f:
         f.write(str(readme))
