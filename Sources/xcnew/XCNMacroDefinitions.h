@@ -18,6 +18,8 @@
 // Since some versions of Xcode has an invalid octal version number like 0900 and it causes a compilation error,
 // I added prefix `0x` to the actual XCODE_VERSION_MAJOR build variable.
 // See also `Preprocessor Macros` section in the project's build settings.
-#define XCN_INFOPLIST_GENERATION_IS_AVAILABLE (XCODE_VERSION_MAJOR >= 0x1300)
+#if XCODE_VERSION_MAJOR >= 0x1300
+#define XCN_INFOPLIST_GENERATION_IS_AVAILABLE
+#endif
 
 #endif /* XCNMacroDefinions_h */
