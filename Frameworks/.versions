@@ -1,7 +1,7 @@
 + xcodebuild -version
-Xcode 13.3.1
-Build version 13E500a
+Xcode 13.4.1
+Build version 13F100
 + class-dump --version
-class-dump 3.5-0.1.1 (64 bit) (forked by @manicmaniac) compiled Aug  4 2022 13:22:21
+class-dump 3.5-0.1.1 (64 bit) (forked by @manicmaniac) compiled Aug  5 2022 02:36:07
 + clang-format --version
-clang-format version 11.1.0
+clang-format version 14.0.6
