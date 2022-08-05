@@ -96,7 +96,7 @@
 		5BC9EE2322FDF76100D67BD1 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
-			dstPath = /share/man/man1;
+			dstPath = "$(INSTALL_PATH)/../share/man/man1";
 			dstSubfolderSpec = 0;
 			files = (
 				5BD3D460289B1C2C00BDB452 /* xcnew.mxml in Copy Files */,
