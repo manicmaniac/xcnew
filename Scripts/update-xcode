@@ -2,6 +2,7 @@
 
 import json
 import re
+import subprocess
 import sys
 
 class Workflow(object):
@@ -52,6 +53,20 @@ class Readme(object):
                 f'Xcode <= {self.max_xcode_version}', self.contents)
 
 
+def unifdef_source_files(xcode_version):
+    major = xcode_version.split('.')[0]
+    args = [
+        'find', '.',
+        '-type', 'f',
+        '-name', '*.[hm]',
+        '-exec', 'unifdef',
+        f'-DXCODE_VERSION_MAJOR=0x{major}00',
+        '-o', '{}',
+        '{}', ';'
+    ]
+    subprocess.check_call(args)
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print(f'usage: {sys.argv[0]} <XCODE_VERSION> <RUNNER>')
@@ -74,3 +89,5 @@ if __name__ == '__main__':
     readme.max_xcode_version = current_xcode_version
     with open(readme_path, 'w') as f:
         f.write(str(readme))
+
+    unifdef_source_files(current_xcode_version)
