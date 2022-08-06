@@ -25,6 +25,7 @@ If you prefer, you can change the base path to install with `PREFIX` environment
 Usage
 -----
 
+<!-- xml2c:start -->
     xcnew - A command line tool to create Xcode project.
     
     Usage: xcnew [-h|-v] [-n ORG_NAME] [-i ORG_ID] [-tucos] <PRODUCT_NAME> [OUTPUT_DIR]
@@ -43,6 +44,7 @@ Usage
     Arguments:
         <PRODUCT_NAME>                 Required TARGET_NAME of project.pbxproj
         [OUTPUT_DIR]                   Optional directory name of the project
+<!-- xml2c:end -->
 
 Supported Xcode versions
 ------------------------
