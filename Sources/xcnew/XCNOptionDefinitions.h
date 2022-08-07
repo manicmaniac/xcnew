@@ -9,8 +9,8 @@
 #ifndef XCNOptionDefintions_h
 #define XCNOptionDefintions_h
 
-#import <objc/objc.h>
 #import <getopt.h>
+#import <objc/objc.h>
 
 OBJC_EXPORT const char XCNHelp[];
 OBJC_EXPORT const char XCNShortOptions[];
