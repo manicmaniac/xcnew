@@ -2,9 +2,7 @@
 
 import argparse
 import collections
-import functools
 import io
-import shutil
 import textwrap
 import xml.etree.ElementTree as etree
 
@@ -16,6 +14,8 @@ Arg = collections.namedtuple('Option', 'name required help')
 class Mdoc(object):
     def __init__(self, f):
         self.manpage = etree.parse(f).getroot()
+        self.options = self._parse_options()
+        self.args = self._parse_args()
 
     @property
     def prog(self):
@@ -25,37 +25,28 @@ class Mdoc(object):
     def desc(self):
         return self.manpage.find('names/name/desc').text
 
-    @property
-    @functools.lru_cache
-    def options(self):
+    def _parse_options(self):
         options = []
         for node in self.manpage.findall('usage/flag'):
-            short = node.text
-            long = node.find('long').text
-            help = node.find('desc').text
             arg_node = node.find('arg')
             if arg_node is None:
                 nargs, dest = 0, ''
             else:
                 nargs, dest = 1, arg_node.text
-            # action = argparse.Action([f'-{short}', f'--{long}'], dest, nargs=nargs, help=help)
-            option = Option(short, long, dest, nargs, help)
-            options.append(option)
+            options.append(Option(
+                short=node.text,
+                long=node.find('long').text,
+                dest=dest,
+                nargs=nargs,
+                help=node.find('desc').text
+            ))
         return options
 
-    @property
-    @functools.lru_cache
-    def args(self):
-        args = []
-        for node in self.manpage.findall('usage/arg'):
-            name = node.text
-            required = (node.attrib.get('optional', '0') != '1')
-            nargs = int(required)
-            help = node.find('desc').text
-            # action = argparse.Action([], name, required=required, nargs=nargs, help=help)
-            arg = Arg(name, required, help)
-            args.append(arg)
-        return args
+    def _parse_args(self):
+        return [Arg(name=node.text,
+                    required=(node.attrib.get('optional', '0') != '1'),
+                    help=node.find('desc').text)
+                for node in self.manpage.findall('usage/arg')]
 
 
 class GetoptFormatter(object):
@@ -66,7 +57,15 @@ class GetoptFormatter(object):
         self.args = args
         self.prefix = prefix
 
-    def format_header(self):
+    def format_c_source(self):
+        return '\n'.join([
+            self._format_header(),
+            self._format_help(),
+            self._format_short_options(),
+            self._format_long_options()
+        ])
+
+    def _format_header(self):
         return textwrap.dedent("""\
             /*
              * This file is generated from {} with xml2c.
@@ -76,20 +75,22 @@ class GetoptFormatter(object):
             #include <getopt.h>
             """).format(self.path)
 
-    def format_help(self):
+    def _format_help(self):
+        decl = f'const char {self.prefix}Help[] = '
+        indent_width = len(decl)
         help_lines = self.help_formatter.format_help().splitlines()
         lines = []
         for i, line in enumerate(help_lines):
             if i == 0:
                 line = f'const char {self.prefix}Help[] = "{line}\\n"'
             elif i == len(help_lines) - 1:
-                line = '                           "{}";\n'.format(line)
+                line = ' ' * indent_width + f'"{line}";\n'
             else:
-                line = '                           "{}\\n"'.format(line)
+                line = ' ' * indent_width + f'"{line}\\n"'
             lines.append(line)
         return '\n'.join(lines)
 
-    def format_short_options(self):
+    def _format_short_options(self):
         chars = ''
         for option in self.options:
             chars += option.short
@@ -97,29 +98,26 @@ class GetoptFormatter(object):
                 chars += ':'
         return f'const char {self.prefix}ShortOptions[] = "{chars}";\n'
 
-    def format_long_options(self):
+    def _format_long_options(self):
         lines = [f'const struct option {self.prefix}LongOptions[] = {{']
         for option in self.options:
-            flag = 'no_argument' if option.nargs == 0 else 'required_argument'
-            lines.append(f"""    {{"{option.long}", {flag}, NULL, '{option.short}'}},""")
+            short = option.short
+            long = option.long
+            if option.nargs == 0:
+                flag = 'no_argument'
+            else:
+                flag = 'required_argument'
+            lines.append(f'    {{"{long}", {flag}, NULL, \'{short}\'}},')
         lines.append('    {NULL, 0, NULL, 0},')
         lines.append('};\n')
         return '\n'.join(lines)
-
-    def format_c_source(self):
-        return '\n'.join([
-            self.format_header(),
-            self.format_help(),
-            self.format_short_options(),
-            self.format_long_options()
-        ])
 
 
 class HelpFormatter(argparse.HelpFormatter):
     def __init__(self, prog, desc, options, args):
         super().__init__(prog, indent_increment=4, max_help_position=30)
-        options = [self.option_to_action(option) for option in options]
-        args = [self.arg_to_action(arg) for arg in args]
+        options = [self._option_to_action(option) for option in options]
+        args = [self._arg_to_action(arg) for arg in args]
         self.add_text(f'{self._prog} - {desc}\n')
         self.add_usage(None, options + args, [], prefix='Usage: ')
         self.start_section('Options')
@@ -129,18 +127,16 @@ class HelpFormatter(argparse.HelpFormatter):
         self.add_arguments(args)
         self.end_section()
 
-    def format_help(self):
-        return super().format_help()
-
     @staticmethod
-    def option_to_action(option):
+    def _option_to_action(option):
         return argparse.Action(['-' + option.short, '--' + option.long],
                                option.dest, nargs=option.nargs,
                                help=option.help)
 
     @staticmethod
-    def arg_to_action(arg):
-        return argparse.Action([], arg.name, nargs=int(arg.required), required=arg.required, help=arg.help)
+    def _arg_to_action(arg):
+        return argparse.Action([], arg.name, nargs=int(arg.required),
+                               required=arg.required, help=arg.help)
 
     def _format_actions_usage(self, actions, _groups):
         args = []
@@ -155,14 +151,16 @@ class HelpFormatter(argparse.HelpFormatter):
                 exits.append(action.format_usage()[1:])
             elif action.nargs and action.nargs != 0:
                 get_metavar = self._get_default_metavar_for_optional
-                options.append('{} {}'.format(action.format_usage(),
-                                              get_metavar(action)))
+                short = action.format_usage()
+                metavar = get_metavar(action)
+                options.append(f'{short} {metavar}')
             else:
                 switches += action.format_usage()[1:]
         args = ' '.join(args)
-        exits = '[-{}]'.format('|'.join(exits))
+        exit_contents = '|'.join(exits)
+        exits = f'[-{exit_contents}]'
         options = ' '.join(options)
-        switches = '[-{}]'.format(switches)
+        switches = f'[-{switches}]'
         return ' '.join([exits, options, switches, args])
 
     def _get_default_metavar_for_optional(self, action):
@@ -178,7 +176,8 @@ if __name__ == '__main__':
     parser.add_argument('-H', '--help-only', action='store_true',
             help='Generate only help text')
     parser.add_argument('-i', '--inject', action='store_true',
-            help='Edit file inplace; Lines between xml2c:start and xml2c:end will be modified')
+            help='Edit file inplace; ' +
+                 'Lines between xml2c:start and xml2c:end will be modified')
     parser.add_argument('-I', '--indent', type=int, default=0, metavar='WIDTH',
             help='Specify output indent width')
     parser.add_argument('-p', '--prefix', default='',
@@ -190,10 +189,12 @@ if __name__ == '__main__':
     with open(args.INPUT) as f:
         mdoc = Mdoc(f)
     if args.help_only:
-        formatter = HelpFormatter(mdoc.prog, mdoc.desc, mdoc.options, mdoc.args)
+        formatter = HelpFormatter(mdoc.prog, mdoc.desc, mdoc.options,
+                                  mdoc.args)
         text = formatter.format_help()
     else:
-        formatter = GetoptFormatter(args.INPUT, mdoc.prog, mdoc.desc, mdoc.options, mdoc.args, args.prefix)
+        formatter = GetoptFormatter(args.INPUT, mdoc.prog, mdoc.desc,
+                                    mdoc.options, mdoc.args, args.prefix)
         text = formatter.format_c_source()
     if args.inject:
         memory = io.StringIO()
@@ -210,7 +211,7 @@ if __name__ == '__main__':
                     memory.write(line)
         memory.seek(0)
         with open(args.OUTPUT, 'w') as f:
-            shutil.copyfileobj(memory, f)
+            f.write(memory.read())
     else:
         with open(args.OUTPUT, 'w+') as f:
             f.write(indent(text))
