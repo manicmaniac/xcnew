@@ -153,7 +153,7 @@ class HelpFormatter(argparse.HelpFormatter):
                 get_metavar = self._get_default_metavar_for_optional
                 short = action.format_usage()
                 metavar = get_metavar(action)
-                options.append(f'{short} {metavar}')
+                options.append(f'[{short} {metavar}]')
             else:
                 switches += action.format_usage()[1:]
         args = ' '.join(args)
