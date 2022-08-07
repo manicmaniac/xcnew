@@ -28,7 +28,7 @@ Usage
 <!-- xml2c:start -->
     xcnew - A command line interface to make a project for iOS Single View App.
 
-    Usage: xcnew [-h|v] -i <ORG_ID> [-tcCosS] <PRODUCT_NAME> [OUTPUT_DIR]
+    Usage: xcnew [-h|v] [-i <ORG_ID>] [-tcCosS] <PRODUCT_NAME> [OUTPUT_DIR]
 
     Options:
         -h, --help                Show help and exit

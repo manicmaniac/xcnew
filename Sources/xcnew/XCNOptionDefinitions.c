@@ -7,7 +7,7 @@
 
 const char XCNHelp[] = "xcnew - A command line interface to make a project for iOS Single View App.\n"
                        "\n"
-                       "Usage: xcnew [-h|v] -i <ORG_ID> [-tcCosS] <PRODUCT_NAME> [OUTPUT_DIR]\n"
+                       "Usage: xcnew [-h|v] [-i <ORG_ID>] [-tcCosS] <PRODUCT_NAME> [OUTPUT_DIR]\n"
                        "\n"
                        "Options:\n"
                        "    -h, --help                Show help and exit\n"
