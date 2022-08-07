@@ -1,1 +1,2 @@
 Tests/xcnew-integration-tests/xcnew-integration-tests.sb linguist-language=Scheme
+Sources/xcnew/XCNOptionDefinitions.c -diff linguist-generated

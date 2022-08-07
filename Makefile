@@ -1,4 +1,4 @@
-.PHONY: all install uninstall check clean distclean format
+.PHONY: all install uninstall check clean distclean format generate
 
 PREFIX = /usr/local
 BUILD_DIR = build
@@ -25,5 +25,13 @@ distclean: clean
 format:
 	find Sources Tests -type f -name '*.[hm]' -exec clang-format -i {} +
 
+generate: README.md Sources/xcnew/XCNOptionDefinitions.c
+
 $(EXECUTABLE):
 	$(XCODEBUILD) build
+
+README.md: Sources/xcnew/xcnew.mxml
+	./Scripts/xml2c -HiI4 $< $@
+
+Sources/xcnew/XCNOptionDefinitions.c: Sources/xcnew/xcnew.mxml
+	./Scripts/xml2c -p XCN $< $@
