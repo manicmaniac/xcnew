@@ -26,5 +26,6 @@ old_wd="$PWD"
     cd "$tempdir"
     productbuild \
         --distribution "${old_wd}/Package/Distribution.xml" \
+        --resources "${old_wd}/Package/Resources" \
         "${old_wd}/xcnew-${version}.pkg"
 )

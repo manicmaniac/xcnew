@@ -1,0 +1,13 @@
+本ソフトウェアをインストールする前に、Xcode コマンドラインツールのパスが正しく設定されているか確認してください。
+以下のコマンドで現在の Xcode コマンドラインツールのパスが確認できます。
+
+$ xcode-select --print-path
+
+パスが設定されていない場合は以下のコマンドで設定できます。
+
+$ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+
+このパッケージは以下のファイルを作成します:
+
+- xcnew 実行バイナリ /usr/local/bin/xcnew
+- xcnew オンラインマニュアル /usr/share/man/man1/xcnew.1

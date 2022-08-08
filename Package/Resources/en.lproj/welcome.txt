@@ -1,0 +1,14 @@
+Before installing this software, please make sure that path of Xcode command line tool is set correctly.
+
+You can check the current Xcode command line tool's path with the following command.
+
+$ xcode-select --print-path
+
+If the path is not set, you can set it with the following command.
+
+$ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+
+This package creates the following files:
+
+- xcnew executable binary to /usr/local/bin/xcnew
+- xcnew on-line manual to /usr/share/man/man1/xcnew.1
