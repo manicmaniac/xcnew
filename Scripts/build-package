@@ -5,15 +5,9 @@ set -ex
 destdir="$(mktemp -d)"
 trap "rm -Rf '$destdir'" EXIT
 
-# tempdir="$(mktemp -d)"
-# trap "rm -Rf '$tempdir'" EXIT
-tempdir=.
-
 version="$(agvtool vers -terse)"
 
 xcodebuild install -project xcnew.xcodeproj -scheme xcnew -configuration Release -quiet DSTROOT="$destdir" INSTALL_PATH='/usr/local/bin'
-
-find "$destdir"
 
 pkgbuild \
     --root "$destdir" \
@@ -21,12 +15,9 @@ pkgbuild \
     --version "$version" \
     --ownership recommended \
     --scripts Package/Scripts \
-    "${tempdir}/xcnew-component.pkg"
-
-pkgutil --payload-files "${tempdir}/xcnew-component.pkg"
+    xcnew.pkg
+trap 'rm -f xcnew.pkg' EXIT
 
 productbuild \
     --distribution Package/Distribution.xml \
-    xcnew.pkg
-
-pkgutil --payload-files xcnew.pkg
+    "xcnew-${version}.pkg"
