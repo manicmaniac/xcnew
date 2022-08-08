@@ -2,7 +2,6 @@
 <installer-gui-script minSpecVersion="2">
     <title>xcnew</title>
     <pkg-ref id="com.github.manicmaniac.xcnew"/>
-    <domains enable_anywhere="true" enable_currentUserHome="true" enable_localSystem="true"/>
     <options customize="allow" require-scripts="false" hostArchitectures="x86_64"/>
     <volume-check script="false">
         <allowed-os-versions>
