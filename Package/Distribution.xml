@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="1">
+    <title>xcnew</title>
     <pkg-ref id="com.github.manicmaniac.xcnew"/>
-    <options customize="never" require-scripts="false" hostArchitectures="x86_64,arm64"/>
+    <domains enable_anywhere="true" enable_currentUserHome="true" enable_localSystem="true"/>
+    <options customize="allow" require-scripts="false" hostArchitectures="x86_64"/>
+    <volume-check script="false">
+        <allowed-os-versions>
+            <os-version min="11"/>
+        </allowed-os-versions>
+        <required-bundles all="true">
+            <bundle id="com.apple.dt.Xcode" path="/Applications/Xcode.app" search="true" CFBundleShortVersionString="12.5"/>
+        </required-bundles>
+    </volume-check>
     <choices-outline>
         <line choice="default">
             <line choice="com.github.manicmaniac.xcnew"/>

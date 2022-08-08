@@ -15,16 +15,6 @@ xcodebuild install -project xcnew.xcodeproj -scheme xcnew -configuration Release
 
 find "$destdir"
 
-# productbuild \
-#     --root "$destdir" \
-#     --identifier com.github.manicmaniac.xcnew \
-#     --version "$version" \
-#     --product Package/Requirements.plist \
-#     --scripts Package/Scripts \
-#     xcnew.pkg
-# 
-# exit
-
 pkgbuild \
     --root "$destdir" \
     --identifier com.github.manicmaniac.xcnew \
@@ -35,16 +25,8 @@ pkgbuild \
 
 pkgutil --payload-files "${tempdir}/xcnew-component.pkg"
 
-# productbuild \
-#     --synthesize \
-#     --package "${tempdir}/xcnew-component.pkg" \
-#     Package/Distribution.xml
-
 productbuild \
     --distribution Package/Distribution.xml \
-    --product Package/Requirements.plist \
-    --package-path "${tempdir}/xcnew-component.pkg" \
     xcnew.pkg
-
 
 pkgutil --payload-files xcnew.pkg
