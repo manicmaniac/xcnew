@@ -2,7 +2,7 @@
 <installer-gui-script minSpecVersion="2">
     <title>xcnew</title>
     <pkg-ref id="com.github.manicmaniac.xcnew"/>
-    <options customize="allow" require-scripts="false" hostArchitectures="x86_64"/>
+    <options customize="never" require-scripts="false" hostArchitectures="x86_64"/>
     <volume-check script="false">
         <allowed-os-versions>
             <os-version min="11"/>
