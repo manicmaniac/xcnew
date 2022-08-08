@@ -10,7 +10,15 @@ mkdir "$dstroot"
 
 version="$(agvtool vers -terse)"
 
-xcodebuild install -project xcnew.xcodeproj -scheme xcnew -configuration Release -quiet BUILD_DIR="${tempdir}/build" DSTROOT="$dstroot" INSTALL_PATH='/usr/local/bin'
+xcodebuild install \
+    -project xcnew.xcodeproj \
+    -scheme xcnew \
+    -configuration Release \
+    -destination 'platform=macOS,arch=x86_64' \
+    -quiet \
+    BUILD_DIR="${tempdir}/build" \
+    DSTROOT="$dstroot" \
+    INSTALL_PATH='/usr/local/bin'
 
 pkgbuild \
     --root "$dstroot" \
