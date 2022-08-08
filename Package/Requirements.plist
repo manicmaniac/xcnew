@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>os</key>
+    <array>
+        <string>11</string>
+    </array>
+    <key>arch</key>
+    <array>
+        <string>x86_64</string>
+    </array>
+    <key>bundle</key>
+    <array>
+        <dict>
+            <key>id</key>
+            <string>com.apple.dt.Xcode</string>
+            <key>path</key>
+            <string>/Applications/Xcode.app</string>
+            <key>CFBundleShortVersionString</key>
+            <string>12.5</string>
+            <key>search</key>
+            <true/>
+        </dict>
+    </array>
+    <key>all-bundles</key>
+    <true/>
+    <key>home</key>
+    <true/>
+</dict>
+</plist>

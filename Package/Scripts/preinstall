@@ -1,0 +1,44 @@
+#!/bin/bash
+
+exec >/Users/rito/Projects/manicmaniac/xcnew/preinstall.log 2>&1
+pwd
+env
+
+set -ex
+
+get_developer_dir() {
+    developer_dir="$(xcode-select --print-path)"
+    if [ -z "$developer_dir" -o ! -d "$developer_dir/../Frameworks/IDEFoundation.framework" ]; then
+        developer_dir="$(guess_developer_dir)"
+    fi
+    echo "$developer_dir"
+}
+
+guess_developer_dir() {
+    if [ -d '/Applications/Xcode.app/Contents/Frameworks/IDEFoundation.framework' ]; then
+        echo '/Applications/Xcode.app/Contents/Developer'
+    else
+        echo "$(find_xcodes_with_version | sort -Vr | head -n 1 | cut -d ' ' -f 2)/Contents/Developer"
+    fi
+}
+
+find_xcodes_with_version() {
+    find /Applications -mindepth 1 -maxdepth 1 -type d -name '*Xcode*.app' -print0 \
+        | xargs -0 -I% -n1 sh -c 'plutil -extract CFBundleShortVersionString raw %/Contents/Info.plist; echo %' \
+        | xargs -n2
+}
+
+get_rpaths() {
+    xcrun otool -l "$1" | sed -ne '/cmd LC_RPATH/,/path /s/^ *path \(.*\) (offset [0-9]*)$/\1/p'
+}
+
+developer_dir="$(get_developer_dir)"
+if [ -z "$developer_dir" ]; then
+    exit 1
+fi
+
+for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
+do
+    new_rpath="${developer_dir}/${old_rpath##*/Contents/Developer/}"
+    install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
+done

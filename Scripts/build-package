@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -ex
+
+destdir="$(mktemp -d)"
+trap "rm -Rf '$destdir'" EXIT
+
+# tempdir="$(mktemp -d)"
+# trap "rm -Rf '$tempdir'" EXIT
+tempdir=.
+
+version="$(agvtool vers -terse)"
+
+xcodebuild install -project xcnew.xcodeproj -scheme xcnew -configuration Release -quiet DSTROOT="$destdir" INSTALL_PATH='/usr/local/bin'
+
+find "$destdir"
+
+# productbuild \
+#     --root "$destdir" \
+#     --identifier com.github.manicmaniac.xcnew \
+#     --version "$version" \
+#     --product Package/Requirements.plist \
+#     --scripts Package/Scripts \
+#     xcnew.pkg
+# 
+# exit
+
+pkgbuild \
+    --root "$destdir" \
+    --identifier com.github.manicmaniac.xcnew \
+    --version "$version" \
+    --ownership recommended \
+    --scripts Package/Scripts \
+    "${tempdir}/xcnew-component.pkg"
+
+pkgutil --payload-files "${tempdir}/xcnew-component.pkg"
+
+# productbuild \
+#     --synthesize \
+#     --package "${tempdir}/xcnew-component.pkg" \
+#     Package/Distribution.xml
+
+productbuild \
+    --distribution Package/Distribution.xml \
+    --product Package/Requirements.plist \
+    --package-path "${tempdir}/xcnew-component.pkg" \
+    xcnew.pkg
+
+
+pkgutil --payload-files xcnew.pkg
