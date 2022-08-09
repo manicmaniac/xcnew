@@ -110,6 +110,7 @@
 
 /* Begin PBXFileReference section */
 		5B13E06928A28335004E9B8E /* Package */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Package; sourceTree = "<group>"; };
+		5B13E06A28A28381004E9B8E /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		5B1F0F3922F7A2BA00A7AFFA /* xcnew-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNewTests.m; sourceTree = "<group>"; };
 		5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -151,15 +152,10 @@
 		5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNProjectTests.m; sourceTree = "<group>"; };
 		5B96C8AB26472813009C4C13 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
 		5B96C8AC26472813009C4C13 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
-		5B96C8AF26472827009C4C13 /* dump-private-headers */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "dump-private-headers"; sourceTree = "<group>"; };
 		5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTPlatformTests.m; sourceTree = "<group>"; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BD3D469289F054200BDB452 /* XCNOptionDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionDefinitions.h; sourceTree = "<group>"; };
 		5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XCNOptionDefinitions.c; sourceTree = "<group>"; };
-		5BD3D46D289F080C00BDB452 /* xml2c */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = xml2c; sourceTree = "<group>"; };
-		5BD3D46F289F8ED200BDB452 /* update-docdate */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "update-docdate"; sourceTree = "<group>"; };
-		5BD3D470289F8ED200BDB452 /* update-xcode */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "update-xcode"; sourceTree = "<group>"; };
-		5BD3D47D28A21B9000BDB452 /* build-package */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-package"; sourceTree = "<group>"; };
 		5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */ = {isa = PBXFileReference; lastKnownFileType = text; path = "xcnew-integration-tests.sb"; sourceTree = "<group>"; };
 		5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTFilePathTests.m; sourceTree = "<group>"; };
 		5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateKindTests.m; sourceTree = "<group>"; };
@@ -225,7 +221,7 @@
 				5B1F0F3A22F7A2BA00A7AFFA /* Tests */,
 				5B96C8A926472813009C4C13 /* Frameworks */,
 				5B13E06928A28335004E9B8E /* Package */,
-				5B96C8AE26472827009C4C13 /* Scripts */,
+				5B13E06A28A28381004E9B8E /* Scripts */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -314,18 +310,6 @@
 				5B96C8AC26472813009C4C13 /* DVTFoundation.framework */,
 			);
 			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		5B96C8AE26472827009C4C13 /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				5BD3D47D28A21B9000BDB452 /* build-package */,
-				5B96C8AF26472827009C4C13 /* dump-private-headers */,
-				5BD3D46F289F8ED200BDB452 /* update-docdate */,
-				5BD3D470289F8ED200BDB452 /* update-xcode */,
-				5BD3D46D289F080C00BDB452 /* xml2c */,
-			);
-			path = Scripts;
 			sourceTree = "<group>";
 		};
 		5BE75964260106D300DC1E89 /* DVTFoundationTests */ = {
