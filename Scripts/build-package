@@ -40,5 +40,5 @@ old_wd="$PWD"
     productbuild \
         --distribution "${old_wd}/Package/Distribution.xml" \
         --resources "${old_wd}/Package/Resources" \
-        "${old_wd}/xcnew-${version}.pkg"
+        "${old_wd}/xcnew.pkg"
 )
