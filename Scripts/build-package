@@ -3,7 +3,7 @@
 set -e
 
 tempdir="$(mktemp -d)"
-trap "rm -Rf '$tempdir'" EXIT
+trap 'rm -Rf "$tempdir"' EXIT
 
 dstroot="${tempdir}/dstroot"
 mkdir "$dstroot"

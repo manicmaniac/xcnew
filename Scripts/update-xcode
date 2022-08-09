@@ -5,6 +5,7 @@ import re
 import sys
 from urllib.parse import quote, unquote
 
+
 class Workflow(object):
     _xcodes_re = re.compile(r'xcode: (\[.*\])$')
     _indent_re = re.compile(r'^( *)')
@@ -81,7 +82,7 @@ if __name__ == '__main__':
     workflow.xcodes.insert(0, current_xcode_version)
     workflow.includes.insert(0, (runner, current_xcode_version))
     with open(workflow_path, 'w') as f:
-      f.write(str(workflow))
+        f.write(str(workflow))
 
     with open(readme_path) as f:
         readme = Readme(f)
