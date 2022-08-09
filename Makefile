@@ -1,4 +1,4 @@
-.PHONY: all install uninstall check clean distclean format generate
+.PHONY: all install uninstall check clean distclean format generate xcnew.pkg
 
 PREFIX = /usr/local
 BUILD_DIR = build
@@ -35,3 +35,6 @@ README.md: Sources/xcnew/xcnew.mxml
 
 Sources/xcnew/XCNOptionDefinitions.c: Sources/xcnew/xcnew.mxml
 	./Scripts/xml2c -p XCN $< $@
+
+xcnew.pkg:
+	./Scripts/build-package

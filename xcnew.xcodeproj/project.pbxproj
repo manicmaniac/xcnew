@@ -158,6 +158,7 @@
 		5BD3D46D289F080C00BDB452 /* xml2c */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = xml2c; sourceTree = "<group>"; };
 		5BD3D46F289F8ED200BDB452 /* update-docdate */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "update-docdate"; sourceTree = "<group>"; };
 		5BD3D470289F8ED200BDB452 /* update-xcode */ = {isa = PBXFileReference; explicitFileType = text.script.python; path = "update-xcode"; sourceTree = "<group>"; };
+		5BD3D47D28A21B9000BDB452 /* build-package */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-package"; sourceTree = "<group>"; };
 		5BDE4A912490D8BE00292480 /* xcnew-integration-tests.sb */ = {isa = PBXFileReference; lastKnownFileType = text; path = "xcnew-integration-tests.sb"; sourceTree = "<group>"; };
 		5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTFilePathTests.m; sourceTree = "<group>"; };
 		5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateKindTests.m; sourceTree = "<group>"; };
@@ -316,6 +317,7 @@
 		5B96C8AE26472827009C4C13 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				5BD3D47D28A21B9000BDB452 /* build-package */,
 				5B96C8AF26472827009C4C13 /* dump-private-headers */,
 				5BD3D46F289F8ED200BDB452 /* update-docdate */,
 				5BD3D470289F8ED200BDB452 /* update-xcode */,

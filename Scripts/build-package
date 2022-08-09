@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -e
+
+tempdir="$(mktemp -d)"
+trap "rm -Rf '$tempdir'" EXIT
+
+dstroot="${tempdir}/dstroot"
+mkdir "$dstroot"
+
+version="$(agvtool vers -terse)"
+
+xcodebuild install \
+    -project xcnew.xcodeproj \
+    -scheme xcnew \
+    -configuration Release \
+    -destination 'platform=macOS,arch=x86_64' \
+    -quiet \
+    BUILD_DIR="${tempdir}/build" \
+    DSTROOT="$dstroot"
+
+pkgbuild \
+    --root "$dstroot/bin" \
+    --identifier com.github.manicmaniac.xcnew \
+    --version "$version" \
+    --ownership recommended \
+    --scripts Package/Scripts \
+    "${tempdir}/xcnew.pkg"
+
+pkgbuild \
+    --root "$dstroot/share/man/man1" \
+    --identifier com.github.manicmaniac.xcnew.1 \
+    --version "$version" \
+    --ownership recommended \
+    "${tempdir}/xcnew.1.pkg"
+
+old_wd="$PWD"
+(
+    cd "$tempdir"
+    productbuild \
+        --distribution "${old_wd}/Package/Distribution.xml" \
+        --resources "${old_wd}/Package/Resources" \
+        "${old_wd}/xcnew.pkg"
+)

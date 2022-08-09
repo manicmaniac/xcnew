@@ -1,0 +1,20 @@
+#!/bin/bash
+
+is_developer_dir_in_xcode() {
+    [ "$(plutil -extract CFBundleIdentifier raw "${1}/../Info.plist")" = 'com.apple.dt.Xcode' ]
+}
+
+get_rpaths() {
+    xcrun otool -l "$1" | sed -ne '/cmd LC_RPATH/,/path /s/^ *path \(.*\) (offset [0-9]*)$/\1/p'
+}
+
+developer_dir="$(xcode-select --print-path)"
+if ! is_developer_dir_in_xcode "$developer_dir"; then
+    exit 1
+fi
+
+for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
+do
+    new_rpath="${developer_dir}/${old_rpath##*/Contents/Developer/}"
+    install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
+done
