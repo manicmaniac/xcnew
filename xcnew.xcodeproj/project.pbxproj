@@ -109,6 +109,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B13E06928A28335004E9B8E /* Package */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Package; sourceTree = "<group>"; };
 		5B1F0F3922F7A2BA00A7AFFA /* xcnew-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcnew-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1F0F3B22F7A2BA00A7AFFA /* XCNewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNewTests.m; sourceTree = "<group>"; };
 		5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -223,6 +224,7 @@
 				5B20A2F022F0BB0300EA7295 /* Sources */,
 				5B1F0F3A22F7A2BA00A7AFFA /* Tests */,
 				5B96C8A926472813009C4C13 /* Frameworks */,
+				5B13E06928A28335004E9B8E /* Package */,
 				5B96C8AE26472827009C4C13 /* Scripts */,
 				5B20A2EF22F0BB0300EA7295 /* Products */,
 			);
