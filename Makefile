@@ -1,4 +1,4 @@
-.PHONY: all install uninstall check clean distclean format generate xcnew.pkg
+.PHONY: all install uninstall check installcheck clean distclean format generate xcnew.pkg
 
 PREFIX = /usr/local
 BUILD_DIR = build
@@ -15,6 +15,10 @@ uninstall:
 
 check:
 	$(XCODEBUILD) test
+
+installcheck:
+	xcodebuild build -project xcnew.xcodeproj -target xcnew-integration-tests
+	env XCNEW_TEST_TARGET_EXECUTABLE_PATH=$(PREFIX)/bin/xcnew $(XCODEBUILD) test-without-building -only-testing xcnew-integration-tests/XCNewTests
 
 clean:
 	$(XCODEBUILD) clean

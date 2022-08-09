@@ -26,7 +26,12 @@
 - (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    _executableURL = [bundle URLForAuxiliaryExecutable:@"xcnew"];
+    NSString *executablePathFromEnvironment = NSProcessInfo.processInfo.environment[@"XCNEW_TEST_TARGET_EXECUTABLE_PATH"];
+    if (executablePathFromEnvironment) {
+        _executableURL = [NSURL fileURLWithPath:executablePathFromEnvironment];
+    } else {
+        _executableURL = [bundle URLForAuxiliaryExecutable:@"xcnew"];
+    }
     _sandboxProfileURL = [bundle URLForResource:@"xcnew-integration-tests" withExtension:@"sb"];
     _temporaryDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
                                                   inDomain:NSUserDomainMask

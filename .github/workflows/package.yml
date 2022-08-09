@@ -11,11 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: make xcnew.pkg
+    - name: Install package
+      run: sudo installer -pkg xcnew.pkg -target /
+    - name: Test installed package
+      run: make installcheck | xcpretty
+    - run: man -P cat 1 xcnew
     - uses: actions/upload-artifact@v3
       with:
         name: xcnew.pkg
         path: xcnew.pkg
-    - name: Install package
-      run: sudo installer -pkg xcnew.pkg -target /
-    - name: Check installed package
-      run: xcnew -h && man -P cat xcnew
