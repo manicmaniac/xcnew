@@ -31,3 +31,6 @@ DerivedData/
 
 ## LLVM raw profile data
 default.profraw
+
+## macOS packages
+*.pkg
