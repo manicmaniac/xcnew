@@ -174,18 +174,21 @@ class HelpFormatter(argparse.HelpFormatter):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-H', '--help-only', action='store_true',
-            help='Generate only help text')
+                        help='Generate only help text')
     parser.add_argument('-i', '--inject', action='store_true',
-            help='Edit file inplace; ' +
-                 'Lines between xml2c:start and xml2c:end will be modified')
+                        help='Edit file inplace; Lines between xml2c:start ' +
+                             'and xml2c:end will be modified')
     parser.add_argument('-I', '--indent', type=int, default=0, metavar='WIDTH',
-            help='Specify output indent width')
+                        help='Specify output indent width')
     parser.add_argument('-p', '--prefix', default='',
-            help='Specify prefix of C constant names')
+                        help='Specify prefix of C constant names')
     parser.add_argument('INPUT', help='Input .mxml file')
     parser.add_argument('OUTPUT', help='Output file')
     args = parser.parse_args()
-    indent = lambda text: textwrap.indent(text, ' ' * args.indent)
+
+    def indent(text):
+        return textwrap.indent(text, ' ' * args.indent)
+
     with open(args.INPUT) as f:
         mdoc = Mdoc(f)
     if args.help_only:

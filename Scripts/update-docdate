@@ -13,12 +13,14 @@ import re
 import sys
 
 
-_docdate_line_re = re.compile(r'^(?P<prefix>\s*<docdate>).*(?P<suffix></docdate>\s*)$')
+_docdate_line_re = re.compile(
+    r'^(?P<prefix>\s*<docdate>).*(?P<suffix></docdate>\s*)$')
 
 
 def substitute_docdate(new_docdate, lines):
     """
-    >>> for line in substitute_docdate('September 29, 2021', ['<docdate>Septempber 28, 2021</docdate>']):
+    >>> lines = ['<docdate>Septempber 28, 2021</docdate>']
+    >>> for line in substitute_docdate('September 29, 2021', lines):
     ...     print(line)
     <docdate>September 29, 2021</docdate>
     """
@@ -42,11 +44,15 @@ def _main(argv=sys.argv):
         return doctest.testmod()
     today = format_date(dt.date.today())
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument('-d', '--date', default=today, help='new date (default: {0})'.format(today))
-    parser.add_argument('-i', '--inplace', action='store_true', help='edit files in-place')
-    parser.add_argument('files', nargs='+', metavar='FILE', help='path to files to edit')
+    parser.add_argument('-d', '--date', default=today,
+                        help='new date (default: {0})'.format(today))
+    parser.add_argument('-i', '--inplace', action='store_true',
+                        help='edit files in-place')
+    parser.add_argument('files', nargs='+', metavar='FILE',
+                        help='path to files to edit')
     args = parser.parse_args(argv[1:])
-    for line in substitute_docdate(args.date, fileinput.input(files=args.files, inplace=args.inplace)):
+    file_input = fileinput.input(files=args.files, inplace=args.inplace)
+    for line in substitute_docdate(args.date, file_input):
         sys.stdout.write(line)
 
 
