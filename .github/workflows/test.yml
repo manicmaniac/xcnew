@@ -31,3 +31,19 @@ jobs:
         run: make check | xcpretty
       - name: Install
         run: make install | xcpretty
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      id: install-dependencies
+      run: sudo apt install -y clang-format-12 flake8 shellcheck
+    - name: Lint Objective-C files
+      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
+      run: git ls-files -z '*.[hm]' | xargs -0 clang-format --dry-run
+    - name: Lint Python files
+      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
+      run: git grep -z --name-only --extended-regexp '^#!/.*python3?$' | xargs -0 flake8
+    - name: Lint Shell Script files
+      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
+      run: git grep -z --name-only --extended-regexp '^#!/bin/(ba)?sh$' | xargs -0 shellcheck
