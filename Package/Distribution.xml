@@ -2,8 +2,10 @@
 <installer-gui-script minSpecVersion="2">
     <title>xcnew</title>
     <welcome file="welcome.txt" mime-type="text/plain"/>
-    <pkg-ref id="com.github.manicmaniac.xcnew"/>
-    <options customize="never" require-scripts="false" hostArchitectures="x86_64"/>
+    <pkg-ref id="com.github.manicmaniac.xcnew">xcnew.pkg</pkg-ref>
+    <pkg-ref id="com.github.manicmaniac.xcnew.1">xcnew.1.pkg</pkg-ref>
+    <options customize="allow" require-scripts="false" hostArchitectures="x86_64"/>
+    <domains enable_anywhere="true" enable_currentUserHome="true" enable_localSystem="true"/>
     <volume-check script="false">
         <allowed-os-versions>
             <os-version min="11"/>
@@ -13,13 +15,13 @@
         </required-bundles>
     </volume-check>
     <choices-outline>
-        <line choice="default">
-            <line choice="com.github.manicmaniac.xcnew"/>
-        </line>
+        <line choice="com.github.manicmaniac.xcnew"/>
+        <line choice="com.github.manicmaniac.xcnew.1"/>
     </choices-outline>
-    <choice id="default"/>
-    <choice id="com.github.manicmaniac.xcnew" visible="false">
+    <choice id="com.github.manicmaniac.xcnew" title="xcnew" customLocation="/usr/local/bin">
         <pkg-ref id="com.github.manicmaniac.xcnew"/>
     </choice>
-    <pkg-ref id="com.github.manicmaniac.xcnew">xcnew.pkg</pkg-ref>
+    <choice id="com.github.manicmaniac.xcnew.1" title="xcnew.1" customLocation="/usr/local/share/man/man1">
+        <pkg-ref id="com.github.manicmaniac.xcnew.1"/>
+    </choice>
 </installer-gui-script>

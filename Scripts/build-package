@@ -17,17 +17,22 @@ xcodebuild install \
     -destination 'platform=macOS,arch=x86_64' \
     -quiet \
     BUILD_DIR="${tempdir}/build" \
-    DSTROOT="$dstroot" \
-    INSTALL_PATH='/usr/local/bin'
+    DSTROOT="$dstroot"
 
 pkgbuild \
-    --root "$dstroot" \
+    --root "$dstroot/bin" \
     --identifier com.github.manicmaniac.xcnew \
     --version "$version" \
     --ownership recommended \
     --scripts Package/Scripts \
     "${tempdir}/xcnew.pkg"
-trap "rm -f '${tempdir}/xcnew.pkg'" EXIT
+
+pkgbuild \
+    --root "$dstroot/share/man/man1" \
+    --identifier com.github.manicmaniac.xcnew.1 \
+    --version "$version" \
+    --ownership recommended \
+    "${tempdir}/xcnew.1.pkg"
 
 old_wd="$PWD"
 (
