@@ -1,5 +1,8 @@
 name: Package
-on: workflow_dispatch
+on:
+  push:
+    tags:
+      - '\d+\.\d+\.\d+'
 jobs:
   package:
     runs-on: macOS-12
@@ -16,7 +19,14 @@ jobs:
     - name: Test installed package
       run: make installcheck | xcpretty
     - run: man -P cat 1 xcnew
-    - uses: actions/upload-artifact@v3
+    - uses: actions/create-release@v1
+      id: create-release
       with:
-        name: xcnew.pkg
-        path: xcnew.pkg
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+    - uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_name: xcnew.pkg
+        asset_path: xcnew.pkg
+        asset_content_type: application/x-xar
