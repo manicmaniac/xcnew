@@ -2,7 +2,7 @@ name: Package
 on:
   push:
     tags:
-      - '\d+\.\d+\.\d+'
+    - '*'
 jobs:
   package:
     runs-on: macOS-12
