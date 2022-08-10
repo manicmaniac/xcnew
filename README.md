@@ -9,18 +9,46 @@ A command line interface to make a project for iOS Single View App.
 Install
 -------
 
-You can install `xcnew` via [Homebrew](https://brew.sh).
+### Homebrew
 
     brew install manicmaniac/tap/xcnew
 
-Otherwise good old `make install` creates `/usr/local/bin/xcnew` command.
-You may need to use `sudo` to run `make install`.
+### MacPorts
 
-    make install
+Firstly you need to setup local repository.
 
-If you prefer, you can change the base path to install with `PREFIX` environment variable.
+    git clone https://github.com/manicmaniac/ports.git
 
-    PREFIX=~/bin make install
+Then add the repository to MacPorts sources.
+
+    sudo ruby -pi -e 'puts "file://#{Dir.pwd}/ports" if /^rsync:/' /opt/local/etc/macports/sources.conf
+
+Now you can install xcnew from ports.
+
+    sudo port install xcnew
+
+### Install from binary package
+
+Make sure you set a developer directory to Xcode.
+
+    sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+Then download the latest package.
+
+    curl -LO https://github.com/manicmaniac/releases/latest/download/xcnew.pkg
+
+And install it to `/usr/local/bin/xcnew`.
+
+    sudo installer -pkg xcnew.pkg -target /
+
+### Install from source
+
+    git clone https://github.com/manicmaniac/xcnew.git
+    sudo make -C xcnew install
+
+You can change the install location by setting `$PREFIX` environment variable.
+
+    sudo make -C xcnew install PREFIX="/opt/local"
 
 Usage
 -----
