@@ -21,5 +21,9 @@ jobs:
     - run: man -P cat 1 xcnew
     - name: Create release
       run: gh release create '${{ github.ref }}' --generate-notes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload release asset
       run: gh release upload '${{ github.ref }}' xcnew.pkg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
