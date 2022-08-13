@@ -17,6 +17,9 @@
     NSFileManager *_fileManager;
 }
 
+static NSBundle *_dvtFoundation;
+static NSBundle *_ideFoundation;
+
 // MARK: Public
 
 - (instancetype)initWithProductName:(NSString *)productName {
@@ -44,14 +47,14 @@
         }
         return NO;
     }
-    IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
+    IDETemplateKind *kind = [[_ideFoundation classNamed:@"IDETemplateKind"] templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
             *error = XCNErrorTemplateKindNotFoundWithIdentifier(kXcode3ProjectTemplateKindIdentifier);
         }
         return NO;
     }
-    IDETemplateFactory *factory = kind.factory;
+    IDETemplateFactory *factory = [kind factory];
     if (!factory) {
         if (error) {
             *error = XCNErrorTemplateFactoryNotFoundWithKindIdentifier(kXcode3ProjectTemplateKindIdentifier);
@@ -65,10 +68,10 @@
         }
         return NO;
     }
-    [self configureTemplateOptions:template.templateOptions];
+    [self configureTemplateOptions:[template templateOptions]];
     IDETemplateInstantiationContext *context = [kind newTemplateInstantiationContext];
-    context.documentTemplate = template;
-    context.documentFilePath = [DVTFilePath filePathForFileURL:url];
+    [context setDocumentTemplate:template];
+    [context setDocumentFilePath:[[_dvtFoundation classNamed:@"DVTFilePath"] filePathForFileURL:url]];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     __block NSError *instantiationError;
     [factory instantiateTemplateForContext:context
@@ -122,13 +125,21 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 
 + (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *_Nullable)error {
     @synchronized(self) {
-        return IDEInitializationCompleted(NULL) || IDEInitialize(1, error);
+        CFBundleRef ideFoundationCFBundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.dt.IDEFoundation"));
+        BOOL (*IDEInitializationCompleted)(void *) = CFBundleGetFunctionPointerForName(ideFoundationCFBundle, CFSTR("IDEInitializationCompleted"));
+        if (IDEInitializationCompleted(NULL)) {
+            return YES;
+        }
+        _ideFoundation = [NSBundle bundleWithIdentifier:@"com.apple.dt.IDEFoundation"];
+        _dvtFoundation = [NSBundle bundleWithIdentifier:@"com.apple.dt.DVTFoundation"];
+        BOOL (*IDEInitialize)(int, NSError **) = CFBundleGetFunctionPointerForName(ideFoundationCFBundle, CFSTR("IDEInitialize"));
+        return IDEInitialize(1, error);
     }
 }
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
-    DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
-    for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
+    DVTPlatform *iPhoneOSPlatform = [[_dvtFoundation classNamed:@"DVTPlatform"] platformForIdentifier:@"com.apple.platform.iphoneos"];
+    for (IDETemplate *_template in [[_ideFoundation classNamed:@"IDETemplate"] availableTemplatesOfTemplateKind:kind]) {
         if (!_template.hiddenFromChooser &&
             [_template.templateName isEqualToString:@"App"] &&
             [_template.templatePlatforms containsObject:iPhoneOSPlatform]) {

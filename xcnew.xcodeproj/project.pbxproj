@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
 		5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
 		5B11B3B02647B21B00653ABF /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AB26472813009C4C13 /* IDEFoundation.framework */; };
-		5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
 		5B11B3B72647B22000653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
 		5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
 		5B11B3BE2647B22200653ABF /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B96C8AC26472813009C4C13 /* DVTFoundation.framework */; };
@@ -45,6 +43,10 @@
 		5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6533ED2706A218007BFBB4 /* XCNOptionParseResult.m */; };
 		5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */; };
 		5BA08FF5275E9E1300CC3916 /* DVTPlatformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */; };
+		5BC9802428A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9802328A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.m */; };
+		5BC9802A28A6E0C700CD1C12 /* XCNDyldEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9802928A6E0C700CD1C12 /* XCNDyldEnvironment.m */; };
+		5BC9803028A7F0AF00CD1C12 /* XCNSearchPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9802F28A7F0AF00CD1C12 /* XCNSearchPath.m */; };
+		5BC9803328A8123600CD1C12 /* libxcselect.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC9803228A8123600CD1C12 /* libxcselect.tbd */; };
 		5BD3D460289B1C2C00BDB452 /* xcnew.mxml in Copy Files */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
 		5BD3D46B289F054200BDB452 /* XCNOptionDefinitions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */; };
 		5BD3D46C289F054200BDB452 /* XCNOptionDefinitions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */; };
@@ -153,6 +155,13 @@
 		5B96C8AB26472813009C4C13 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEFoundation.framework; sourceTree = "<group>"; };
 		5B96C8AC26472813009C4C13 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DVTFoundation.framework; sourceTree = "<group>"; };
 		5BA08FF4275E9E1300CC3916 /* DVTPlatformTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVTPlatformTests.m; sourceTree = "<group>"; };
+		5BC9802228A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNDyldSearchPathInjector.h; sourceTree = "<group>"; };
+		5BC9802328A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNDyldSearchPathInjector.m; sourceTree = "<group>"; };
+		5BC9802828A6E0C700CD1C12 /* XCNDyldEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNDyldEnvironment.h; sourceTree = "<group>"; };
+		5BC9802928A6E0C700CD1C12 /* XCNDyldEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNDyldEnvironment.m; sourceTree = "<group>"; };
+		5BC9802E28A7F0AF00CD1C12 /* XCNSearchPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNSearchPath.h; sourceTree = "<group>"; };
+		5BC9802F28A7F0AF00CD1C12 /* XCNSearchPath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNSearchPath.m; sourceTree = "<group>"; };
+		5BC9803228A8123600CD1C12 /* libxcselect.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxcselect.tbd; path = usr/lib/libxcselect.tbd; sourceTree = SDKROOT; };
 		5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */ = {isa = PBXFileReference; explicitFileType = text.xml; indentWidth = 2; path = xcnew.mxml; sourceTree = "<group>"; tabWidth = 2; };
 		5BD3D469289F054200BDB452 /* XCNOptionDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNOptionDefinitions.h; sourceTree = "<group>"; };
 		5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XCNOptionDefinitions.c; sourceTree = "<group>"; };
@@ -165,15 +174,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5B20A2EB22F0BB0300EA7295 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */,
-				5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5B2F804625FC965C0018752D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +197,14 @@
 			files = (
 				5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */,
 				5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BC9803128A8122D00CD1C12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BC9803328A8123600CD1C12 /* libxcselect.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +273,10 @@
 			children = (
 				5B39EAA9260BD5510028A910 /* XCNAppLifecycle.h */,
 				5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */,
+				5BC9802228A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.h */,
+				5BC9802328A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.m */,
+				5BC9802828A6E0C700CD1C12 /* XCNDyldEnvironment.h */,
+				5BC9802928A6E0C700CD1C12 /* XCNDyldEnvironment.m */,
 				5B20AFC422F74B7300EA7295 /* XCNErrors.h */,
 				5B20AFC722F74CCB00EA7295 /* XCNErrorsInternal.h */,
 				5B20AFC522F74B7300EA7295 /* XCNErrors.m */,
@@ -281,6 +293,8 @@
 				5B393EE626310FB600948B46 /* XCNProjectInternal.h */,
 				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
 				5B35529824E7A4F90035E983 /* XCNProjectFeature.h */,
+				5BC9802E28A7F0AF00CD1C12 /* XCNSearchPath.h */,
+				5BC9802F28A7F0AF00CD1C12 /* XCNSearchPath.m */,
 				5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */,
 				5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
@@ -306,6 +320,7 @@
 		5B96C8A926472813009C4C13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5BC9803228A8123600CD1C12 /* libxcselect.tbd */,
 				5B96C8AB26472813009C4C13 /* IDEFoundation.framework */,
 				5B96C8AC26472813009C4C13 /* DVTFoundation.framework */,
 			);
@@ -359,8 +374,7 @@
 			buildConfigurationList = 5B20A2F522F0BB0300EA7295 /* Build configuration list for PBXNativeTarget "xcnew" */;
 			buildPhases = (
 				5B20A2EA22F0BB0300EA7295 /* Sources */,
-				5B20A2EB22F0BB0300EA7295 /* Frameworks */,
-				5B11B38F2647ADC600653ABF /* Analyze Executable */,
+				5BC9803128A8122D00CD1C12 /* Frameworks */,
 				5BC9EE2322FDF76100D67BD1 /* Copy Files */,
 			);
 			buildRules = (
@@ -484,28 +498,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		5B11B38F2647ADC600653ABF /* Analyze Executable */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
-			);
-			name = "Analyze Executable";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Fail if `tapi-analyze` writes anything to stderr because it returns 0 even on error.\nif { tapi-analyze \"$SCRIPT_INPUT_FILE_0\" 2>&1 >/dev/null | grep '^'; }; then\n    exit 1\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		5B1F0F3522F7A2BA00A7AFFA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -533,10 +525,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B35519423F5D75B000E5EA1 /* XCNLanguage.m in Sources */,
+				5BC9802428A6B8DB00CD1C12 /* XCNDyldSearchPathInjector.m in Sources */,
 				5B6533EE2706A218007BFBB4 /* XCNOptionParseResult.m in Sources */,
 				5B20A2F922F0BB8500EA7295 /* main.m in Sources */,
+				5BC9803028A7F0AF00CD1C12 /* XCNSearchPath.m in Sources */,
 				5B20AFC622F74B7300EA7295 /* XCNErrors.m in Sources */,
 				5B20AFC022F7437700EA7295 /* XCNProject.m in Sources */,
+				5BC9802A28A6E0C700CD1C12 /* XCNDyldEnvironment.m in Sources */,
 				5BD3D46B289F054200BDB452 /* XCNOptionDefinitions.c in Sources */,
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
 				5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */,
@@ -591,6 +586,10 @@
 		5B1F0F3E22F7A2BA00A7AFFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					Frameworks,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -607,6 +606,10 @@
 		5B1F0F3F22F7A2BA00A7AFFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					Frameworks,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -661,10 +664,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/Frameworks",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -732,10 +731,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/Frameworks",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "XCODE_VERSION_MAJOR=0x$(XCODE_VERSION_MAJOR)";
@@ -759,14 +754,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = YES;
+				CLANG_MODULES_AUTOLINK = NO;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
-				LD_RUNPATH_SEARCH_PATHS = (
+				OTHER_CFLAGS = (
+					"-FFrameworks",
 					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-					"$(DEVELOPER_DIR)/../PlugIns",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -781,14 +775,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = YES;
+				CLANG_MODULES_AUTOLINK = NO;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
-				LD_RUNPATH_SEARCH_PATHS = (
+				OTHER_CFLAGS = (
+					"-FFrameworks",
 					"$(inherited)",
-					"$(DEVELOPER_DIR)/../Frameworks",
-					"$(DEVELOPER_DIR)/../SharedFrameworks",
-					"$(DEVELOPER_DIR)/../PlugIns",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -802,6 +795,10 @@
 		5B5364AC2602C8F8007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					Frameworks,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Tests/DVTFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -817,6 +814,10 @@
 		5B5364AD2602C8F8007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					Frameworks,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Tests/DVTFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -832,6 +833,10 @@
 		5B5364BD2602CB37007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					Frameworks,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Tests/IDEFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -848,6 +853,10 @@
 		5B5364BE2602CB37007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					Frameworks,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Tests/IDEFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
