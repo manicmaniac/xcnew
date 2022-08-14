@@ -27,8 +27,10 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
     steps:
     - uses: actions/checkout@v2
-    - name: Run unit tests
-      run: make check | xcpretty
+    - name: Build
+      run: xcodebuild build-for-testing -scheme xcnew BUILD_DIR=build | xcpretty
+    - name: Run tests
+      run: xcodebuild test-without-building -scheme xcnew BUILD_DIR=build
     - name: Install
       run: make install | xcpretty
   lint:
