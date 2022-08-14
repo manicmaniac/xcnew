@@ -50,3 +50,7 @@ jobs:
     - name: Lint Shell Script files
       if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
       run: git grep -z --name-only --extended-regexp '^#!/bin/(ba)?sh$' | xargs -0 shellcheck
+    - name: Run doctest
+      run: git grep -Flz python Scripts | xargs -0 -I% -n1 ./% -v
+      env:
+        DOCTEST: 1
