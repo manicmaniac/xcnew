@@ -1,0 +1,11 @@
+---
+archs:           [ x86_64 ]
+platform:        macosx
+install-name:    '@rpath/IDEKit.framework/Versions/A/IDEKit'
+current-version: 0
+compatibility-version: 0
+exports:
+  - archs:           [ x86_64 ]
+    symbols:         [ ]
+    objc-classes:    [ ]
+...

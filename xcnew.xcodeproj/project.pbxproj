@@ -48,6 +48,9 @@
 		5BD3D460289B1C2C00BDB452 /* xcnew.mxml in Copy Files */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
 		5BD3D46B289F054200BDB452 /* XCNOptionDefinitions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */; };
 		5BD3D46C289F054200BDB452 /* XCNOptionDefinitions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */; };
+		5BFB20FE28A94D2400E09370 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFB20FD28A94D2400E09370 /* IDEKit.framework */; };
+		5BFB20FF28A9504400E09370 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFB20FD28A94D2400E09370 /* IDEKit.framework */; };
+		5BFB210028A9504500E09370 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFB20FD28A94D2400E09370 /* IDEKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -162,6 +165,7 @@
 		5BE7596A26011AE600DC1E89 /* IDETemplateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateTests.m; sourceTree = "<group>"; };
 		5BE7596C26011FDD00DC1E89 /* XCNIDEFoundationTestHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNIDEFoundationTestHelpers.h; sourceTree = "<group>"; };
 		5BE7596D26011FDD00DC1E89 /* XCNIDEFoundationTestHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNIDEFoundationTestHelpers.m; sourceTree = "<group>"; };
+		5BFB20FD28A94D2400E09370 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDEKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B11B3B62647B22000653ABF /* DVTFoundation.framework in Frameworks */,
+				5BFB20FE28A94D2400E09370 /* IDEKit.framework in Frameworks */,
 				5B11B3A92647B21700653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B11B3BE2647B22200653ABF /* DVTFoundation.framework in Frameworks */,
+				5BFB210028A9504500E09370 /* IDEKit.framework in Frameworks */,
 				5B11B3B02647B21B00653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B11B3BD2647B22100653ABF /* DVTFoundation.framework in Frameworks */,
+				5BFB20FF28A9504400E09370 /* IDEKit.framework in Frameworks */,
 				5B11B3AA2647B21A00653ABF /* IDEFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,8 +313,9 @@
 		5B96C8A926472813009C4C13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5B96C8AB26472813009C4C13 /* IDEFoundation.framework */,
 				5B96C8AC26472813009C4C13 /* DVTFoundation.framework */,
+				5B96C8AB26472813009C4C13 /* IDEFoundation.framework */,
+				5BFB20FD28A94D2400E09370 /* IDEKit.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -663,7 +671,7 @@
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Frameworks",
+					Frameworks,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -734,7 +742,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Frameworks",
+					Frameworks,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;

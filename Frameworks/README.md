@@ -46,3 +46,7 @@ To overcome this situation, you may need to modify `.tbd` files to downgrade ver
 4. Add `platform: macosx` entry.
 5. Add `_` prefix to all `objc-classes` values.
 6. Remove all `objc-ivars` entries.
+
+Note that any APIs in IDEKit.framework are not used in xcnew. However it is needed to be linked only for suppressing warnings link the following.
+
+> Requested but did not find extension point with identifier Xcode.IDEKit.ExtensionSentinelHostApplications for extension Xcode.DebuggerFoundation.AppExtensionHosts.watchOS of plug-in com.apple.dt.IDEWatchSupportCore
