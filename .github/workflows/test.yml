@@ -28,9 +28,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: xcodebuild build-for-testing -scheme xcnew BUILD_DIR=build | xcpretty
+      run: xcodebuild build-for-testing -scheme xcnew -destination 'platform=macOS,arch=x86_64' BUILD_DIR=build | xcpretty
     - name: Run tests
-      run: xcodebuild test-without-building -scheme xcnew BUILD_DIR=build
+      run: xcodebuild test-without-building -scheme xcnew -destination 'platform=macOS,arch=x86_64' BUILD_DIR=build
     - name: Install
       run: make install | xcpretty
   lint:
