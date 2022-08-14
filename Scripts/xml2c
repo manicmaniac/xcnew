@@ -23,11 +23,11 @@ class Mdoc(object):
         True
         >>> import pprint
         >>> pprint.pprint(mdoc.options)
-        [Option(short='h', long='help', dest='', nargs=0, help='description'),
-         Option(short='i', long='id', dest='ID', nargs=1, help='description')]
+        [Option(short='h', long='help', dest='', nargs=0, help='desc'),
+         Option(short='i', long='id', dest='ID', nargs=1, help='desc')]
         >>> pprint.pprint(mdoc.args)
-        [Arg(name='IN', required=True, help='description'),
-         Arg(name='OUT', required=False, help='description')]
+        [Arg(name='IN', required=True, help='desc'),
+         Arg(name='OUT', required=False, help='desc')]
         """
         self.manpage = etree.parse(f).getroot()
         self.options = self._parse_options()
@@ -47,7 +47,7 @@ class Mdoc(object):
         """
         >>> f = io.StringIO(_test_mxml)
         >>> Mdoc(f).desc
-        'description'
+        'desc'
         """
         return self.manpage.find('names/name/desc').text
 
@@ -257,13 +257,13 @@ def _main(argv=sys.argv):
 _test_mxml = """<?xml version="1.0" encoding="UTF-8"?>
 <manpage>
   <names>
-    <name>xcnew<desc>description</desc></name>
+    <name>xcnew<desc>desc</desc></name>
   </names>
   <usage>
-    <flag optional="1">h<long>help</long><desc>description</desc></flag>
-    <flag optional="1">i<long>id</long><arg>ID</arg><desc>description</desc></flag>
-    <arg>IN<desc>description</desc></arg>
-    <arg optional="1">OUT<desc>description</desc></arg>
+    <flag optional="1">h<long>help</long><desc>desc</desc></flag>
+    <flag optional="1">i<long>id</long><arg>ID</arg><desc>desc</desc></flag>
+    <arg>IN<desc>desc</desc></arg>
+    <arg optional="1">OUT<desc>desc</desc></arg>
   </usage>
 </manpage>
 """
