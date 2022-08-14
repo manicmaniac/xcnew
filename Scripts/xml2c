@@ -2,27 +2,53 @@
 
 import argparse
 import collections
+from distutils.util import strtobool
 import io
+import os
 import textwrap
 import xml.etree.ElementTree as etree
+import sys
 
 
 Option = collections.namedtuple('Option', 'short long dest nargs help')
-Arg = collections.namedtuple('Option', 'name required help')
+Arg = collections.namedtuple('Arg', 'name required help')
 
 
 class Mdoc(object):
     def __init__(self, f):
+        """
+        >>> f = io.StringIO(_test_mxml)
+        >>> mdoc = Mdoc(f)
+        >>> mdoc.manpage is not None
+        True
+        >>> import pprint
+        >>> pprint.pprint(mdoc.options)
+        [Option(short='h', long='help', dest='', nargs=0, help='description'),
+         Option(short='i', long='id', dest='ID', nargs=1, help='description')]
+        >>> pprint.pprint(mdoc.args)
+        [Arg(name='IN', required=True, help='description'),
+         Arg(name='OUT', required=False, help='description')]
+        """
         self.manpage = etree.parse(f).getroot()
         self.options = self._parse_options()
         self.args = self._parse_args()
 
     @property
     def prog(self):
+        """
+        >>> f = io.StringIO(_test_mxml)
+        >>> Mdoc(f).prog
+        'xcnew'
+        """
         return self.manpage.find('names/name').text
 
     @property
     def desc(self):
+        """
+        >>> f = io.StringIO(_test_mxml)
+        >>> Mdoc(f).desc
+        'description'
+        """
         return self.manpage.find('names/name/desc').text
 
     def _parse_options(self):
@@ -58,6 +84,11 @@ class GetoptFormatter(object):
         self.prefix = prefix
 
     def format_c_source(self):
+        """
+        >>> formatter = GetoptFormatter('./', 'xcnew', 'desc', [], [], '')
+        >>> '#include <getopt.h>' in formatter.format_c_source()
+        True
+        """
         return '\n'.join([
             self._format_header(),
             self._format_help(),
@@ -171,7 +202,10 @@ class HelpFormatter(argparse.HelpFormatter):
     _get_default_metavar_for_positional = _get_default_metavar_for_optional
 
 
-if __name__ == '__main__':
+def _main(argv=sys.argv):
+    if strtobool(os.getenv('DOCTEST', '0')):
+        import doctest
+        return doctest.testmod()
     parser = argparse.ArgumentParser()
     parser.add_argument('-H', '--help-only', action='store_true',
                         help='Generate only help text')
@@ -184,7 +218,7 @@ if __name__ == '__main__':
                         help='Specify prefix of C constant names')
     parser.add_argument('INPUT', help='Input .mxml file')
     parser.add_argument('OUTPUT', help='Output file')
-    args = parser.parse_args()
+    args = parser.parse_args(argv[1:])
 
     def indent(text):
         return textwrap.indent(text, ' ' * args.indent)
@@ -218,3 +252,22 @@ if __name__ == '__main__':
     else:
         with open(args.OUTPUT, 'w+') as f:
             f.write(indent(text))
+
+
+_test_mxml = """<?xml version="1.0" encoding="UTF-8"?>
+<manpage>
+  <names>
+    <name>xcnew<desc>description</desc></name>
+  </names>
+  <usage>
+    <flag optional="1">h<long>help</long><desc>description</desc></flag>
+    <flag optional="1">i<long>id</long><arg>ID</arg><desc>description</desc></flag>
+    <arg>IN<desc>description</desc></arg>
+    <arg optional="1">OUT<desc>description</desc></arg>
+  </usage>
+</manpage>
+"""
+
+
+if __name__ == '__main__':
+    _main()

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+from distutils.util import strtobool
 import json
+import os
 import re
 import sys
 from urllib.parse import quote, unquote
@@ -11,6 +13,15 @@ class Workflow(object):
     _indent_re = re.compile(r'^( *)')
 
     def __init__(self, f):
+        """
+        >>> import io
+        >>> f = io.StringIO(_test_yaml)
+        >>> workflow = Workflow(f)
+        >>> workflow.xcodes
+        ['13.4.1', '13.3.1']
+        >>> workflow.includes
+        []
+        """
         self.xcodes = []
         self.includes = []
         for line in f:
@@ -21,6 +32,16 @@ class Workflow(object):
         self.contents = f.read()
 
     def __str__(self):
+        """
+        >>> import io
+        >>> f = io.StringIO(_test_yaml)
+        >>> workflow = Workflow(f)
+        >>> str(workflow) == _test_yaml
+        True
+        >>> workflow.includes.append(('macOS-12', '14'))
+        >>> str(workflow) == _test_yaml
+        False
+        """
         lines = []
         for line in self.contents.splitlines(keepends=True):
             matched = self._xcodes_re.search(line)
@@ -44,6 +65,17 @@ class Readme(object):
     _max_xcode_version_re = re.compile(r'Xcode <= (\d+(\.\d+){0,2})')
 
     def __init__(self, f):
+        """
+        >>> import io
+        >>> f = io.StringIO(_test_readme)
+        >>> readme = Readme(f)
+        >>> readme.contents == _test_readme
+        True
+        >>> sorted(readme.badge_versions)
+        ['12', '13']
+        >>> readme.max_xcode_version
+        '13.4.1'
+        """
         for line in f:
             matched = self._badge_re.search(line)
             if matched:
@@ -59,6 +91,16 @@ class Readme(object):
         self.contents = f.read()
 
     def __str__(self):
+        """
+        >>> import io
+        >>> f = io.StringIO(_test_readme)
+        >>> readme = Readme(f)
+        >>> str(readme) == _test_readme
+        True
+        >>> readme.max_xcode_version = '14'
+        >>> str(readme) == _test_readme
+        False
+        """
         contents = self._max_xcode_version_re.sub(
                 f'Xcode <= {self.max_xcode_version}', self.contents)
         quoted_versions = quote(' | ').join(sorted(self.badge_versions))
@@ -67,11 +109,14 @@ class Readme(object):
         return contents
 
 
-if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print(f'usage: {sys.argv[0]} <XCODE_VERSION> <RUNNER>')
-    current_xcode_version = sys.argv[1]
-    runner = sys.argv[2]
+def _main(argv=sys.argv):
+    if strtobool(os.getenv('DOCTEST', '0')):
+        import doctest
+        return doctest.testmod()
+    if len(argv) != 3:
+        print(f'usage: {argv[0]} <XCODE_VERSION> <RUNNER>')
+    current_xcode_version = argv[1]
+    runner = argv[2]
     workflow_path = '.github/workflows/test.yml'
     readme_path = 'README.md'
 
@@ -90,3 +135,31 @@ if __name__ == '__main__':
     readme.max_xcode_version = current_xcode_version
     with open(readme_path, 'w') as f:
         f.write(str(readme))
+
+
+_test_yaml = '''
+name: test
+on: push
+jobs:
+  test:
+    runs-on: ${{ matrix.macos }}
+    strategy:
+      matrix:
+        xcode: ["13.4.1", "13.3.1"]
+        include:
+        - macos: macOS-12
+          xcode: "13.4.1"
+        - macos: macOS-12
+          xcode: "13.3.1"
+    steps:
+    - uses: actions/checkout@v3
+'''
+
+_test_readme = '''
+[![Xcode](https://img.shields.io/badge/xcode-12%20%7C%2013-blue)](https://github.com/manicmaniac/xcnew#supported-xcode-versions)
+`Xcode >= 12.5 && Xcode <= 13.4.1`.
+'''
+
+
+if __name__ == '__main__':
+    _main()
