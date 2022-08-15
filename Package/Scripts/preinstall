@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 is_developer_dir_in_xcode() {
     [ "$(plutil -extract CFBundleIdentifier raw "${1}/../Info.plist")" = 'com.apple.dt.Xcode' ]
