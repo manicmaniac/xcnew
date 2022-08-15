@@ -6,7 +6,6 @@ A script to update <docdate> in manpages.
 
 from argparse import ArgumentParser
 import datetime as dt
-from distutils.util import strtobool
 import fileinput
 import os
 import re
@@ -39,7 +38,7 @@ def format_date(date):
 
 
 def _main(argv=sys.argv):
-    if strtobool(os.getenv('DOCTEST', '0')):
+    if os.getenv('DOCTEST') == '1':
         import doctest
         return doctest.testmod()
     today = format_date(dt.date.today())

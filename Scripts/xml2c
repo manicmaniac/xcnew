@@ -2,7 +2,6 @@
 
 import argparse
 import collections
-from distutils.util import strtobool
 import io
 import os
 import textwrap
@@ -203,7 +202,7 @@ class HelpFormatter(argparse.HelpFormatter):
 
 
 def _main(argv=sys.argv):
-    if strtobool(os.getenv('DOCTEST', '0')):
+    if os.getenv('DOCTEST') == '1':
         import doctest
         return doctest.testmod()
     parser = argparse.ArgumentParser()
