@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # A utility script to dump Xcode private headers that are used in `xcnew`.
 #
