@@ -8,7 +8,7 @@ Files under this folder are stubs of Xcode private frameworks.
 How to create headers
 ---------------------
 
-Their headers are generated with a script `Scripts/dump-private-headers`.
+Their headers are generated with a script `Scripts/generate-framework-stubs`.
 
 The script records last-used tool versions in `Frameworks/.versions`.
 
