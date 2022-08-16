@@ -1,12 +1,13 @@
----
-archs:           [ x86_64 ]
-platform:        macosx
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ x86_64-macos, arm64-macos ]
+flags:           [ not_app_extension_safe, installapi ]
 install-name:    '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation'
 current-version: 0
 compatibility-version: 0
 exports:
-  - archs:           [ x86_64 ]
+  - targets:         [ x86_64-macos, arm64-macos ]
     symbols:         [ _IDEInitializationCompleted, _IDEInitialize ]
-    objc-classes:    [ _IDETemplate, _IDETemplateFactory, _IDETemplateInstantiationContext, 
-                       _IDETemplateKind, _IDETemplateOption ]
+    objc-classes:    [ IDETemplate, IDETemplateFactory, IDETemplateInstantiationContext,
+                       IDETemplateKind, IDETemplateOption ]
 ...

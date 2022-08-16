@@ -1,10 +1,11 @@
----
-archs:           [ x86_64 ]
-platform:        macosx
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ x86_64-macos, arm64-macos ]
+flags:           [ not_app_extension_safe, installapi ]
 install-name:    '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation'
 current-version: 0
 compatibility-version: 0
 exports:
-  - archs:           [ x86_64 ]
-    objc-classes:    [ _DVTFilePath, _DVTPlatform ]
+  - targets:         [ x86_64-macos, arm64-macos ]
+    objc-classes:    [ DVTFilePath, DVTPlatform ]
 ...
