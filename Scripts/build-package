@@ -14,8 +14,9 @@ xcodebuild install \
     -project xcnew.xcodeproj \
     -scheme xcnew \
     -configuration Release \
-    -destination 'platform=macOS,arch=x86_64' \
+    -destination 'platform=macOS' \
     -quiet \
+    ARCHS='$(ARCHS_STANDARD)' \
     BUILD_DIR="${tempdir}/build" \
     DSTROOT="$dstroot"
 
