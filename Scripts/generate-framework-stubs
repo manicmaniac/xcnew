@@ -38,6 +38,9 @@ find Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
 
     # Remove all instance variables.
     / *{/,/}/d
+
+    # Workaround for a bug in class-dump 3.5-0.1.1 running on arm64
+    s/_Bool/BOOL/g
 EOF
 
 # CDStructure.h is not used.
@@ -45,6 +48,28 @@ rm Frameworks/DVTFoundation.framework/Headers/CDStructures.h Frameworks/IDEFound
 
 # Re-format all files.
 find Frameworks -type f -name '*.h' -exec clang-format -i {} +
+
+# Dump .tbd files
+xcrun tapi installapi \
+    -target x86_64-apple-macosx \
+    -target arm64-apple-macosx \
+    -install_name '@rpath/DVTFoundation.framework/Versions/A/DVTFoundation' \
+    -F Frameworks \
+    -extra-public-header Frameworks/DVTFoundation.framework/Headers \
+    -o Frameworks/DVTFoundation.framework/DVTFoundation.tbd \
+    "$contents_dir/SharedFrameworks/DVTFoundation.framework"
+
+xcrun tapi installapi \
+    -target x86_64-apple-macosx \
+    -target arm64-apple-macosx \
+    -install_name '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation' \
+    -F Frameworks \
+    -extra-public-header Frameworks/IDEFoundation.framework/Headers \
+    -o Frameworks/IDEFoundation.framework/IDEFoundation.tbd \
+    "$contents_dir/Frameworks/IDEFoundation.framework"
+
+# Sometimes tapi installapi leaves whitespaces at the end of line.
+find Frameworks -type f -name '*.tbd' -exec sed -i '' -e 's/ *$//g' {} +
 
 # To reproduce the result, tool versions are recorded.
 (
