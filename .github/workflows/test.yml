@@ -43,7 +43,7 @@ jobs:
       run: sudo apt install -y clang-format-12 flake8 shellcheck libxml2-utils
     - name: Lint Objective-C files
       if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
-      run: git ls-files -z '*.[hm]' | xargs -0 clang-format --dry-run
+      run: git ls-files -z '*.[hm]' | xargs -0 clang-format --dry-run --Werror
     - name: Lint Python files
       if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
       run: git grep -z --name-only --extended-regexp '^#!/.*python3?$' | xargs -0 flake8
