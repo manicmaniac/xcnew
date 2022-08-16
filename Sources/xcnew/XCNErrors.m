@@ -18,48 +18,50 @@ NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 
 NSError *XCNErrorFileWriteUnknownWithURL(NSURL *url) {
     NSCParameterAssert(url != nil);
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorFileWriteUnknown userInfo:@{
-        NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot write at path '%@'.", url.path],
-    }];
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot write at path '%@'.", url.path]};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorFileWriteUnknown userInfo:userInfo];
 }
 
 NSError *XCNErrorTemplateKindNotFoundWithIdentifier(NSString *templateKindIdentifier) {
     NSCParameterAssert(templateKindIdentifier != nil);
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateKindNotFound userInfo:@{
+    NSDictionary *userInfo = @{
         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A template kind with identifier '%@' not found.", templateKindIdentifier],
         NSLocalizedFailureReasonErrorKey : kXcodeChangesInterfaceFailureReason,
-    }];
+    };
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateKindNotFound userInfo:userInfo];
 }
 
 NSError *XCNErrorTemplateNotFoundWithKindIdentifier(NSString *templateKindIdentifier) {
     NSCParameterAssert(templateKindIdentifier != nil);
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateNotFound userInfo:@{
+    NSDictionary *userInfo = @{
         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A template for kind '%@' not found.", templateKindIdentifier],
         NSLocalizedFailureReasonErrorKey : kXcodeChangesInterfaceFailureReason,
-    }];
+    };
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateNotFound userInfo:userInfo];
 }
 
 NSError *XCNErrorTemplateFactoryNotFoundWithKindIdentifier(NSString *templateKindIdentifier) {
     NSCParameterAssert(templateKindIdentifier != nil);
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryNotFound userInfo:@{
+    NSDictionary *userInfo = @{
         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A template factory associated with kind '%@' not found.", templateKindIdentifier],
         NSLocalizedFailureReasonErrorKey : kXcodeChangesInterfaceFailureReason,
-    }];
+    };
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryNotFound userInfo:userInfo];
 }
 
 NSError *XCNErrorTemplateFactoryTimeoutWithTimeout(NSTimeInterval timeout) {
     NSCParameterAssert(timeout > 0);
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryTimeout userInfo:@{
+    NSDictionary *userInfo = @{
         NSLocalizedDescriptionKey : @"Operation timed out.",
         NSLocalizedFailureReasonErrorKey : [NSString stringWithFormat:@"IDETemplateFactory hasn't finished in %.f seconds.", timeout],
-    }];
+    };
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryTimeout userInfo:userInfo];
 }
 
 NSError *XCNErrorInvalidOptionWithString(NSString *longOption) {
     NSCParameterAssert(longOption != NULL);
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorInvalidOption userInfo:@{
-        NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unrecognized option '%@'.", longOption],
-    }];
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unrecognized option '%@'.", longOption]};
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorInvalidOption userInfo:userInfo];
 }
 
 NSError *XCNErrorWrongNumberOfArgumentsWithRange(NSRange acceptableRange, int actual) {
@@ -69,7 +71,8 @@ NSError *XCNErrorWrongNumberOfArgumentsWithRange(NSRange acceptableRange, int ac
     } else {
         expected = [NSString stringWithFormat:@"%lu..%lu", acceptableRange.location, NSMaxRange(acceptableRange)];
     }
-    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorWrongNumberOfArgument userInfo:@{
+    NSDictionary *userInfo = @{
         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Wrong number of arguments (%d for %@).", actual, expected],
-    }];
+    };
+    return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorWrongNumberOfArgument userInfo:userInfo];
 }

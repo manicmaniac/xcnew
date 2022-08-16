@@ -34,12 +34,10 @@
  * - https://developer.apple.com/forums/thread/698628
  * - https://stackoverflow.com/q/65547989
  */
-static NSString *const kSymbolCollisionWarningPattern = (
-    @"^objc\\[[0-9]+\\]: Class AMSupportURL(ConnectionDelegate|Session) is implemented in both "
-    @"/usr/lib/libamsupport.dylib \\(0x[0-9a-f]+\\) and "
-    @"/Library/Apple/System/Library/PrivateFrameworks/MobileDevice\\.framework/Versions/A/MobileDevice \\(0x[0-9a-f]+\\)\\. "
-    @"One of the two will be used. Which one is undefined.$\\n"
-);
+static NSString *const kSymbolCollisionWarningPattern = @"^objc\\[[0-9]+\\]: Class AMSupportURL(ConnectionDelegate|Session) is implemented in both "
+                                                        @"/usr/lib/libamsupport.dylib \\(0x[0-9a-f]+\\) and "
+                                                        @"/Library/Apple/System/Library/PrivateFrameworks/MobileDevice\\.framework/Versions/A/MobileDevice "
+                                                        @"\\(0x[0-9a-f]+\\)\\. One of the two will be used. Which one is undefined.$\\n";
 static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
 
 // MARK: Public
