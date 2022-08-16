@@ -10,6 +10,7 @@ mkdir "$dstroot"
 
 version="$(agvtool vers -terse)"
 
+# shellcheck disable=SC2016
 xcodebuild install \
     -project xcnew.xcodeproj \
     -scheme xcnew \
