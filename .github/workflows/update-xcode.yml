@@ -30,14 +30,14 @@ jobs:
       if: ${{ steps.update-xcode.outcome == 'success' }}
     - name: Dump private headers
       if: ${{ steps.update-xcode.outcome == 'success' }}
-      run: Scripts/dump-private-headers
+      run: Scripts/generate-framework-stubs
     - name: Commit private headers
       if: ${{ steps.update-xcode.outcome == 'success' }}
       run: |
         git commit --all --file=- <<-EOF
         Dump private headers with Xcode ${{ steps.setup-xcode.outputs.version }}
 
-        ./Scripts/dump-private-headers
+        ./Scripts/generate-framework-stubs
         EOF
     - uses: peter-evans/create-pull-request@v4
       if: ${{ steps.update-xcode.outcome == 'success' }}

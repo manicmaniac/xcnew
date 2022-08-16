@@ -21,7 +21,38 @@
     NSURL *_sandboxProfileURL;
 }
 
+/**
+ * A regular expression pattern to match and delete spam warnings from Xcode.
+ *
+ * When running Xcode 13 command line tools on Apple Silicon devices,
+ * it warns about symbol collision between libamsupport and MobileDevice.framework.
+ * This could be a bug in Xcode 13 as many developers reported in developer forums or other websites.
+ * Although setting command line tools to /Library/Developer/CommandLineTools may fix the issue,
+ * this solution does not help on CI environment because it needs command line tools set under
+ * Xcode's developer directory.
+ *
+ * - https://developer.apple.com/forums/thread/698628
+ * - https://stackoverflow.com/q/65547989
+ */
+static NSString *const kSymbolCollisionWarningPattern = @"^objc\\[[0-9]+\\]: Class AMSupportURL(ConnectionDelegate|Session) is implemented in both "
+                                                        @"/usr/lib/libamsupport.dylib \\(0x[0-9a-f]+\\) and "
+                                                        @"/Library/Apple/System/Library/PrivateFrameworks/MobileDevice\\.framework/Versions/A/MobileDevice "
+                                                        @"\\(0x[0-9a-f]+\\)\\. One of the two will be used. Which one is undefined.$\\n";
+static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
+
 // MARK: Public
+
++ (void)initialize {
+    [super initialize];
+    // Instantiate a regular expression as early as possible so that the syntax error can be found earlier.
+    NSError *error;
+    XCNSymbolCollisionWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kSymbolCollisionWarningPattern
+                                                                                           options:NSRegularExpressionAnchorsMatchLines
+                                                                                             error:&error];
+    if (!XCNSymbolCollisionWarningRegularExpression) {
+        [NSException raise:NSInvalidArgumentException format:@"%@", error];
+    }
+}
 
 - (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
@@ -177,10 +208,25 @@
         *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
     }
     if (errorString) {
-        NSData *errorData = [errorPipe.fileHandleForReading readDataToEndOfFile];
-        *errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
+        if (!(*errorString = [self readStringSuppressingLogNoiseFromFileHandle:errorPipe.fileHandleForReading error:&error])) {
+            self.continueAfterFailure = NO;
+            XCTFail(@"%@", error);
+            return -1;
+        }
     }
     return task.terminationStatus;
+}
+
+- (NSString *)readStringSuppressingLogNoiseFromFileHandle:(NSFileHandle *)fileHandle error:(NSError **)error {
+    NSData *data = [fileHandle readDataToEndOfFileAndReturnError:error];
+    if (!data) {
+        return nil;
+    }
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return [XCNSymbolCollisionWarningRegularExpression stringByReplacingMatchesInString:string
+                                                                                options:(NSMatchingOptions)0
+                                                                                  range:NSMakeRange(0, string.length)
+                                                                           withTemplate:@""];
 }
 
 @end
