@@ -1,1 +1,3 @@
-Tests/xcnew-integration-tests/xcnew-integration-tests.sb linguist-language=Scheme
+*.mtreeignore linguist-language=Ignore-List
+*.sb linguist-language=Scheme
+*.tbd linguist-language=YAML
