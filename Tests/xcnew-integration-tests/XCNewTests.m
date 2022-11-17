@@ -53,6 +53,16 @@ static NSString *const kWatchOSExtensionPointWarningPattern = @"^.*Requested but
                                                               @"for extension Xcode\\.DebuggerFoundation\\.AppExtension.*\\.watchOS of plug-in .*$\\n";
 static NSRegularExpression *XCNWatchOSExtensionPointWarningRegularExpression = nil;
 
+/**
+ * A regular expression pattern to match and delete spam warnings from Xcode.
+ *
+ * When running Xcode 13 command line tools, it warns about failure to get Swift version.
+ * This could be a bug in `xcnew` but currently I have no idea to fix it.
+ */
+static NSString *const kGetSwiftVersionWarningPattern = @"^.*DVTToolchain: Failed to get Swift version for /.*/XcodeDefault.xctoolchain: "
+                                                        @"Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"$\\n";
+static NSRegularExpression *XCNGetSwiftVersionWarningRegularExpression = nil;
+
 // MARK: Public
 
 + (void)initialize {
@@ -69,6 +79,12 @@ static NSRegularExpression *XCNWatchOSExtensionPointWarningRegularExpression = n
                                                                                                  options:NSRegularExpressionAnchorsMatchLines
                                                                                                    error:&error];
     if (!XCNWatchOSExtensionPointWarningRegularExpression) {
+        [NSException raise:NSInvalidArgumentException format:@"%@", error];
+    }
+    XCNGetSwiftVersionWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kGetSwiftVersionWarningPattern
+                                                                                           options:NSRegularExpressionAnchorsMatchLines
+                                                                                             error:&error];
+    if (!XCNGetSwiftVersionWarningRegularExpression) {
         [NSException raise:NSInvalidArgumentException format:@"%@", error];
     }
 }
@@ -257,6 +273,10 @@ static NSRegularExpression *XCNWatchOSExtensionPointWarningRegularExpression = n
                                                                      options:(NSMatchingOptions)0
                                                                        range:NSMakeRange(0, string.length)
                                                                 withTemplate:@""];
+    [XCNGetSwiftVersionWarningRegularExpression replaceMatchesInString:string
+                                                               options:(NSMatchingOptions)0
+                                                                 range:NSMakeRange(0, string.length)
+                                                          withTemplate:@""];
     return string;
 }
 
