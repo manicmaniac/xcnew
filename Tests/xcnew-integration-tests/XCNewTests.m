@@ -40,6 +40,19 @@ static NSString *const kSymbolCollisionWarningPattern = @"^objc\\[[0-9]+\\]: Cla
                                                         @"\\(0x[0-9a-f]+\\)\\. One of the two will be used. Which one is undefined.$\\n";
 static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
 
+/**
+ * A regular expression pattern to match and delete spam warnings from Xcode.
+ *
+ * When running Xcode 13 command line tools, it warns about missing extension points for watchOS.
+ * I don't know why it occurs but sometimes even `xcodebuild` or other official tools complain the same.
+ *
+ * - https://developer.apple.com/forums/thread/703233
+ */
+static NSString *const kWatchOSExtensionPointWarningPattern = @"^.*Requested but did not find extension point with identifier "
+                                                              @"Xcode\\.IDEKit\\.Extension(SentinelHostApplications|PointIdentifierToBundleIdentifier) "
+                                                              @"for extension Xcode\\.DebuggerFoundation\\.AppExtension.*\\.watchOS of plug-in .*$\\n";
+static NSRegularExpression *XCNWatchOSExtensionPointWarningRegularExpression = nil;
+
 // MARK: Public
 
 + (void)initialize {
@@ -50,6 +63,12 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
                                                                                            options:NSRegularExpressionAnchorsMatchLines
                                                                                              error:&error];
     if (!XCNSymbolCollisionWarningRegularExpression) {
+        [NSException raise:NSInvalidArgumentException format:@"%@", error];
+    }
+    XCNWatchOSExtensionPointWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kWatchOSExtensionPointWarningPattern
+                                                                                                 options:NSRegularExpressionAnchorsMatchLines
+                                                                                                   error:&error];
+    if (!XCNWatchOSExtensionPointWarningRegularExpression) {
         [NSException raise:NSInvalidArgumentException format:@"%@", error];
     }
 }
@@ -124,6 +143,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/default");
 }
 
@@ -133,6 +153,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-t", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/tests" : @"Fixtures/tests@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
@@ -143,6 +164,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-c", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/core-data");
 }
 
@@ -152,6 +174,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-C", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/cloud-kit");
 }
 
@@ -161,6 +184,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-o", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/objective-c");
 }
 
@@ -170,6 +194,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-s", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui");
 }
 
@@ -179,6 +204,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-S", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/swift-ui-lifecycle" : @"Fixtures/swift-ui-lifecycle@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
@@ -222,11 +248,16 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     if (!data) {
         return nil;
     }
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    return [XCNSymbolCollisionWarningRegularExpression stringByReplacingMatchesInString:string
-                                                                                options:(NSMatchingOptions)0
-                                                                                  range:NSMakeRange(0, string.length)
-                                                                           withTemplate:@""];
+    NSMutableString *string = [[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [XCNSymbolCollisionWarningRegularExpression replaceMatchesInString:string
+                                                               options:(NSMatchingOptions)0
+                                                                 range:NSMakeRange(0, string.length)
+                                                          withTemplate:@""];
+    [XCNWatchOSExtensionPointWarningRegularExpression replaceMatchesInString:string
+                                                                     options:(NSMatchingOptions)0
+                                                                       range:NSMakeRange(0, string.length)
+                                                                withTemplate:@""];
+    return string;
 }
 
 @end
