@@ -35,7 +35,7 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     - name: Run unit tests
-      run: make check | xcpretty
+      run: make check | xcpretty; false
     - name: Install
       run: make install | xcpretty
     - uses: actions/upload-artifact@v3
