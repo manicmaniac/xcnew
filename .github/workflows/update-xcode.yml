@@ -15,10 +15,8 @@ jobs:
         xcode-version: latest-stable
     - name: Update Xcode
       id: update-xcode
-      continue-on-error: true
       run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-12
     - name: Commit Xcode update
-      if: ${{ steps.update-xcode.outcome == 'success' }}
       run: |
         git commit --all --file=- <<-EOF
         Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets
@@ -27,12 +25,10 @@ jobs:
         EOF
     - name: Install dependencies
       run: brew install clang-format manicmaniac/tap/class-dump
-      if: ${{ steps.update-xcode.outcome == 'success' }}
     - name: Dump private headers
-      if: ${{ steps.update-xcode.outcome == 'success' }}
+      continue-on-error: true
       run: Scripts/generate-framework-stubs
     - name: Commit private headers
-      if: ${{ steps.update-xcode.outcome == 'success' }}
       run: |
         git commit --all --file=- <<-EOF
         Dump private headers with Xcode ${{ steps.setup-xcode.outputs.version }}
@@ -40,7 +36,6 @@ jobs:
         ./Scripts/generate-framework-stubs
         EOF
     - uses: peter-evans/create-pull-request@v4
-      if: ${{ steps.update-xcode.outcome == 'success' }}
       with:
         title: Support Xcode ${{ steps.setup-xcode.outputs.version }}
         body: |
