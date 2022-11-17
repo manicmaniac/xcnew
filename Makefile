@@ -14,7 +14,7 @@ uninstall:
 	$(RM) $(PREFIX)/bin/xcnew $(PREFIX)/share/man/man1/xcnew.1
 
 check:
-	$(XCODEBUILD) test
+	$(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test
 
 installcheck:
 	xcodebuild build -project xcnew.xcodeproj -target xcnew-integration-tests
