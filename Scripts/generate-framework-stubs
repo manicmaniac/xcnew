@@ -26,8 +26,8 @@ class-dump -H \
            "$contents_dir/Frameworks/IDEFoundation.framework"
 
 find Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
-    # Remove C++ destructor declaration, which is not permitted in Objective-C class.
-    /^- (void)\.cxx_destruct;$/d
+    # Remove C++ constructor declaration, which is not permitted in Objective-C class.
+    /^- (id)\.cxx_construct;$/d
 
     # Import Foundation.framework instead of importing individual headers.
     s/^#import <objc\/NSObject\.h>$/#import <Foundation\/Foundation.h>/
