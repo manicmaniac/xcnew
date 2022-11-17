@@ -38,6 +38,11 @@ jobs:
       run: make check | xcpretty
     - name: Install
       run: make install | xcpretty
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: xcnew-xcode-${{ matrix.xcode }}.xcresult
+        path: xcnew.xcresult/*
     - name: Format coverage
       run: |
         xcrun xccov view --report --json xcnew.xcresult > coverage.json
