@@ -7,12 +7,15 @@
 #import <Foundation/Foundation.h>
 
 
-@class DVTExtendedPlatformInfo, DVTFilePath, DVTPlatformFamily, DVTVersion, NSArray, NSDictionary, NSHashTable, NSSet, NSString;
+@class DVTExtendedPlatformInfo, DVTFilePath, DVTPlatformFamily, DVTSDK, DVTVersion, NSArray, NSDictionary, NSHashTable, NSSet, NSString, _TtC13DVTFoundation16DVTKnownPlatform;
 
 @interface DVTPlatform : NSObject<NSCopying>
 
-+ (id)_preferredArchitectureForPlatformWithIdentifier:(id)arg1;
 + (id)extraPlatformFolders;
++ (id)onlyLoadPlatformFamilyNames;
++ (id)onlyLoadPlatformIdentifiers;
++ (BOOL)onlySearchExtraPlatformFolders;
++ (BOOL)allowMissingDefaultPlatform;
 + (id)defaultPlatform;
 + (BOOL)validatePlatformDataReturningError:(id *)arg1;
 + (BOOL)loadAllPlatformsReturningError:(id *)arg1;
@@ -38,17 +41,22 @@
 @property (readonly) DVTFilePath *platformPath;             // @synthesize platformPath=_platformPath;
 @property (readonly, copy) NSString *platformDirectoryName; // @synthesize platformDirectoryName=_platformDirectoryName;
 @property (readonly) DVTVersion *minimumSDKVersion;         // @synthesize minimumSDKVersion=_minimumSDKVersion;
-@property (readonly) DVTPlatformFamily *family;             // @synthesize family=_family;
+@property (retain) DVTPlatformFamily *family;               // @synthesize family=_family;
 @property (readonly, copy) NSString *name;                  // @synthesize name=_name;
 @property (readonly, copy) NSArray *alternateNames;         // @synthesize alternateNames=_alternateNames;
 @property (readonly, copy) NSString *identifier;            // @synthesize identifier=_identifier;
+@property (readonly) BOOL isiOSDevice;
+@property (readonly) BOOL isWatchDevice;
+@property (readonly) BOOL isWatchPlatform;
 - (id)copyWithZone:(struct _NSZone *)arg1;
 - (unsigned long long)hash;
 - (BOOL)isEqual:(id)arg1;
 - (id)description;
 @property (readonly, copy) NSString *internalSDKName;
 @property (readonly, copy) NSString *sdkName;
+- (id)mappedOperatingSystemVersionForPlatformFamilyName:(id)arg1 version:(id)arg2;
 - (id)mappedOperatingSystemVersionForPlatformFamily:(id)arg1 version:(id)arg2;
+@property (readonly) DVTSDK *defaultSDKForPlatformInstallation;
 @property (readonly, copy) NSSet *SDKs;
 - (void)addSDK:(id)arg1;
 - (id)internalPropertyListDictionary;
@@ -57,5 +65,9 @@
 - (id)initWithPropertyListDictionary:(id)arg1 path:(id)arg2;
 - (id)dvt_extendedInfoOrError:(id *)arg1;
 @property (readonly) DVTExtendedPlatformInfo *dvt_extendedInfo;
+@property (nonatomic, readonly) DVTSDK *latestInternalOrPublicSDK;
+@property (nonatomic, readonly) DVTSDK *latestPublicOrInternalSDK;
+@property (nonatomic, readonly) NSArray *allSupportedArchitectures;
+@property (nonatomic, readonly) _TtC13DVTFoundation16DVTKnownPlatform *knownPlatform;
 
 @end

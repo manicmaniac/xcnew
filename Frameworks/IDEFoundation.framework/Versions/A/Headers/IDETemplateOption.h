@@ -13,6 +13,7 @@
 
 + (id)keyPathsForValuesAffectingBooleanValue;
 + (id)keyPathsForValuesAffectingDisplayValues;
++ (id)keyPathsForValuesAffectingAssistantWarningString;
 + (id)keyPathsForValuesAffectingHasValidValue;
 + (id)keyPathsForValuesAffectingDisplayValue;
 + (id)allowedTemplateOptionTypes;
@@ -21,6 +22,7 @@
 @property (nonatomic) BOOL disabledByConstraints;                   // @synthesize disabledByConstraints=_disabledByConstraints;
 @property (nonatomic) BOOL enabled;                                 // @synthesize enabled=_enabled;
 @property (nonatomic) BOOL indented;                                // @synthesize indented=_indented;
+@property (nonatomic) BOOL warnForProblematicProductNames;          // @synthesize warnForProblematicProductNames=_warnForProblematicProductNames;
 @property long long sortOrder;                                      // @synthesize sortOrder=_sortOrder;
 @property (readonly) NSDictionary *variables;                       // @synthesize variables=_variables;
 @property (readonly) NSDictionary *allowedTypes;                    // @synthesize allowedTypes=_allowedTypes;
@@ -51,6 +53,7 @@
 - (void)updateFilteredDisplayValuesWithOptions:(id)arg1;
 @property (readonly) NSArray *displayValues;
 @property (readonly) BOOL hasExplicitValues;
+@property (readonly) NSString *assistantWarningString;
 @property (readonly) BOOL hasValidValue;
 - (void)updateValueWithBuildables:(id)arg1;
 - (void)updateValueWithOptions:(id)arg1;
