@@ -13,3 +13,4 @@
 (allow sysctl-read
     (sysctl-name "hw.pagesize" "hw.pagesize_compat")
     (sysctl-name "machdep.cpu.core_count"))
+(allow user-preference-write)
