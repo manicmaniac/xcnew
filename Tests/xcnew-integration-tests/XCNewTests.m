@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "XCNFileHierarchyAssertions.h"
 #import "XCNMacroDefinitions.h"
+#import "XCNSpamWarningSuppressor.h"
 
 @interface XCNewTests : XCTestCase
 @end
@@ -21,38 +22,7 @@
     NSURL *_sandboxProfileURL;
 }
 
-/**
- * A regular expression pattern to match and delete spam warnings from Xcode.
- *
- * When running Xcode 13 command line tools on Apple Silicon devices,
- * it warns about symbol collision between libamsupport and MobileDevice.framework.
- * This could be a bug in Xcode 13 as many developers reported in developer forums or other websites.
- * Although setting command line tools to /Library/Developer/CommandLineTools may fix the issue,
- * this solution does not help on CI environment because it needs command line tools set under
- * Xcode's developer directory.
- *
- * - https://developer.apple.com/forums/thread/698628
- * - https://stackoverflow.com/q/65547989
- */
-static NSString *const kSymbolCollisionWarningPattern = @"^objc\\[[0-9]+\\]: Class AMSupportURL(ConnectionDelegate|Session) is implemented in both "
-                                                        @"/usr/lib/libamsupport.dylib \\(0x[0-9a-f]+\\) and "
-                                                        @"/Library/Apple/System/Library/PrivateFrameworks/MobileDevice\\.framework/Versions/A/MobileDevice "
-                                                        @"\\(0x[0-9a-f]+\\)\\. One of the two will be used. Which one is undefined.$\\n";
-static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
-
 // MARK: Public
-
-+ (void)initialize {
-    [super initialize];
-    // Instantiate a regular expression as early as possible so that the syntax error can be found earlier.
-    NSError *error;
-    XCNSymbolCollisionWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kSymbolCollisionWarningPattern
-                                                                                           options:NSRegularExpressionAnchorsMatchLines
-                                                                                             error:&error];
-    if (!XCNSymbolCollisionWarningRegularExpression) {
-        [NSException raise:NSInvalidArgumentException format:@"%@", error];
-    }
-}
 
 - (BOOL)setUpWithError:(NSError *__autoreleasing _Nullable *)error {
     _fileManager = NSFileManager.defaultManager;
@@ -124,6 +94,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/default");
 }
 
@@ -133,6 +104,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-t", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/tests" : @"Fixtures/tests@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
@@ -143,6 +115,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-c", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/core-data");
 }
 
@@ -152,6 +125,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-C", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/cloud-kit");
 }
 
@@ -161,6 +135,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-o", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/objective-c");
 }
 
@@ -170,6 +145,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-s", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, @"Fixtures/swift-ui");
 }
 
@@ -179,6 +155,7 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
     NSArray *arguments = @[ @"-S", productName ];
     XCTAssertEqual([self runWithArguments:arguments output:&outputString error:&errorString], 0);
     XCTAssertEqualObjects(outputString, @"");
+    XCTAssertEqualObjects(errorString, @"");
     NSString *specificationName = (XCODE_VERSION_MAJOR >= 0x1300 ? @"Fixtures/swift-ui-lifecycle" : @"Fixtures/swift-ui-lifecycle@xcode12");
     XCNAssertFileHierarchyEqualsToSpecificationName(_currentDirectoryURL, specificationName);
 }
@@ -208,25 +185,14 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
         *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
     }
     if (errorString) {
-        if (!(*errorString = [self readStringSuppressingLogNoiseFromFileHandle:errorPipe.fileHandleForReading error:&error])) {
+        XCNSpamWarningSuppressor *suppressor = [[XCNSpamWarningSuppressor alloc] initWithFileHandle:errorPipe.fileHandleForReading];
+        if (!(*errorString = [suppressor readStringToEndOfFileAndReturnError:&error])) {
             self.continueAfterFailure = NO;
             XCTFail(@"%@", error);
             return -1;
         }
     }
     return task.terminationStatus;
-}
-
-- (NSString *)readStringSuppressingLogNoiseFromFileHandle:(NSFileHandle *)fileHandle error:(NSError **)error {
-    NSData *data = [fileHandle readDataToEndOfFileAndReturnError:error];
-    if (!data) {
-        return nil;
-    }
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    return [XCNSymbolCollisionWarningRegularExpression stringByReplacingMatchesInString:string
-                                                                                options:(NSMatchingOptions)0
-                                                                                  range:NSMakeRange(0, string.length)
-                                                                           withTemplate:@""];
 }
 
 @end
