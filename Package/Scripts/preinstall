@@ -15,6 +15,6 @@ fi
 
 for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
 do
-    new_rpath="${developer_dir}/${old_rpath##*/Contents/Developer/}"
+    new_rpath="$(echo "$old_rpath" | sed -e "s|.*/Contents/Developer|$developer_dir|")"
     install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
 done
