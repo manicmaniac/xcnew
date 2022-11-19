@@ -3,14 +3,22 @@
 (version 1)
 
 (deny default)
-(allow process-exec
+(allow process-exec*
+    (regex #"XCBBuildService")
     (regex #"xcnew$"))
+(allow process-fork)
 (allow ipc-posix-shm*)
+(allow iokit-open-user-client)
 (allow mach-lookup)
+(allow file-ioctl
+    (literal "/dev/dtracehelper"))
 (allow file-read*)
 (allow file-write*
-    (subpath "/private/var/folders"))
-(allow sysctl-read
-    (sysctl-name "hw.pagesize" "hw.pagesize_compat")
-    (sysctl-name "machdep.cpu.core_count"))
+    (subpath "/private/var/folders")
+    (literal "/dev/dtracehelper")
+    (literal "/dev/null"))
+(allow job-creation)
+(allow sysctl*)
+(allow system-fsctl)
+(allow user-preference-read)
 (allow user-preference-write)
