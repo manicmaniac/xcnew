@@ -13,6 +13,8 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
     steps:
     - uses: actions/checkout@v3
+    - name: Validate version
+      run: test "$(agvtool what-version -terse)" = "${GITHUB_REF#refs/*/}"
     - run: make xcnew.pkg
     - name: Install package
       run: sudo installer -pkg xcnew.pkg -target /
