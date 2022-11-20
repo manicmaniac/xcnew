@@ -88,7 +88,7 @@ static XCNOptionParser *_sharedOptionParser;
                     *error = XCNErrorInvalidOptionWithString(@(argv[optind - 1]));
                 }
                 return nil;
-            // `getopt()` always catches any invalid options and return '?' so that `default:` block is not needed.
+                // `getopt()` always catches any invalid options and return '?' so that `default:` block is not needed.
         }
     }
     int numberOfRestArguments = argc - optind;
