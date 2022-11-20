@@ -54,25 +54,24 @@
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
-- (void)testXCNErrorInvalidOptionWithStringWithShortOption {
-    NSError *error = XCNErrorInvalidOptionWithString(@"-X");
+- (void)testXCNErrorInvalidOptionWithCStringWithShortOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("-X");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNErrorInvalidOptionWithStringWithUnprintableShortOption {
-    const char *unprintableOption = "-\x80";
-    NSError *error = XCNErrorInvalidOptionWithString(@(unprintableOption));
+- (void)testXCNErrorInvalidOptionWithCStringWithUnprintableShortOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("-\x80");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\\x80'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
-- (void)testXCNErrorInvalidOptionWithStringWithLongOption {
-    NSError *error = XCNErrorInvalidOptionWithString(@"--invalid");
+- (void)testXCNErrorInvalidOptionWithCStringWithLongOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("--invalid");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--invalid'.");
