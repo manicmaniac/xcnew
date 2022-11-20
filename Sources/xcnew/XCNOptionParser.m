@@ -88,9 +88,7 @@ static XCNOptionParser *_sharedOptionParser;
                     *error = XCNErrorInvalidOptionWithString(@(argv[optind - 1]));
                 }
                 return nil;
-            default:
-                [NSException raise:NSInvalidArgumentException format:@"Invalid argument '%c' is found.", shortOption, nil];
-                break;
+            // `getopt()` always catches any invalid options and return '?' so that `default:` block is not needed.
         }
     }
     int numberOfRestArguments = argc - optind;
