@@ -78,6 +78,14 @@
     XCTAssertNil(error.localizedFailureReason);
 }
 
+- (void)testXCNErrorInvalidOptionWithCStringWithUTF8LongOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("--日本語");
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--日本語'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
 - (void)testXCNErrorWrongNumberOfArgumentsWithRangeWithShortRange {
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 0);
     NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
