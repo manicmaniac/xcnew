@@ -54,7 +54,15 @@
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
-- (void)testXCNErrorInvalidOptionWithString {
+- (void)testXCNErrorInvalidOptionWithStringWithShortOption {
+    NSError *error = XCNErrorInvalidOptionWithString(@"-X");
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
+- (void)testXCNErrorInvalidOptionWithStringWithLongOption {
     NSError *error = XCNErrorInvalidOptionWithString(@"--invalid");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
