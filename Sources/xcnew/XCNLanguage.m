@@ -8,6 +8,8 @@
 
 #import "XCNLanguage.h"
 
+// MARK: Public
+
 NSString *NSStringFromXCNLanguage(XCNLanguage language) {
     switch (language) {
         case XCNLanguageSwift:

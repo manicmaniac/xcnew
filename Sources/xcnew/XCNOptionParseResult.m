@@ -10,6 +10,8 @@
 
 @implementation XCNOptionParseResult
 
+// MARK: Public
+
 - (instancetype)initWithProject:(XCNProject *)project outputURL:(NSURL *)outputURL {
     self = [super init];
     if (self) {

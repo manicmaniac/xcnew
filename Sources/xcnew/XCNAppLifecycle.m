@@ -8,6 +8,8 @@
 
 #import "XCNAppLifecycle.h"
 
+// MARK: Public
+
 NSString *NSStringFromXCNAppLifecycle(XCNAppLifecycle lifecycle) {
     switch (lifecycle) {
         case XCNAppLifecycleCocoa:
