@@ -66,7 +66,7 @@
     NSError *error = XCNErrorInvalidOptionWithCString("-\x80");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
-    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\\x80'.");
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\uFFFD'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 
