@@ -217,6 +217,20 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertNil(result);
                                   XCTAssertTrue([output containsString:version]);
                                   XCTAssertNil(error);
+                              }],
+            // Unicode characters
+            [self invocationWithArguments:@[ @"xcnew", @"-\uFFFD" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--日本語" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--日本語"]);
                               }]
         ]];
     }
