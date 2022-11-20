@@ -11,6 +11,9 @@
 @implementation XCNOptionParseResult
 
 - (instancetype)initWithProject:(XCNProject *)project outputURL:(NSURL *)outputURL {
+    NSParameterAssert(project != nil);
+    NSParameterAssert(outputURL != nil);
+    NSParameterAssert(outputURL.isFileURL);
     self = [super init];
     if (self) {
         _project = project;
