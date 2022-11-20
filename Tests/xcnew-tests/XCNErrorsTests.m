@@ -62,6 +62,15 @@
     XCTAssertNil(error.localizedFailureReason);
 }
 
+- (void)testXCNErrorInvalidOptionWithStringWithUnprintableShortOption {
+    const char *unprintableOption = "-\x80";
+    NSError *error = XCNErrorInvalidOptionWithString(@(unprintableOption));
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\\x80'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
 - (void)testXCNErrorInvalidOptionWithStringWithLongOption {
     NSError *error = XCNErrorInvalidOptionWithString(@"--invalid");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
