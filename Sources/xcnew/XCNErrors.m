@@ -63,7 +63,7 @@ NSError *XCNErrorInvalidOptionWithCString(const char *longOption) {
     NSData *optionData = [NSData dataWithBytes:longOption length:strlen(longOption)];
     NSString *optionString;
     [NSString stringEncodingForData:optionData
-                    encodingOptions:@{NSStringEncodingDetectionSuggestedEncodingsKey : @[@(NSUTF8StringEncoding)],
+                    encodingOptions:@{NSStringEncodingDetectionSuggestedEncodingsKey : @[ @(NSUTF8StringEncoding) ],
                                       NSStringEncodingDetectionUseOnlySuggestedEncodingsKey : @YES}
                     convertedString:&optionString
                 usedLossyConversion:nil];
