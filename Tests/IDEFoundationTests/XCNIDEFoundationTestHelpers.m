@@ -10,4 +10,6 @@
 
 #import <XCTest/XCTest.h>
 
+// MARK: Public
+
 NSString *const XCNXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.ProjectTemplateKind";

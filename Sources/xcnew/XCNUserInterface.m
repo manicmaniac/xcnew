@@ -8,6 +8,8 @@
 
 #import "XCNUserInterface.h"
 
+// MARK: Public
+
 NSString *NSStringFromXCNUserInterface(XCNUserInterface userInterface) {
     switch (userInterface) {
         case XCNUserInterfaceSwiftUI:

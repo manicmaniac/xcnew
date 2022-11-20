@@ -8,13 +8,13 @@
 
 #import "XCNErrorsInternal.h"
 
-static NSString *const kXcodeChangesInterfaceFailureReason = @"This error means Xcode changes interface to manipulate project files.";
-
 // MARK: Public
 
 NSErrorDomain const XCNErrorDomain = @"XCNErrorDomain";
 
 // MARK: Internal
+
+static NSString *const kXcodeChangesInterfaceFailureReason = @"This error means Xcode changes interface to manipulate project files.";
 
 NSError *XCNErrorFileWriteUnknownWithURL(NSURL *url) {
     NSCParameterAssert(url != nil);
