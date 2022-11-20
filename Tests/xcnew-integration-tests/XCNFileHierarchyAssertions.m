@@ -21,6 +21,12 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationName(XCTestCase *self, 
 }
 
 void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, NSURL *url, NSURL *specificationURL, NSString *file, NSUInteger line) {
+    NSCParameterAssert(self != nil);
+    NSCParameterAssert(url != nil);
+    NSCParameterAssert(url.isFileURL);
+    NSCParameterAssert(specificationURL != nil);
+    NSCParameterAssert(specificationURL.isFileURL);
+    NSCParameterAssert(file != nil);
     NSTask *task = [[NSTask alloc] init];
     task.currentDirectoryURL = url;
     task.executableURL = [NSURL fileURLWithPath:@"/usr/sbin/mtree"];
@@ -70,11 +76,16 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
 // MARK: Private
 
 static NSURL *XCNFindFileHierarchySpecificationURLWithName(XCTestCase *testCase, NSString *specificationName) {
+    NSCParameterAssert(testCase != nil);
+    NSCParameterAssert(specificationName != nil);
     NSBundle *bundle = [NSBundle bundleForClass:[testCase class]];
     return [bundle URLForResource:specificationName withExtension:@"dist"];
 }
 
 static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line, NSError *error) {
+    NSCParameterAssert(testCase != nil);
+    NSCParameterAssert(description != nil);
+    NSCParameterAssert(file != nil);
     XCTSourceCodeLocation *location = [[XCTSourceCodeLocation alloc] initWithFilePath:file lineNumber:line];
     XCTSourceCodeContext *context = [[XCTSourceCodeContext alloc] initWithLocation:location];
     XCTIssue *issue = [[XCTIssue alloc] initWithType:XCTIssueTypeThrownError

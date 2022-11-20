@@ -45,6 +45,7 @@
 }
 
 - (instancetype)initWithFileHandle:(NSFileHandle *)fileHandle {
+    NSParameterAssert(fileHandle != nil);
     self = [super init];
     if (self) {
         _fileHandle = fileHandle;

@@ -31,6 +31,7 @@
 
 - (BOOL)writeToURL:(NSURL *)url timeout:(NSTimeInterval)timeout error:(NSError *__autoreleasing _Nullable *)error {
     NSParameterAssert(url != nil);
+    NSParameterAssert(url.isFileURL);
     NSParameterAssert(timeout > 0);
     if (![XCNProject initializeIDEIfNeededWithError:error]) {
         return NO;
@@ -127,6 +128,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
 }
 
 - (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
+    NSParameterAssert(kind != nil);
     DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
     for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
         if (!_template.hiddenFromChooser &&
