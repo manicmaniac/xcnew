@@ -54,11 +54,35 @@
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
-- (void)testXCNErrorInvalidOptionWithString {
-    NSError *error = XCNErrorInvalidOptionWithString(@"--invalid");
+- (void)testXCNErrorInvalidOptionWithCStringWithShortOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("-X");
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
+- (void)testXCNErrorInvalidOptionWithCStringWithUnprintableShortOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("-\x80");
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\uFFFD'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
+- (void)testXCNErrorInvalidOptionWithCStringWithLongOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("--invalid");
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--invalid'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
+- (void)testXCNErrorInvalidOptionWithCStringWithUTF8LongOption {
+    NSError *error = XCNErrorInvalidOptionWithCString("--日本語");
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--日本語'.");
     XCTAssertNil(error.localizedFailureReason);
 }
 

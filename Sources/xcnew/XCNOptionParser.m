@@ -85,7 +85,7 @@ static XCNOptionParser *_sharedOptionParser;
                 break;
             case '?':
                 if (error) {
-                    *error = XCNErrorInvalidOptionWithString(@(argv[optind - 1]));
+                    *error = XCNErrorInvalidOptionWithCString(argv[optind - 1]);
                 }
                 return nil;
             default:

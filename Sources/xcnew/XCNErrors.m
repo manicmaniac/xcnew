@@ -58,9 +58,16 @@ NSError *XCNErrorTemplateFactoryTimeoutWithTimeout(NSTimeInterval timeout) {
     return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorTemplateFactoryTimeout userInfo:userInfo];
 }
 
-NSError *XCNErrorInvalidOptionWithString(NSString *longOption) {
+NSError *XCNErrorInvalidOptionWithCString(const char *longOption) {
     NSCParameterAssert(longOption != NULL);
-    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unrecognized option '%@'.", longOption]};
+    NSData *optionData = [NSData dataWithBytes:longOption length:strlen(longOption)];
+    NSString *optionString;
+    [NSString stringEncodingForData:optionData
+                    encodingOptions:@{NSStringEncodingDetectionSuggestedEncodingsKey : @[ @(NSUTF8StringEncoding) ],
+                                      NSStringEncodingDetectionUseOnlySuggestedEncodingsKey : @YES}
+                    convertedString:&optionString
+                usedLossyConversion:nil];
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unrecognized option '%@'.", optionString]};
     return [NSError errorWithDomain:XCNErrorDomain code:XCNErrorInvalidOption userInfo:userInfo];
 }
 
