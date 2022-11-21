@@ -157,6 +157,7 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorWrongNumberOfArgument);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"0 for 1"]);
                               }],
             [self invocationWithArguments:@[ @"xcnew", @"-X" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
@@ -164,13 +165,32 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"-X"]);
                               }],
-            [self invocationWithArguments:@[ @"xcnew", @"--invalid" ]
+            [self invocationWithArguments:@[ @"xcnew", @"--invalid", @"--help" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
                                   XCTAssertNil(result);
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--invalid"]);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--日本語" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--日本語"]);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--objc", @"-\uFFFD" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTExpectFailure(@"getopt() cannot treat non ASCII characters in options.");
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"-\uFFFD"]);
                               }],
             // Reverse-ordered options
             [self invocationWithArguments:@[ @"xcnew", @"Example", @"-i", @"com.github.manicmaniac" ]
@@ -217,20 +237,6 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertNil(result);
                                   XCTAssertTrue([output containsString:version]);
                                   XCTAssertNil(error);
-                              }],
-            // Unicode characters
-            [self invocationWithArguments:@[ @"xcnew", @"-\uFFFD" ]
-                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertNil(result);
-                                  XCTAssertEqualObjects(output, @"");
-                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
-                              }],
-            [self invocationWithArguments:@[ @"xcnew", @"--日本語" ]
-                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
-                                  XCTAssertNil(result);
-                                  XCTAssertEqualObjects(output, @"");
-                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
-                                  XCTAssertTrue([error.localizedDescription containsString:@"--日本語"]);
                               }]
         ]];
     }
