@@ -192,12 +192,23 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
                                   XCTAssertTrue([error.localizedDescription containsString:@"-\uFFFD"]);
                               }],
+            // Missing argument
+            [self invocationWithArguments:@[ @"xcnew", @"-i" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"Missing"]);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"-i"]);
+                              }],
             [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
                                   XCTAssertNil(result);
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"Missing"]);
                                   XCTAssertTrue([error.localizedDescription containsString:@"--organization-identifier"]);
                               }],
             // Reverse-ordered options
