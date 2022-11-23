@@ -83,6 +83,16 @@ static XCNOptionParser *_sharedOptionParser;
             case 'S':
                 lifecycle = XCNAppLifecycleSwiftUI;
                 break;
+            case ':':
+                /*
+                 * Although man pages of `getopt_long(3)` says "return `:' if there was a missing option argument and error messages are suppressed",
+                 * this behavior seems changed by defining `GNU_COMPATIBLE` flag at compile time.
+                 * So at least on macOS 12.5, `getopt_long(3)` never returns ':'.
+                 *
+                 * However, to be compatible with a future release of macOS, I put ':' label here and make it fall though.
+                 *
+                 * @see https://github.com/apple-oss-distributions/Libc/blob/7861c72b1692b65f79c03f21a8a1a8e51e14c843/stdlib/FreeBSD/getopt_long.c#L66
+                 */
             case '?':
                 if (error) {
                     const char *option = argv[optind - 1];
