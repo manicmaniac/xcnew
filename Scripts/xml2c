@@ -209,7 +209,7 @@ class HelpFormatter(argparse.HelpFormatter):
 def _main(argv=sys.argv):
     if os.getenv('DOCTEST') == '1':
         import doctest
-        return doctest.testmod()
+        return doctest.testmod()[0] > 0
     parser = argparse.ArgumentParser()
     parser.add_argument('-H', '--help-only', action='store_true',
                         help='Generate only help text')
@@ -274,4 +274,4 @@ _test_mxml = """<?xml version="1.0" encoding="UTF-8"?>
 
 
 if __name__ == '__main__':
-    _main()
+    sys.exit(_main())
