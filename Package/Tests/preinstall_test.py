@@ -1,32 +1,33 @@
 #!/usr/bin/env python3
 
+import pathlib
 import shutil
 import subprocess
 import tempfile
 import shlex
-import os
 import unittest
 
 
 class PreinstallTest(unittest.TestCase):
-    executable_path = os.path.normpath(os.path.join(__file__, '../../Scripts/preinstall'))
-    fixtures_path = os.path.normpath(os.path.join(__file__, '../Fixtures'))
+    executable_path = pathlib.Path(__file__).joinpath('../../Scripts/preinstall').resolve()
+    fixtures_path = pathlib.Path(__file__).joinpath('../Fixtures').resolve()
 
     def setUp(self):
         self.original_developer_dir = subprocess.check_output(['xcode-select', '--print-path'], encoding='utf-8').rstrip()
-        self.tmpdir = tempfile.TemporaryDirectory()
+        self.tmpdir_object = tempfile.TemporaryDirectory()
+        self.tmpdir = pathlib.Path(self.tmpdir_object.name)
         self.setup_installer_payload_dir()
         self.setup_developer_dir()
 
     def tearDown(self):
-        self.tmpdir.cleanup()
+        self.tmpdir_object.cleanup()
 
     def test_preinstall(self):
         out, err, status = self.run_preinstall(self.xcode_developer_dir)
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
-        self.assertTrue(all(rpath.startswith(self.xcode_developer_dir) for rpath in self.get_rpaths()))
+        self.assertTrue(all(rpath.startswith(str(self.xcode_developer_dir)) for rpath in self.get_rpaths()))
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
         out, err, status = self.run_preinstall(self.command_line_tools_developer_dir)
@@ -43,7 +44,7 @@ class PreinstallTest(unittest.TestCase):
         }
         process = subprocess.Popen(args,
                                    executable=self.executable_path,
-                                   cwd=self.tmpdir.name,
+                                   cwd=self.tmpdir,
                                    env=env,
                                    encoding='utf-8',
                                    stdout=subprocess.PIPE,
@@ -66,32 +67,32 @@ class PreinstallTest(unittest.TestCase):
         return rpaths
 
     def setup_installer_payload_dir(self):
-        self.installer_payload_dir = os.path.join(self.tmpdir.name, 'Payload')
-        bin_dir = os.path.join(self.installer_payload_dir, 'usr', 'local', 'bin')
-        os.makedirs(bin_dir)
-        self.xcnew_path = os.path.join(bin_dir, 'xcnew')
-        shutil.copy(os.path.join(self.fixtures_path, 'xcnew'), self.xcnew_path)
+        self.installer_payload_dir = self.tmpdir / 'Payload'
+        bin_dir = self.installer_payload_dir / 'usr/local/bin'
+        bin_dir.mkdir(parents=True)
+        self.xcnew_path = bin_dir / 'xcnew'
+        shutil.copy(self.fixtures_path / 'xcnew', self.xcnew_path)
 
     def setup_developer_dir(self):
         self.setup_command_line_tools_developer_dir()
         self.setup_xcode_developer_dir()
 
     def setup_command_line_tools_developer_dir(self):
-        self.command_line_tools_developer_dir = os.path.join(self.tmpdir.name, 'Library', 'Developer', 'CommandLineTools')
-        os.makedirs(self.command_line_tools_developer_dir)
+        self.command_line_tools_developer_dir = self.tmpdir / 'Library/Developer/CommandLineTools'
+        self.command_line_tools_developer_dir.mkdir(parents=True)
 
     def setup_xcode_developer_dir(self):
-        contents_dir = os.path.join(self.tmpdir.name, 'Applications', 'Xcode.app', 'Contents')
-        self.xcode_developer_dir = os.path.join(contents_dir, 'Developer')
-        bin_dir = os.path.join(self.xcode_developer_dir, 'usr', 'bin')
-        os.makedirs(bin_dir)
-        with open(os.path.join(contents_dir, 'Info.plist'), 'w') as f:
+        contents_dir = self.tmpdir / 'Applications/Xcode.app/Contents'
+        self.xcode_developer_dir = contents_dir / 'Developer'
+        bin_dir = self.xcode_developer_dir / 'usr/bin'
+        bin_dir.mkdir(parents=True)
+        with contents_dir.joinpath('Info.plist').open('w') as f:
             f.write('CFBundleIdentifier = "com.apple.dt.Xcode";\n')
-        xcrun_path = os.path.join(bin_dir, 'xcrun')
-        with open(xcrun_path, 'w') as f:
+        xcrun_path = bin_dir / 'xcrun'
+        with xcrun_path.open('w') as f:
             f.write('#!/bin/sh\n')
             f.write('DEVELOPER_DIR={} "$@"'.format(shlex.quote(self.original_developer_dir)))
-        os.chmod(xcrun_path, 0o700)
+        xcrun_path.chmod(0o700)
 
 
 if __name__ == '__main__':
