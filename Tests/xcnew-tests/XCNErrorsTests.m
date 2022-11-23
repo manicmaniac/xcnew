@@ -54,8 +54,16 @@
     XCTAssertEqualObjects(error.localizedFailureReason, @"This error means Xcode changes interface to manipulate project files.");
 }
 
+- (void)testXCNErrorInvalidOptionWithCStringWithMissingArgument {
+    NSError *error = XCNErrorInvalidOptionWithCString("-i", YES);
+    XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+    XCTAssertEqual(error.code, 6);
+    XCTAssertEqualObjects(error.localizedDescription, @"Missing argument for option '-i'.");
+    XCTAssertNil(error.localizedFailureReason);
+}
+
 - (void)testXCNErrorInvalidOptionWithCStringWithShortOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("-X");
+    NSError *error = XCNErrorInvalidOptionWithCString("-X", NO);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
@@ -63,7 +71,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithUnprintableShortOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("-\x80");
+    NSError *error = XCNErrorInvalidOptionWithCString("-\x80", NO);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\uFFFD'.");
@@ -71,7 +79,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithLongOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("--invalid");
+    NSError *error = XCNErrorInvalidOptionWithCString("--invalid", NO);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--invalid'.");
@@ -79,7 +87,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithUTF8LongOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("--日本語");
+    NSError *error = XCNErrorInvalidOptionWithCString("--日本語", NO);
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--日本語'.");

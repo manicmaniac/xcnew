@@ -85,7 +85,9 @@ static XCNOptionParser *_sharedOptionParser;
                 break;
             case '?':
                 if (error) {
-                    *error = XCNErrorInvalidOptionWithCString(argv[optind - 1]);
+                    const char *option = argv[optind - 1];
+                    BOOL missingArgument = [self isArgumentRequiredForOption:option];
+                    *error = XCNErrorInvalidOptionWithCString(option, missingArgument);
                 }
                 return nil;
                 // `getopt()` always catches any invalid options and return '?' so that `default:` block is not needed.
@@ -107,6 +109,25 @@ static XCNOptionParser *_sharedOptionParser;
     project.lifecycle = lifecycle;
     NSURL *outputURL = [NSURL fileURLWithPath:@(argv[optind + (numberOfRestArguments - 1)])];
     return [[XCNOptionParseResult alloc] initWithProject:project outputURL:outputURL];
+}
+
+// MARK: Private
+
+- (BOOL)isArgumentRequiredForOption:(const char *)option {
+    if (strlen(option) == 2 && strncmp(option, "-", 1) == 0) {
+        for (size_t i = 0; XCNLongOptions[i].name; i++) {
+            if (option[1] == XCNLongOptions[i].val && XCNLongOptions[i].has_arg == required_argument) {
+                return YES;
+            }
+        }
+    } else if (strlen(option) >= 3 && strncmp(option, "--", 2) == 0) {
+        for (size_t i = 0; XCNLongOptions[i].name; i++) {
+            if (strcmp(&(option[2]), XCNLongOptions[i].name) == 0 && XCNLongOptions[i].has_arg == required_argument) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 
 @end

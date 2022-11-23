@@ -192,6 +192,14 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
                                   XCTAssertTrue([error.localizedDescription containsString:@"-\uFFFD"]);
                               }],
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--organization-identifier"]);
+                              }],
             // Reverse-ordered options
             [self invocationWithArguments:@[ @"xcnew", @"Example", @"-i", @"com.github.manicmaniac" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
