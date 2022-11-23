@@ -9,11 +9,16 @@ import unittest
 
 
 class PreinstallTest(unittest.TestCase):
-    executable_path = pathlib.Path(__file__).joinpath('../../Scripts/preinstall').resolve()
-    fixtures_path = pathlib.Path(__file__).joinpath('../Fixtures').resolve()
+    script_path = pathlib.Path(__file__)
+    executable_path = script_path.joinpath(
+            '../../Scripts/preinstall').resolve()
+    fixtures_path = script_path.joinpath('../Fixtures').resolve()
 
     def setUp(self):
-        self.original_developer_dir = subprocess.check_output(['xcode-select', '--print-path'], encoding='utf-8').rstrip()
+        self.original_developer_dir = subprocess.check_output(
+            ['xcode-select', '--print-path'],
+            encoding='utf-8',
+        ).rstrip()
         self.tmpdir_object = tempfile.TemporaryDirectory()
         self.tmpdir = pathlib.Path(self.tmpdir_object.name)
         self.setup_installer_payload_dir()
@@ -27,14 +32,17 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
-        self.assertTrue(all(rpath.startswith(str(self.xcode_developer_dir)) for rpath in self.get_rpaths()))
+        self.assertTrue(all(rpath.startswith(str(self.xcode_developer_dir))
+                            for rpath in self.get_rpaths()))
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
-        out, err, status = self.run_preinstall(self.command_line_tools_developer_dir)
+        out, err, status = self.run_preinstall(
+                self.command_line_tools_developer_dir)
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 1)
-        self.assertTrue(all(rpath.startswith('/Applications') for rpath in self.get_rpaths()))
+        self.assertTrue(all(rpath.startswith('/Applications')
+                            for rpath in self.get_rpaths()))
 
     def run_preinstall(self, developer_dir):
         args = []
@@ -55,7 +63,8 @@ class PreinstallTest(unittest.TestCase):
     def get_rpaths(self):
         rpaths = []
         in_rpath = False
-        out = subprocess.check_output(['otool', '-l', self.xcnew_path], encoding='utf-8')
+        out = subprocess.check_output(['otool', '-l', self.xcnew_path],
+                                      encoding='utf-8')
         for line in out.splitlines():
             line = line.strip()
             if line.startswith('cmd LC_RPATH'):
@@ -78,7 +87,8 @@ class PreinstallTest(unittest.TestCase):
         self.setup_xcode_developer_dir()
 
     def setup_command_line_tools_developer_dir(self):
-        self.command_line_tools_developer_dir = self.tmpdir / 'Library/Developer/CommandLineTools'
+        self.command_line_tools_developer_dir = self.tmpdir.joinpath(
+                'Library/Developer/CommandLineTools')
         self.command_line_tools_developer_dir.mkdir(parents=True)
 
     def setup_xcode_developer_dir(self):
@@ -91,7 +101,8 @@ class PreinstallTest(unittest.TestCase):
         xcrun_path = bin_dir / 'xcrun'
         with xcrun_path.open('w') as f:
             f.write('#!/bin/sh\n')
-            f.write('DEVELOPER_DIR={} "$@"'.format(shlex.quote(self.original_developer_dir)))
+            f.write('DEVELOPER_DIR={} "$@"'.format(
+                shlex.quote(self.original_developer_dir)))
         xcrun_path.chmod(0o700)
 
 
