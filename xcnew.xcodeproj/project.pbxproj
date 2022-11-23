@@ -33,6 +33,7 @@
 		5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */; };
 		5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */; };
 		5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */; };
+		5B4EAD2F292AE50E00398438 /* XCNOptionParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4EAD2E292AE50E00398438 /* XCNOptionParserTests.m */; };
 		5B5364AF2602C915007E7F20 /* DVTFilePathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE75965260106EE00DC1E89 /* DVTFilePathTests.m */; };
 		5B5364C12602CBFD007E7F20 /* IDETemplateKindTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596826010D8A00DC1E89 /* IDETemplateKindTests.m */; };
 		5B5364C22602CBFD007E7F20 /* IDETemplateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7596A26011AE600DC1E89 /* IDETemplateTests.m */; };
@@ -143,6 +144,7 @@
 		5B39EAAA260BD5510028A910 /* XCNAppLifecycle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycle.m; sourceTree = "<group>"; };
 		5B39EAC1260C69AD0028A910 /* XCNAppLifecycleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNAppLifecycleTests.m; sourceTree = "<group>"; };
 		5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNUserInterface.h; sourceTree = "<group>"; };
+		5B4EAD2E292AE50E00398438 /* XCNOptionParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNOptionParserTests.m; sourceTree = "<group>"; };
 		5B5364A72602C8F8007E7F20 /* DVTFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVTFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5364B02602C957007E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B5364B72602CB37007E7F20 /* IDEFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDEFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +258,7 @@
 				5B1F0F4A22F8515700A7AFFA /* XCNErrorsTests.m */,
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */,
+				5B4EAD2E292AE50E00398438 /* XCNOptionParserTests.m */,
 				5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
@@ -524,6 +527,7 @@
 				5B1F0F4C22F8520000A7AFFA /* XCNErrors.m in Sources */,
 				5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */,
 				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
+				5B4EAD2F292AE50E00398438 /* XCNOptionParserTests.m in Sources */,
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */,

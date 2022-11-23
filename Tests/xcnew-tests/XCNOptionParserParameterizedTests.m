@@ -157,6 +157,7 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorWrongNumberOfArgument);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"0 for 1"]);
                               }],
             [self invocationWithArguments:@[ @"xcnew", @"-X" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
@@ -164,13 +165,51 @@ static NSArray<NSInvocation *> *_testInvocations;
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"-X"]);
                               }],
-            [self invocationWithArguments:@[ @"xcnew", @"--invalid" ]
+            [self invocationWithArguments:@[ @"xcnew", @"--invalid", @"--help" ]
                               expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
                                   XCTAssertNil(result);
                                   XCTAssertEqualObjects(output, @"");
                                   XCTAssertEqualObjects(error.domain, XCNErrorDomain);
                                   XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--invalid"]);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--日本語" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--日本語"]);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--objc", @"-\uFFFD" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTExpectFailure(@"getopt() cannot treat non ASCII characters in options.");
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"-\uFFFD"]);
+                              }],
+            // Missing argument
+            [self invocationWithArguments:@[ @"xcnew", @"-i" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"Missing"]);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"-i"]);
+                              }],
+            [self invocationWithArguments:@[ @"xcnew", @"--organization-identifier" ]
+                              expectation:^(XCNOptionParseResult *result, NSString *output, NSError *error) {
+                                  XCTAssertNil(result);
+                                  XCTAssertEqualObjects(output, @"");
+                                  XCTAssertEqualObjects(error.domain, XCNErrorDomain);
+                                  XCTAssertEqual(error.code, XCNErrorInvalidOption);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"Missing"]);
+                                  XCTAssertTrue([error.localizedDescription containsString:@"--organization-identifier"]);
                               }],
             // Reverse-ordered options
             [self invocationWithArguments:@[ @"xcnew", @"Example", @"-i", @"com.github.manicmaniac" ]
@@ -246,35 +285,6 @@ static NSArray<NSInvocation *> *_testInvocations;
     [_outputPipe.fileHandleForReading closeFile];
     dup2(_originalStandardOutputFileDescriptor, STDOUT_FILENO);
     close(_originalStandardOutputFileDescriptor);
-}
-
-- (void)testInheritance {
-    Class XCNSubclassedOptionParser = objc_allocateClassPair([XCNOptionParser class], "XCNSubclassedOptionParser", 0);
-    [self addTeardownBlock:^{
-        objc_disposeClassPair(XCNSubclassedOptionParser);
-    }];
-    objc_registerClassPair(XCNSubclassedOptionParser);
-    XCTAssertThrowsSpecificNamed([XCNSubclassedOptionParser self], NSException, NSInternalInconsistencyException);
-}
-
-- (void)testSomeInvalidShortOptionThrowsInvalidArgumentException {
-    XCTExpectFailure(@"getopt() always returns '?' when the short option is invalid so there's no chance for exception to be thrown.");
-    NSUInteger exceptionThrownCount = 0;
-    char shortOption[3] = "-?";
-    char *argv[3] = {"xcnew", shortOption, NULL};
-    for (char i = CHAR_MIN; i < CHAR_MAX; i++) {
-        shortOption[1] = i;
-        @try {
-            [XCNOptionParser.sharedOptionParser parseArguments:argv count:2 error:nil];
-        }
-        @catch (NSException *exception) {
-            if (exception.name != NSInvalidArgumentException) {
-                @throw exception;
-            }
-            exceptionThrownCount++;
-        }
-    }
-    XCTAssertGreaterThan(exceptionThrownCount, 0);
 }
 
 - (void)parameterizedTestParseArguments:(NSArray<NSString *> *)arguments expectation:(XCNOptionParserExpectation)expectationBlock {

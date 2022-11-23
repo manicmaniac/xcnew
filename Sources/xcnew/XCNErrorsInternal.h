@@ -16,7 +16,7 @@ OBJC_EXPORT NSError *XCNErrorTemplateNotFoundWithKindIdentifier(NSString *templa
 OBJC_EXPORT NSError *XCNErrorTemplateFactoryNotFoundWithKindIdentifier(NSString *templateKindIdentifier);
 OBJC_EXPORT NSError *XCNErrorTemplateFactoryTimeoutWithTimeout(NSTimeInterval timeout);
 OBJC_EXPORT NSError *XCNErrorInvalidShortOptionWithCharacter(char shortOption);
-OBJC_EXPORT NSError *XCNErrorInvalidOptionWithCString(const char *longOption);
+OBJC_EXPORT NSError *XCNErrorInvalidOptionWithCString(const char *longOption, BOOL missingArgument);
 OBJC_EXPORT NSError *XCNErrorWrongNumberOfArgumentsWithRange(NSRange acceptableRange, int actual);
 
 NS_ASSUME_NONNULL_END
