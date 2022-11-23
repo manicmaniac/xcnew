@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import pathlib
+import shlex
 import shutil
 import subprocess
 import tempfile
-import shlex
 import unittest
 
 
