@@ -15,6 +15,7 @@ uninstall:
 
 check:
 	$(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test
+	env PYTHONDONTWRITEBYTECODE=1 python3 -munittest discover --verbose Package/Tests
 
 installcheck:
 	xcodebuild build -project xcnew.xcodeproj -target xcnew-integration-tests
