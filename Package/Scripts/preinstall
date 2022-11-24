@@ -6,16 +6,16 @@ is_developer_dir_in_xcode() {
 }
 
 get_rpaths() {
-    xcrun otool -l "$1" | sed -ne '/cmd LC_RPATH/,/path /s/^ *path \(.*\) (offset [0-9]*)$/\1/p'
+    /usr/bin/otool -l "$1" | /usr/bin/sed -ne '/cmd LC_RPATH/,/path /s/^ *path \(.*\) (offset [0-9]*)$/\1/p'
 }
 
-developer_dir="$(xcode-select --print-path)"
+developer_dir="$(/usr/bin/xcode-select --print-path)"
 if ! is_developer_dir_in_xcode "$developer_dir"; then
     exit 1
 fi
 
 for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
 do
-    new_rpath="$(echo "$old_rpath" | sed -e "s|.*/Contents/Developer|$developer_dir|")"
-    install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
+    new_rpath="$(echo "$old_rpath" | /usr/bin/sed -e "s|.*/Contents/Developer|$developer_dir|")"
+    /usr/bin/install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
 done
