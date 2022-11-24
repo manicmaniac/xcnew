@@ -15,6 +15,8 @@ uninstall:
 
 check:
 	$(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test
+
+check-scripts:
 	env PYTHONDONTWRITEBYTECODE=1 python3 -munittest discover --verbose Package/Tests
 
 installcheck:

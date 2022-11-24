@@ -38,6 +38,8 @@ jobs:
     - run: ./cc-test-reporter before-build
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+    - name: Run package script tests
+      run: make check-scripts
     - name: Run unit tests
       run: make check | xcpretty
     - name: Install
