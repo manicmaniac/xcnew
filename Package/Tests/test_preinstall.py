@@ -57,7 +57,7 @@ class PreinstallTest(unittest.TestCase):
                                    encoding='utf-8',
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
-        out, err = process.communicate(timeout=5)
+        out, err = process.communicate(timeout=20)
         return (out, err, process.returncode)
 
     def get_rpaths(self):
