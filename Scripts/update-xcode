@@ -111,7 +111,7 @@ class Readme(object):
 def _main(argv=sys.argv):
     if os.getenv('DOCTEST') == '1':
         import doctest
-        return doctest.testmod()
+        return doctest.testmod()[0] > 0
     if len(argv) != 3:
         print(f'usage: {argv[0]} <XCODE_VERSION> <RUNNER>')
     current_xcode_version = argv[1]
@@ -161,4 +161,4 @@ _test_readme = '''
 
 
 if __name__ == '__main__':
-    _main()
+    sys.exit(_main())

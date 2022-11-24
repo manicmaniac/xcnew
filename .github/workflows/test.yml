@@ -55,9 +55,20 @@ jobs:
       with:
         name: coverages
         path: codeclimate-xcode-${{ matrix.xcode }}.json
+  test-scripts:
+    runs-on: ubuntu-20.04
+    env:
+      DOCTEST: 1
+    steps:
+    - uses: actions/checkout@v3
+    - run: ./Scripts/update-docdate
+    - run: ./Scripts/update-xcode
+    - run: ./Scripts/xml2c
   upload-coverage:
     runs-on: ubuntu-20.04
-    needs: test
+    needs:
+    - test
+    - test-scripts
     steps:
     - uses: actions/download-artifact@v3
       with:
@@ -94,5 +105,3 @@ jobs:
       run: |
         curl -Lo Distribution.xsd https://bit.ly/3AnpijZ
         xmllint --schema Distribution.xsd --noout Package/Distribution.xml
-    - name: Run doctest
-      run: find Scripts -type f -exec grep -Fq '#!/usr/bin/env python' {} \; -exec env DOCTEST=1 {} -v \;

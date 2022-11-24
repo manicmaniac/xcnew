@@ -40,7 +40,7 @@ def format_date(date):
 def _main(argv=sys.argv):
     if os.getenv('DOCTEST') == '1':
         import doctest
-        return doctest.testmod()
+        return doctest.testmod()[0] > 0
     today = format_date(dt.date.today())
     parser = ArgumentParser(description=__doc__)
     parser.add_argument('-d', '--date', default=today,
@@ -56,4 +56,4 @@ def _main(argv=sys.argv):
 
 
 if __name__ == '__main__':
-    _main()
+    sys.exit(_main())
