@@ -86,7 +86,7 @@ class GetoptFormatter(object):
 
     def format_c_source(self):
         """
-        >>> formatter = GetoptFormatter('./', 'xcnew', 'desc', [], [], '')
+        >>> formatter = GetoptFormatter('./', 'xcnew', 'desc', [], [], '', [])
         >>> '#include <getopt.h>' in formatter.format_c_source()
         True
         """
