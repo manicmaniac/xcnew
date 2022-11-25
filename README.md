@@ -82,6 +82,15 @@ Supported Xcode versions
 
 `Xcode >= 12.5 && Xcode <= 14.1.0`.
 
+Known bugs
+----------
+
+`xcnew` emits the following warnings while outputting project files.
+
+There could be a bug in `xcnew` but you can ignore this kind of warnings, everything goes well.
+
+    2022-11-25 10:38:35.224290+0900 ibtoold[18002:7011474] [default] 0 is not a valid connection ID.
+
 How it works?
 -------------
 
