@@ -5,7 +5,8 @@
 
 (deny default)
 (allow process-exec*
-    (regex #"XCBBuildService")
+    (regex #"XCBBuildService$")
+    (regex #"ibtoold$")
     (regex #"xcnew$"))
 (allow process-fork)
 (allow ipc-posix-shm*)
@@ -14,9 +15,10 @@
     (literal "/dev/dtracehelper"))
 (allow file-read*)
 (allow file-write*
-    (subpath "/private/var/folders")
     (literal "/dev/dtracehelper")
-    (literal "/dev/null"))
+    (literal "/dev/null")
+    (regex #"^/Users/[0-9A-Za-z_]+/Library/Caches/com\.apple\.dt\.Xcode/Downloads/[0-9A-F]+\.dvtdownloadableindex")
+    (subpath "/private/var/folders"))
 (allow job-creation)
 (allow sysctl*)
 (allow system-fsctl)
