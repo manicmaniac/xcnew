@@ -9,8 +9,8 @@
 #import "XCNOptionParser.h"
 
 #import <getopt.h>
+#import "NSError+XCNErrorDomain.h"
 #import "XCNAppLifecycle.h"
-#import "XCNErrorsInternal.h"
 #import "XCNLanguage.h"
 #import "XCNOptionDefinitions.h"
 #import "XCNOptionParseResult.h"
@@ -97,7 +97,7 @@ static XCNOptionParser *_sharedOptionParser;
                 if (error) {
                     const char *option = argv[optind - 1];
                     BOOL missingArgument = [self isArgumentRequiredForOption:option];
-                    *error = XCNErrorInvalidOptionWithCString(option, missingArgument);
+                    *error = [NSError xcn_errorInvalidOptionWithCString:option missingArgument:missingArgument];
                 }
                 return nil;
                 // `getopt()` always catches any invalid options and return '?' so that `default:` block is not needed.
@@ -107,7 +107,7 @@ static XCNOptionParser *_sharedOptionParser;
     if (numberOfRestArguments != 1 && numberOfRestArguments != 2) {
         if (error) {
             NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
-            *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, numberOfRestArguments);
+            *error = [NSError xcn_errorWrongNumberOfArgumentsWithRange:acceptableRangeOfArgumentsCount actual:numberOfRestArguments];
         }
         return nil;
     }

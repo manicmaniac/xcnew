@@ -10,7 +10,7 @@
 
 #import <DVTFoundation/DVTFoundation.h>
 #import <IDEFoundation/IDEFoundation.h>
-#import "XCNErrorsInternal.h"
+#import "NSError+XCNErrorDomain.h"
 #import "XCNMacroDefinitions.h"
 
 @implementation XCNProject {
@@ -41,28 +41,28 @@
     }
     if (![_fileManager isWritableFileAtPath:url.path]) {
         if (error) {
-            *error = XCNErrorFileWriteUnknownWithURL(url);
+            *error = [NSError xcn_errorFileWriteUnknownWithURL:url];
         }
         return NO;
     }
     IDETemplateKind *kind = [IDETemplateKind templateKindForIdentifier:kXcode3ProjectTemplateKindIdentifier];
     if (!kind) {
         if (error) {
-            *error = XCNErrorTemplateKindNotFoundWithIdentifier(kXcode3ProjectTemplateKindIdentifier);
+            *error = [NSError xcn_errorTemplateKindNotFoundWithIdentifier:kXcode3ProjectTemplateKindIdentifier];
         }
         return NO;
     }
     IDETemplateFactory *factory = kind.factory;
     if (!factory) {
         if (error) {
-            *error = XCNErrorTemplateFactoryNotFoundWithKindIdentifier(kXcode3ProjectTemplateKindIdentifier);
+            *error = [NSError xcn_errorTemplateFactoryNotFoundWithKindIdentifier:kXcode3ProjectTemplateKindIdentifier];
         }
         return NO;
     }
     IDETemplate *template = [self singleViewAppProjectTemplateForKind:kind];
     if (!template) {
         if (error) {
-            *error = XCNErrorTemplateNotFoundWithKindIdentifier(kXcode3ProjectTemplateKindIdentifier);
+            *error = [NSError xcn_errorTemplateNotFoundWithKindIdentifier:kXcode3ProjectTemplateKindIdentifier];
         }
         return NO;
     }
@@ -81,7 +81,7 @@
                                   }];
     if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
         if (error) {
-            *error = XCNErrorTemplateFactoryTimeoutWithTimeout(timeout);
+            *error = [NSError xcn_errorTemplateFactoryTimeoutWithTimeout:timeout];
         }
         return NO;
     }

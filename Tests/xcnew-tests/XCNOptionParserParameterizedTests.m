@@ -8,8 +8,8 @@
 
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
+#import "NSError+XCNErrorDomain.h"
 #import "XCNAppLifecycle.h"
-#import "XCNErrors.h"
 #import "XCNOptionParseResult.h"
 #import "XCNOptionParser.h"
 #import "XCNProject.h"

@@ -1,21 +1,21 @@
 //
-//  XCNErrorsTests.m
+//  NSError+XCNErrorDomainTests.m
 //  xcnew-tests
 //
-//  Created by Ryosuke Ito on 8/5/19.
-//  Copyright © 2019 Ryosuke Ito. All rights reserved.
+//  Created by Ryosuke Ito on 11/26/22.
+//  Copyright © 2022 Ryosuke Ito. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
-#import "XCNErrorsInternal.h"
+#import "NSError+XCNErrorDomain.h"
 
-@interface XCNErrorsTests : XCTestCase
+@interface NSError_XCNErrorDomainTests : XCTestCase
 @end
 
-@implementation XCNErrorsTests
+@implementation NSError_XCNErrorDomainTests
 
 - (void)testXCNErrorFileWriteUnknownWithURL {
-    NSError *error = XCNErrorFileWriteUnknownWithURL([NSURL URLWithString:@"file:///path/to/file"]);
+    NSError *error = [NSError xcn_errorFileWriteUnknownWithURL:[NSURL fileURLWithPath:@"/path/to/file"]];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 1);
     XCTAssertEqualObjects(error.localizedDescription, @"Cannot write at path '/path/to/file'.");
@@ -23,7 +23,7 @@
 }
 
 - (void)testXCNErrorTemplateKindNotFoundWithIdentifier {
-    NSError *error = XCNErrorTemplateKindNotFoundWithIdentifier(@"com.github.manicmaniac.xcnew.template");
+    NSError *error = [NSError xcn_errorTemplateKindNotFoundWithIdentifier:@"com.github.manicmaniac.xcnew.template"];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 2);
     XCTAssertEqualObjects(error.localizedDescription, @"A template kind with identifier 'com.github.manicmaniac.xcnew.template' not found.");
@@ -31,7 +31,7 @@
 }
 
 - (void)testXCNErrorTemplateNotFoundWithKindIdentifier {
-    NSError *error = XCNErrorTemplateNotFoundWithKindIdentifier(@"com.github.manicmaniac.xcnew.template");
+    NSError *error = [NSError xcn_errorTemplateNotFoundWithKindIdentifier:@"com.github.manicmaniac.xcnew.template"];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 3);
     XCTAssertEqualObjects(error.localizedDescription, @"A template for kind 'com.github.manicmaniac.xcnew.template' not found.");
@@ -39,7 +39,7 @@
 }
 
 - (void)testXCNErrorTemplateFactoryTimeoutWithTimeout {
-    NSError *error = XCNErrorTemplateFactoryTimeoutWithTimeout(42);
+    NSError *error = [NSError xcn_errorTemplateFactoryTimeoutWithTimeout:42];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 4);
     XCTAssertEqualObjects(error.localizedDescription, @"Operation timed out.");
@@ -47,7 +47,7 @@
 }
 
 - (void)testXCNErrorTemplateFactoryNotFoundWithKindIdentifier {
-    NSError *error = XCNErrorTemplateFactoryNotFoundWithKindIdentifier(@"com.github.manicmaniac.xcnew.template");
+    NSError *error = [NSError xcn_errorTemplateFactoryNotFoundWithKindIdentifier:@"com.github.manicmaniac.xcnew.template"];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 5);
     XCTAssertEqualObjects(error.localizedDescription, @"A template factory associated with kind 'com.github.manicmaniac.xcnew.template' not found.");
@@ -55,7 +55,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithMissingArgument {
-    NSError *error = XCNErrorInvalidOptionWithCString("-i", YES);
+    NSError *error = [NSError xcn_errorInvalidOptionWithCString:"-i" missingArgument:YES];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Missing argument for option '-i'.");
@@ -63,7 +63,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithShortOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("-X", NO);
+    NSError *error = [NSError xcn_errorInvalidOptionWithCString:"-X" missingArgument:NO];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-X'.");
@@ -71,7 +71,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithUnprintableShortOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("-\x80", NO);
+    NSError *error = [NSError xcn_errorInvalidOptionWithCString:"-\x80" missingArgument:NO];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '-\uFFFD'.");
@@ -79,7 +79,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithLongOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("--invalid", NO);
+    NSError *error = [NSError xcn_errorInvalidOptionWithCString:"--invalid" missingArgument:NO];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--invalid'.");
@@ -87,7 +87,7 @@
 }
 
 - (void)testXCNErrorInvalidOptionWithCStringWithUTF8LongOption {
-    NSError *error = XCNErrorInvalidOptionWithCString("--日本語", NO);
+    NSError *error = [NSError xcn_errorInvalidOptionWithCString:"--日本語" missingArgument:NO];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 6);
     XCTAssertEqualObjects(error.localizedDescription, @"Unrecognized option '--日本語'.");
@@ -96,7 +96,7 @@
 
 - (void)testXCNErrorWrongNumberOfArgumentsWithRangeWithShortRange {
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 0);
-    NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
+    NSError *error = [NSError xcn_errorWrongNumberOfArgumentsWithRange:acceptableRangeOfArgumentsCount actual:4];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 7);
     XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1).");
@@ -105,7 +105,7 @@
 
 - (void)testXCNErrorWrongNumberOfArgumentsWithRangeWithLongRange {
     NSRange acceptableRangeOfArgumentsCount = NSMakeRange(1, 1);
-    NSError *error = XCNErrorWrongNumberOfArgumentsWithRange(acceptableRangeOfArgumentsCount, 4);
+    NSError *error = [NSError xcn_errorWrongNumberOfArgumentsWithRange:acceptableRangeOfArgumentsCount actual:4];
     XCTAssertEqualObjects(error.domain, XCNErrorDomain);
     XCTAssertEqual(error.code, 7);
     XCTAssertEqualObjects(error.localizedDescription, @"Wrong number of arguments (4 for 1..2).");
