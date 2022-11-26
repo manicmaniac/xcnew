@@ -9,7 +9,7 @@
 #import <IDEFoundation/IDEFoundation.h>
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
-#import "XCNErrors.h"
+#import "NSError+XCNErrorDomain.h"
 #import "XCNMacroDefinitions.h"
 #import "XCNProjectInternal.h"
 
