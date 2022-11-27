@@ -16,6 +16,7 @@ class PreinstallTest(unittest.TestCase):
     fixtures_path = script_path.joinpath('../Fixtures').resolve()
 
     def setUp(self):
+        self.maxDiff = None
         self.original_developer_dir = pathlib.Path(subprocess.check_output(
             ['xcode-select', '--print-path'],
             encoding='utf-8',
@@ -40,7 +41,7 @@ class PreinstallTest(unittest.TestCase):
         out, err, status = self.run_preinstall(
                 self.command_line_tools_developer_dir)
         self.assertEqual(out, '')
-        self.assertEqual(err, '')
+        self.assertIn('Xcode', err)
         self.assertEqual(status, 1)
         self.assertTrue(all(rpath.startswith('/Applications')
                             for rpath in self.get_rpaths()))

@@ -1,21 +1,129 @@
-#!/bin/sh
+#!/usr/bin/osascript -lJavaScript
 
-is_developer_dir_in_xcode() {
-    bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "${1}/../Info.plist" 2>/dev/null)"
-    test "$bundle_id" = 'com.apple.dt.Xcode'
+/**
+ * @file Pre-install script for `xcnew`.
+ *
+ * It retouches rpath in `xcnew` executable to be suitable for the user's environment.
+ *
+ * @see {@link /var/log/install.log} for runtime log.
+ */
+
+ObjC.import('Foundation');
+ObjC.import('stdlib');
+
+const process = {
+  /**
+   * @return {{[key: string]: string}}
+   */
+  get env() {
+    return ObjC.deepUnwrap($.NSProcessInfo.processInfo.environment);
+  }
+};
+
+/**
+ * @param {NSPipe} pipe
+ * @param {string} encoding
+ * @return {Ref|string}
+ */
+function readPipe(pipe, encoding) {
+  const error = $();
+  const data = pipe.fileHandleForReading.readDataToEndOfFileAndReturnError(error);
+  if (data.isNil()) {
+    throw new Error(error.description.js);
+  }
+  if (!encoding) {
+    return data.bytes;
+  }
+  const cfStringEncoding = $.CFStringConvertIANACharSetNameToEncoding($(encoding));
+  if (cfStringEncoding == $.kCFStringEncodingInvalidId) {
+    return data.bytes;
+  }
+  const nsStringEncoding = $.CFStringConvertEncodingToNSStringEncoding(cfStringEncoding);
+  const string = $.NSString.alloc.initWithDataEncoding(data, nsStringEncoding);
+  return string.js;
 }
 
-get_rpaths() {
-    /usr/bin/otool -l "$1" | /usr/bin/sed -ne '/cmd LC_RPATH/,/path /s/^ *path \(.*\) (offset [0-9]*)$/\1/p'
+/**
+ * @param {string} file
+ * @param {string[]} args
+ * @param {object} options
+ * @param {string} options.encoding
+ * @return {Ref|string}
+ */
+function execFileSync(file, args = [], options = {}) {
+  const task = $.NSTask.new;
+  task.executableURL = $.NSURL.fileURLWithPath(file);
+  task.arguments = args;
+  task.standardOutput = $.NSPipe.pipe;
+  task.standardError = $.NSPipe.pipe;
+  const error = $();
+  if (!task.launchAndReturnError(error)) {
+    throw new Error(error.description.js);
+  }
+  task.waitUntilExit;
+  const stdout = readPipe(task.standardOutput, options.encoding);
+  const stderr = readPipe(task.standardError, options.encoding);
+  const status = task.terminationStatus;
+  if (status != 0) {
+    const error = new Error(`Command failed: ${file}`);
+    error.stdout = stdout;
+    error.stderr = stderr;
+    error.status = status;
+    throw error;
+  }
+  return stdout;
 }
 
-developer_dir="$(/usr/bin/xcode-select --print-path)"
-if ! is_developer_dir_in_xcode "$developer_dir"; then
-    exit 1
-fi
+/**
+ * @param {string} developerDir
+ * @return {boolean}
+ */
+function isDeveloperDirInXcode(developerDir) {
+  const possibleInfoPlistURL = $.NSURL.fileURLWithPath(`${developerDir}/../Info.plist`);
+  const infoPlist = $.NSDictionary.dictionaryWithContentsOfURLError(possibleInfoPlistURL, null);
+  if (infoPlist.isNil()) {
+    return false;
+  }
+  const bundleId = infoPlist.objectForKey('CFBundleIdentifier').js;
+  return bundleId === 'com.apple.dt.Xcode';
+}
 
-for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
-do
-    new_rpath="$(echo "$old_rpath" | /usr/bin/sed -e "s|.*/Contents/Developer|$developer_dir|")"
-    /usr/bin/install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
-done
+/**
+ * @param {string} file
+ * @return {string[]}
+ */
+function getRpaths(file) {
+  const out = execFileSync('/usr/bin/otool', ['-l', file], {encoding: 'utf-8'});
+  const rpaths = [];
+  let inRpath = false;
+  for (const line of out.split('\n')) {
+    if (line.match(/cmd LC_RPATH/)) {
+      inRpath = true;
+      continue;
+    }
+    if (!inRpath) {
+      continue;
+    }
+    const matched = line.match(/^ *path (.*) \(offset \d*\)$/);
+    if (!matched) {
+      continue;
+    }
+    rpaths.push(matched[1]);
+  }
+  return rpaths;
+}
+
+const developerDir = execFileSync('/usr/bin/xcode-select', ['--print-path'], {encoding: 'utf-8'}).trimEnd();
+if (!isDeveloperDirInXcode(developerDir)) {
+  throw new Error('Developer directory must be in Xcode.app.');
+}
+const installerPayloadDir = process.env['INSTALLER_PAYLOAD_DIR'];
+if (!installerPayloadDir) {
+  throw new Error('Environment variable $INSTALLER_PAYLOAD_DIR not found.');
+}
+const xcnewPath = installerPayloadDir + '/usr/local/bin/xcnew';
+for (const oldRpath of getRpaths(xcnewPath)) {
+  const newRpath = developerDir + oldRpath.split('/Contents/Developer', 2)[1];
+  execFileSync('/usr/bin/install_name_tool', ['-rpath', oldRpath, newRpath, xcnewPath], {encoding: 'utf-8'});
+}
+$.exit(0);
