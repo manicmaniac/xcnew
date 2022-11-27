@@ -1,3 +1,4 @@
 *.mtreeignore linguist-language=Ignore-List
 *.sb linguist-language=Scheme
 *.tbd linguist-language=YAML
+/Package/Scripts/preinstall linguist-language=JavaScript
