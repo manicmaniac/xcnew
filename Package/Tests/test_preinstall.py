@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import pathlib
 import re
 import shlex
@@ -37,7 +38,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
-        expected_rpaths = [str(self.tmpdir / path) for path in (
+        expected_rpaths = [os.fspath(self.tmpdir / path) for path in (
             'Applications/Xcode.app/Contents/Developer/../Frameworks',
             'Applications/Xcode.app/Contents/Developer/../PlugIns',
             'Applications/Xcode.app/Contents/Developer/../SharedFrameworks'
@@ -119,7 +120,7 @@ class PreinstallTest(unittest.TestCase):
         with xcrun_path.open('w') as f:
             f.write('#!/bin/sh\n')
             f.write('DEVELOPER_DIR={} "$@"'.format(
-                shlex.quote(str(self.original_developer_dir))))
+                shlex.quote(os.fspath(self.original_developer_dir))))
         xcrun_path.chmod(0o700)
 
     _spam_warnings_re = re.compile(
