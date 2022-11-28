@@ -34,8 +34,12 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
-        self.assertTrue(all(rpath.startswith(str(self.xcode_developer_dir))
-                            for rpath in self.get_rpaths()))
+        expected_rpaths = [str(self.tmpdir / path) for path in (
+            'Applications/Xcode.app/Contents/Developer/../Frameworks',
+            'Applications/Xcode.app/Contents/Developer/../PlugIns',
+            'Applications/Xcode.app/Contents/Developer/../SharedFrameworks'
+        )]
+        self.assertListEqual(self.get_rpaths(), expected_rpaths)
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
         out, err, status = self.run_preinstall(
@@ -43,8 +47,12 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('Xcode', err)
         self.assertEqual(status, 1)
-        self.assertTrue(all(rpath.startswith('/Applications')
-                            for rpath in self.get_rpaths()))
+        expected_rpaths = [
+            '/Applications/Xcode.app/Contents/Developer/../Frameworks',
+            '/Applications/Xcode.app/Contents/Developer/../PlugIns',
+            '/Applications/Xcode.app/Contents/Developer/../SharedFrameworks'
+        ]
+        self.assertListEqual(self.get_rpaths(), expected_rpaths)
 
     def run_preinstall(self, developer_dir):
         args = []
