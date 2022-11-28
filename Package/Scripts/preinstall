@@ -93,24 +93,8 @@ function isDeveloperDirInXcode(developerDir) {
  * @return {string[]}
  */
 function getRpaths(file) {
-  const out = execFileSync('/usr/bin/otool', ['-l', file], {encoding: 'utf-8'});
-  const rpaths = [];
-  let inRpath = false;
-  for (const line of out.split('\n')) {
-    if (line.match(/cmd LC_RPATH/)) {
-      inRpath = true;
-      continue;
-    }
-    if (!inRpath) {
-      continue;
-    }
-    const matched = line.match(/^ *path (.*) \(offset \d*\)$/);
-    if (!matched) {
-      continue;
-    }
-    rpaths.push(matched[1]);
-  }
-  return rpaths;
+  const out = execFileSync('/usr/bin/objdump', ['--no-leading-headers', '--macho', '--rpaths', file], {encoding: 'utf-8'});
+  return out.trimEnd().split('\n');
 }
 
 const developerDir = execFileSync('/usr/bin/xcode-select', ['--print-path'], {encoding: 'utf-8'}).trimEnd();

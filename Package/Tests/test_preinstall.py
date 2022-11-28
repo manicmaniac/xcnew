@@ -64,19 +64,10 @@ class PreinstallTest(unittest.TestCase):
         return (out, err, process.returncode)
 
     def get_rpaths(self):
-        rpaths = []
-        in_rpath = False
-        out = subprocess.check_output(['otool', '-l', self.xcnew_path],
-                                      encoding='utf-8')
-        for line in out.splitlines():
-            line = line.strip()
-            if line.startswith('cmd LC_RPATH'):
-                in_rpath = True
-            elif in_rpath and line.startswith('path /'):
-                rpath = line.split(' ')[1]
-                rpaths.append(rpath)
-                in_rpath = False
-        return rpaths
+        args = ['objdump', '--no-leading-headers', '--macho', '--rpaths',
+                self.xcnew_path]
+        out = subprocess.check_output(args, encoding='utf-8')
+        return out.rstrip().splitlines()
 
     def setup_installer_payload_dir(self):
         self.installer_payload_dir = self.tmpdir / 'Payload'
