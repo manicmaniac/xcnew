@@ -1,5 +1,172 @@
 #!/usr/bin/osascript -lJavaScript
 
+ObjC.import('stdlib');
+
+class MachOBinary {
+  /**
+   * @param {string} path
+   */
+  constructor(path) {
+    const url = $.NSURL.fileURLWithPath(path);
+    const error = $();
+    const data = $.NSData.dataWithContentsOfURLOptionsError(url, 0, error);
+    if (data.isNil()) {
+      throw new Error(error.description.js);
+    }
+    this.bytes = data.bytes;
+    this.offset = 0;
+    this.parse();
+  }
+
+  parse() {
+    const magic = this.readInt32BE();
+    switch (magic) {
+      case 0xcafebabe >> 0:
+        this.fatHeader();
+        break;
+      case 0xcafebabf >> 0:
+        this.fatHeader();
+        break;
+      default:
+        this.offset -= 4;
+        const mach = this.machMagic();
+        this.archs = [{mach}];
+        break;
+    }
+  }
+
+  fatHeader() {
+    const nfatArch = this.readInt32BE();
+    const offset = this.offset;
+    this.archs = new Array(nfatArch);
+    for (let i = 0; i < nfatArch; i++) {
+      this.offset = offset;
+      this.archs[i] = this.fatArch();
+    }
+  }
+
+  fatArch() {
+    const cpuType = this.readInt32BE();
+    const cpuSubtype = this.readInt32BE();
+    const offset = this.readInt32BE();
+    const size = this.readInt32BE();
+    const align = this.readInt32BE();
+    this.offset = offset;
+    const mach = this.machMagic();
+    return {
+      cpuType,
+      cpuSubtype,
+      offset,
+      size,
+      align,
+      mach,
+    };
+  }
+
+  machMagic() {
+    const magic = this.readInt32LE();
+    switch (magic) {
+      case 0xfeedface >> 0:
+        return this.machHeader();
+      case 0xfeedfacf >> 0:
+        return this.machHeader(64);
+      default:
+        throw new Error(`Unknown mach magic: ${magic}`);
+    }
+  }
+
+  machHeader(bits = 32) {
+    const cputype = this.readInt32LE();
+    const cpusubtype = this.readInt32LE();
+    const filetype = this.readInt32LE();
+    const ncmds = this.readInt32LE();
+    const sizeofcmds = this.readInt32LE();
+    const flags = this.readInt32LE();
+    if (bits === 64) {
+      this.readInt32LE(); // reserved
+    }
+    const loadCommands = new Array(ncmds);
+    for (let i = 0; i < ncmds; i++) {
+      loadCommands[i] = this.loadCommand();
+    }
+    return {
+      cputype,
+      cpusubtype,
+      filetype,
+      ncmds,
+      sizeofcmds,
+      flags,
+      loadCommands,
+    };
+  }
+
+  loadCommand() {
+    const loadCommand = {
+      cmd: this.readInt32LE(),
+      cmdsize: this.readInt32LE(),
+    };
+    switch (loadCommand.cmd) {
+      case 0x8000001C >> 0: // LC_RPATH
+        return this.rpathCommand(loadCommand.cmdsize);
+      default:
+        this.offset += loadCommand.cmdsize - 8;
+        return loadCommand;
+    }
+  }
+
+  rpathCommand(cmdsize) {
+    const offset = this.readInt32LE();
+    const rpath = this.readString(cmdsize - offset);
+    return { offset, rpath };
+  }
+
+  /**
+   * @return {Ref}
+   */
+  readInt32BE() {
+    return (
+      this.bytes[this.offset++] << 24 |
+      this.bytes[this.offset++] << 16 |
+      this.bytes[this.offset++] << 8 |
+      this.bytes[this.offset++]
+    );
+  }
+
+  /**
+   * @return {Ref}
+   */
+  readInt32LE() {
+    return (
+      this.bytes[this.offset++] |
+      this.bytes[this.offset++] << 8 |
+      this.bytes[this.offset++] << 16 |
+      this.bytes[this.offset++] << 24
+    );
+  }
+
+  /**
+   * @param {number} length
+   * @return {string}
+   */
+  readString(length) {
+    const bytes = this.readBytes(length);
+    const firstNullCharacterIndex = bytes.indexOf(0);
+    return String.fromCharCode(...bytes.subarray(0, firstNullCharacterIndex));
+  }
+
+  /**
+   * @param {number} length
+   * @return {Ref}
+   */
+  readBytes(length) {
+    const bytes = new Uint8Array(length);
+    for (let i = 0; i < length; i++) {
+      bytes[i] = this.bytes[this.offset++];
+    }
+    return bytes;
+  }
+}
+
 /**
  * @file Pre-install script for `xcnew`.
  *
@@ -7,9 +174,6 @@
  *
  * @see {@link /var/log/install.log} for runtime log.
  */
-
-ObjC.import('Foundation');
-ObjC.import('stdlib');
 
 const process = {
   /**
@@ -93,8 +257,8 @@ function isDeveloperDirInXcode(developerDir) {
  * @return {string[]}
  */
 function getRpaths(file) {
-  const out = execFileSync('/usr/bin/objdump', ['--no-leading-headers', '--macho', '--rpaths', file], {encoding: 'utf-8'});
-  return out.trimEnd().split('\n');
+  const binary = new MachOBinary(file);
+  return binary.archs[0].mach.loadCommands.flatMap(c => c.rpath || []);
 }
 
 const developerDir = execFileSync('/usr/bin/xcode-select', ['--print-path'], {encoding: 'utf-8'}).trimEnd();
