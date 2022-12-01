@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import pathlib
 import re
 import shlex
@@ -36,7 +37,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
-        self.assertTrue(all(rpath.startswith(str(self.xcode_developer_dir))
+        self.assertTrue(all(rpath.startswith(os.fspath(self.xcode_developer_dir))
                             for rpath in self.get_rpaths()))
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
@@ -95,7 +96,7 @@ class PreinstallTest(unittest.TestCase):
         with xcrun_path.open('w') as f:
             f.write('#!/bin/sh\n')
             f.write('DEVELOPER_DIR={} "$@"'.format(
-                shlex.quote(str(self.original_developer_dir))))
+                shlex.quote(os.fspath(self.original_developer_dir))))
         xcrun_path.chmod(0o700)
 
     _spam_warnings_re = re.compile(
