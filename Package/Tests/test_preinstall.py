@@ -33,7 +33,10 @@ class PreinstallTest(unittest.TestCase):
         self.tmpdir_object.cleanup()
 
     def test_preinstall(self):
-        out, err, status = self.run_preinstall(self.xcode_developer_dir)
+        out, err, status = self.run_preinstall(
+            DEVELOPER_DIR=self.xcode_developer_dir,
+            INSTALLER_PAYLOAD_DIR=self.installer_payload_dir,
+        )
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
@@ -46,7 +49,8 @@ class PreinstallTest(unittest.TestCase):
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
         out, err, status = self.run_preinstall(
-                self.command_line_tools_developer_dir)
+            DEVELOPER_DIR=self.command_line_tools_developer_dir,
+        )
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 1)
@@ -57,12 +61,8 @@ class PreinstallTest(unittest.TestCase):
         ]
         self.assertListEqual(self.get_rpaths(), expected_rpaths)
 
-    def run_preinstall(self, developer_dir):
+    def run_preinstall(self, **env):
         args = []
-        env = {
-            'DEVELOPER_DIR': developer_dir,
-            'INSTALLER_PAYLOAD_DIR': self.installer_payload_dir,
-        }
         process = subprocess.Popen(args,
                                    executable=self.executable_path,
                                    cwd=self.tmpdir,
