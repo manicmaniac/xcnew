@@ -18,6 +18,7 @@ class PreinstallTest(unittest.TestCase):
     fixtures_path = script_path.joinpath('../Fixtures').resolve()
 
     def setUp(self):
+        self.maxDiff = None
         self.original_developer_dir = pathlib.Path(subprocess.check_output(
             ['xcode-select', '--print-path'],
             encoding='utf-8',
