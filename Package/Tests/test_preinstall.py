@@ -23,7 +23,7 @@ class PreinstallTest(unittest.TestCase):
             ['xcode-select', '--print-path'],
             encoding='utf-8',
         ).rstrip())
-        self.tmpdir_object = tempfile.TemporaryDirectory()
+        self.tmpdir_object = tempfile.TemporaryDirectory(prefix= ' ')
         self.tmpdir = pathlib.Path(self.tmpdir_object.name)
         self.setup_installer_payload_dir()
         self.setup_developer_dir()
