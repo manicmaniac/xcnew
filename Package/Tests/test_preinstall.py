@@ -56,9 +56,9 @@ class PreinstallTest(unittest.TestCase):
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
         expected_rpaths = [
-            '/Applications/Xcode.app/Contents/Developer/../Frameworks',
-            '/Applications/Xcode.app/Contents/Developer/../PlugIns',
-            '/Applications/Xcode.app/Contents/Developer/../SharedFrameworks',
+            '/path with whitespace/Xcode.app/Contents/Developer/../Frameworks',
+            '/path with whitespace/Xcode.app/Contents/Developer/../PlugIns',
+            '/path with whitespace/Xcode.app/Contents/Developer/../SharedFrameworks',
         ]
         self.assertListEqual(self.get_rpaths(), expected_rpaths)
 
@@ -70,9 +70,9 @@ class PreinstallTest(unittest.TestCase):
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
         expected_rpaths = [
-            '/Applications/Xcode.app/Contents/Developer/../Frameworks',
-            '/Applications/Xcode.app/Contents/Developer/../PlugIns',
-            '/Applications/Xcode.app/Contents/Developer/../SharedFrameworks',
+            '/path with whitespace/Xcode.app/Contents/Developer/../Frameworks',
+            '/path with whitespace/Xcode.app/Contents/Developer/../PlugIns',
+            '/path with whitespace/Xcode.app/Contents/Developer/../SharedFrameworks',
         ]
         self.assertListEqual(self.get_rpaths(), expected_rpaths)
 

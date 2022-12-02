@@ -20,6 +20,8 @@ if [ -z "$INSTALLER_PAYLOAD_DIR" ]; then
     exit 1
 fi
 
+IFS='
+' # newline
 for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
 do
     new_rpath="$(echo "$old_rpath" | /usr/bin/sed -e "s|.*/Contents/Developer|$developer_dir|")"
