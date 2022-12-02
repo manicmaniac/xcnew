@@ -24,7 +24,7 @@ class PreinstallTest(unittest.TestCase):
             ['xcode-select', '--print-path'],
             encoding='utf-8',
         ).rstrip())
-        self.tmpdir_object = tempfile.TemporaryDirectory(prefix= ' ')
+        self.tmpdir_object = tempfile.TemporaryDirectory(prefix=' ')
         self.tmpdir = pathlib.Path(self.tmpdir_object.name)
         self.setup_installer_payload_dir()
         self.setup_developer_dir()
@@ -55,11 +55,12 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
-        expected_rpaths = [
-            '/path with whitespace/Xcode.app/Contents/Developer/../Frameworks',
-            '/path with whitespace/Xcode.app/Contents/Developer/../PlugIns',
-            '/path with whitespace/Xcode.app/Contents/Developer/../SharedFrameworks',
-        ]
+        base = pathlib.Path('/path with space/Xcode.app/Contents/Developer/')
+        expected_rpaths = [os.fspath(path) for path in(
+            base / '../Frameworks',
+            base / '../PlugIns',
+            base / '../SharedFrameworks',
+        )]
         self.assertListEqual(self.get_rpaths(), expected_rpaths)
 
     def test_preinstall_when_not_running_in_installer(self):
@@ -69,11 +70,12 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
-        expected_rpaths = [
-            '/path with whitespace/Xcode.app/Contents/Developer/../Frameworks',
-            '/path with whitespace/Xcode.app/Contents/Developer/../PlugIns',
-            '/path with whitespace/Xcode.app/Contents/Developer/../SharedFrameworks',
-        ]
+        base = pathlib.Path('/path with space/Xcode.app/Contents/Developer/')
+        expected_rpaths = [os.fspath(path) for path in(
+            base / '../Frameworks',
+            base / '../PlugIns',
+            base / '../SharedFrameworks',
+        )]
         self.assertListEqual(self.get_rpaths(), expected_rpaths)
 
     def run_preinstall(self, **env):

@@ -11,12 +11,13 @@ get_rpaths() {
 
 developer_dir="$(/usr/bin/xcode-select --print-path)"
 if ! is_developer_dir_in_xcode "$developer_dir"; then
-    echo 'error: $DEVELOPER_DIR is not in Xcode. Run `xcode-select --switch /path/to/Xcode.app/Contents/Developer` to set it to the correct path.' >&2
+    # shellcheck disable=SC2016
+    echo 'error: DEVELOPER_DIR is not in Xcode. Run `xcode-select --switch /path/to/Xcode.app/Contents/Developer` to set it to the correct path.' >&2
     exit 1
 fi
 
 if [ -z "$INSTALLER_PAYLOAD_DIR" ]; then
-    echo 'error: $INSTALLER_PAYLOAD_DIR is not set. Do not run this script outside of installer context.' >&2
+    echo 'error: INSTALLER_PAYLOAD_DIR is not set. Do not run this script outside of installer context.' >&2
     exit 1
 fi
 
