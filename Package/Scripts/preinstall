@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 is_developer_dir_in_xcode() {
     bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "${1}/../Info.plist" 2>/dev/null)"
     test "$bundle_id" = 'com.apple.dt.Xcode'
@@ -11,9 +13,18 @@ get_rpaths() {
 
 developer_dir="$(/usr/bin/xcode-select --print-path)"
 if ! is_developer_dir_in_xcode "$developer_dir"; then
+    # shellcheck disable=SC2016
+    echo 'error: DEVELOPER_DIR is not in Xcode. Run `xcode-select --switch /path/to/Xcode.app/Contents/Developer` to set it to the correct path.' >&2
     exit 1
 fi
 
+if [ -z "$INSTALLER_PAYLOAD_DIR" ]; then
+    echo 'error: INSTALLER_PAYLOAD_DIR is not set. Do not run this script outside of installer context.' >&2
+    exit 1
+fi
+
+IFS='
+' # newline
 for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
 do
     new_rpath="$(echo "$old_rpath" | /usr/bin/sed -e "s|.*/Contents/Developer|$developer_dir|")"
