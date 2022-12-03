@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 is_developer_dir_in_xcode() {
     bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "${1}/../Info.plist" 2>/dev/null)"
     test "$bundle_id" = 'com.apple.dt.Xcode'
