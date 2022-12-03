@@ -17,6 +17,12 @@ class PreinstallTest(unittest.TestCase):
     executable_path = script_path.joinpath(
             '../../Scripts/preinstall').resolve()
     fixtures_path = script_path.joinpath('../Fixtures').resolve()
+    # Defined in ./Fixtures/Makefile
+    xcnew_rpaths = [
+        '/path with space/Xcode.app/Contents/Developer/../Frameworks',
+        '/path with space/Xcode.app/Contents/Developer/../PlugIns',
+        '/path with space/Xcode.app/Contents/Developer/../SharedFrameworks',
+    ]
 
     def setUp(self):
         self.maxDiff = None
@@ -55,13 +61,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
-        base = pathlib.Path('/path with space/Xcode.app/Contents/Developer/')
-        expected_rpaths = [os.fspath(path) for path in(
-            base / '../Frameworks',
-            base / '../PlugIns',
-            base / '../SharedFrameworks',
-        )]
-        self.assertListEqual(self.get_rpaths(), expected_rpaths)
+        self.assertListEqual(self.get_rpaths(), self.xcnew_rpaths)
 
     def test_preinstall_when_not_running_in_installer(self):
         out, err, status = self.run_preinstall(
@@ -71,12 +71,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
         base = pathlib.Path('/path with space/Xcode.app/Contents/Developer/')
-        expected_rpaths = [os.fspath(path) for path in(
-            base / '../Frameworks',
-            base / '../PlugIns',
-            base / '../SharedFrameworks',
-        )]
-        self.assertListEqual(self.get_rpaths(), expected_rpaths)
+        self.assertListEqual(self.get_rpaths(), self.xcnew_rpaths)
 
     def run_preinstall(self, **env):
         args = []
