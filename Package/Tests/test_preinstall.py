@@ -12,18 +12,18 @@ import unittest
 import macho
 
 
-class PreinstallTest(unittest.TestCase):
-    _script_path = pathlib.Path(__file__)
-    _executable_path = _script_path.joinpath(
-            '../../Scripts/preinstall').resolve()
-    _fixtures_path = _script_path.joinpath('../Fixtures').resolve()
-    # Defined in ./Fixtures/Makefile
-    _xcnew_rpaths = [
-        '/path with space/Xcode.app/Contents/Developer/../Frameworks',
-        '/path with space/Xcode.app/Contents/Developer/../PlugIns',
-        '/path with space/Xcode.app/Contents/Developer/../SharedFrameworks',
-    ]
+_script_path = pathlib.Path(__file__)
+_executable_path = _script_path.joinpath('../../Scripts/preinstall').resolve()
+_fixtures_path = _script_path.joinpath('../Fixtures').resolve()
+# Defined in ./Fixtures/Makefile
+_xcnew_rpaths = [
+    '/path with space/Xcode.app/Contents/Developer/../Frameworks',
+    '/path with space/Xcode.app/Contents/Developer/../PlugIns',
+    '/path with space/Xcode.app/Contents/Developer/../SharedFrameworks',
+]
 
+
+class PreinstallTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
         self._original_developer_dir = pathlib.Path(subprocess.check_output(
@@ -61,7 +61,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self._get_rpaths(), self._xcnew_rpaths)
+        self.assertListEqual(self._get_rpaths(), _xcnew_rpaths)
 
     def test_preinstall_when_not_running_in_installer(self):
         out, err, status = self._run_preinstall(
@@ -70,11 +70,11 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self._get_rpaths(), self._xcnew_rpaths)
+        self.assertListEqual(self._get_rpaths(), _xcnew_rpaths)
 
     def _run_preinstall(self, **env):
         process = subprocess.Popen([],
-                                   executable=self._executable_path,
+                                   executable=_executable_path,
                                    cwd=self._tmpdir,
                                    env=env,
                                    encoding='utf-8',
@@ -92,7 +92,7 @@ class PreinstallTest(unittest.TestCase):
         bin_dir = self.installer_payload_dir / 'usr/local/bin'
         bin_dir.mkdir(parents=True)
         self.xcnew_path = bin_dir / 'xcnew'
-        shutil.copy(self._fixtures_path / 'xcnew', self.xcnew_path)
+        shutil.copy(_fixtures_path / 'xcnew', self.xcnew_path)
 
     def _setup_developer_dir(self):
         self._setup_command_line_tools_developer_dir()
