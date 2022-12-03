@@ -40,8 +40,8 @@ class PreinstallTest(unittest.TestCase):
 
     def test_preinstall(self):
         out, err, status = self._run_preinstall(
-            DEVELOPER_DIR=self.xcode_developer_dir,
-            INSTALLER_PAYLOAD_DIR=self.installer_payload_dir,
+            DEVELOPER_DIR=self._xcode_developer_dir,
+            INSTALLER_PAYLOAD_DIR=self._installer_payload_dir,
         )
         self.assertEqual(out, '')
         self.assertEqual(err, '')
@@ -55,8 +55,8 @@ class PreinstallTest(unittest.TestCase):
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
         out, err, status = self._run_preinstall(
-            DEVELOPER_DIR=self.command_line_tools_developer_dir,
-            INSTALLER_PAYLOAD_DIR=self.installer_payload_dir,
+            DEVELOPER_DIR=self._command_line_tools_developer_dir,
+            INSTALLER_PAYLOAD_DIR=self._installer_payload_dir,
         )
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
@@ -65,7 +65,7 @@ class PreinstallTest(unittest.TestCase):
 
     def test_preinstall_when_not_running_in_installer(self):
         out, err, status = self._run_preinstall(
-            DEVELOPER_DIR=self.xcode_developer_dir,
+            DEVELOPER_DIR=self._xcode_developer_dir,
         )
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
@@ -85,28 +85,28 @@ class PreinstallTest(unittest.TestCase):
         return (out, err, process.returncode)
 
     def _get_rpaths(self):
-        return macho.get_rpaths(self.xcnew_path)
+        return macho.get_rpaths(self._xcnew_path)
 
     def _setup_installer_payload_dir(self):
-        self.installer_payload_dir = self._tmpdir / 'Payload'
-        bin_dir = self.installer_payload_dir / 'usr/local/bin'
+        self._installer_payload_dir = self._tmpdir / 'Payload'
+        bin_dir = self._installer_payload_dir / 'usr/local/bin'
         bin_dir.mkdir(parents=True)
-        self.xcnew_path = bin_dir / 'xcnew'
-        shutil.copy(_fixtures_path / 'xcnew', self.xcnew_path)
+        self._xcnew_path = bin_dir / 'xcnew'
+        shutil.copy(_fixtures_path / 'xcnew', self._xcnew_path)
 
     def _setup_developer_dir(self):
         self._setup_command_line_tools_developer_dir()
         self._setup_xcode_developer_dir()
 
     def _setup_command_line_tools_developer_dir(self):
-        self.command_line_tools_developer_dir = self._tmpdir.joinpath(
+        self._command_line_tools_developer_dir = self._tmpdir.joinpath(
                 'Library/Developer/CommandLineTools')
-        self.command_line_tools_developer_dir.mkdir(parents=True)
+        self._command_line_tools_developer_dir.mkdir(parents=True)
 
     def _setup_xcode_developer_dir(self):
         contents_dir = self._tmpdir / 'Applications/Xcode.app/Contents'
-        self.xcode_developer_dir = contents_dir / 'Developer'
-        bin_dir = self.xcode_developer_dir / 'usr/bin'
+        self._xcode_developer_dir = contents_dir / 'Developer'
+        bin_dir = self._xcode_developer_dir / 'usr/bin'
         bin_dir.mkdir(parents=True)
         with contents_dir.joinpath('Info.plist').open('w') as f:
             f.write('CFBundleIdentifier = "com.apple.dt.Xcode";\n')
