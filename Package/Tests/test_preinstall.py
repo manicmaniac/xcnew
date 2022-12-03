@@ -13,12 +13,12 @@ import macho
 
 
 class PreinstallTest(unittest.TestCase):
-    script_path = pathlib.Path(__file__)
-    executable_path = script_path.joinpath(
+    _script_path = pathlib.Path(__file__)
+    _executable_path = _script_path.joinpath(
             '../../Scripts/preinstall').resolve()
-    fixtures_path = script_path.joinpath('../Fixtures').resolve()
+    _fixtures_path = _script_path.joinpath('../Fixtures').resolve()
     # Defined in ./Fixtures/Makefile
-    xcnew_rpaths = [
+    _xcnew_rpaths = [
         '/path with space/Xcode.app/Contents/Developer/../Frameworks',
         '/path with space/Xcode.app/Contents/Developer/../PlugIns',
         '/path with space/Xcode.app/Contents/Developer/../SharedFrameworks',
@@ -26,87 +26,86 @@ class PreinstallTest(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = None
-        self.original_developer_dir = pathlib.Path(subprocess.check_output(
+        self._original_developer_dir = pathlib.Path(subprocess.check_output(
             ['xcode-select', '--print-path'],
             encoding='utf-8',
         ).rstrip())
-        self.tmpdir_object = tempfile.TemporaryDirectory(prefix=' ')
-        self.tmpdir = pathlib.Path(self.tmpdir_object.name)
-        self.setup_installer_payload_dir()
-        self.setup_developer_dir()
+        self._tmpdir_object = tempfile.TemporaryDirectory(prefix=' ')
+        self._tmpdir = pathlib.Path(self._tmpdir_object.name)
+        self._setup_installer_payload_dir()
+        self._setup_developer_dir()
 
     def tearDown(self):
-        self.tmpdir_object.cleanup()
+        self._tmpdir_object.cleanup()
 
     def test_preinstall(self):
-        out, err, status = self.run_preinstall(
+        out, err, status = self._run_preinstall(
             DEVELOPER_DIR=self.xcode_developer_dir,
             INSTALLER_PAYLOAD_DIR=self.installer_payload_dir,
         )
         self.assertEqual(out, '')
         self.assertEqual(err, '')
         self.assertEqual(status, 0)
-        expected_rpaths = [os.fspath(self.tmpdir / path) for path in (
+        expected_rpaths = [os.fspath(self._tmpdir / path) for path in (
             'Applications/Xcode.app/Contents/Developer/../Frameworks',
             'Applications/Xcode.app/Contents/Developer/../PlugIns',
             'Applications/Xcode.app/Contents/Developer/../SharedFrameworks',
         )]
-        self.assertListEqual(self.get_rpaths(), expected_rpaths)
+        self.assertListEqual(self._get_rpaths(), expected_rpaths)
 
     def test_preinstall_when_developer_dir_is_not_in_xcode(self):
-        out, err, status = self.run_preinstall(
+        out, err, status = self._run_preinstall(
             DEVELOPER_DIR=self.command_line_tools_developer_dir,
             INSTALLER_PAYLOAD_DIR=self.installer_payload_dir,
         )
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self.get_rpaths(), self.xcnew_rpaths)
+        self.assertListEqual(self._get_rpaths(), self._xcnew_rpaths)
 
     def test_preinstall_when_not_running_in_installer(self):
-        out, err, status = self.run_preinstall(
+        out, err, status = self._run_preinstall(
             DEVELOPER_DIR=self.xcode_developer_dir,
         )
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
         base = pathlib.Path('/path with space/Xcode.app/Contents/Developer/')
-        self.assertListEqual(self.get_rpaths(), self.xcnew_rpaths)
+        self.assertListEqual(self._get_rpaths(), self._xcnew_rpaths)
 
-    def run_preinstall(self, **env):
-        args = []
-        process = subprocess.Popen(args,
-                                   executable=self.executable_path,
-                                   cwd=self.tmpdir,
+    def _run_preinstall(self, **env):
+        process = subprocess.Popen([],
+                                   executable=self._executable_path,
+                                   cwd=self._tmpdir,
                                    env=env,
                                    encoding='utf-8',
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
         out, err = process.communicate(timeout=20)
-        err = self.suppress_spam_warnings(err)
+        err = self._suppress_spam_warnings(err)
         return (out, err, process.returncode)
 
-    def get_rpaths(self):
+    def _get_rpaths(self):
         return macho.get_rpaths(self.xcnew_path)
 
-    def setup_installer_payload_dir(self):
-        self.installer_payload_dir = self.tmpdir / 'Payload'
+    def _setup_installer_payload_dir(self):
+        self.installer_payload_dir = self._tmpdir / 'Payload'
         bin_dir = self.installer_payload_dir / 'usr/local/bin'
         bin_dir.mkdir(parents=True)
         self.xcnew_path = bin_dir / 'xcnew'
-        shutil.copy(self.fixtures_path / 'xcnew', self.xcnew_path)
+        shutil.copy(self._fixtures_path / 'xcnew', self.xcnew_path)
 
-    def setup_developer_dir(self):
-        self.setup_command_line_tools_developer_dir()
-        self.setup_xcode_developer_dir()
+    def _setup_developer_dir(self):
+        self._setup_command_line_tools_developer_dir()
+        self._setup_xcode_developer_dir()
 
-    def setup_command_line_tools_developer_dir(self):
-        self.command_line_tools_developer_dir = self.tmpdir.joinpath(
+    def _setup_command_line_tools_developer_dir(self):
+        self.command_line_tools_developer_dir = self._tmpdir.joinpath(
                 'Library/Developer/CommandLineTools')
         self.command_line_tools_developer_dir.mkdir(parents=True)
 
-    def setup_xcode_developer_dir(self):
-        contents_dir = self.tmpdir / 'Applications/Xcode.app/Contents'
+    def _setup_xcode_developer_dir(self):
+        contents_dir = self._tmpdir / 'Applications/Xcode.app/Contents'
         self.xcode_developer_dir = contents_dir / 'Developer'
         bin_dir = self.xcode_developer_dir / 'usr/bin'
         bin_dir.mkdir(parents=True)
@@ -116,7 +115,7 @@ class PreinstallTest(unittest.TestCase):
         with xcrun_path.open('w') as f:
             f.write('#!/bin/sh\n')
             f.write('DEVELOPER_DIR={} "$@"'.format(
-                shlex.quote(os.fspath(self.original_developer_dir))))
+                shlex.quote(os.fspath(self._original_developer_dir))))
         xcrun_path.chmod(0o700)
 
     _spam_warnings_re = re.compile(
@@ -126,8 +125,8 @@ class PreinstallTest(unittest.TestCase):
         r'Xcode\.DebuggerFoundation\.AppExtension.*\.watchOS of plug-in .*$'
     )
 
-    def suppress_spam_warnings(self, string):
-        if not ((13, 3) < self.xcode_version < (14,)):
+    def _suppress_spam_warnings(self, string):
+        if not ((13, 3) < self._xcode_version < (14,)):
             return string
         lines = []
         for line in string.splitlines():
@@ -137,7 +136,7 @@ class PreinstallTest(unittest.TestCase):
         return '\n'.join(lines)
 
     @property
-    def xcode_version(self):
+    def _xcode_version(self):
         out = subprocess.check_output(['xcodebuild', '-version'],
                                       encoding='utf-8')
         version_string = out.split()[1]
