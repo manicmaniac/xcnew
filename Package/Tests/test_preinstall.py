@@ -81,7 +81,7 @@ class PreinstallTest(unittest.TestCase):
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
         out, err = process.communicate(timeout=20)
-        err = self._suppress_spam_warnings(err)
+        err = _suppress_spam_warnings(err)
         return (out, err, process.returncode)
 
     def _get_rpaths(self):
@@ -117,29 +117,30 @@ class PreinstallTest(unittest.TestCase):
                 shlex.quote(os.fspath(self._original_developer_dir))))
         xcrun_path.chmod(0o700)
 
-    _spam_warnings_re = re.compile(
-        r'^.*Requested but did not find extension point with identifier ' +
-        r'Xcode\.IDEKit\.Extension(SentinelHostApplications|' +
-        r'PointIdentifierToBundleIdentifier) for extension ' +
-        r'Xcode\.DebuggerFoundation\.AppExtension.*\.watchOS of plug-in .*$'
-    )
 
-    def _suppress_spam_warnings(self, string):
-        if not ((13, 3) < self._xcode_version < (14,)):
-            return string
-        lines = []
-        for line in string.splitlines():
-            if self._spam_warnings_re.search(line):
-                continue
-            lines.append(line)
-        return '\n'.join(lines)
+_spam_warnings_re = re.compile(
+    r'^.*Requested but did not find extension point with identifier ' +
+    r'Xcode\.IDEKit\.Extension(SentinelHostApplications|' +
+    r'PointIdentifierToBundleIdentifier) for extension ' +
+    r'Xcode\.DebuggerFoundation\.AppExtension.*\.watchOS of plug-in .*$'
+)
 
-    @property
-    def _xcode_version(self):
-        out = subprocess.check_output(['xcodebuild', '-version'],
-                                      encoding='utf-8')
-        version_string = out.split()[1]
-        return tuple(map(int, version_string.split('.')))
+
+def _suppress_spam_warnings(string):
+    if not ((13, 3) < _get_xcode_version() < (14,)):
+        return string
+    lines = []
+    for line in string.splitlines():
+        if _spam_warnings_re.search(line):
+            continue
+        lines.append(line)
+    return '\n'.join(lines)
+
+
+def _get_xcode_version():
+    out = subprocess.check_output(['xcodebuild', '-version'], encoding='utf-8')
+    version_string = out.split()[1]
+    return tuple(map(int, version_string.split('.')))
 
 
 if __name__ == '__main__':
