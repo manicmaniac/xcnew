@@ -70,7 +70,6 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
-        base = pathlib.Path('/path with space/Xcode.app/Contents/Developer/')
         self.assertListEqual(self._get_rpaths(), self._xcnew_rpaths)
 
     def _run_preinstall(self, **env):
