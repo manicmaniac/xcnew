@@ -137,10 +137,17 @@ def _suppress_spam_warnings(string):
     return '\n'.join(lines)
 
 
+_xcode_version = None
+
+
 def _get_xcode_version():
-    out = subprocess.check_output(['xcodebuild', '-version'], encoding='utf-8')
-    version_string = out.split()[1]
-    return tuple(map(int, version_string.split('.')))
+    global _xcode_version
+    if _xcode_version is None:
+        out = subprocess.check_output(['xcodebuild', '-version'],
+                                      encoding='utf-8')
+        version_string = out.split()[1]
+        _xcode_version = tuple(map(int, version_string.split('.')))
+    return _xcode_version
 
 
 if __name__ == '__main__':
