@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from distutils.sysconfig import parse_makefile
 import os
 import pathlib
 import re
@@ -15,12 +16,6 @@ import macho
 _script_path = pathlib.Path(__file__)
 _executable_path = _script_path.joinpath('../../Scripts/preinstall').resolve()
 _fixtures_path = _script_path.joinpath('../Fixtures').resolve()
-# Defined in ./Fixtures/Makefile
-_xcnew_rpaths = [
-    '/path with space/Xcode.app/Contents/Developer/../Frameworks',
-    '/path with space/Xcode.app/Contents/Developer/../PlugIns',
-    '/path with space/Xcode.app/Contents/Developer/../SharedFrameworks',
-]
 
 
 class PreinstallTest(unittest.TestCase):
@@ -61,7 +56,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self._get_rpaths(), _xcnew_rpaths)
+        self.assertListEqual(self._get_rpaths(), _get_xcnew_rpaths())
 
     def test_preinstall_when_not_running_in_installer(self):
         out, err, status = self._run_preinstall(
@@ -70,7 +65,7 @@ class PreinstallTest(unittest.TestCase):
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self._get_rpaths(), _xcnew_rpaths)
+        self.assertListEqual(self._get_rpaths(), _get_xcnew_rpaths())
 
     def _run_preinstall(self, **env):
         process = subprocess.Popen([],
@@ -148,6 +143,22 @@ def _get_xcode_version():
         version_string = out.split()[1]
         _xcode_version = tuple(map(int, version_string.split('.')))
     return _xcode_version
+
+
+_xcnew_rpaths = None
+
+
+def _get_xcnew_rpaths():
+    """
+    Parse LDFLAGS in Makefile and returns arguments of -rpath option.
+    """
+    global _xcnew_rpaths
+    if _xcnew_rpaths is None:
+        make_vars = parse_makefile(_fixtures_path / 'Makefile')
+        ldflags = shlex.split(make_vars['LDFLAGS'])
+        rpath_indices = (i for i, f in enumerate(ldflags, 1) if f == '-rpath')
+        _xcnew_rpaths = [ldflags[i] for i in rpath_indices]
+    return _xcnew_rpaths
 
 
 if __name__ == '__main__':
