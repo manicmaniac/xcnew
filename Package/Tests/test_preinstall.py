@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 
-from distutils.sysconfig import parse_makefile
 import os
 import pathlib
 import re
-import shlex
 import shutil
 import subprocess
 import tempfile
 import unittest
 
+import Fixtures
 import macho
 
 
 _script_path = pathlib.Path(__file__)
 _executable_path = _script_path.joinpath('../../Scripts/preinstall').resolve()
-_fixtures_path = _script_path.joinpath('../Fixtures').resolve()
 
 
 class PreinstallTest(unittest.TestCase):
@@ -27,8 +25,10 @@ class PreinstallTest(unittest.TestCase):
         ).rstrip())
         self._tmpdir_object = tempfile.TemporaryDirectory(prefix=' ')
         self._tmpdir = pathlib.Path(self._tmpdir_object.name)
-        self._setup_installer_payload_dir()
-        self._setup_developer_dir()
+        shutil.copytree(Fixtures.path('Container'),
+                        self._tmpdir,
+                        dirs_exist_ok=True)
+        self._makefile = Fixtures.Makefile()
 
     def tearDown(self):
         self._tmpdir_object.cleanup()
@@ -37,6 +37,7 @@ class PreinstallTest(unittest.TestCase):
         out, err, status = self._run_preinstall(
             DEVELOPER_DIR=self._xcode_developer_dir,
             INSTALLER_PAYLOAD_DIR=self._installer_payload_dir,
+            ORIGINAL_DEVELOPER_DIR=self._original_developer_dir,
         )
         self.assertEqual(out, '')
         self.assertEqual(err, '')
@@ -52,20 +53,22 @@ class PreinstallTest(unittest.TestCase):
         out, err, status = self._run_preinstall(
             DEVELOPER_DIR=self._command_line_tools_developer_dir,
             INSTALLER_PAYLOAD_DIR=self._installer_payload_dir,
+            ORIGINAL_DEVELOPER_DIR=self._original_developer_dir,
         )
         self.assertEqual(out, '')
         self.assertIn('DEVELOPER_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self._get_rpaths(), _get_xcnew_rpaths())
+        self.assertListEqual(self._get_rpaths(), self._makefile.xcnew_rpaths)
 
     def test_preinstall_when_not_running_in_installer(self):
         out, err, status = self._run_preinstall(
             DEVELOPER_DIR=self._xcode_developer_dir,
+            ORIGINAL_DEVELOPER_DIR=self._original_developer_dir,
         )
         self.assertEqual(out, '')
         self.assertIn('INSTALLER_PAYLOAD_DIR', err)
         self.assertEqual(status, 1)
-        self.assertListEqual(self._get_rpaths(), _get_xcnew_rpaths())
+        self.assertListEqual(self._get_rpaths(), self._makefile.xcnew_rpaths)
 
     def _run_preinstall(self, **env):
         process = subprocess.Popen([],
@@ -80,37 +83,20 @@ class PreinstallTest(unittest.TestCase):
         return (out, err, process.returncode)
 
     def _get_rpaths(self):
-        return macho.get_rpaths(self._xcnew_path)
+        xcnew_path = self._tmpdir / self._makefile.installer_xcnew_path
+        return macho.get_rpaths(xcnew_path)
 
-    def _setup_installer_payload_dir(self):
-        self._installer_payload_dir = self._tmpdir / 'Payload'
-        bin_dir = self._installer_payload_dir / 'usr/local/bin'
-        bin_dir.mkdir(parents=True)
-        self._xcnew_path = bin_dir / 'xcnew'
-        shutil.copy(_fixtures_path / 'xcnew', self._xcnew_path)
+    @property
+    def _installer_payload_dir(self):
+        return self._tmpdir / self._makefile.installer_payload_dir
 
-    def _setup_developer_dir(self):
-        self._setup_command_line_tools_developer_dir()
-        self._setup_xcode_developer_dir()
+    @property
+    def _command_line_tools_developer_dir(self):
+        return self._tmpdir / self._makefile.command_line_tools_developer_dir
 
-    def _setup_command_line_tools_developer_dir(self):
-        self._command_line_tools_developer_dir = self._tmpdir.joinpath(
-                'Library/Developer/CommandLineTools')
-        self._command_line_tools_developer_dir.mkdir(parents=True)
-
-    def _setup_xcode_developer_dir(self):
-        contents_dir = self._tmpdir / 'Applications/Xcode.app/Contents'
-        self._xcode_developer_dir = contents_dir / 'Developer'
-        bin_dir = self._xcode_developer_dir / 'usr/bin'
-        bin_dir.mkdir(parents=True)
-        with contents_dir.joinpath('Info.plist').open('w') as f:
-            f.write('CFBundleIdentifier = "com.apple.dt.Xcode";\n')
-        xcrun_path = bin_dir / 'xcrun'
-        with xcrun_path.open('w') as f:
-            f.write('#!/bin/sh\n')
-            f.write('DEVELOPER_DIR={} "$@"'.format(
-                shlex.quote(os.fspath(self._original_developer_dir))))
-        xcrun_path.chmod(0o700)
+    @property
+    def _xcode_developer_dir(self):
+        return self._tmpdir / self._makefile.xcode_developer_dir
 
 
 _spam_warnings_re = re.compile(
@@ -143,22 +129,6 @@ def _get_xcode_version():
         version_string = out.split()[1]
         _xcode_version = tuple(map(int, version_string.split('.')))
     return _xcode_version
-
-
-_xcnew_rpaths = None
-
-
-def _get_xcnew_rpaths():
-    """
-    Parse LDFLAGS in Makefile and returns arguments of -rpath option.
-    """
-    global _xcnew_rpaths
-    if _xcnew_rpaths is None:
-        make_vars = parse_makefile(_fixtures_path / 'Makefile')
-        ldflags = shlex.split(make_vars['LDFLAGS'])
-        rpath_indices = (i for i, f in enumerate(ldflags, 1) if f == '-rpath')
-        _xcnew_rpaths = [ldflags[i] for i in rpath_indices]
-    return _xcnew_rpaths
 
 
 if __name__ == '__main__':

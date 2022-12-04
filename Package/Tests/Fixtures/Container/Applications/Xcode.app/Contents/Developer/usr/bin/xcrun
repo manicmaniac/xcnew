@@ -1,0 +1,2 @@
+#!/bin/sh
+DEVELOPER_DIR="$ORIGINAL_DEVELOPER_DIR" "$@"
