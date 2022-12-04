@@ -27,8 +27,14 @@ class PreinstallTest(unittest.TestCase):
         ).rstrip())
         self._tmpdir_object = tempfile.TemporaryDirectory(prefix=' ')
         self._tmpdir = pathlib.Path(self._tmpdir_object.name)
-        self._setup_installer_payload_dir()
-        self._setup_developer_dir()
+        shutil.copytree(_fixtures_path / 'Container/',
+                        self._tmpdir,
+                        dirs_exist_ok=True)
+        self._installer_payload_dir = self._tmpdir / 'Payload'
+        self._command_line_tools_developer_dir = self._tmpdir.joinpath(
+                'Library/Developer/CommandLineTooly')
+        self._xcode_developer_dir = self._tmpdir.joinpath(
+                'Applications/Xcode.app/Contents/Developer')
 
     def tearDown(self):
         self._tmpdir_object.cleanup()
@@ -80,37 +86,8 @@ class PreinstallTest(unittest.TestCase):
         return (out, err, process.returncode)
 
     def _get_rpaths(self):
-        return macho.get_rpaths(self._xcnew_path)
-
-    def _setup_installer_payload_dir(self):
-        self._installer_payload_dir = self._tmpdir / 'Payload'
-        bin_dir = self._installer_payload_dir / 'usr/local/bin'
-        bin_dir.mkdir(parents=True)
-        self._xcnew_path = bin_dir / 'xcnew'
-        shutil.copy(_fixtures_path / 'xcnew', self._xcnew_path)
-
-    def _setup_developer_dir(self):
-        self._setup_command_line_tools_developer_dir()
-        self._setup_xcode_developer_dir()
-
-    def _setup_command_line_tools_developer_dir(self):
-        self._command_line_tools_developer_dir = self._tmpdir.joinpath(
-                'Library/Developer/CommandLineTools')
-        self._command_line_tools_developer_dir.mkdir(parents=True)
-
-    def _setup_xcode_developer_dir(self):
-        contents_dir = self._tmpdir / 'Applications/Xcode.app/Contents'
-        self._xcode_developer_dir = contents_dir / 'Developer'
-        bin_dir = self._xcode_developer_dir / 'usr/bin'
-        bin_dir.mkdir(parents=True)
-        with contents_dir.joinpath('Info.plist').open('w') as f:
-            f.write('CFBundleIdentifier = "com.apple.dt.Xcode";\n')
-        xcrun_path = bin_dir / 'xcrun'
-        with xcrun_path.open('w') as f:
-            f.write('#!/bin/sh\n')
-            f.write('DEVELOPER_DIR={} "$@"'.format(
-                shlex.quote(os.fspath(self._original_developer_dir))))
-        xcrun_path.chmod(0o700)
+        xcnew_path = self._installer_payload_dir / 'usr/local/bin/xcnew'
+        return macho.get_rpaths(xcnew_path)
 
 
 _spam_warnings_re = re.compile(
