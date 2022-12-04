@@ -19,12 +19,9 @@
     (literal "/dev/null")
     (regex #"^/Users/[0-9A-Za-z_]+/Library/Caches/com\.apple\.dt\.Xcode/Downloads/[0-9A-F]+\.dvtdownloadableindex")
     (subpath "/private/var/folders"))
+(allow iokit-open)
 (allow job-creation)
 (allow sysctl*)
 (allow system-fsctl)
 (allow user-preference-read)
 (allow user-preference-write)
-
-; iokit-open-user-client is not defined in macOS < 12
-(if (defined? 'iokit-open-user-client)
-    (allow iokit-open-user-client))
