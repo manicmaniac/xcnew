@@ -11,7 +11,7 @@ XCODE_DEVELOPER_DIR = $(XCODE_CONTENTS_DIR)/Developer
 
 all: Container/$(XCODE_DEVELOPER_DIR)/usr/bin/xcrun \
 	Container/$(XCODE_CONTENTS_DIR)/Info.plist \
-	Container/$(COMMAND_LINE_TOOLS_DEVELOPER_DIR) \
+	Container/$(COMMAND_LINE_TOOLS_DEVELOPER_DIR)/.keep \
 	Container/$(INSTALLER_XCNEW_PATH)
 
 Container/$(XCODE_DEVELOPER_DIR)/usr/bin/xcrun:
@@ -24,8 +24,9 @@ Container/$(XCODE_CONTENTS_DIR)/Info.plist:
 	mkdir -p $(@D)
 	echo 'CFBundleIdentifier = "com.apple.dt.Xcode";' > $@
 
-Container/$(COMMAND_LINE_TOOLS_DEVELOPER_DIR):
-	mkdir -p $@
+Container/$(COMMAND_LINE_TOOLS_DEVELOPER_DIR)/.keep:
+	mkdir -p $(@D)
+	touch $@
 
 Container/$(INSTALLER_XCNEW_PATH): xcnew.arm64 xcnew.x86_64
 	mkdir -p $(@D)
