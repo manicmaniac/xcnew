@@ -9,7 +9,8 @@
 #import "XCNFileHierarchyAssertions.h"
 
 static NSURL *XCNFindFileHierarchySpecificationURLWithName(XCTestCase *testCase, NSString *specificationName);
-static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line, NSError *error);
+static void XCNTestCaseRecordError(XCTestCase *testCase, NSError *error, NSString *file, NSUInteger line);
+static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line);
 
 // MARK: Public
 
@@ -37,38 +38,43 @@ void XCNPrimitiveAssertFileHierarchyEqualsToSpecificationURL(XCTestCase *self, N
     task.standardError = errorPipe;
     NSError *error;
     if (![task launchAndReturnError:&error]) {
-        return XCNTestCaseRecordFailureWithDescription(self, error.localizedDescription, file, line, error);
+        return XCNTestCaseRecordError(self, error, file, line);
     }
     [task waitUntilExit];
-    [outputPipe.fileHandleForWriting closeFile];
-    [errorPipe.fileHandleForWriting closeFile];
-    NSData *outputData = [outputPipe.fileHandleForReading readDataToEndOfFile];
+    if (!([outputPipe.fileHandleForWriting closeAndReturnError:&error] &&
+          [errorPipe.fileHandleForWriting closeAndReturnError:&error])) {
+        return XCNTestCaseRecordError(self, error, file, line);
+    }
+    NSData *outputData = [outputPipe.fileHandleForReading readDataToEndOfFileAndReturnError:&error];
+    if (!outputData) {
+        return XCNTestCaseRecordError(self, error, file, line);
+    }
     NSString *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
-    NSData *errorData = [errorPipe.fileHandleForReading readDataToEndOfFile];
+    NSData *errorData = [errorPipe.fileHandleForReading readDataToEndOfFileAndReturnError:&error];
+    if (!errorData) {
+        return XCNTestCaseRecordError(self, error, file, line);
+    }
     NSString *errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
     switch (task.terminationReason) {
         case NSTaskTerminationReasonExit:
-            switch (task.terminationStatus) {
-                case 0:
-                    break;
-                case 2:
-                    XCNTestCaseRecordFailureWithDescription(self, outputString, file, line, nil);
-                    break;
-                default: {
-                    NSError *error = [NSError errorWithDomain:XCNMtreeErrorDomain
-                                                         code:task.terminationStatus
-                                                     userInfo:@{
-                                                         NSLocalizedDescriptionKey : errorString
-                                                     }];
-                    XCNTestCaseRecordFailureWithDescription(self, errorString, file, line, error);
-                    break;
-                }
-            }
             break;
         case NSTaskTerminationReasonUncaughtSignal: {
-            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
-            XCNTestCaseRecordFailureWithDescription(self, errorString, file, line, error);
+            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                 code:NSUserCancelledError
+                                             userInfo:@{NSLocalizedDescriptionKey : errorString}];
+            return XCNTestCaseRecordError(self, error, file, line);
+        }
+    }
+    switch (task.terminationStatus) {
+        case 0:
             break;
+        case 2:
+            return XCNTestCaseRecordFailureWithDescription(self, outputString, file, line);
+        default: {
+            NSError *error = [NSError errorWithDomain:XCNMtreeErrorDomain
+                                                 code:task.terminationStatus
+                                             userInfo:@{NSLocalizedDescriptionKey : errorString}];
+            return XCNTestCaseRecordError(self, error, file, line);
         }
     }
 }
@@ -82,7 +88,22 @@ static NSURL *XCNFindFileHierarchySpecificationURLWithName(XCTestCase *testCase,
     return [bundle URLForResource:specificationName withExtension:@"dist"];
 }
 
-static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line, NSError *error) {
+static void XCNTestCaseRecordError(XCTestCase *testCase, NSError *error, NSString *file, NSUInteger line) {
+    NSCParameterAssert(testCase != nil);
+    NSCParameterAssert(file != nil);
+    NSCParameterAssert(error != nil);
+    XCTSourceCodeLocation *location = [[XCTSourceCodeLocation alloc] initWithFilePath:file lineNumber:line];
+    XCTSourceCodeContext *context = [[XCTSourceCodeContext alloc] initWithLocation:location];
+    XCTIssue *issue = [[XCTIssue alloc] initWithType:XCTIssueTypeThrownError
+                                  compactDescription:error.localizedDescription
+                                 detailedDescription:error.description
+                                   sourceCodeContext:context
+                                     associatedError:error
+                                         attachments:@[]];
+    [testCase recordIssue:issue];
+}
+
+static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSString *description, NSString *file, NSUInteger line) {
     NSCParameterAssert(testCase != nil);
     NSCParameterAssert(description != nil);
     NSCParameterAssert(file != nil);
@@ -92,7 +113,7 @@ static void XCNTestCaseRecordFailureWithDescription(XCTestCase *testCase, NSStri
                                   compactDescription:description
                                  detailedDescription:nil
                                    sourceCodeContext:context
-                                     associatedError:error
+                                     associatedError:nil
                                          attachments:@[]];
     [testCase recordIssue:issue];
 }
