@@ -80,7 +80,7 @@ Usage
 Supported Xcode versions
 ------------------------
 
-`Xcode >= 12.5 && Xcode <= 14.1.0`.
+`Xcode >= 12.5 && Xcode <= 14.2.0`.
 
 How it works?
 -------------
