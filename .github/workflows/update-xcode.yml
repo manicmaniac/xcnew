@@ -35,7 +35,7 @@ jobs:
 
         ./Scripts/generate-framework-stubs
         EOF
-    - uses: peter-evans/create-pull-request@v4
+    - uses: peter-evans/create-pull-request@v5
       with:
         title: Support Xcode ${{ steps.setup-xcode.outputs.version }}
         body: |
