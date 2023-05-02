@@ -2,7 +2,7 @@ name: Update Xcode
 on: workflow_dispatch
 jobs:
   update-xcode:
-    runs-on: macOS-12
+    runs-on: macOS-13
     steps:
     - uses: actions/checkout@v3
     - uses: maxim-lobanov/setup-xcode@v1
@@ -16,13 +16,13 @@ jobs:
         git checkout -b support-xcode-${{ steps.setup-xcode.outputs.version }}
     - name: Update Xcode
       id: update-xcode
-      run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-12
+      run: Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-13
     - name: Commit Xcode update
       run: |
         git commit --all --file=- <<-EOF
         Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets
 
-        ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-12
+        ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-13
         EOF
     - name: Install dependencies
       run: brew install clang-format manicmaniac/tap/class-dump
