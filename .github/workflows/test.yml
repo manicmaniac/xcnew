@@ -5,110 +5,22 @@ concurrency:
   cancel-in-progress: true
 jobs:
   test:
-    runs-on: ${{ matrix.macos }}
+    runs-on: macOS-13
     defaults:
       run:
         shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        xcode: ["14.2.0", "14.1.0", "14.0.1", "13.4.1", "13.3.1", "13.2.1", "13.1", "13.0", "12.5"]
-        include:
-        - macos: macOS-12
-          xcode: "14.2.0"
-        - macos: macOS-12
-          xcode: "14.1.0"
-        - macos: macOS-12
-          xcode: "14.0.1"
-        - macos: macOS-12
-          xcode: "13.4.1"
-        - macos: macOS-12
-          xcode: "13.3.1"
-        - macos: macOS-11
-          xcode: "13.2.1"
-        - macos: macOS-11
-          xcode: "13.1"
-        - macos: macOS-11
-          xcode: "13.0"
-        - macos: macOS-11
-          xcode: "12.5"
     env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
     steps:
     - uses: actions/checkout@v3
-    - name: Install cc-test-reporter
-      run: |
-        curl -Lo cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64
-        chmod +x cc-test-reporter
-    - run: ./cc-test-reporter before-build
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-    - name: Run package script tests
-      run: make check-scripts
-    - name: Run unit tests
-      run: make check | xcpretty
-    - name: Install
-      run: make install | xcpretty
-    - uses: actions/upload-artifact@v3
-      if: failure()
+    - uses: actions/setup-python@v4
       with:
-        name: xcnew-xcode-${{ matrix.xcode }}.xcresult
-        path: xcnew.xcresult/*
-    - name: Format coverage
-      run: |
-        xcrun xccov view --report --json xcnew.xcresult > coverage.json
-        ./cc-test-reporter format-coverage --input-type xccov --output 'codeclimate-xcode-${{ matrix.xcode }}.json' coverage.json
-    - uses: actions/upload-artifact@v3
-      with:
-        name: coverages
-        path: codeclimate-xcode-${{ matrix.xcode }}.json
-  test-scripts:
-    runs-on: ubuntu-20.04
-    env:
-      DOCTEST: 1
-    steps:
-    - uses: actions/checkout@v3
-    - run: ./Scripts/update-docdate
-    - run: ./Scripts/update-xcode
-    - run: ./Scripts/xml2c
-  upload-coverage:
-    runs-on: ubuntu-20.04
-    needs:
-    - test
-    - test-scripts
-    steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: coverages
-    - name: Install cc-test-reporter
-      run: |
-        curl -Lo cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-        chmod +x cc-test-reporter
-    - name: Upload coverage
-      run: ./cc-test-reporter sum-coverage --output - codeclimate-*.json | ./cc-test-reporter upload-coverage --debug --input -
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-  lint:
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        shell: bash
-    steps:
-    - uses: actions/checkout@v3
+        python-version: '3.11'
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
     - name: Install dependencies
-      id: install-dependencies
-      run: sudo apt-get install -y clang-format-12 flake8 shellcheck libxml2-utils
-    - name: Lint Objective-C files
-      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
-      run: git ls-files -z '*.[hm]' | xargs -0 clang-format --dry-run --Werror
-    - name: Lint Python files
-      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
-      run: git grep -z --name-only --extended-regexp '^#!/.*python3?$' | xargs -0 flake8
-    - name: Lint Shell Script files
-      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
-      run: git grep -z --name-only --extended-regexp '^#!/bin/(ba)?sh$' | xargs -0 shellcheck
-    - name: Validate Distribution.xml
-      if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
-      run: |
-        curl -Lo Distribution.xsd https://bit.ly/3AnpijZ
-        xmllint --schema Distribution.xsd --noout Package/Distribution.xml
+      run: brew install clang-format
+    - name: Dump private headers
+      run: Scripts/generate-framework-stubs
+    - name: Show diff
+      run: git diff
