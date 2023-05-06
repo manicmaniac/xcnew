@@ -7,7 +7,7 @@
 #
 # - [Xcode](https://developer.apple.com/download/all/)
 # - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
-# - [class-dump](http://github.com/manicmaniac/class-dump)
+# - [ktool](https://github.com/cxnder/ktool)
 
 set -e
 
