@@ -43,7 +43,7 @@ jobs:
         EOF
     - name: Create pull request
       run: |
-        git push
+        git push --set-upstream origin support-xcode-${{ steps.setup-xcode.outputs.version }}
         gh pr create --title 'Support Xcode ${{ steps.setup-xcode-outputs.version }}' --body-file - <<-EOF
         Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets.
 
