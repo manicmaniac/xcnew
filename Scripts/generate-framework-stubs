@@ -18,11 +18,9 @@ trap 'rm -rf "$tmpdir"' EXIT
 
 # Dump necessary headers in DVTFoundation.framework.
 ktool dump --headers --out "$tmpdir" "$contents_dir/SharedFrameworks/DVTFoundation.framework/DVTFoundation"
-mv "$tmpdir/DVTExtension.h" \
-    "$tmpdir/DVTFilePath.h" \
+mv "$tmpdir/DVTFilePath.h" \
     "$tmpdir/DVTFileSystemRepresentationProviding-Protocol.h" \
     "$tmpdir/DVTPlatform.h" \
-    "$tmpdir/DVTPropertyListEncoding-Protocol.h" \
     Frameworks/DVTFoundation.framework/Headers
 
 # Dump necessary headers in IDEFoundation.framework.
@@ -57,6 +55,9 @@ find Frameworks -type f -name '*.h' -exec sed -i '' -E -f /dev/fd/0 {} + <<-'EOF
 
     # Use forward declarations
     s/^#import "(DVT|IDE)([^.-]*)\.h"/@class \1\2;/g
+
+    # Remove unused classes
+    s/^#import <DVTFoundation\/DVTExtension\.h>/@class DVTExtension;/g
 
     # Remove import statements for Swift types
     /^#import "_.*\.h"/d

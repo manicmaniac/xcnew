@@ -7,5 +7,5 @@ current-version: 0
 compatibility-version: 0
 exports:
   - targets:         [ x86_64-macos, arm64-macos ]
-    objc-classes:    [ DVTExtension, DVTFilePath, DVTPlatform ]
+    objc-classes:    [ DVTFilePath, DVTPlatform ]
 ...

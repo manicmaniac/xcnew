@@ -7,9 +7,9 @@
 #define IDETEMPLATEKIND_H
 
 
-#import <CoreFoundation/CoreFoundation.h>
-#import <DVTFoundation/DVTExtension.h>
 #import <Foundation/Foundation.h>
+@class DVTExtension;
+#import <CoreFoundation/CoreFoundation.h>
 
 @class IDETemplateFactory;
 
