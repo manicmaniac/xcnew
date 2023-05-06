@@ -1,7 +1,7 @@
 + xcodebuild -version
-Xcode 14.2
-Build version 14C18
-+ class-dump --version
-class-dump 3.5-0.1.1 (64 bit) (forked by @manicmaniac) compiled Feb  1 2023 17:50:57
+Xcode 14.1
+Build version 14B47b
++ ktool -V
+ktool v1.3.0. by cynder. gh/cxnder || @arm64e
 + clang-format --version
-clang-format version 15.0.7
+clang-format version 11.1.0

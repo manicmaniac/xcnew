@@ -13,41 +13,71 @@ set -e
 
 contents_dir="$(dirname "${DEVELOPER_DIR:-$(xcode-select -p)}")"
 
+tmpdir="$(mktemp -d)"
+trap 'rm -rf "$tmpdir"' EXIT
+
 # Dump necessary headers in DVTFoundation.framework.
-class-dump -H \
-           -C '^DVT(FilePath|FileSystemRepresentationProviding|Platform)$' \
-           -o Frameworks/DVTFoundation.framework/Headers \
-           "$contents_dir/SharedFrameworks/DVTFoundation.framework"
+ktool dump --headers --out "$tmpdir" "$contents_dir/SharedFrameworks/DVTFoundation.framework/DVTFoundation"
+mv "$tmpdir/DVTExtension.h" \
+    "$tmpdir/DVTFilePath.h" \
+    "$tmpdir/DVTFileSystemRepresentationProviding-Protocol.h" \
+    "$tmpdir/DVTPlatform.h" \
+    "$tmpdir/DVTPropertyListEncoding-Protocol.h" \
+    Frameworks/DVTFoundation.framework/Headers
 
 # Dump necessary headers in IDEFoundation.framework.
-class-dump -H \
-           -C '^IDETemplate(|Factory|InstantiationContext|Kind|Option|OptionParent)$' \
-           -o Frameworks/IDEFoundation.framework/Headers \
-           "$contents_dir/Frameworks/IDEFoundation.framework"
+ktool dump --headers --out "$tmpdir" "$contents_dir/Frameworks/IDEFoundation.framework/IDEFoundation"
+mv "$tmpdir/IDETemplate.h" \
+    "$tmpdir/IDETemplateFactory.h" \
+    "$tmpdir/IDETemplateInstantiationContext.h" \
+    "$tmpdir/IDETemplateKind.h" \
+    "$tmpdir/IDETemplateOption.h" \
+    "$tmpdir/IDETemplateOptionParent-Protocol.h" \
+    Frameworks/IDEFoundation.framework/Headers
 
-find Frameworks -type f -name '*.h' -exec sed -i '' -f /dev/fd/0 {} + <<-'EOF'
-    # Remove C++ constructor declaration, which is not permitted in Objective-C class.
-    /^- (id)\.cxx_construct;$/d
+find Frameworks -type f -name '*.h' -exec sed -i '' -E -f /dev/fd/0 {} + <<-'EOF'
+    # Remove C++ destructor declaration, which is not permitted in Objective-C class.
+    /^- (id)\.cxx_destruct;$/d
 
     # Import Foundation.framework instead of importing individual headers.
-    s/^#import <objc\/NSObject\.h>$/#import <Foundation\/Foundation.h>/
     /^#import "NS.*$/d
 
     # Use `NSUInteger` instead of an architecture-dependent type `unsigned long long`.
     s/unsigned long long hash;$/NSUInteger hash;/
 
     # Add an explicit ownership to avoid warnings.
-    s/\(id \*_field2;\)$/__unsafe_unretained \1/
+    # s/(id \*_field2;)$/__unsafe_unretained \1/
 
     # Remove all instance variables.
-    / *{/,/}/d
+    / *{/,/}/{
+        s/(.*) *{/\1/g
+        t
+        d
+    }
 
-    # Workaround for a bug in class-dump 3.5-0.1.1 running on arm64
-    s/_Bool/BOOL/g
+    # Use forward declarations
+    s/^#import "(DVT|IDE)([^.-]*)\.h"/@class \1\2;/g
+
+    # Remove import statements for Swift types
+    /^#import "_.*\.h"/d
+
+    # Remove Swift type references
+    /^@property.*\) _.*;$/d
+
+    # Workaround for possible ktool's bug
+    s/\(\*unk/(void */g
+    s/\(\*([A-Za-z0-9]+)/(\1 */g
+    s/^#import "IDEProvisioningBasicTeam-Protocol.h"$/@protocol IDEProvisioningBasicTeam;/g
+
+    # Fix warning: type of property 'workspace' does not match type of accessor 'setWorkspace:'
+    /^-.*setWorkspace:\(id\).*$/d
+
+    # Fix warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed [-Wobjc-property-no-attribute]
+    s/^@property *NSObject<([^ >]+)> *\*([A-Za-z1-9_]+);/@property(retain) id<\1> \2;/g
+
+    # Fix error: property with 'copy' attribute must be of object type
+    s/@property *\(copy\) *id \*templateFilter;/@property (copy) id templateFilter;/g
 EOF
-
-# CDStructure.h is not used.
-rm Frameworks/DVTFoundation.framework/Headers/CDStructures.h Frameworks/IDEFoundation.framework/Headers/CDStructures.h
 
 # Re-format all files.
 find Frameworks -type f -name '*.h' -exec clang-format -i {} +
@@ -79,6 +109,6 @@ find Frameworks -type f -name '*.tbd' -exec sed -i '' -e 's/ *$//g' {} +
     exec 2>&1
     set -x
     xcodebuild -version
-    class-dump --version
+    ktool -V
     clang-format --version
 ) >Frameworks/.versions

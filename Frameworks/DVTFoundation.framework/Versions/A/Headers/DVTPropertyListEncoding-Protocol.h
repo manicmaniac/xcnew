@@ -4,9 +4,11 @@
 
 
 
-@protocol DVTFileSystemRepresentationProviding
+@protocol DVTPropertyListEncoding
 
 
-- (void)dvt_provideFileSystemRepresentationToBlock:(id)arg0;
+- (id)initWithPropertyList:(id)arg0 owner:(id)arg1;
+- (void)awakeFromPropertyList;
+- (void)encodeIntoPropertyList:(id)arg0;
 
 @end
