@@ -43,7 +43,8 @@ jobs:
         EOF
     - name: Create pull request
       run: |
-        gh pr create --head --title 'Support Xcode ${{ steps.setup-xcode-outputs.version }}' --body-file - <<-EOF
+        git push
+        gh pr create --title 'Support Xcode ${{ steps.setup-xcode-outputs.version }}' --body-file - <<-EOF
         Add Xcode ${{ steps.setup-xcode.outputs.version }} to test targets.
 
         See https://developer.apple.com/documentation/xcode-release-notes for Xcode release notes.
