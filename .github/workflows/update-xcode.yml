@@ -24,8 +24,13 @@ jobs:
 
         ./Scripts/update-xcode ${{ steps.setup-xcode.outputs.version }} macOS-13
         EOF
-    - name: Install dependencies
-      run: brew install clang-format manicmaniac/tap/class-dump
+    - name: Install Homebrew dependencies
+      run: brew install clang-format
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
     - name: Dump private headers
       continue-on-error: true
       run: Scripts/generate-framework-stubs
