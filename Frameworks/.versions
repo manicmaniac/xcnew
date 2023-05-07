@@ -1,7 +1,7 @@
 + xcodebuild -version
-Xcode 14.1
-Build version 14B47b
+Xcode 14.3
+Build version 14E222b
 + ktool -V
 ktool v1.3.0. by cynder. gh/cxnder || @arm64e
 + clang-format --version
-clang-format version 11.1.0
+clang-format version 16.0.2

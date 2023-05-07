@@ -1,13 +1,13 @@
 // Headers generated with ktool v1.3.0
 // https://github.com/cxnder/ktool | pip3 install k2l
-// Platform: MACOS | Minimum OS: 11.0.0 | SDK: 13.0.0
+// Platform: MACOS | Minimum OS: 12.0.0 | SDK: 13.3.0
 
 
 #ifndef DVTPLATFORM_H
 #define DVTPLATFORM_H
 
+@class NSDictionary, NSHashTable, NSArray, NSString, NSSet;
 
-#import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
 @class DVTSDK;
@@ -54,31 +54,11 @@
 - (void)addSDK:(id)arg0;
 - (id)mappedOperatingSystemVersionForPlatformFamily:(id)arg0 version:(id)arg1;
 - (id)mappedOperatingSystemVersionForPlatformFamilyName:(id)arg0 version:(id)arg1;
+- (id)mappedOperatingSystemVersionForPlatformFamilyName:(id)arg0 version:(id)arg1 reverse:(char)arg2;
 - (id)description;
 - (char)isEqual:(id)arg0;
 - (NSUInteger)hash;
 - (id)copyWithZone:(struct _NSZone *)arg0;
-+ (void)initialize;
-+ (void)_mapPlatformName:(id)arg0 toPlatform:(id)arg1 isAlias:(char)arg2;
-+ (id)platformForName:(id)arg0;
-+ (id)platformForUserDescription:(id)arg0;
-+ (void)_mapPlatformIdentifier:(id)arg0 toPlatform:(id)arg1;
-+ (id)platformForIdentifier:(id)arg0;
-+ (id)_allPlatformsByIdentifierValues;
-+ (void)_mapPlatformPath:(id)arg0 toPlatform:(id)arg1;
-+ (id)platformForPath:(id)arg0;
-+ (void)registerPlatform:(id)arg0;
-+ (id)allPlatforms;
-+ (id)_propertyDictionaryForPlatformAtPath:(id)arg0;
-+ (void)_loadPlatformAtPath:(id)arg0;
-+ (char)loadAllPlatformsReturningError:(id *)arg0;
-+ (char)validatePlatformDataReturningError:(id *)arg0;
-+ (id)defaultPlatform;
-+ (char)allowMissingDefaultPlatform;
-+ (char)onlySearchExtraPlatformFolders;
-+ (id)onlyLoadPlatformIdentifiers;
-+ (id)onlyLoadPlatformFamilyNames;
-+ (id)extraPlatformFolders;
 
 
 @end

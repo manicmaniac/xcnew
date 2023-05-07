@@ -1,15 +1,14 @@
 // Headers generated with ktool v1.3.0
 // https://github.com/cxnder/ktool | pip3 install k2l
-// Platform: MACOS | Minimum OS: 11.0.0 | SDK: 13.0.0
+// Platform: MACOS | Minimum OS: 12.0.0 | SDK: 13.3.0
 
 
 #ifndef IDETEMPLATEKIND_H
 #define IDETEMPLATEKIND_H
 
+@class DVTExtension, NSString, NSArray;
 
 #import <Foundation/Foundation.h>
-@class DVTExtension;
-#import <CoreFoundation/CoreFoundation.h>
 
 @class IDETemplateFactory;
 
@@ -35,15 +34,6 @@
 - (Class)instantiationContextClass;
 - (id)newTemplateInstantiationContext;
 - (id)nextAssistantIdentifierForWorkspace:(id)arg0;
-+ (void)initialize;
-+ (id)_templateKindForExtension:(id)arg0;
-+ (id)templateKindForIdentifier:(id)arg0;
-+ (id)allTemplateKinds;
-+ (id)fileTemplateKind;
-+ (id)playgroundTemplateKind;
-+ (id)projectTemplateKind;
-+ (id)packageTemplateKind;
-+ (id)targetTemplateKind;
 
 
 @end
