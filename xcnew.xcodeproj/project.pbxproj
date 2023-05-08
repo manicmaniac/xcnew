@@ -649,6 +649,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_IMPLICIT_FALLTHROUGH = YES_ERROR;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
@@ -720,6 +721,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_IMPLICIT_FALLTHROUGH = YES_ERROR;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
@@ -779,10 +781,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wimplicit-fallthrough",
-				);
 			};
 			name = Debug;
 		};
@@ -801,10 +799,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.manicmaniac.xcnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wimplicit-fallthrough",
-				);
 			};
 			name = Release;
 		};
