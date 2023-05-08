@@ -70,28 +70,10 @@
     IDETemplateInstantiationContext *context = [kind newTemplateInstantiationContext];
     context.documentTemplate = template;
     context.documentFilePath = [DVTFilePath filePathForFileURL:url];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block NSError *instantiationError;
-    [factory instantiateTemplateForContext:context
-                                   options:nil
-                                  whenDone:^(NSArray<DVTFilePath *> *paths, void *_unknown, NSError *error) {
-                                      [paths makeObjectsPerformSelector:@selector(removeAssociatesWithRole:) withObject:@"PBXContainerAssociateRole"];
-                                      instantiationError = error;
-                                      dispatch_semaphore_signal(semaphore);
-                                  }];
-    if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
-        if (error) {
-            *error = [NSError xcn_errorTemplateFactoryTimeoutWithTimeout:timeout];
-        }
-        return NO;
-    }
-    if (instantiationError) {
-        if (error) {
-            *error = instantiationError;
-        }
-        return NO;
-    }
-    return YES;
+    return [self synchronouslyInstantiateTemplateWithFactory:factory
+                                                     context:context
+                                                     timeout:timeout
+                                                       error:error];
 }
 
 - (void)setLanguage:(XCNLanguage)language {
@@ -162,6 +144,39 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
             option.value = NSStringFromXCNAppLifecycle(_lifecycle);
         }
     }
+}
+
+- (BOOL)synchronouslyInstantiateTemplateWithFactory:(IDETemplateFactory *)factory
+                                            context:(IDETemplateInstantiationContext *)context
+                                            timeout:(NSTimeInterval)timeout
+                                              error:(NSError *__autoreleasing _Nullable *_Nullable)error {
+    NSParameterAssert(factory != nil);
+    NSParameterAssert(context != nil);
+    NSParameterAssert(context.documentTemplate != nil);
+    NSParameterAssert(context.documentFilePath != nil);
+    NSParameterAssert(timeout > 0);
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    __block NSError *instantiationError;
+    [factory instantiateTemplateForContext:context
+                                   options:nil
+                                  whenDone:^(NSArray<DVTFilePath *> *paths, void *_unknown, NSError *error) {
+                                      [paths makeObjectsPerformSelector:@selector(removeAssociatesWithRole:) withObject:@"PBXContainerAssociateRole"];
+                                      instantiationError = error;
+                                      dispatch_semaphore_signal(semaphore);
+                                  }];
+    if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)))) {
+        if (error) {
+            *error = [NSError xcn_errorTemplateFactoryTimeoutWithTimeout:timeout];
+        }
+        return NO;
+    }
+    if (instantiationError) {
+        if (error) {
+            *error = instantiationError;
+        }
+        return NO;
+    }
+    return YES;
 }
 
 @end
