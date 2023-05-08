@@ -67,13 +67,27 @@
         return NO;
     }
     [self configureTemplateOptions:template.templateOptions];
+    NSURL *itemReplacementDirectoryURL = [_fileManager URLForDirectory:NSItemReplacementDirectory
+                                                              inDomain:NSUserDomainMask
+                                                     appropriateForURL:[_fileManager temporaryDirectory]
+                                                                create:YES
+                                                                 error:error];
+    if (!itemReplacementDirectoryURL) {
+        return NO;
+    }
+    NSURL *temporaryDirectoryURL = [itemReplacementDirectoryURL URLByAppendingPathComponent:url.lastPathComponent];
     IDETemplateInstantiationContext *context = [kind newTemplateInstantiationContext];
     context.documentTemplate = template;
-    context.documentFilePath = [DVTFilePath filePathForFileURL:url];
-    return [self synchronouslyInstantiateTemplateWithFactory:factory
-                                                     context:context
-                                                     timeout:timeout
-                                                       error:error];
+    context.documentFilePath = [DVTFilePath filePathForFileURL:temporaryDirectoryURL];
+    if (![self synchronouslyInstantiateTemplateWithFactory:factory context:context timeout:timeout error:error]) {
+        return NO;
+    }
+    return [_fileManager replaceItemAtURL:url
+                            withItemAtURL:temporaryDirectoryURL
+                           backupItemName:nil
+                                  options:NSFileManagerItemReplacementUsingNewMetadataOnly
+                         resultingItemURL:nil
+                                    error:error];
 }
 
 - (void)setLanguage:(XCNLanguage)language {
