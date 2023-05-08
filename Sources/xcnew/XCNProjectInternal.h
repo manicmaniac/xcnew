@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // These methods are only visible for testing.
 + (BOOL)initializeIDEIfNeededWithError:(NSError *__autoreleasing _Nullable *_Nullable)error;
-- (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind;
+- (nullable IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind;
 
 @end
 

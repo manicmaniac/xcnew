@@ -123,7 +123,7 @@ static NSString *const kXcode3ProjectTemplateKindIdentifier = @"Xcode.Xcode3.Pro
     }
 }
 
-- (IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
+- (nullable IDETemplate *)singleViewAppProjectTemplateForKind:(IDETemplateKind *)kind {
     NSParameterAssert(kind != nil);
     DVTPlatform *iPhoneOSPlatform = [DVTPlatform platformForIdentifier:@"com.apple.platform.iphoneos"];
     for (IDETemplate *_template in [IDETemplate availableTemplatesOfTemplateKind:kind]) {
