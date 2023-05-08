@@ -64,6 +64,20 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
 }
 
+- (void)testWriteToURLAtomicity {
+    __block NSError *error;
+    NSSet<NSString *> *eventPathSet = [self withWatchingFileSystemEventsWithPaths:@[ _temporaryDirectoryURL.path ]
+                                                                         callback:^{
+                                                                             XCTAssertTrue([self->_project writeToURL:self->_url timeout:10 error:&error]);
+                                                                         }];
+    XCTAssertNil(error);
+    NSSet<NSString *> *intermediateObjectPathSet = [eventPathSet objectsPassingTest:^BOOL(NSString *eventPath, BOOL *stop) {
+        // Intermediate .dat files are created and deleted before `[IDETemplateFactory instantiateTemplateForContext:options:whenDone:]` returns.
+        return [eventPath.lastPathComponent hasPrefix:@".dat"];
+    }];
+    XCTAssertEqual(intermediateObjectPathSet.count, 0);
+}
+
 - (void)testWriteToURLWithOrganizationIdentifier {
     static NSString *const organizationIdentifier = @"com.example.organization";
     _project.organizationIdentifier = organizationIdentifier;
@@ -448,6 +462,42 @@ static NSString *const kProductName = @"Example";
     [self addTeardownBlock:^{
         [notificationCenter removeObserver:observer];
     }];
+}
+
+static void fsEventStreamCallback(ConstFSEventStreamRef streamRef,
+                                  void *clientCallBackInfo,
+                                  size_t numEvents,
+                                  void *eventPaths,
+                                  const FSEventStreamEventFlags *eventFlags,
+                                  const FSEventStreamEventId *eventIds) {
+    NSMutableSet<NSString *> *eventPathSet = (__bridge NSMutableSet *)clientCallBackInfo;
+    [eventPathSet addObjectsFromArray:(__bridge NSArray *)eventPaths];
+}
+
+- (NSSet<NSString *> *)withWatchingFileSystemEventsWithPaths:(NSArray<NSString *> *)paths callback:(void (^)(void))callback {
+    NSMutableSet *eventPathSet = [NSMutableSet set];
+    FSEventStreamContext context = {
+        .version = 0,
+        .info = (__bridge void *)eventPathSet,
+        .retain = NULL,
+        .release = NULL,
+        .copyDescription = NULL,
+    };
+    FSEventStreamRef eventStream = FSEventStreamCreate(NULL,
+                                                       &fsEventStreamCallback,
+                                                       &context,
+                                                       (__bridge CFArrayRef)paths,
+                                                       kFSEventStreamEventIdSinceNow,
+                                                       0,
+                                                       kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagNoDefer);
+    dispatch_queue_t queue = dispatch_queue_create("com.github.manicmaniac.xcnew.XCNProjectTests", NULL);
+    FSEventStreamSetDispatchQueue(eventStream, queue);
+    FSEventStreamStart(eventStream);
+    callback();
+    FSEventStreamStop(eventStream);
+    FSEventStreamInvalidate(eventStream);
+    FSEventStreamRelease(eventStream);
+    return eventPathSet;
 }
 
 @end
