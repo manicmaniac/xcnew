@@ -600,7 +600,6 @@
 		5B1F0F3E22F7A2BA00A7AFFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -617,7 +616,6 @@
 		5B1F0F3F22F7A2BA00A7AFFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Tests/xcnew-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -771,7 +769,6 @@
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -794,7 +791,6 @@
 			buildSettings = {
 				APPLY_RULES_IN_COPY_FILES = YES;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/xcnew/Info.plist";
 				INSTALL_PATH = /bin;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -815,7 +811,6 @@
 		5B5364AC2602C8F8007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Tests/DVTFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -831,7 +826,6 @@
 		5B5364AD2602C8F8007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Tests/DVTFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -847,7 +841,6 @@
 		5B5364BD2602CB37007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Tests/IDEFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -864,7 +857,6 @@
 		5B5364BE2602CB37007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Tests/IDEFoundationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -881,7 +873,6 @@
 		5B5364D12602D710007E7F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Tests/xcnew-integration-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -896,7 +887,6 @@
 		5B5364D22602D710007E7F20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Tests/xcnew-integration-tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
