@@ -77,13 +77,6 @@
 			remoteGlobalIDString = 5B20A2ED22F0BB0300EA7295;
 			remoteInfo = xcnew;
 		};
-		5BD3D45E289B00E100BDB452 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5B20A2E622F0BB0300EA7295 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5B20A2ED22F0BB0300EA7295;
-			remoteInfo = xcnew;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -353,7 +346,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5BD3D45F289B00E100BDB452 /* PBXTargetDependency */,
 			);
 			name = "xcnew-tests";
 			productName = "xcnew-tests";
@@ -588,11 +580,6 @@
 			isa = PBXTargetDependency;
 			target = 5B20A2ED22F0BB0300EA7295 /* xcnew */;
 			targetProxy = 5B96C88E26472044009C4C13 /* PBXContainerItemProxy */;
-		};
-		5BD3D45F289B00E100BDB452 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5B20A2ED22F0BB0300EA7295 /* xcnew */;
-			targetProxy = 5BD3D45E289B00E100BDB452 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
