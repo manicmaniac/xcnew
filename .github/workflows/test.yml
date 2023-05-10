@@ -109,6 +109,4 @@ jobs:
       run: git grep -z --name-only --extended-regexp '^#!/bin/(ba)?sh$' | xargs -0 shellcheck
     - name: Validate Distribution.xml
       if: ${{ always() && steps.install-dependencies.conclusion == 'success' }}
-      run: |
-        curl -Lo Distribution.xsd https://bit.ly/3AnpijZ
-        xmllint --schema Distribution.xsd --noout Package/Distribution.xml
+      run: curl https://manicmaniac.github.io/macos-package-distribution-xml-schema/Distribution.xsd | xmllint --schema - --noout Package/Distribution.xml
