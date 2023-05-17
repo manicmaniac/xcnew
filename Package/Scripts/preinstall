@@ -27,6 +27,6 @@ IFS='
 ' # newline
 for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
 do
-    new_rpath="$(echo "$old_rpath" | /usr/bin/sed -e "s|.*/Contents/Developer|$developer_dir|")"
+    new_rpath="$(echo "$old_rpath" | /usr/bin/awk -v developer_dir="$developer_dir" '{sub(".*/Contents/Developer", developer_dir); print}')"
     /usr/bin/install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
 done
