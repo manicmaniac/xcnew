@@ -14,12 +14,12 @@ get_rpaths() {
 developer_dir="$(/usr/bin/xcode-select --print-path)"
 if ! is_developer_dir_in_xcode "$developer_dir"; then
     # shellcheck disable=SC2016
-    echo 'error: DEVELOPER_DIR is not in Xcode. Run `xcode-select --switch /path/to/Xcode.app/Contents/Developer` to set it to the correct path.' >&2
+    /usr/bin/printf 'error: DEVELOPER_DIR is not in Xcode. Run `xcode-select --switch /path/to/Xcode.app/Contents/Developer` to set it to the correct path.\n' >&2
     exit 1
 fi
 
 if [ -z "$INSTALLER_PAYLOAD_DIR" ]; then
-    echo 'error: INSTALLER_PAYLOAD_DIR is not set. Do not run this script outside of installer context.' >&2
+    /usr/bin/printf 'error: INSTALLER_PAYLOAD_DIR is not set. Do not run this script outside of installer context.\n' >&2
     exit 1
 fi
 
@@ -27,6 +27,6 @@ IFS='
 ' # newline
 for old_rpath in $(get_rpaths "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew")
 do
-    new_rpath="$(echo "$old_rpath" | /usr/bin/awk -v developer_dir="$developer_dir" '{sub(".*/Contents/Developer", developer_dir); print}')"
+    new_rpath="$(/usr/bin/printf "%s\n" "$old_rpath" | /usr/bin/awk -v developer_dir="$developer_dir" '{sub(".*/Contents/Developer", developer_dir); print}')"
     /usr/bin/install_name_tool -rpath "$old_rpath" "$new_rpath" "${INSTALLER_PAYLOAD_DIR}/usr/local/bin/xcnew"
 done
