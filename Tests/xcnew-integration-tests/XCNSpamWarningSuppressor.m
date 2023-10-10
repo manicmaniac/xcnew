@@ -36,10 +36,16 @@
     if (!XCNGetSwiftVersionWarningRegularExpression) {
         [NSException raise:NSInvalidArgumentException format:@"%@", error];
     }
-    XCNXCAssetPermissionErrorRegularExpression = [NSRegularExpression regularExpressionWithPattern:kXCAssetPermissionErrorPattern
-                                                                                           options:NSRegularExpressionAnchorsMatchLines
-                                                                                             error:&error];
-    if (!XCNXCAssetPermissionErrorRegularExpression) {
+    XCNIbtooldConnectionIDErrorRegularExpression = [NSRegularExpression regularExpressionWithPattern:kIbtooldConnectionIDErrorPattern
+                                                                                             options:NSRegularExpressionAnchorsMatchLines
+                                                                                               error:&error];
+    if (!XCNIbtooldConnectionIDErrorRegularExpression) {
+        [NSException raise:NSInvalidArgumentException format:@"%@", error];
+    }
+    XCNIbtooldIORegistryNotificationRegularExpression = [NSRegularExpression regularExpressionWithPattern:kIbtooldIORegistryNotificationPattern
+                                                                                                  options:NSRegularExpressionAnchorsMatchLines
+                                                                                                    error:&error];
+    if (!XCNIbtooldIORegistryNotificationRegularExpression) {
         [NSException raise:NSInvalidArgumentException format:@"%@", error];
     }
 }
@@ -71,10 +77,14 @@
                                                                options:(NSMatchingOptions)0
                                                                  range:NSMakeRange(0, string.length)
                                                           withTemplate:@""];
-    [XCNXCAssetPermissionErrorRegularExpression replaceMatchesInString:string
-                                                               options:(NSMatchingOptions)0
-                                                                 range:NSMakeRange(0, string.length)
-                                                          withTemplate:@""];
+    [XCNIbtooldConnectionIDErrorRegularExpression replaceMatchesInString:string
+                                                                 options:(NSMatchingOptions)0
+                                                                   range:NSMakeRange(0, string.length)
+                                                            withTemplate:@""];
+    [XCNIbtooldIORegistryNotificationRegularExpression replaceMatchesInString:string
+                                                                      options:(NSMatchingOptions)0
+                                                                        range:NSMakeRange(0, string.length)
+                                                                 withTemplate:@""];
     return string;
 }
 
@@ -125,11 +135,20 @@ static NSRegularExpression *XCNGetSwiftVersionWarningRegularExpression = nil;
 /**
  * A regular expression pattern to match and delete spam warnings from Xcode.
  *
- * When running Xcode 13 command line tools, it warns about permission to write Assets.xcassets.
- * This could be a bug in `xcnew` but currently I have no idea to fix it.
+ * This warning could be a bug in `xcnew`.
+ * Although `IDEInitialize()` launches `ibtoold` internally, something is missing to have `ibtoold` set a valid connection ID.
  */
-static NSString *const kXCAssetPermissionErrorPattern = @"^.*Error outputting Assets\\.xcassets: Error Domain=NSPOSIXErrorDomain Code=1 "
-                                                        @"\"Operation not permitted\"$\\n";
-static NSRegularExpression *XCNXCAssetPermissionErrorRegularExpression = nil;
+static NSString *const kIbtooldConnectionIDErrorPattern = @"^.*ibtoold.*0 is not a valid connection ID\\.$\\n";
+static NSRegularExpression *XCNIbtooldConnectionIDErrorRegularExpression = nil;
+
+/**
+ * A regular expression pattern to match and delete spam warnings from Xcode.
+ *
+ * This notification does not appear in my local environment but in GitHub Actions.
+ * Since it appears even when sandbox is disabled, possibly it is because of GitHub Actions virtual environment.
+ */
+static NSString *const kIbtooldIORegistryNotificationPattern = @"^.*ibtoold.*IORegistry entry 'IODeviceTree:/efi/platform' "
+                                                               @"does not contain the key 'apple-coprocessor-version'$\\n";
+static NSRegularExpression *XCNIbtooldIORegistryNotificationRegularExpression = nil;
 
 @end

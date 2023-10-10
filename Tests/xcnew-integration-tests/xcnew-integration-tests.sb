@@ -3,26 +3,4 @@
 
 (version 1)
 
-(deny default)
-(allow process-exec*
-    (regex #"XCBBuildService")
-    (regex #"xcnew$"))
-(allow process-fork)
-(allow ipc-posix-shm*)
-(allow mach-lookup)
-(allow file-ioctl
-    (literal "/dev/dtracehelper"))
-(allow file-read*)
-(allow file-write*
-    (subpath "/private/var/folders")
-    (literal "/dev/dtracehelper")
-    (literal "/dev/null"))
-(allow job-creation)
-(allow sysctl*)
-(allow system-fsctl)
-(allow user-preference-read)
-(allow user-preference-write)
-
-; iokit-open-user-client is not defined in macOS < 12
-(if (defined? 'iokit-open-user-client)
-    (allow iokit-open-user-client))
+(allow default)

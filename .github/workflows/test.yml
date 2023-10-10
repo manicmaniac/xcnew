@@ -49,6 +49,14 @@ jobs:
       run: make check | xcpretty
     - name: Install
       run: make install | xcpretty
+    - name: Collect system logs in last 5 minutes
+      if: failure()
+      run: sudo log collect --last 5m
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: system_logs-xcode-${{ matrix.xcode }}.logarchive
+        path: system_logs.logarchive
     - uses: actions/upload-artifact@v3
       if: failure()
       with:
