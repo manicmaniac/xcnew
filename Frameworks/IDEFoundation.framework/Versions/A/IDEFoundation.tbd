@@ -1,7 +1,7 @@
 --- !tapi-tbd
 tbd-version:     4
 targets:         [ x86_64-macos, arm64-macos ]
-flags:           [ not_app_extension_safe, installapi ]
+flags:           [ not_app_extension_safe ]
 install-name:    '@rpath/IDEFoundation.framework/Versions/A/IDEFoundation'
 current-version: 0
 compatibility-version: 0
