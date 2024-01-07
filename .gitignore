@@ -37,3 +37,5 @@ default.profraw
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+
+venv/
