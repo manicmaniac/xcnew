@@ -1,4 +1,7 @@
-from distutils.sysconfig import parse_makefile
+try:
+    from sysconfig import _parse_makefile as parse_makefile
+except ImportError:
+    from distutils.sysconfig import parse_makefile
 from functools import cached_property
 import pathlib
 import shlex
