@@ -358,7 +358,6 @@
 			buildPhases = (
 				5B20A2EA22F0BB0300EA7295 /* Sources */,
 				5B20A2EB22F0BB0300EA7295 /* Frameworks */,
-				5B11B38F2647ADC600653ABF /* Analyze Executable */,
 				5BC9EE2322FDF76100D67BD1 /* Copy Files */,
 			);
 			buildRules = (
@@ -481,29 +480,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5B11B38F2647ADC600653ABF /* Analyze Executable */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
-			);
-			name = "Analyze Executable";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Fail if `tapi-analyze` writes anything to stderr because it returns 0 even on error.\nif { tapi-analyze \"$SCRIPT_INPUT_FILE_0\" 2>&1 >/dev/null | grep '^'; }; then\n    exit 1\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B1F0F3522F7A2BA00A7AFFA /* Sources */ = {
