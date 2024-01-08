@@ -49,7 +49,7 @@ jobs:
       run: make check | xcpretty
     - name: Install
       run: make install | xcpretty
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: xcnew-xcode-${{ matrix.xcode }}.xcresult
@@ -58,9 +58,9 @@ jobs:
       run: |
         xcrun xccov view --report --json xcnew.xcresult > coverage.json
         ./cc-test-reporter format-coverage --input-type xccov --output 'codeclimate-xcode-${{ matrix.xcode }}.json' coverage.json
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
-        name: coverages
+        name: coverages-xcode-${{ matrix.xcode }}
         path: codeclimate-xcode-${{ matrix.xcode }}.json
   test-scripts:
     runs-on: ubuntu-22.04
@@ -77,9 +77,10 @@ jobs:
     - test
     - test-scripts
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
-        name: coverages
+        pattern: coverages-xcode-*
+        merge-multiple: true
     - name: Install cc-test-reporter
       run: |
         curl -Lo cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
