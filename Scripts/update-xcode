@@ -85,7 +85,7 @@ class Readme(object):
                 self.max_xcode_version = matched.group(1)
                 break
         else:
-            raise RuntimeError(f'Does not contain Xcode version string')
+            raise RuntimeError('Does not contain Xcode version string')
         f.seek(0)
         self.contents = f.read()
 
