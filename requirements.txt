@@ -1,4 +1,4 @@
 k2l==1.3.0
 kimg4==0.1.1
 pyaes==1.6.1
-Pygments==2.15.1
+Pygments==2.17.2
