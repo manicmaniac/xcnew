@@ -63,7 +63,7 @@ jobs:
         name: coverages
         path: codeclimate-xcode-${{ matrix.xcode }}.json
   test-scripts:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       DOCTEST: 1
     steps:
@@ -72,7 +72,7 @@ jobs:
     - run: ./Scripts/update-xcode
     - run: ./Scripts/xml2c
   upload-coverage:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
     - test
     - test-scripts
@@ -89,7 +89,7 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
