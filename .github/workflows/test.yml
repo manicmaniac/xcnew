@@ -77,7 +77,7 @@ jobs:
     - test
     - test-scripts
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: coverages
     - name: Install cc-test-reporter
