@@ -1,13 +1,13 @@
 // Headers generated with ktool v1.3.0
 // https://github.com/cxnder/ktool | pip3 install k2l
-// Platform: MACOS | Minimum OS: 12.0.0 | SDK: 13.3.0
+// Platform: MACOS | Minimum OS: 11.0.0 | SDK: 13.0.0
 
 
 #ifndef DVTFILEPATH_H
 #define DVTFILEPATH_H
 
-@class NSString, NSURL, NSArray, NSDate, NSDictionary, NSNumber;
 
+#import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
 @class DVTFilePath;
@@ -106,6 +106,20 @@
 - (void)dvt_provideFileSystemRepresentationToBlock:(id)arg0;
 - (id)description;
 - (id)_descriptionOfAssociates;
++ (void)initialize;
++ (id)rootFilePath;
++ (id)_lookupOrCreateFilePathWithParentPath:(id)arg0 fileSystemRepresentation:(char *)arg1 length:(NSUInteger)arg2 allowCreation:(char)arg3;
++ (char)supportsSecureCoding;
++ (id)_filePathForParent:(id)arg0 fileSystemRepresentation:(char *)arg1 length:(NSUInteger)arg2 allowCreation:(char)arg3;
++ (id)_filePathForParent:(id)arg0 pathString:(id)arg1;
++ (id)filePathForFileSystemRepresentation:(char *)arg0 length:(NSUInteger)arg1;
++ (id)filePathForFileSystemRepresentation:(char *)arg0;
++ (id)filePathForPathString:(id)arg0;
++ (id)filePathForFileURL:(id)arg0;
++ (void)registerCachedInfoDerivationFunction:(void *)arg0 forKey:(id)arg1;
++ (void)_registerCachedInfoDerivationFunction:(void *)arg0 forKey:(id)arg1 shouldUsePerVnodeLock:(char)arg2;
++ (void *)_cachedInfoDerivationFunctionForKey:(id)arg0 derivationLock:(id *)arg1;
++ (void)_registerStandardCachedFileInfoDerivationFunctionsIfNeeded;
 
 
 @end

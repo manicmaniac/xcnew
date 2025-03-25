@@ -1,13 +1,14 @@
 // Headers generated with ktool v1.3.0
 // https://github.com/cxnder/ktool | pip3 install k2l
-// Platform: MACOS | Minimum OS: 12.0.0 | SDK: 13.3.0
+// Platform: MACOS | Minimum OS: 11.0.0 | SDK: 13.0.0
 
 
 #ifndef IDETEMPLATE_H
 #define IDETEMPLATE_H
 
-@class NSString, NSDictionary, DVTFilePath, NSArray;
 
+#import <CoreFoundation/CoreFoundation.h>
+#import <DVTFoundation/DVTFilePath.h>
 #import <Foundation/Foundation.h>
 
 @class IDETemplateOption;
@@ -58,6 +59,17 @@
 - (char)isEqual:(id)arg0;
 - (NSInteger)templateCompare:(id)arg0;
 - (void)valueDidChangeForOption:(id)arg0;
++ (id)_templateInfoForTemplateAtURL:(id)arg0 error:(id *)arg1;
++ (void)initialize;
++ (void)_processChildrenOfFilePath:(id)arg0 enumerator:(id)arg1;
++ (id)additionalAvailableTemplatesOfTemplateKind:(id)arg0;
++ (id)_templateFolderPathsInDefault:(id)arg0;
++ (id)_templateSearchFilePaths;
++ (id)availableTemplatesOfTemplateKind:(id)arg0;
++ (id)_availableTemplatesOfTemplateKind:(id)arg0 templateSearchFilePaths:(id)arg1;
++ (id)_findAllTemplateBearingDirectoriesToHotSwap;
++ (id)_allTemplateBearingDirectoriesToHotSwap;
++ (void)_injectHotSwapedTemplatesOfTemplateKind:(id)arg0 availableTemplates:(id)arg1;
 
 
 @end
