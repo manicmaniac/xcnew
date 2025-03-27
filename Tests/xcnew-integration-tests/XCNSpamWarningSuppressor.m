@@ -17,31 +17,12 @@
 + (void)initialize {
     [super initialize];
     // Instantiate a regular expression as early as possible so that the syntax error can be found earlier.
-    NSError *error;
-    XCNSymbolCollisionWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kSymbolCollisionWarningPattern
-                                                                                           options:NSRegularExpressionAnchorsMatchLines
-                                                                                             error:&error];
-    if (!XCNSymbolCollisionWarningRegularExpression) {
-        [NSException raise:NSInvalidArgumentException format:@"%@", error];
-    }
-    XCNWatchOSExtensionPointWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kWatchOSExtensionPointWarningPattern
-                                                                                                 options:NSRegularExpressionAnchorsMatchLines
-                                                                                                   error:&error];
-    if (!XCNWatchOSExtensionPointWarningRegularExpression) {
-        [NSException raise:NSInvalidArgumentException format:@"%@", error];
-    }
-    XCNGetSwiftVersionWarningRegularExpression = [NSRegularExpression regularExpressionWithPattern:kGetSwiftVersionWarningPattern
-                                                                                           options:NSRegularExpressionAnchorsMatchLines
-                                                                                             error:&error];
-    if (!XCNGetSwiftVersionWarningRegularExpression) {
-        [NSException raise:NSInvalidArgumentException format:@"%@", error];
-    }
-    XCNXCAssetPermissionErrorRegularExpression = [NSRegularExpression regularExpressionWithPattern:kXCAssetPermissionErrorPattern
-                                                                                           options:NSRegularExpressionAnchorsMatchLines
-                                                                                             error:&error];
-    if (!XCNXCAssetPermissionErrorRegularExpression) {
-        [NSException raise:NSInvalidArgumentException format:@"%@", error];
-    }
+    _regularExpressions = @[
+        XCNMustCompileRegularExpressionWithPattern(kSymbolCollisionWarningPattern),
+        XCNMustCompileRegularExpressionWithPattern(kWatchOSExtensionPointWarningPattern),
+        XCNMustCompileRegularExpressionWithPattern(kGetSwiftVersionWarningPattern),
+        XCNMustCompileRegularExpressionWithPattern(kXCAssetPermissionErrorPattern),
+    ];
 }
 
 - (instancetype)initWithFileHandle:(NSFileHandle *)fileHandle {
@@ -59,26 +40,30 @@
         return nil;
     }
     NSMutableString *string = [[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [XCNSymbolCollisionWarningRegularExpression replaceMatchesInString:string
-                                                               options:(NSMatchingOptions)0
-                                                                 range:NSMakeRange(0, string.length)
-                                                          withTemplate:@""];
-    [XCNWatchOSExtensionPointWarningRegularExpression replaceMatchesInString:string
-                                                                     options:(NSMatchingOptions)0
-                                                                       range:NSMakeRange(0, string.length)
-                                                                withTemplate:@""];
-    [XCNGetSwiftVersionWarningRegularExpression replaceMatchesInString:string
-                                                               options:(NSMatchingOptions)0
-                                                                 range:NSMakeRange(0, string.length)
-                                                          withTemplate:@""];
-    [XCNXCAssetPermissionErrorRegularExpression replaceMatchesInString:string
-                                                               options:(NSMatchingOptions)0
-                                                                 range:NSMakeRange(0, string.length)
-                                                          withTemplate:@""];
+    for (NSRegularExpression *regularExpression in _regularExpressions) {
+        [regularExpression replaceMatchesInString:string
+                                          options:(NSMatchingOptions)0
+                                            range:NSMakeRange(0, string.length)
+                                     withTemplate:@""];
+    }
     return string;
 }
 
 // MARK: Private
+
+static NSRegularExpression *XCNMustCompileRegularExpressionWithPattern(NSString *pattern) {
+    NSCParameterAssert(pattern != nil);
+    NSError *error;
+    NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                                       options:NSRegularExpressionAnchorsMatchLines
+                                                                                         error:&error];
+    if (!regularExpression) {
+        [NSException raise:NSInvalidArgumentException format:@"%@", error];
+    }
+    return regularExpression;
+}
+
+static NSArray<NSRegularExpression *> *_regularExpressions;
 
 /**
  * A regular expression pattern to match and delete spam warnings from Xcode.
@@ -97,7 +82,6 @@ static NSString *const kSymbolCollisionWarningPattern = @"^objc\\[[0-9]+\\]: Cla
                                                         @"/usr/lib/libamsupport.dylib \\(0x[0-9a-f]+\\) and "
                                                         @"/Library/Apple/System/Library/PrivateFrameworks/MobileDevice\\.framework/Versions/A/MobileDevice "
                                                         @"\\(0x[0-9a-f]+\\)\\. One of the two will be used. Which one is undefined.$\\n";
-static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
 
 /**
  * A regular expression pattern to match and delete spam warnings from Xcode.
@@ -110,7 +94,6 @@ static NSRegularExpression *XCNSymbolCollisionWarningRegularExpression = nil;
 static NSString *const kWatchOSExtensionPointWarningPattern = @"^.*Requested but did not find extension point with identifier "
                                                               @"Xcode\\.IDEKit\\.Extension(SentinelHostApplications|PointIdentifierToBundleIdentifier) "
                                                               @"for extension Xcode\\.DebuggerFoundation\\.AppExtension.*\\.watchOS of plug-in .*$\\n";
-static NSRegularExpression *XCNWatchOSExtensionPointWarningRegularExpression = nil;
 
 /**
  * A regular expression pattern to match and delete spam warnings from Xcode.
@@ -120,7 +103,6 @@ static NSRegularExpression *XCNWatchOSExtensionPointWarningRegularExpression = n
  */
 static NSString *const kGetSwiftVersionWarningPattern = @"^.*DVTToolchain: Failed to get Swift version for /.*/XcodeDefault.xctoolchain: "
                                                         @"Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"$\\n";
-static NSRegularExpression *XCNGetSwiftVersionWarningRegularExpression = nil;
 
 /**
  * A regular expression pattern to match and delete spam warnings from Xcode.
@@ -130,6 +112,5 @@ static NSRegularExpression *XCNGetSwiftVersionWarningRegularExpression = nil;
  */
 static NSString *const kXCAssetPermissionErrorPattern = @"^.*Error outputting Assets\\.xcassets: Error Domain=NSPOSIXErrorDomain Code=1 "
                                                         @"\"Operation not permitted\"$\\n";
-static NSRegularExpression *XCNXCAssetPermissionErrorRegularExpression = nil;
 
 @end
