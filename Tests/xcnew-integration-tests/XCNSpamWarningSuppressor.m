@@ -22,6 +22,7 @@
         XCNMustCompileRegularExpressionWithPattern(kWatchOSExtensionPointWarningPattern),
         XCNMustCompileRegularExpressionWithPattern(kGetSwiftVersionWarningPattern),
         XCNMustCompileRegularExpressionWithPattern(kXCAssetPermissionErrorPattern),
+        XCNMustCompileRegularExpressionWithPattern(kDisabledAutomationModeWarningPattern),
     ];
 }
 
@@ -112,5 +113,13 @@ static NSString *const kGetSwiftVersionWarningPattern = @"^.*DVTToolchain: Faile
  */
 static NSString *const kXCAssetPermissionErrorPattern = @"^.*Error outputting Assets\\.xcassets: Error Domain=NSPOSIXErrorDomain Code=1 "
                                                         @"\"Operation not permitted\"$\\n";
+
+/**
+ * A regular expression pattern to match and delete spam warnings from Xcode.
+ *
+ * When running Xcode 14 command line tools, it warns abount disabled automation mode.
+ * This could be a bug in `xcnew` but currently I have no idea to fix it.
+ */
+static NSString *const kDisabledAutomationModeWarningPattern = @"^.*Automation Mode has been disabled, existing connections will be invalidated\\.$\\n";
 
 @end
