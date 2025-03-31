@@ -3,7 +3,7 @@ xcnew
 
 [![GitHub Actions](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml/badge.svg)](https://github.com/manicmaniac/xcnew/actions/workflows/test.yml)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1b708551a78044461357/test_coverage)](https://codeclimate.com/github/manicmaniac/xcnew/test_coverage)
-[![Xcode](https://img.shields.io/badge/xcode-12%20%7C%2013%20%7C%2014-blue)](https://github.com/manicmaniac/xcnew#supported-xcode-versions)
+[![Xcode](https://img.shields.io/badge/xcode-12%20%7C%2013%20%7C%2014%20%7C%2015-blue)](https://github.com/manicmaniac/xcnew#supported-xcode-versions)
 
 A command line interface to make a project for iOS Single View App.
 
@@ -80,7 +80,7 @@ Usage
 Supported Xcode versions
 ------------------------
 
-`Xcode >= 12.5 && Xcode <= 14.3.1`.
+`Xcode >= 12.5 && Xcode <= 15.0.1`.
 
 How it works?
 -------------
