@@ -1,23 +1,8 @@
 from functools import cached_property
 import pathlib
+import re
 import shlex
 
-try:
-    from distutils.sysconfig import parse_makefile
-except ImportError:
-    from sysconfig import _parse_makefile
-    from tempfile import NamedTemporaryFile
-
-    # https://github.com/python/cpython/blob/v3.11.7/Lib/distutils/sysconfig.py#L72
-    def parse_makefile(fn, g=None):
-        with open(fn, mode='rb') as src, NamedTemporaryFile() as dest:
-            data = src.read()
-            # `distutils.sysconfig.parse_makefile` understands escaped newlines
-            # but `sysconfig._parse_makefile` does not.
-            # The next line fills the gap by just replacing escaped newlines.
-            dest.write(data.replace(b'\\\n', b' '))
-            dest.seek(0)
-            return _parse_makefile(dest.name, g)
 
 _script_path = pathlib.Path(__file__)
 
@@ -25,7 +10,7 @@ _script_path = pathlib.Path(__file__)
 class Makefile(object):
     def __init__(self):
         makefile_path = path('Makefile')
-        self._vars = parse_makefile(makefile_path)
+        self._vars = _parse_makefile_vars(makefile_path)
 
     def __getattr__(self, name):
         value = self._vars.get(name.upper(), None)
@@ -42,3 +27,25 @@ class Makefile(object):
 
 def path(name):
     return _script_path.parent / name
+
+
+_var_decl_re = re.compile(r'^\s*(\w+)\s*=\s*(.*?)\s*$')
+_var_re = re.compile(r'\$\((\w+)\)')
+
+
+# Parse very simple Makefile and returns declared variables.
+def _parse_makefile_vars(path):
+    with open(path) as f:
+        text = f.read().replace('\\\n', '')
+    vars = {}
+    for line in text.splitlines():
+        matched = _var_decl_re.search(line)
+        if not matched:
+            continue
+        name = matched.group(1)
+        value = matched.group(2)
+        matched = _var_re.search(value)
+        if matched:
+            value = value.replace(matched.group(0), vars.get(matched.group(1), ''))
+        vars[name] = value
+    return vars
