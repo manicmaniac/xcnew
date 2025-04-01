@@ -13,10 +13,10 @@ install:
 uninstall:
 	$(RM) $(PREFIX)/bin/xcnew $(PREFIX)/share/man/man1/xcnew.1
 
-ifeq ($(origin CI), environment)
-	TEST_COMMAND = $(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test | xcbeautify
-else
+ifeq ($(CI),)
 	TEST_COMMAND = $(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test
+else
+	TEST_COMMAND = $(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test | xcbeautify
 endif
 
 check:
