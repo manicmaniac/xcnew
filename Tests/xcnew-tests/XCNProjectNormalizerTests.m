@@ -7,11 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "XCNAppLifecycle.h"
+#import "XCNLanguage.h"
 #import "XCNProject.h"
 #import "XCNProjectNormalizer.h"
-#import "XCNLanguage.h"
 #import "XCNUserInterface.h"
-#import "XCNAppLifecycle.h"
 
 @interface XCNProjectNormalizerTests : XCTestCase
 @end
@@ -23,7 +23,7 @@
     project.language = XCNLanguageSwift;
     project.userInterface = XCNUserInterfaceStoryboard;
     project.lifecycle = XCNAppLifecycleCocoa;
-    
+
     NSError *error;
     XCTAssertTrue([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNil(error);
@@ -37,7 +37,7 @@
     project.language = XCNLanguageSwift;
     project.userInterface = XCNUserInterfaceSwiftUI;
     project.lifecycle = XCNAppLifecycleCocoa;
-    
+
     NSError *error;
     XCTAssertTrue([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNil(error);
@@ -51,7 +51,7 @@
     project.language = XCNLanguageSwift;
     project.userInterface = XCNUserInterfaceSwiftUI;
     project.lifecycle = XCNAppLifecycleSwiftUI;
-    
+
     NSError *error;
     XCTAssertTrue([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNil(error);
@@ -65,7 +65,7 @@
     project.language = XCNLanguageObjectiveC;
     project.userInterface = XCNUserInterfaceStoryboard;
     project.lifecycle = XCNAppLifecycleCocoa;
-    
+
     NSError *error;
     XCTAssertTrue([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNil(error);
@@ -79,7 +79,7 @@
     project.language = XCNLanguageObjectiveC;
     project.userInterface = XCNUserInterfaceSwiftUI;
     project.lifecycle = XCNAppLifecycleCocoa;
-    
+
     NSError *error;
     XCTAssertFalse([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNotNil(error);
@@ -91,7 +91,7 @@
     project.language = XCNLanguageObjectiveC;
     project.userInterface = XCNUserInterfaceStoryboard;
     project.lifecycle = XCNAppLifecycleSwiftUI;
-    
+
     NSError *error;
     XCTAssertFalse([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNotNil(error);
@@ -103,7 +103,7 @@
     project.language = XCNLanguageSwift;
     project.userInterface = XCNUserInterfaceStoryboard;
     project.lifecycle = XCNAppLifecycleSwiftUI;
-    
+
     NSError *error;
     XCTAssertFalse([XCNProjectNormalizer normalizeProject:project error:&error]);
     XCTAssertNotNil(error);
