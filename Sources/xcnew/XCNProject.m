@@ -12,6 +12,7 @@
 #import <IDEFoundation/IDEFoundation.h>
 #import "NSError+XCNErrorDomain.h"
 #import "XCNMacroDefinitions.h"
+#import "XCNProjectNormalizer.h"
 
 @implementation XCNProject {
     NSFileManager *_fileManager;
@@ -34,6 +35,10 @@
     NSParameterAssert(url.isFileURL);
     NSParameterAssert(timeout > 0);
     if (![XCNProject initializeIDEIfNeededWithError:error]) {
+        return NO;
+    }
+    // Normalize project properties according to Xcode constraints
+    if (![XCNProjectNormalizer normalizeProject:self error:error]) {
         return NO;
     }
     if (![_fileManager createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:error]) {
@@ -91,25 +96,14 @@
 }
 
 - (void)setLanguage:(XCNLanguage)language {
-    if (language == XCNLanguageObjectiveC) {
-        _userInterface = XCNUserInterfaceStoryboard;
-        _lifecycle = XCNAppLifecycleCocoa;
-    }
     _language = language;
 }
 
 - (void)setUserInterface:(XCNUserInterface)userInterface {
-    if (userInterface == XCNUserInterfaceSwiftUI) {
-        _language = XCNLanguageSwift;
-    }
     _userInterface = userInterface;
 }
 
 - (void)setLifecycle:(XCNAppLifecycle)lifecycle {
-    if (lifecycle == XCNAppLifecycleSwiftUI) {
-        _language = XCNLanguageSwift;
-        _userInterface = XCNUserInterfaceSwiftUI;
-    }
     _lifecycle = lifecycle;
 }
 
