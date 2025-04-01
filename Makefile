@@ -13,8 +13,14 @@ install:
 uninstall:
 	$(RM) $(PREFIX)/bin/xcnew $(PREFIX)/share/man/man1/xcnew.1
 
+ifeq ($(CI),)
+	TEST_COMMAND = $(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test
+else
+	TEST_COMMAND = $(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test | xcbeautify
+endif
+
 check:
-	$(XCODEBUILD) -resultBundlePath ./xcnew.xcresult test
+	$(TEST_COMMAND)
 
 check-scripts:
 	env PYTHONDONTWRITEBYTECODE=1 python3 -munittest discover --verbose Package/Tests

@@ -50,6 +50,9 @@
 		5BD3D460289B1C2C00BDB452 /* xcnew.mxml in Copy Files */ = {isa = PBXBuildFile; fileRef = 5BC9EE2022FDF6C000D67BD1 /* xcnew.mxml */; };
 		5BD3D46B289F054200BDB452 /* XCNOptionDefinitions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */; };
 		5BD3D46C289F054200BDB452 /* XCNOptionDefinitions.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BD3D46A289F054200BDB452 /* XCNOptionDefinitions.c */; };
+		6C6032E02D9C4E7900B9EEA8 /* XCNProjectNormalizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6032DF2D9C4E7900B9EEA8 /* XCNProjectNormalizerTests.m */; };
+		6C6032E32D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6032E12D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m */; };
+		6C6032E42D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6032E12D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -159,6 +162,9 @@
 		5BE7596A26011AE600DC1E89 /* IDETemplateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDETemplateTests.m; sourceTree = "<group>"; };
 		5BE7596C26011FDD00DC1E89 /* XCNIDEFoundationTestHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCNIDEFoundationTestHelpers.h; sourceTree = "<group>"; };
 		5BE7596D26011FDD00DC1E89 /* XCNIDEFoundationTestHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNIDEFoundationTestHelpers.m; sourceTree = "<group>"; };
+		6C6032DF2D9C4E7900B9EEA8 /* XCNProjectNormalizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCNProjectNormalizerTests.m; sourceTree = "<group>"; };
+		6C6032E12D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCNProjectNormalizer.m; sourceTree = "<group>"; };
+		6C6032E22D9C4E8C00B9EEA8 /* XCNProjectNormalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCNProjectNormalizer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +257,7 @@
 				5B35519B23F5D93A000E5EA1 /* XCNLanguageTests.m */,
 				5B6128262610F89000B048A1 /* XCNOptionParserParameterizedTests.m */,
 				5B4EAD2E292AE50E00398438 /* XCNOptionParserTests.m */,
+				6C6032DF2D9C4E7900B9EEA8 /* XCNProjectNormalizerTests.m */,
 				5B7E89F225FC91A3004E0420 /* XCNProjectTests.m */,
 				5B35519723F5D87C000E5EA1 /* XCNUserInterfaceTests.m */,
 				5B1F0F3D22F7A2BA00A7AFFA /* Info.plist */,
@@ -278,6 +285,8 @@
 				5B393EE626310FB600948B46 /* XCNProjectInternal.h */,
 				5B20AFBF22F7437700EA7295 /* XCNProject.m */,
 				5B35529824E7A4F90035E983 /* XCNProjectFeature.h */,
+				6C6032E22D9C4E8C00B9EEA8 /* XCNProjectNormalizer.h */,
+				6C6032E12D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m */,
 				5B3F958023F55DB5002F32B8 /* XCNUserInterface.h */,
 				5B35519523F5D7C1000E5EA1 /* XCNUserInterface.m */,
 				5B20A2F822F0BB8500EA7295 /* main.m */,
@@ -492,12 +501,14 @@
 				5B61282D2610F8A300B048A1 /* XCNOptionParser.m in Sources */,
 				5B35519923F5D8FB000E5EA1 /* XCNUserInterface.m in Sources */,
 				5B4EAD2F292AE50E00398438 /* XCNOptionParserTests.m in Sources */,
+				6C6032E42D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m in Sources */,
 				5B35519A23F5D8FE000E5EA1 /* XCNLanguage.m in Sources */,
 				5B35519C23F5D93A000E5EA1 /* XCNLanguageTests.m in Sources */,
 				5B39EABB260BD67A0028A910 /* XCNAppLifecycle.m in Sources */,
 				5B6533EF2706A6B6007BFBB4 /* XCNOptionParseResult.m in Sources */,
 				5B7E89F325FC91A3004E0420 /* XCNProjectTests.m in Sources */,
 				5B39EAC2260C69AD0028A910 /* XCNAppLifecycleTests.m in Sources */,
+				6C6032E02D9C4E7900B9EEA8 /* XCNProjectNormalizerTests.m in Sources */,
 				5B2F804525FC95D20018752D /* XCNProject.m in Sources */,
 				5B891E5E2931BDB7004047BB /* NSError+XCNErrorDomainTests.m in Sources */,
 				5B891E5F2931BF82004047BB /* NSError+XCNErrorDomain.m in Sources */,
@@ -516,6 +527,7 @@
 				5BD3D46B289F054200BDB452 /* XCNOptionDefinitions.c in Sources */,
 				5B20AFCE22F7567C00EA7295 /* XCNOptionParser.m in Sources */,
 				5B39EAAB260BD5510028A910 /* XCNAppLifecycle.m in Sources */,
+				6C6032E32D9C4E8C00B9EEA8 /* XCNProjectNormalizer.m in Sources */,
 				5B35519623F5D7C1000E5EA1 /* XCNUserInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

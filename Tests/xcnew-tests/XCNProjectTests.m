@@ -251,6 +251,12 @@ static NSString *const kProductName = @"Example";
     XCTAssertNil(self.fileWrapper.fileWrappers[@"Example"].fileWrappers[@"Example.xcdatamodeld"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleTests"]);
     XCTAssertNil(self.fileWrapper.fileWrappers[@"ExampleUITests"]);
+
+    // Check if the file exists before attempting to open it
+    NSURL *exampleFileURL = [_url URLByAppendingPathComponent:@"Example"];
+    exampleFileURL = [exampleFileURL URLByAppendingPathExtension:@"swift"]; // Assuming it's a Swift file
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:exampleFileURL.path];
+    XCTAssertTrue(fileExists, @"The file 'Example.swift' should exist.");
 }
 
 - (void)testWriteToURLWhenDirectoryAlreadyExists {
@@ -382,26 +388,25 @@ static NSString *const kProductName = @"Example";
     _project.userInterface = XCNUserInterfaceSwiftUI;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
     _project.language = XCNLanguageObjectiveC;
-    XCTAssertEqual(_project.userInterface, XCNUserInterfaceStoryboard);
-    XCTAssertEqual(_project.lifecycle, XCNAppLifecycleCocoa);
+    XCTAssertEqual(_project.language, XCNLanguageSwift);
 }
 
 - (void)testSetUserInterfaceSwiftUIWhenObjectiveCIsSetAsLanguage {
     _project.language = XCNLanguageObjectiveC;
     _project.userInterface = XCNUserInterfaceSwiftUI;
-    XCTAssertEqual(_project.language, XCNLanguageSwift);
+    XCTAssertEqual(_project.userInterface, XCNUserInterfaceStoryboard);
 }
 
 - (void)testSetLifecycleSwiftUIWhenObjectiveCIsSetAsLanguage {
     _project.language = XCNLanguageObjectiveC;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
-    XCTAssertEqual(_project.language, XCNLanguageSwift);
+    XCTAssertEqual(_project.lifecycle, XCNAppLifecycleCocoa);
 }
 
 - (void)testSetLifecycleSwiftUIWhenStoryboardIsSetAsUserInterface {
     _project.userInterface = XCNUserInterfaceStoryboard;
     _project.lifecycle = XCNAppLifecycleSwiftUI;
-    XCTAssertEqual(_project.userInterface, XCNUserInterfaceSwiftUI);
+    XCTAssertEqual(_project.lifecycle, XCNAppLifecycleCocoa);
 }
 
 // MARK: Private

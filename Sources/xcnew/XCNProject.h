@@ -14,6 +14,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class XCNProjectNormalizer;
+
 @interface XCNProject : NSObject
 
 @property (nonatomic, readonly) NSString *productName;
