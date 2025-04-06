@@ -3,6 +3,13 @@ on:
   push:
     tags:
     - '*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to create release from'
+        required: true
+        type: string
+
 jobs:
   package:
     runs-on: macOS-12
@@ -11,10 +18,11 @@ jobs:
         shell: bash
     env:
       DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
+      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
     - uses: actions/checkout@v4
     - name: Validate version
-      run: test "$(agvtool what-version -terse)" = "${GITHUB_REF#refs/*/}"
+      run: test "$(agvtool what-version -terse)" = "${{ env.RELEASE_TAG }}"
     - run: make xcnew.pkg
     - name: Install package
       run: sudo installer -pkg xcnew.pkg -target /
@@ -22,10 +30,10 @@ jobs:
       run: make installcheck | xcpretty
     - run: man -P cat 1 xcnew
     - name: Create release
-      run: gh release create "${GITHUB_REF#refs/*/}" --generate-notes
+      run: gh release create "${{ env.RELEASE_TAG }}" --generate-notes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload release asset
-      run: gh release upload "${GITHUB_REF#refs/*/}" xcnew.pkg
+      run: gh release upload "${{ env.RELEASE_TAG }}" xcnew.pkg
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
