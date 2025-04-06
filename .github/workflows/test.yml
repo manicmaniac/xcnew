@@ -1,23 +1,21 @@
 name: Test
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   test:
-    runs-on: ${{ matrix.macos }}
+    runs-on: macOS-13
     defaults:
       run:
         shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        xcode: ["14.3.1"]
-        include:
-        - macos: macOS-13
-          xcode: "14.3.1"
     env:
-      DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_14.3.1.app/Contents/Developer
     steps:
     - uses: actions/checkout@v4
     - name: Install cc-test-reporter
@@ -36,16 +34,16 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: failure()
       with:
-        name: xcnew-xcode-${{ matrix.xcode }}.xcresult
+        name: xcnew-xcode-14.3.1.xcresult
         path: xcnew.xcresult/*
     - name: Format coverage
       run: |
         xcrun xccov view --report --json xcnew.xcresult > coverage.json
-        ./cc-test-reporter format-coverage --input-type xccov --output 'codeclimate-xcode-${{ matrix.xcode }}.json' coverage.json
+        ./cc-test-reporter format-coverage --input-type xccov --output 'codeclimate-xcode-14.3.1.json' coverage.json
     - uses: actions/upload-artifact@v4
       with:
-        name: coverages-xcode-${{ matrix.xcode }}
-        path: codeclimate-xcode-${{ matrix.xcode }}.json
+        name: coverages-xcode-14.3.1
+        path: codeclimate-xcode-14.3.1.json
   test-scripts:
     runs-on: ubuntu-22.04
     env:
