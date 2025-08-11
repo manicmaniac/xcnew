@@ -19,7 +19,7 @@ jobs:
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Install cc-test-reporter
       run: |
         curl -Lo cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64
@@ -51,7 +51,7 @@ jobs:
     env:
       DOCTEST: 1
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - run: ./Scripts/update-docdate
     - run: ./Scripts/update-xcode
     - run: ./Scripts/xml2c
@@ -79,7 +79,7 @@ jobs:
       run:
         shell: bash
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Install dependencies
       id: install-dependencies
       run: sudo apt-get install -y clang-format-12 flake8 shellcheck libxml2-utils

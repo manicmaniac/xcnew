@@ -4,7 +4,7 @@ jobs:
   update-xcode:
     runs-on: macOS-13
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     - uses: maxim-lobanov/setup-xcode@v1
