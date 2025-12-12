@@ -33,7 +33,7 @@ jobs:
       run: make check | xcpretty
     - name: Install
       run: make install | xcpretty
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v6
       if: failure()
       with:
         name: xcnew-xcode-${{ matrix.xcode }}.xcresult
@@ -42,7 +42,7 @@ jobs:
       run: |
         xcrun xccov view --report --json xcnew.xcresult > coverage.json
         ./cc-test-reporter format-coverage --input-type xccov --output 'codeclimate-xcode-${{ matrix.xcode }}.json' coverage.json
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v6
       with:
         name: coverages-xcode-${{ matrix.xcode }}
         path: codeclimate-xcode-${{ matrix.xcode }}.json
@@ -61,7 +61,7 @@ jobs:
     - test
     - test-scripts
     steps:
-    - uses: actions/download-artifact@v5
+    - uses: actions/download-artifact@v7
       with:
         pattern: coverages-xcode-*
         merge-multiple: true
